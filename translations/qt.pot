@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-29 10:06+0300\n"
+"POT-Creation-Date: 2022-11-14 20:38+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,27 +17,23 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/core/plugin/qlibrary.cpp:165
+#: src/core/plugin/qlibrary.cpp:154
 msgid "'%1' is not ELF file"
 msgstr ""
 
-#: src/core/plugin/qlibrary.cpp:168
+#: src/core/plugin/qlibrary.cpp:157
 msgid "ELF class mismatch in '%1'"
 msgstr ""
 
-#: src/core/plugin/qlibrary.cpp:187
-msgid "Plugin verification data mismatch in '%1'"
-msgstr ""
-
-#: src/core/plugin/qlibrary.cpp:364 src/core/plugin/qlibrary.cpp:374
+#: src/core/plugin/qlibrary.cpp:335 src/core/plugin/qlibrary.cpp:345
 msgid "The shared library was not found."
 msgstr ""
 
-#: src/core/plugin/qlibrary.cpp:376
+#: src/core/plugin/qlibrary.cpp:347
 msgid "The file '%1' is not a valid Katie plugin."
 msgstr ""
 
-#: src/core/plugin/qlibrary.cpp:565 src/core/io/qiodevice.cpp:1516
+#: src/core/plugin/qlibrary.cpp:533 src/core/io/qiodevice.cpp:1500
 #: src/network/socket/qabstractsocketengine.cpp:439
 msgid "Unknown error"
 msgstr ""
@@ -124,12 +120,8 @@ msgctxt "QStandardPaths"
 msgid "Executable"
 msgstr ""
 
-#: src/core/io/qfile.cpp:558
+#: src/core/io/qfile.cpp:578
 msgid "Destination file exists"
-msgstr ""
-
-#: src/core/io/qfile.cpp:955
-msgid "No file engine available or engine does not support UnMapExtension"
 msgstr ""
 
 #: src/core/io/qprocess.cpp:663 src/core/io/qprocess.cpp:715
@@ -240,7 +232,7 @@ msgctxt "QJsonDocument"
 msgid "Unknown JSON type"
 msgstr ""
 
-#: src/core/tools/qjsondocument.cpp:199 src/core/tools/qjsondocument.cpp:299
+#: src/core/tools/qjsondocument.cpp:199 src/core/tools/qjsondocument.cpp:301
 msgctxt "QJsonDocument"
 msgid "Rootless values are not supported"
 msgstr ""
@@ -255,12 +247,12 @@ msgctxt "QJsonDocument"
 msgid "Maximum depth reached"
 msgstr ""
 
-#: src/core/tools/qjsondocument.cpp:282 src/core/tools/qjsondocument.cpp:308
+#: src/core/tools/qjsondocument.cpp:284 src/core/tools/qjsondocument.cpp:310
 msgctxt "QJsonDocument"
 msgid "Unknown variant type"
 msgstr ""
 
-#: src/core/tools/qjsondocument.cpp:304
+#: src/core/tools/qjsondocument.cpp:306
 msgctxt "QJsonDocument"
 msgid "Rootless arrays are not supported"
 msgstr ""
@@ -814,69 +806,69 @@ msgctxt "QDeclarativeVME"
 msgid "Cannot set properties on %1 as it is null"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativescriptparser.cpp:234
-#: src/declarative/qml/qdeclarativescriptparser.cpp:663
-#: src/declarative/qml/qdeclarativescriptparser.cpp:722
+#: src/declarative/qml/qdeclarativescriptparser.cpp:235
+#: src/declarative/qml/qdeclarativescriptparser.cpp:664
+#: src/declarative/qml/qdeclarativescriptparser.cpp:723
 msgctxt "QDeclarativeParser"
 msgid "Property value set multiple times"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativescriptparser.cpp:245
+#: src/declarative/qml/qdeclarativescriptparser.cpp:246
 msgctxt "QDeclarativeParser"
 msgid "Expected type name"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativescriptparser.cpp:379
+#: src/declarative/qml/qdeclarativescriptparser.cpp:380
 msgctxt "QDeclarativeParser"
 msgid "Invalid import qualifier ID"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativescriptparser.cpp:387
+#: src/declarative/qml/qdeclarativescriptparser.cpp:388
 msgctxt "QDeclarativeParser"
 msgid "Reserved name \"Qt\" cannot be used as an qualifier"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativescriptparser.cpp:402
+#: src/declarative/qml/qdeclarativescriptparser.cpp:403
 msgctxt "QDeclarativeParser"
 msgid "Script import qualifiers must be unique."
 msgstr ""
 
-#: src/declarative/qml/qdeclarativescriptparser.cpp:412
+#: src/declarative/qml/qdeclarativescriptparser.cpp:413
 msgctxt "QDeclarativeParser"
 msgid "Script import requires a qualifier"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativescriptparser.cpp:423
+#: src/declarative/qml/qdeclarativescriptparser.cpp:424
 msgctxt "QDeclarativeParser"
 msgid "Library import requires a version"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativescriptparser.cpp:482
+#: src/declarative/qml/qdeclarativescriptparser.cpp:483
 msgctxt "QDeclarativeParser"
 msgid "Expected parameter type"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativescriptparser.cpp:524
+#: src/declarative/qml/qdeclarativescriptparser.cpp:525
 msgctxt "QDeclarativeParser"
 msgid "Invalid property type modifier"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativescriptparser.cpp:533
+#: src/declarative/qml/qdeclarativescriptparser.cpp:534
 msgctxt "QDeclarativeParser"
 msgid "Unexpected property type modifier"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativescriptparser.cpp:542
+#: src/declarative/qml/qdeclarativescriptparser.cpp:543
 msgctxt "QDeclarativeParser"
 msgid "Expected property type"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativescriptparser.cpp:551
+#: src/declarative/qml/qdeclarativescriptparser.cpp:552
 msgctxt "QDeclarativeParser"
 msgid "Readonly not yet supported"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativescriptparser.cpp:769
+#: src/declarative/qml/qdeclarativescriptparser.cpp:770
 msgctxt "QDeclarativeParser"
 msgid "JavaScript declaration outside Script element"
 msgstr ""
@@ -1109,7 +1101,7 @@ msgid "< &Back"
 msgstr ""
 
 #: src/gui/dialogs/qwizard.cpp:581
-#: src/scripttools/debugging/qscriptdebugger.cpp:1676
+#: src/scripttools/debugging/qscriptdebugger.cpp:1674
 msgid "Continue"
 msgstr ""
 
@@ -1229,7 +1221,7 @@ msgstr ""
 msgid "Enter a value:"
 msgstr ""
 
-#: src/gui/dialogs/qfilesystemmodel_p.h:232
+#: src/gui/dialogs/qfilesystemmodel_p.h:223
 msgid "Computer"
 msgstr ""
 
@@ -1628,53 +1620,53 @@ msgstr ""
 msgid "Recent Places"
 msgstr ""
 
-#: src/gui/dialogs/qfilesystemmodel.cpp:640
+#: src/gui/dialogs/qfilesystemmodel.cpp:636
 #: src/gui/itemviews/qdirmodel.cpp:1204
 msgid "%1 TB"
 msgstr ""
 
-#: src/gui/dialogs/qfilesystemmodel.cpp:642
+#: src/gui/dialogs/qfilesystemmodel.cpp:638
 #: src/gui/itemviews/qdirmodel.cpp:1206
 msgid "%1 GB"
 msgstr ""
 
-#: src/gui/dialogs/qfilesystemmodel.cpp:644
+#: src/gui/dialogs/qfilesystemmodel.cpp:640
 #: src/gui/itemviews/qdirmodel.cpp:1208
 msgid "%1 MB"
 msgstr ""
 
-#: src/gui/dialogs/qfilesystemmodel.cpp:646
+#: src/gui/dialogs/qfilesystemmodel.cpp:642
 #: src/gui/itemviews/qdirmodel.cpp:1210
 msgid "%1 KB"
 msgstr ""
 
-#: src/gui/dialogs/qfilesystemmodel.cpp:647
+#: src/gui/dialogs/qfilesystemmodel.cpp:643
 msgid "%1 bytes"
 msgstr ""
 
-#: src/gui/dialogs/qfilesystemmodel.cpp:717
+#: src/gui/dialogs/qfilesystemmodel.cpp:713
 msgid "Invalid filename"
 msgstr ""
 
-#: src/gui/dialogs/qfilesystemmodel.cpp:718
+#: src/gui/dialogs/qfilesystemmodel.cpp:714
 msgid ""
 "<b>The name \"%1\" can not be used.</b><p>Try using another name, with fewer "
 "characters or no punctuations marks."
 msgstr ""
 
-#: src/gui/dialogs/qfilesystemmodel.cpp:786 src/gui/itemviews/qdirmodel.cpp:395
+#: src/gui/dialogs/qfilesystemmodel.cpp:782 src/gui/itemviews/qdirmodel.cpp:395
 msgid "Name"
 msgstr ""
 
-#: src/gui/dialogs/qfilesystemmodel.cpp:790 src/gui/itemviews/qdirmodel.cpp:396
+#: src/gui/dialogs/qfilesystemmodel.cpp:786 src/gui/itemviews/qdirmodel.cpp:396
 msgid "Size"
 msgstr ""
 
-#: src/gui/dialogs/qfilesystemmodel.cpp:794 src/gui/itemviews/qdirmodel.cpp:397
+#: src/gui/dialogs/qfilesystemmodel.cpp:790 src/gui/itemviews/qdirmodel.cpp:397
 msgid "Type"
 msgstr ""
 
-#: src/gui/dialogs/qfilesystemmodel.cpp:800 src/gui/itemviews/qdirmodel.cpp:400
+#: src/gui/dialogs/qfilesystemmodel.cpp:796 src/gui/itemviews/qdirmodel.cpp:400
 msgid "Date Modified"
 msgstr ""
 
@@ -1698,17 +1690,17 @@ msgstr ""
 msgid "&OK"
 msgstr ""
 
-#: src/gui/image/qimagewriter.cpp:459
+#: src/gui/image/qimagewriter.cpp:458
 msgctxt "QImageWriter"
 msgid "Unknown error"
 msgstr ""
 
-#: src/gui/image/qimagewriter.cpp:462
+#: src/gui/image/qimagewriter.cpp:461
 msgctxt "QImageWriter"
 msgid "Device not writable"
 msgstr ""
 
-#: src/gui/image/qimagewriter.cpp:465
+#: src/gui/image/qimagewriter.cpp:464
 msgctxt "QImageWriter"
 msgid "Unsupported image format"
 msgstr ""
@@ -2016,11 +2008,11 @@ msgstr ""
 msgid "Step &down"
 msgstr ""
 
-#: src/gui/kernel/qwidget.cpp:5004
+#: src/gui/kernel/qwidget.cpp:5006
 msgid "*"
 msgstr ""
 
-#: src/gui/kernel/qapplication.cpp:1601
+#: src/gui/kernel/qapplication.cpp:1594
 msgid "QT_LAYOUT_DIRECTION"
 msgstr ""
 
@@ -3467,32 +3459,32 @@ msgstr ""
 msgid "<empty>"
 msgstr ""
 
-#: src/gui/text/qfontdatabase.cpp:627
+#: src/gui/text/qfontdatabase.cpp:593
 msgctxt "QFontDatabase"
 msgid "Black"
 msgstr ""
 
-#: src/gui/text/qfontdatabase.cpp:629
+#: src/gui/text/qfontdatabase.cpp:595
 msgctxt "QFontDatabase"
 msgid "Bold"
 msgstr ""
 
-#: src/gui/text/qfontdatabase.cpp:631
+#: src/gui/text/qfontdatabase.cpp:597
 msgctxt "QFontDatabase"
 msgid "Demi Bold"
 msgstr ""
 
-#: src/gui/text/qfontdatabase.cpp:633
+#: src/gui/text/qfontdatabase.cpp:599
 msgctxt "QFontDatabase"
 msgid "Light"
 msgstr ""
 
-#: src/gui/text/qfontdatabase.cpp:637
+#: src/gui/text/qfontdatabase.cpp:603
 msgctxt "QFontDatabase"
 msgid "Italic"
 msgstr ""
 
-#: src/gui/text/qfontdatabase.cpp:639
+#: src/gui/text/qfontdatabase.cpp:605
 msgctxt "QFontDatabase"
 msgid "Oblique"
 msgstr ""
@@ -3623,7 +3615,7 @@ msgstr ""
 msgid "Socket operation timed out"
 msgstr ""
 
-#: src/network/socket/qabstractsocket.cpp:1846
+#: src/network/socket/qabstractsocket.cpp:1839
 msgid "Socket is not connected"
 msgstr ""
 
@@ -3756,7 +3748,7 @@ msgid "This platform does not support IPv6"
 msgstr ""
 
 #: src/scripttools/debugging/qscriptedit.cpp:398
-#: src/scripttools/debugging/qscriptdebugger.cpp:1797
+#: src/scripttools/debugging/qscriptdebugger.cpp:1795
 msgid "Toggle Breakpoint"
 msgstr ""
 
@@ -3831,108 +3823,108 @@ msgctxt "QScriptBreakpointsModel"
 msgid "Hit-count"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:851
-#: src/scripttools/debugging/qscriptdebugger.cpp:1905
+#: src/scripttools/debugging/qscriptdebugger.cpp:849
+#: src/scripttools/debugging/qscriptdebugger.cpp:1903
 msgid "Go to Line"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:852
+#: src/scripttools/debugging/qscriptdebugger.cpp:850
 msgid "Line:"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1650
+#: src/scripttools/debugging/qscriptdebugger.cpp:1648
 msgid "Interrupt"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1652
+#: src/scripttools/debugging/qscriptdebugger.cpp:1650
 msgid "Shift+F5"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1678
+#: src/scripttools/debugging/qscriptdebugger.cpp:1676
 msgid "F5"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1697
+#: src/scripttools/debugging/qscriptdebugger.cpp:1695
 msgid "Step Into"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1699
+#: src/scripttools/debugging/qscriptdebugger.cpp:1697
 msgid "F11"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1718
+#: src/scripttools/debugging/qscriptdebugger.cpp:1716
 msgid "Step Over"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1720
+#: src/scripttools/debugging/qscriptdebugger.cpp:1718
 msgid "F10"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1739
+#: src/scripttools/debugging/qscriptdebugger.cpp:1737
 msgid "Step Out"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1741
+#: src/scripttools/debugging/qscriptdebugger.cpp:1739
 msgid "Shift+F11"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1760
+#: src/scripttools/debugging/qscriptdebugger.cpp:1758
 msgid "Run to Cursor"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1762
+#: src/scripttools/debugging/qscriptdebugger.cpp:1760
 msgid "Ctrl+F10"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1782
+#: src/scripttools/debugging/qscriptdebugger.cpp:1780
 msgid "Run to New Script"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1798
+#: src/scripttools/debugging/qscriptdebugger.cpp:1796
 msgid "F9"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1812
+#: src/scripttools/debugging/qscriptdebugger.cpp:1810
 msgid "Clear Debug Output"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1825
+#: src/scripttools/debugging/qscriptdebugger.cpp:1823
 msgid "Clear Error Log"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1838
+#: src/scripttools/debugging/qscriptdebugger.cpp:1836
 msgid "Clear Console"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1857
+#: src/scripttools/debugging/qscriptdebugger.cpp:1855
 msgid "&Find in Script..."
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1858
+#: src/scripttools/debugging/qscriptdebugger.cpp:1856
 msgid "Ctrl+F"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1875
+#: src/scripttools/debugging/qscriptdebugger.cpp:1873
 msgid "Find &Next"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1877
+#: src/scripttools/debugging/qscriptdebugger.cpp:1875
 msgid "F3"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1890
+#: src/scripttools/debugging/qscriptdebugger.cpp:1888
 msgid "Find &Previous"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1892
+#: src/scripttools/debugging/qscriptdebugger.cpp:1890
 msgid "Shift+F3"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1906
+#: src/scripttools/debugging/qscriptdebugger.cpp:1904
 msgid "Ctrl+G"
 msgstr ""
 
-#: src/scripttools/debugging/qscriptdebugger.cpp:1917
+#: src/scripttools/debugging/qscriptdebugger.cpp:1915
 msgid "Debug"
 msgstr ""
 
