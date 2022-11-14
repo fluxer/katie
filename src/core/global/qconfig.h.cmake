@@ -99,7 +99,6 @@
 // #cmakedefine QT_NO_DIRMODEL
 // #cmakedefine QT_NO_DOCKWIDGET
 // #cmakedefine QT_NO_DOM
-// #cmakedefine QT_NO_ERRORMESSAGE
 // #cmakedefine QT_NO_FILEDIALOG
 // #cmakedefine QT_NO_FILEICONPROVIDER
 // #cmakedefine QT_NO_FILESYSTEMMODEL
