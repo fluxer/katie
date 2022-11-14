@@ -43,7 +43,6 @@ QT_BEGIN_NAMESPACE
 
 bool qt_debug_component();
 
-class QSettings;
 class QLibraryPrivate
 {
 public:
