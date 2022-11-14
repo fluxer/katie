@@ -102,27 +102,6 @@ QCursorData::~QCursorData()
     }
 }
 
-QCursorData *QCursorData::setBitmap(const QPixmap &pixmap, const QBitmap &mask, int hotX, int hotY)
-{
-    if (Q_UNLIKELY(mask.depth() != 1 || pixmap.size() != mask.size())) {
-        qWarning("QCursor: Cannot create bitmap cursor; invalid bitmap(s)");
-        return nullptr;
-    }
-    QCursorData *d = new QCursorData(Qt::BitmapCursor);
-
-    d->px = pixmap;
-    d->bm = mask;
-    d->hx = (hotX >= 0 ? hotX : (pixmap.width() / 2));
-    d->hy = (hotY >= 0 ? hotY : (pixmap.height() / 2));
-    d->fg.red   = 0x0000;
-    d->fg.green = 0x0000;
-    d->fg.blue  = 0x0000;
-    d->bg.red   = 0xffff;
-    d->bg.green = 0xffff;
-    d->bg.blue  = 0xffff;
-    return d;
-}
-
 QCursor::QCursor(Qt::HANDLE cursor)
     : d(new QCursorData(Qt::CustomCursor))
 {

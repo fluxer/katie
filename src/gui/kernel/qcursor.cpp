@@ -248,7 +248,23 @@ QDataStream &operator>>(QDataStream &s, QCursor &c)
 QCursor::QCursor(const QPixmap &pixmap, int hotX, int hotY)
     : d(nullptr)
 {
-    d = QCursorData::setBitmap(pixmap, pixmap.mask(), hotX, hotY);
+    const QBitmap mask = pixmap.mask();
+    if (Q_UNLIKELY(mask.depth() != 1 || pixmap.size() != mask.size())) {
+        qWarning("QCursor: Cannot create bitmap cursor; invalid bitmap(s)");
+        return;
+    }
+
+    d = new QCursorData(Qt::BitmapCursor);
+    d->px = pixmap;
+    d->bm = mask;
+    d->hx = (hotX >= 0 ? hotX : (pixmap.width() / 2));
+    d->hy = (hotY >= 0 ? hotY : (pixmap.height() / 2));
+    d->fg.red   = 0x0000;
+    d->fg.green = 0x0000;
+    d->fg.blue  = 0x0000;
+    d->bg.red   = 0xffff;
+    d->bg.green = 0xffff;
+    d->bg.blue  = 0xffff;
 }
 
 /*!

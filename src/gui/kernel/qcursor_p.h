@@ -65,8 +65,6 @@ public:
     Picture x11pic;
 #endif
 #endif
-
-    static QCursorData *setBitmap(const QPixmap &pixmap, const QBitmap &mask, int hotX, int hotY);
 };
 
 QT_END_NAMESPACE
