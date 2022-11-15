@@ -551,34 +551,6 @@ static inline QString styleStringHelper(const QFontDatabasePrivate *d_ptr,
 }
 
 /*!
-    Returns a string that describes the style of the \a font. For
-    example, "Bold Italic", "Bold", "Italic" or "Normal". An empty
-    string may be returned.
-*/
-QString QFontDatabase::styleString(const QFont &font)
-{
-    QString result = font.styleName();
-    if (result.isEmpty()) {
-        result = styleStringHelper(d_ptr, font.family(), font.weight(), font.style());
-    }
-    return result;
-}
-
-/*!
-    Returns a string that describes the style of the \a fontInfo. For
-    example, "Bold Italic", "Bold", "Italic" or "Normal". An empty
-    string may be returned.
-*/
-QString QFontDatabase::styleString(const QFontInfo &fontInfo)
-{
-    QString result = fontInfo.styleName();
-    if (result.isEmpty()) {
-        result = styleStringHelper(d_ptr, fontInfo.family(), fontInfo.weight(), fontInfo.style());
-    }
-    return result;
-}
-
-/*!
     \class QFontDatabase
     \threadsafe
 
@@ -638,12 +610,12 @@ QFontDatabase::QFontDatabase()
 #endif
 
     Q_ASSERT_X(qt_x11Data, "QFontDatabase",
-            "A QApplication object needs to be constructed before FontConfig is used.");
+               "A QApplication object needs to be constructed before FontConfig is used.");
     if (!qt_x11Data->has_fontconfig)
         return;
 
     Q_ASSERT_X(int(QUnicodeTables::ScriptCount) == SpecialCharCount,
-            "QFontDatabase", "New scripts have been added.");
+               "QFontDatabase", "New scripts have been added.");
 
     FcObjectSet *os = FcObjectSetCreate();
     FcPattern *pattern = FcPatternCreate();
@@ -726,6 +698,34 @@ QFontDatabase::QFontDatabase()
 QFontDatabase::~QFontDatabase()
 {
     delete d_ptr;
+}
+
+/*!
+    Returns a string that describes the style of the \a font. For
+    example, "Bold Italic", "Bold", "Italic" or "Normal". An empty
+    string may be returned.
+*/
+QString QFontDatabase::styleString(const QFont &font)
+{
+    QString result = font.styleName();
+    if (result.isEmpty()) {
+        result = styleStringHelper(d_ptr, font.family(), font.weight(), font.style());
+    }
+    return result;
+}
+
+/*!
+    Returns a string that describes the style of the \a fontInfo. For
+    example, "Bold Italic", "Bold", "Italic" or "Normal". An empty
+    string may be returned.
+*/
+QString QFontDatabase::styleString(const QFontInfo &fontInfo)
+{
+    QString result = fontInfo.styleName();
+    if (result.isEmpty()) {
+        result = styleStringHelper(d_ptr, fontInfo.family(), fontInfo.weight(), fontInfo.style());
+    }
+    return result;
 }
 
 /*!
