@@ -25,17 +25,13 @@
 #include "qfontdatabase_p.h"
 #include "qfontmetrics.h"
 #include "qfontinfo.h"
-#include "qpainter.h"
 #include "qhash.h"
 #include "qdatastream.h"
 #include "qapplication.h"
 #include "qstringlist.h"
-#include "qthread.h"
 #include "qunicodetables_p.h"
 #include "qfont_p.h"
 #include "qfontengine_p.h"
-#include "qpainter_p.h"
-#include "qmutex.h"
 #include "qcorecommon_p.h"
 
 #include <limits.h>
