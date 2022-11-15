@@ -1006,11 +1006,11 @@ QPixmap QPixmap::transformed(const QTransform &transform,
 }
 
 /*!
-  \overload
+    \overload
 
-  This convenience function loads the \a matrix into a
-  QTransform and calls the overloaded function.
- */
+    This convenience function loads the \a matrix into a
+    QTransform and calls the overloaded function.
+*/
 QPixmap QPixmap::transformed(const QMatrix &matrix, Qt::TransformationMode mode) const
 {
     return transformed(QTransform(matrix), mode);
