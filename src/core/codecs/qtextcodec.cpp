@@ -1252,15 +1252,6 @@ QTextCodecCleanup::~QTextCodecCleanup()
 Q_GLOBAL_STATIC(QTextCodecCleanup, qGlobalQTextCodec)
 
 /*!
-    \enum QTextConverter::ConversionFlag
-
-    \value DefaultConversion  No flag is set.
-    \value ConvertInvalidToNull  If this flag is set, each invalid input
-                                 character is output as a null character.
-    \value IgnoreHeader  Ignore any Unicode byte-order mark and don't generate any.
-*/
-
-/*!
     \class QTextCodec
     \brief The QTextCodec class provides conversions between text encodings.
     \reentrant
@@ -1837,6 +1828,15 @@ QTextCodec *QTextCodec::codecForText(const QByteArray &ba)
     is split between chunks.
 
     \sa QTextStream, QTextCodec, {Codecs Example}
+*/
+
+/*!
+    \enum QTextConverter::ConversionFlag
+
+    \value DefaultConversion  No flag is set.
+    \value ConvertInvalidToNull  If this flag is set, each invalid input
+                                 character is output as a null character.
+    \value IgnoreHeader  Ignore any Unicode byte-order mark and don't generate any.
 */
 
 /*!
