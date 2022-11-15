@@ -135,8 +135,8 @@ bool QPngHandler::read(QImage *image)
     png_set_read_fn(png_ptr, this, qt_png_read);
     png_read_info(png_ptr, info_ptr);
 
-    png_uint_32 width;
-    png_uint_32 height;
+    png_uint_32 width = 0;
+    png_uint_32 height = 0;
     int bit_depth;
     int color_type;
     png_get_IHDR(png_ptr, info_ptr, &width, &height, &bit_depth, &color_type, 0, 0, 0);
@@ -181,12 +181,9 @@ bool QPngHandler::read(QImage *image)
 
     uchar *data = image->d->data;
     const int bpl = image->bytesPerLine();
-    png_byte **row_pointers = new png_bytep[height];
     for (uint y = 0; y < height; y++) {
-        row_pointers[y] = QFAST_SCAN_LINE(data, bpl, y);
+        png_read_row(png_ptr, QFAST_SCAN_LINE(data, bpl, y), NULL);
     }
-
-    png_read_image(png_ptr, row_pointers);
 
     image->d->dpmx = png_get_x_pixels_per_meter(png_ptr, info_ptr);
     image->d->dpmy = png_get_y_pixels_per_meter(png_ptr, info_ptr);
@@ -194,7 +191,6 @@ bool QPngHandler::read(QImage *image)
     png_read_end(png_ptr, end_info);
 
     png_destroy_read_struct(&png_ptr, &info_ptr, &end_info);
-    delete [] row_pointers;
 
     return true;
 }
