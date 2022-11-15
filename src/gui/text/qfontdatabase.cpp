@@ -20,12 +20,10 @@
 ****************************************************************************/
 
 #include "qfontdatabase.h"
+#include "qfontdatabase_p.h"
 #include "qdebug.h"
 #include "qalgorithms.h"
 #include "qapplication.h"
-#include "qthread.h"
-#include "qmutex.h"
-#include "qstdcontainers_p.h"
 #include "qunicodetables_p.h"
 #include "qfontengine_p.h"
 #include "qfontinfo.h"
@@ -55,76 +53,9 @@
 
 QT_BEGIN_NAMESPACE
 
-struct QtFontFamily {
-    QString family;
-    QString foundry;
-    QString style;
-    bool fixedpitch;
-    bool italic;
-    bool bold;
-    int weight;
-
-    short preference;
-    bool operator<(const QtFontFamily &other) const;
-};
-
 static const QLatin1String normalfontstyle("Normal");
 static const QLatin1String bookfontstyle("Book");
 static const QLatin1String romanfontstyle("Roman");
-
-bool QtFontFamily::operator<(const QtFontFamily &other) const
-{
-    // qDebug() << Q_FUNC_INFO << preference << other.preference;
-    return (preference >= other.preference);
-}
-
-typedef QStdVector<QtFontFamily> QtFontFamilyList;
-
-Q_GLOBAL_STATIC(QtFontFamilyList, qGlobalFontDatabase)
-Q_GLOBAL_STATIC(QMutex, qGlobalFontDatabaseMutex)
-
-/*!
-  \internal
-
-  This makes sense of the font family name:
-
-  if the family name contains a '[' and a ']', then we take the text
-  between the square brackets as the foundry, and the text before the
-  square brackets as the family (ie. "FreeSans [GNU]")
-*/
-static void parseFontName(const QString &name, QString &foundry, QString &family)
-{
-    int i = name.indexOf(QLatin1Char('['));
-    int li = name.lastIndexOf(QLatin1Char(']'));
-    if (i >= 0 && li >= 0 && i < li) {
-        foundry = name.mid(i + 1, li - i - 1);
-        if (i > 0 && name[i - 1] == QLatin1Char(' '))
-            i--;
-        family = name.left(i);
-    } else {
-        foundry.clear();
-        family = name;
-    }
-
-    // capitalize the family/foundry names
-    bool space = true;
-    QChar *s = family.data();
-    int len = family.length();
-    while(len--) {
-        if (space) *s = s->toUpper();
-        space = s->isSpace();
-        ++s;
-    }
-
-    space = true;
-    s = foundry.data();
-    len = foundry.length();
-    while(len--) {
-        if (space) *s = s->toUpper();
-        space = s->isSpace();
-        ++s;
-    }
-}
 
 static inline bool isStyleMatch(const QString &style, const QString &otherstyle)
 {
@@ -434,7 +365,7 @@ static FcPattern *getFcPattern(const QFontPrivate *fp, const QFontDef &request)
     }
 
     QString family, foundry;
-    parseFontName(request.family, foundry, family);
+    QFontDatabasePrivate::parseFontName(request.family, foundry, family);
 
     if (!family.isEmpty()) {
         QByteArray cs = family.toUtf8();
@@ -585,7 +516,8 @@ static QFontEngine *loadFc(const QFontPrivate *fp, QUnicodeTables::Script script
 }
 #endif // QT_NO_FONTCONFIG
 
-static inline QString styleStringHelper(const QString &family, int weight, QFont::Style style)
+static inline QString styleStringHelper(const QFontDatabasePrivate *d_ptr,
+                                        const QString &family, int weight, QFont::Style style)
 {
     QString result;
 
@@ -606,9 +538,7 @@ static inline QString styleStringHelper(const QString &family, int weight, QFont
     }
 
     if (result.isEmpty()) {
-        const QtFontFamilyList* db = qGlobalFontDatabase();
-        for (int i = 0; i < db->size(); i++) {
-            const QtFontFamily &fontfamily = db->at(i);
+        foreach (const QFontFamily &fontfamily, d_ptr->fontfamilies) {
             if (fontfamily.family.compare(family, Qt::CaseInsensitive) != 0) {
                 continue;
             }
@@ -629,7 +559,7 @@ QString QFontDatabase::styleString(const QFont &font)
 {
     QString result = font.styleName();
     if (result.isEmpty()) {
-        result = styleStringHelper(font.family(), font.weight(), font.style());
+        result = styleStringHelper(d_ptr, font.family(), font.weight(), font.style());
     }
     return result;
 }
@@ -643,7 +573,7 @@ QString QFontDatabase::styleString(const QFontInfo &fontInfo)
 {
     QString result = fontInfo.styleName();
     if (result.isEmpty()) {
-        result = styleStringHelper(fontInfo.family(), fontInfo.weight(), fontInfo.style());
+        result = styleStringHelper(d_ptr, fontInfo.family(), fontInfo.weight(), fontInfo.style());
     }
     return result;
 }
@@ -652,7 +582,7 @@ QString QFontDatabase::styleString(const QFontInfo &fontInfo)
     \class QFontDatabase
     \threadsafe
 
-    \brief The QFontDatabase class provides information about the fonts available in the underlying window system.
+    \brief The QFontDatabase class provides information about the fonts available on the system.
 
     \ingroup appearance
 
@@ -699,102 +629,103 @@ QString QFontDatabase::styleString(const QFontInfo &fontInfo)
     Creates a font database object.
 */
 QFontDatabase::QFontDatabase()
+    : d_ptr(new QFontDatabasePrivate())
 {
-    {
-        QMutexLocker locker(qGlobalFontDatabaseMutex());
-
-        QtFontFamilyList* db = qGlobalFontDatabase();
-        if (!db || db->size() > 0)
-            return;
-
 #ifndef QT_NO_FONTCONFIG
 #ifdef QFONTDATABASE_DEBUG
-        QElapsedTimer elapsedtimer;
-        elapsedtimer.start();
+    QElapsedTimer elapsedtimer;
+    elapsedtimer.start();
 #endif
 
-        Q_ASSERT_X(qt_x11Data, "QFontDatabase",
-                "A QApplication object needs to be constructed before FontConfig is used.");
-        if (!qt_x11Data->has_fontconfig)
-            return;
+    Q_ASSERT_X(qt_x11Data, "QFontDatabase",
+            "A QApplication object needs to be constructed before FontConfig is used.");
+    if (!qt_x11Data->has_fontconfig)
+        return;
 
-        Q_ASSERT_X(int(QUnicodeTables::ScriptCount) == SpecialCharCount,
-                "QFontDatabase", "New scripts have been added.");
+    Q_ASSERT_X(int(QUnicodeTables::ScriptCount) == SpecialCharCount,
+            "QFontDatabase", "New scripts have been added.");
 
-        FcObjectSet *os = FcObjectSetCreate();
-        FcPattern *pattern = FcPatternCreate();
-        FcObjectSetAdd(os, FC_FAMILY);
-        FcObjectSetAdd(os, FC_SCALABLE);
-        FcObjectSetAdd(os, FC_FOUNDRY);
-        FcObjectSetAdd(os, FC_WEIGHT);
-        FcObjectSetAdd(os, FC_SPACING);
-        FcObjectSetAdd(os, FC_STYLE);
-        FcObjectSetAdd(os, FC_SLANT);
-        FcFontSet *fonts = FcFontList(0, pattern, os);
-        FcObjectSetDestroy(os);
-        FcPatternDestroy(pattern);
+    FcObjectSet *os = FcObjectSetCreate();
+    FcPattern *pattern = FcPatternCreate();
+    FcObjectSetAdd(os, FC_FAMILY);
+    FcObjectSetAdd(os, FC_SCALABLE);
+    FcObjectSetAdd(os, FC_FOUNDRY);
+    FcObjectSetAdd(os, FC_WEIGHT);
+    FcObjectSetAdd(os, FC_SPACING);
+    FcObjectSetAdd(os, FC_STYLE);
+    FcObjectSetAdd(os, FC_SLANT);
+    FcFontSet *fonts = FcFontList(0, pattern, os);
+    FcObjectSetDestroy(os);
+    FcPatternDestroy(pattern);
 
-        for (int i = 0; i < fonts->nfont; i++) {
-            FcChar8 *family_value = nullptr;
-            FcChar8 *foundry_value = nullptr;
-            int weight_value = FC_WEIGHT_MEDIUM;
-            int spacing_value = FC_PROPORTIONAL;
-            FcChar8 *style_value = nullptr;
-            FcBool scalable_value = FcFalse;
-            int slant_value = FC_SLANT_ROMAN;
+    for (int i = 0; i < fonts->nfont; i++) {
+        FcChar8 *family_value = nullptr;
+        FcChar8 *foundry_value = nullptr;
+        int weight_value = FC_WEIGHT_MEDIUM;
+        int spacing_value = FC_PROPORTIONAL;
+        FcChar8 *style_value = nullptr;
+        FcBool scalable_value = FcFalse;
+        int slant_value = FC_SLANT_ROMAN;
 
-            if (FcPatternGetString(fonts->fonts[i], FC_FAMILY, 0, &family_value) != FcResultMatch)
-                continue;
-            FcPatternGetBool(fonts->fonts[i], FC_SCALABLE, 0, &scalable_value);
-            if (scalable_value != FcTrue)
-                continue;
+        if (FcPatternGetString(fonts->fonts[i], FC_FAMILY, 0, &family_value) != FcResultMatch)
+            continue;
+        FcPatternGetBool(fonts->fonts[i], FC_SCALABLE, 0, &scalable_value);
+        if (scalable_value != FcTrue)
+            continue;
 
-            if (FcPatternGetString(fonts->fonts[i], FC_FOUNDRY, 0, &foundry_value) != FcResultMatch)
-                foundry_value = nullptr;
-            if (FcPatternGetInteger(fonts->fonts[i], FC_WEIGHT, 0, &weight_value) != FcResultMatch)
-                weight_value = FC_WEIGHT_MEDIUM;
-            if (FcPatternGetInteger(fonts->fonts[i], FC_SPACING, 0, &spacing_value) != FcResultMatch)
-                spacing_value = FC_PROPORTIONAL;
-            if (FcPatternGetString(fonts->fonts[i], FC_STYLE, 0, &style_value) != FcResultMatch)
-                style_value = nullptr;
-            if (FcPatternGetInteger(fonts->fonts[i], FC_SLANT, 0, &slant_value) != FcResultMatch)
-                slant_value = FC_SLANT_ROMAN;
+        if (FcPatternGetString(fonts->fonts[i], FC_FOUNDRY, 0, &foundry_value) != FcResultMatch)
+            foundry_value = nullptr;
+        if (FcPatternGetInteger(fonts->fonts[i], FC_WEIGHT, 0, &weight_value) != FcResultMatch)
+            weight_value = FC_WEIGHT_MEDIUM;
+        if (FcPatternGetInteger(fonts->fonts[i], FC_SPACING, 0, &spacing_value) != FcResultMatch)
+            spacing_value = FC_PROPORTIONAL;
+        if (FcPatternGetString(fonts->fonts[i], FC_STYLE, 0, &style_value) != FcResultMatch)
+            style_value = nullptr;
+        if (FcPatternGetInteger(fonts->fonts[i], FC_SLANT, 0, &slant_value) != FcResultMatch)
+            slant_value = FC_SLANT_ROMAN;
 
-            QString fontstyle = QString::fromUtf8((const char *)style_value);
-            if (fontstyle.compare(QLatin1String("Regular"), Qt::CaseInsensitive) == 0) {
-                fontstyle = normalfontstyle;
-            }
-
-            QtFontFamily fontfamily;
-            fontfamily.family = QString::fromUtf8((const char *)family_value);
-            fontfamily.foundry = QString::fromUtf8((const char *)foundry_value);
-            fontfamily.style = fontstyle;
-            fontfamily.fixedpitch = (spacing_value >= FC_MONO);
-            fontfamily.italic = (slant_value >= FC_SLANT_ITALIC);
-            fontfamily.bold = (weight_value >= FC_WEIGHT_BOLD); // or FC_WEIGHT_DEMIBOLD?
-            fontfamily.weight = weight_value;
-            fontfamily.preference = -weight_value;
-
-            if (fontstyle == normalfontstyle) {
-                fontfamily.preference += 1000;
-            } else if (fontstyle == bookfontstyle) {
-                fontfamily.preference += 900;
-            } else if (fontstyle == romanfontstyle) {
-                fontfamily.preference += 800;
-            }
-
-            db->append(fontfamily);
+        QString fontstyle = QString::fromUtf8((const char *)style_value);
+        if (fontstyle.compare(QLatin1String("Regular"), Qt::CaseInsensitive) == 0) {
+            fontstyle = normalfontstyle;
         }
 
-        FcFontSetDestroy(fonts);
+        QFontFamily fontfamily;
+        fontfamily.family = QString::fromUtf8((const char *)family_value);
+        fontfamily.foundry = QString::fromUtf8((const char *)foundry_value);
+        fontfamily.style = fontstyle;
+        fontfamily.fixedpitch = (spacing_value >= FC_MONO);
+        fontfamily.italic = (slant_value >= FC_SLANT_ITALIC);
+        fontfamily.bold = (weight_value >= FC_WEIGHT_BOLD); // or FC_WEIGHT_DEMIBOLD?
+        fontfamily.weight = weight_value;
+        fontfamily.preference = -weight_value;
 
-        qStableSort(db->begin(), db->end());
+        if (fontstyle == normalfontstyle) {
+            fontfamily.preference += 1000;
+        } else if (fontstyle == bookfontstyle) {
+            fontfamily.preference += 900;
+        } else if (fontstyle == romanfontstyle) {
+            fontfamily.preference += 800;
+        }
+
+        d_ptr->fontfamilies.append(fontfamily);
+    }
+
+    FcFontSetDestroy(fonts);
+
+    qStableSort(d_ptr->fontfamilies);
 
 #ifdef QFONTDATABASE_DEBUG
-        FD_DEBUG("QFontDatabase: loaded FontConfig: %d ms", int(elapsedtimer.elapsed()));
+    FD_DEBUG("QFontDatabase: loaded FontConfig: %d ms", int(elapsedtimer.elapsed()));
 #endif
-    }
 #endif // QT_NO_FONTCONFIG
+}
+
+/*!
+    Destroys the font database object and frees all allocated resources.
+*/
+QFontDatabase::~QFontDatabase()
+{
+    delete d_ptr;
 }
 
 /*!
@@ -808,9 +739,7 @@ QStringList QFontDatabase::families() const
 {
     QStringList result;
     QMap<QString,QStringList> familieswithfoundry;
-    const QtFontFamilyList* db = qGlobalFontDatabase();
-    for (int i = 0; i < db->size(); i++) {
-        const QtFontFamily &fontfamily = db->at(i);
+    foreach (const QFontFamily &fontfamily, d_ptr->fontfamilies) {
         familieswithfoundry[fontfamily.family].append(fontfamily.foundry);
     }
     QMap<QString,QStringList>::const_iterator familieswithfoundryit = familieswithfoundry.constBegin();
@@ -844,12 +773,10 @@ QStringList QFontDatabase::families() const
 QStringList QFontDatabase::styles(const QString &family) const
 {
     QString parsedfamily, parsedfoundry;
-    parseFontName(family, parsedfoundry, parsedfamily);
+    QFontDatabasePrivate::parseFontName(family, parsedfoundry, parsedfamily);
 
     QStringList result;
-    const QtFontFamilyList* db = qGlobalFontDatabase();
-    for (int i = 0; i < db->size(); i++) {
-        const QtFontFamily &fontfamily = db->at(i);
+    foreach (const QFontFamily &fontfamily, d_ptr->fontfamilies) {
         if (fontfamily.family.compare(parsedfamily, Qt::CaseInsensitive) != 0
             || (!parsedfoundry.isEmpty() && fontfamily.foundry.compare(parsedfoundry, Qt::CaseInsensitive) != 0)) {
             continue;
@@ -868,12 +795,10 @@ QStringList QFontDatabase::styles(const QString &family) const
 bool QFontDatabase::isFixedPitch(const QString &family, const QString &style) const
 {
     QString parsedfamily, parsedfoundry;
-    parseFontName(family, parsedfoundry, parsedfamily);
+    QFontDatabasePrivate::parseFontName(family, parsedfoundry, parsedfamily);
 
     bool result = false;
-    const QtFontFamilyList* db = qGlobalFontDatabase();
-    for (int i = 0; i < db->size(); i++) {
-        const QtFontFamily &fontfamily = db->at(i);
+    foreach (const QFontFamily &fontfamily, d_ptr->fontfamilies) {
         if (fontfamily.family.compare(parsedfamily, Qt::CaseInsensitive) != 0
             || (!parsedfoundry.isEmpty() && fontfamily.foundry.compare(parsedfoundry, Qt::CaseInsensitive) != 0)
             || (!style.isEmpty() && !isStyleMatch(fontfamily.style, style))) {
@@ -896,12 +821,10 @@ bool QFontDatabase::isFixedPitch(const QString &family, const QString &style) co
 bool QFontDatabase::isSmoothlyScalable(const QString &family, const QString &style) const
 {
     QString parsedfamily, parsedfoundry;
-    parseFontName(family, parsedfoundry, parsedfamily);
+    QFontDatabasePrivate::parseFontName(family, parsedfoundry, parsedfamily);
 
     bool result = false;
-    const QtFontFamilyList* db = qGlobalFontDatabase();
-    for (int i = 0; i < db->size(); i++) {
-        const QtFontFamily &fontfamily = db->at(i);
+    foreach (const QFontFamily &fontfamily, d_ptr->fontfamilies) {
         if (fontfamily.family.compare(parsedfamily, Qt::CaseInsensitive) != 0
             || (!parsedfoundry.isEmpty() && fontfamily.foundry.compare(parsedfoundry, Qt::CaseInsensitive) != 0)
             || (!style.isEmpty() && !isStyleMatch(fontfamily.style, style))) {
@@ -934,12 +857,10 @@ bool QFontDatabase::isScalable(const QString &family, const QString &style) cons
 QList<int> QFontDatabase::pointSizes(const QString &family, const QString &style)
 {
     QString parsedfamily, parsedfoundry;
-    parseFontName(family, parsedfoundry, parsedfamily);
+    QFontDatabasePrivate::parseFontName(family, parsedfoundry, parsedfamily);
 
     QList<int> result;
-    const QtFontFamilyList* db = qGlobalFontDatabase();
-    for (int i = 0; i < db->size(); i++) {
-        const QtFontFamily &fontfamily = db->at(i);
+    foreach (const QFontFamily &fontfamily, d_ptr->fontfamilies) {
         if (fontfamily.family.compare(parsedfamily, Qt::CaseInsensitive) != 0
             || (!parsedfoundry.isEmpty() && fontfamily.foundry.compare(parsedfoundry, Qt::CaseInsensitive) != 0)
             || (!style.isEmpty() && !isStyleMatch(fontfamily.style, style))) {
@@ -961,12 +882,10 @@ QFont QFontDatabase::font(const QString &family, const QString &style,
                           int pointSize) const
 {
     QString parsedfamily, parsedfoundry;
-    parseFontName(family, parsedfoundry, parsedfamily);
+    QFontDatabasePrivate::parseFontName(family, parsedfoundry, parsedfamily);
 
     QFont result = QApplication::font();
-    const QtFontFamilyList* db = qGlobalFontDatabase();
-    for (int i = 0; i < db->size(); i++) {
-        const QtFontFamily &fontfamily = db->at(i);
+    foreach (const QFontFamily &fontfamily, d_ptr->fontfamilies) {
         if (fontfamily.family.compare(parsedfamily, Qt::CaseInsensitive) != 0
             || (!parsedfoundry.isEmpty() && fontfamily.foundry.compare(parsedfoundry, Qt::CaseInsensitive) != 0)
             || !isStyleMatch(fontfamily.style, style)) {
@@ -993,12 +912,10 @@ QFont QFontDatabase::font(const QString &family, const QString &style,
 QList<int> QFontDatabase::smoothSizes(const QString &family, const QString &style)
 {
     QString parsedfamily, parsedfoundry;
-    parseFontName(family, parsedfoundry, parsedfamily);
+    QFontDatabasePrivate::parseFontName(family, parsedfoundry, parsedfamily);
 
     QList<int> result;
-    const QtFontFamilyList* db = qGlobalFontDatabase();
-    for (int i = 0; i < db->size(); i++) {
-        const QtFontFamily &fontfamily = db->at(i);
+    foreach (const QFontFamily &fontfamily, d_ptr->fontfamilies) {
         if (fontfamily.family.compare(parsedfamily, Qt::CaseInsensitive) != 0
             || (!parsedfoundry.isEmpty() && fontfamily.foundry.compare(parsedfoundry, Qt::CaseInsensitive) != 0)
             || !isStyleMatch(fontfamily.style, style)) {
@@ -1010,6 +927,104 @@ QList<int> QFontDatabase::smoothSizes(const QString &family, const QString &styl
     return result;
 }
 
+/*!
+    Returns true if the font that has family \a family and style \a
+    style is italic; otherwise returns false.
+
+    \sa weight(), bold()
+*/
+bool QFontDatabase::italic(const QString &family, const QString &style) const
+{
+    QString parsedfamily, parsedfoundry;
+    QFontDatabasePrivate::parseFontName(family, parsedfoundry, parsedfamily);
+
+    bool result = false;
+    foreach (const QFontFamily &fontfamily, d_ptr->fontfamilies) {
+        if (fontfamily.family.compare(parsedfamily, Qt::CaseInsensitive) != 0
+            || (!parsedfoundry.isEmpty() && fontfamily.foundry.compare(parsedfoundry, Qt::CaseInsensitive) != 0)
+            || !isStyleMatch(fontfamily.style, style)) {
+            continue;
+        }
+        result = fontfamily.italic;
+        break;
+    }
+    return result;
+}
+
+
+/*!
+    Returns true if the font that has family \a family and style \a
+    style is bold; otherwise returns false.
+
+    \sa italic(), weight()
+*/
+bool QFontDatabase::bold(const QString &family, const QString &style) const
+{
+    QString parsedfamily, parsedfoundry;
+    QFontDatabasePrivate::parseFontName(family, parsedfoundry, parsedfamily);
+
+    bool result = false;
+    foreach (const QFontFamily &fontfamily, d_ptr->fontfamilies) {
+        if (fontfamily.family.compare(parsedfamily, Qt::CaseInsensitive) != 0
+            || (!parsedfoundry.isEmpty() && fontfamily.foundry.compare(parsedfoundry, Qt::CaseInsensitive) != 0)
+            || !isStyleMatch(fontfamily.style, style)) {
+            continue;
+        }
+        result = fontfamily.bold;
+        break;
+    }
+    return result;
+}
+
+
+/*!
+    Returns the weight of the font that has family \a family and style
+    \a style. If there is no such family and style combination,
+    returns -1.
+
+    \sa italic(), bold()
+*/
+int QFontDatabase::weight(const QString &family, const QString &style) const
+{
+    QString parsedfamily, parsedfoundry;
+    QFontDatabasePrivate::parseFontName(family, parsedfoundry, parsedfamily);
+
+    int result = -1;
+    foreach (const QFontFamily &fontfamily, d_ptr->fontfamilies) {
+        if (fontfamily.family.compare(parsedfamily, Qt::CaseInsensitive) != 0
+            || (!parsedfoundry.isEmpty() && fontfamily.foundry.compare(parsedfoundry, Qt::CaseInsensitive) != 0)
+            || !isStyleMatch(fontfamily.style, style)) {
+            continue;
+        }
+        result = fontfamily.weight;
+        break;
+    }
+    return result;
+}
+
+
+/*!
+    Returns true if font \a family is available, false otherwise. Aliases
+    such as "Sans Serif" are resolved.
+*/
+bool QFontDatabase::hasFamily(const QString &family) const
+{
+    QString parsedfamily, parsedfoundry;
+    QFontDatabasePrivate::parseFontName(family, parsedfoundry, parsedfamily);
+
+    const QString familyalias = QFontDatabasePrivate::resolveFontFamilyAlias(parsedfamily);
+
+    bool result = false;
+    foreach (const QFontFamily &fontfamily, d_ptr->fontfamilies) {
+        if (fontfamily.family.compare(familyalias, Qt::CaseInsensitive) != 0
+            || (!parsedfoundry.isEmpty() && fontfamily.foundry.compare(parsedfoundry, Qt::CaseInsensitive) != 0)) {
+            continue;
+        }
+        result = true;
+        break;
+    }
+    return result;
+}
 
 /*!
     Returns a list of standard font sizes.
@@ -1040,114 +1055,6 @@ QList<int> QFontDatabase::standardSizes()
     return sizes;
 }
 
-
-/*!
-    Returns true if the font that has family \a family and style \a
-    style is italic; otherwise returns false.
-
-    \sa weight(), bold()
-*/
-bool QFontDatabase::italic(const QString &family, const QString &style) const
-{
-    QString parsedfamily, parsedfoundry;
-    parseFontName(family, parsedfoundry, parsedfamily);
-
-    bool result = false;
-    const QtFontFamilyList* db = qGlobalFontDatabase();
-    for (int i = 0; i < db->size(); i++) {
-        const QtFontFamily &fontfamily = db->at(i);
-        if (fontfamily.family.compare(parsedfamily, Qt::CaseInsensitive) != 0
-            || (!parsedfoundry.isEmpty() && fontfamily.foundry.compare(parsedfoundry, Qt::CaseInsensitive) != 0)
-            || !isStyleMatch(fontfamily.style, style)) {
-            continue;
-        }
-        result = fontfamily.italic;
-        break;
-    }
-    return result;
-}
-
-
-/*!
-    Returns true if the font that has family \a family and style \a
-    style is bold; otherwise returns false.
-
-    \sa italic(), weight()
-*/
-bool QFontDatabase::bold(const QString &family, const QString &style) const
-{
-    QString parsedfamily, parsedfoundry;
-    parseFontName(family, parsedfoundry, parsedfamily);
-
-    bool result = false;
-    const QtFontFamilyList* db = qGlobalFontDatabase();
-    for (int i = 0; i < db->size(); i++) {
-        const QtFontFamily &fontfamily = db->at(i);
-        if (fontfamily.family.compare(parsedfamily, Qt::CaseInsensitive) != 0
-            || (!parsedfoundry.isEmpty() && fontfamily.foundry.compare(parsedfoundry, Qt::CaseInsensitive) != 0)
-            || !isStyleMatch(fontfamily.style, style)) {
-            continue;
-        }
-        result = fontfamily.bold;
-        break;
-    }
-    return result;
-}
-
-
-/*!
-    Returns the weight of the font that has family \a family and style
-    \a style. If there is no such family and style combination,
-    returns -1.
-
-    \sa italic(), bold()
-*/
-int QFontDatabase::weight(const QString &family, const QString &style) const
-{
-    QString parsedfamily, parsedfoundry;
-    parseFontName(family, parsedfoundry, parsedfamily);
-
-    int result = -1;
-    const QtFontFamilyList* db = qGlobalFontDatabase();
-    for (int i = 0; i < db->size(); i++) {
-        const QtFontFamily &fontfamily = db->at(i);
-        if (fontfamily.family.compare(parsedfamily, Qt::CaseInsensitive) != 0
-            || (!parsedfoundry.isEmpty() && fontfamily.foundry.compare(parsedfoundry, Qt::CaseInsensitive) != 0)
-            || !isStyleMatch(fontfamily.style, style)) {
-            continue;
-        }
-        result = fontfamily.weight;
-        break;
-    }
-    return result;
-}
-
-
-/*!
-    Returns true if font \a family is available, false otherwise. Aliases
-    such as "Sans Serif" are resolved.
-*/
-bool QFontDatabase::hasFamily(const QString &family) const
-{
-    QString parsedfamily, parsedfoundry;
-    parseFontName(family, parsedfoundry, parsedfamily);
-
-    const QString familyalias = resolveFontFamilyAlias(parsedfamily);
-
-    bool result = false;
-    const QtFontFamilyList* db = qGlobalFontDatabase();
-    for (int i = 0; i < db->size(); i++) {
-        const QtFontFamily &fontfamily = db->at(i);
-        if (fontfamily.family.compare(familyalias, Qt::CaseInsensitive) != 0
-            || (!parsedfoundry.isEmpty() && fontfamily.foundry.compare(parsedfoundry, Qt::CaseInsensitive) != 0)) {
-            continue;
-        }
-        result = true;
-        break;
-    }
-    return result;
-}
-
 /*!
     \since 4.4
 
@@ -1168,17 +1075,52 @@ bool QFontDatabase::supportsThreadedFontRendering()
 }
 
 /*!
-    \internal
+  \internal
+
+  This makes sense of the font family name:
+
+  if the family name contains a '[' and a ']', then we take the text
+  between the square brackets as the foundry, and the text before the
+  square brackets as the family (ie. "FreeSans [GNU]")
 */
-void QFontDatabase::parseFontName(const QString &name, QString &foundry, QString &family)
+void QFontDatabasePrivate::parseFontName(const QString &name, QString &foundry, QString &family)
 {
-    QT_PREPEND_NAMESPACE(parseFontName)(name, foundry, family);
+    int i = name.indexOf(QLatin1Char('['));
+    int li = name.lastIndexOf(QLatin1Char(']'));
+    if (i >= 0 && li >= 0 && i < li) {
+        foundry = name.mid(i + 1, li - i - 1);
+        if (i > 0 && name[i - 1] == QLatin1Char(' '))
+            i--;
+        family = name.left(i);
+    } else {
+        foundry.clear();
+        family = name;
+    }
+
+    // capitalize the family/foundry names
+    bool space = true;
+    QChar *s = family.data();
+    int len = family.length();
+    while(len--) {
+        if (space) *s = s->toUpper();
+        space = s->isSpace();
+        ++s;
+    }
+
+    space = true;
+    s = foundry.data();
+    len = foundry.length();
+    while(len--) {
+        if (space) *s = s->toUpper();
+        space = s->isSpace();
+        ++s;
+    }
 }
 
 /*!
     \internal
 */
-QString QFontDatabase::resolveFontFamilyAlias(const QString &family)
+QString QFontDatabasePrivate::resolveFontFamilyAlias(const QString &family)
 {
 #if defined(QT_NO_FONTCONFIG)
     return family;
@@ -1220,7 +1162,7 @@ QString QFontDatabase::resolveFontFamilyAlias(const QString &family)
     Loads a QFontEngine for the specified \a script that matches the
     QFontDef \e request member variable.
 */
-QFontEngine* QFontDatabase::load(const QFontPrivate *d, int script)
+QFontEngine* QFontDatabasePrivate::load(const QFontPrivate *d, int script)
 {
     Q_ASSERT(script >= 0 && script < QUnicodeTables::ScriptCount);
 

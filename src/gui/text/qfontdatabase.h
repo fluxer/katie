@@ -32,14 +32,13 @@ QT_BEGIN_NAMESPACE
 class QFontInfo;
 class QStringList;
 template <class T> class QList;
-class QFontEngine;
+class QFontDatabasePrivate;
 
 class Q_GUI_EXPORT QFontDatabase
 {
 public:
-    static QList<int> standardSizes();
-
     QFontDatabase();
+    ~QFontDatabase();
 
     QStringList families() const;
     QStringList styles(const QString &family) const;
@@ -60,17 +59,13 @@ public:
 
     bool hasFamily(const QString &family) const;
 
+    static QList<int> standardSizes();
+
     static bool supportsThreadedFontRendering();
 
 private:
-    static void parseFontName(const QString &name, QString &foundry, QString &family);
-    static QString resolveFontFamilyAlias(const QString &family);
-    static QFontEngine* load(const QFontPrivate *d, int script);
-
-    friend struct QFontDef;
-    friend class QFontPrivate;
-    friend class QFontDialog;
-    friend class QFontDialogPrivate;
+    Q_DISABLE_COPY(QFontDatabase);
+    QFontDatabasePrivate *d_ptr;
 };
 
 QT_END_NAMESPACE

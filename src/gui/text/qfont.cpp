@@ -22,7 +22,7 @@
 #include "qfont.h"
 #include "qdebug.h"
 #include "qpaintdevice.h"
-#include "qfontdatabase.h"
+#include "qfontdatabase_p.h"
 #include "qfontmetrics.h"
 #include "qfontinfo.h"
 #include "qpainter.h"
@@ -95,8 +95,8 @@ bool QFontDef::exactMatch(const QFontDef &other) const
         return false;
 
     QString this_family, this_foundry, other_family, other_foundry;
-    QFontDatabase::parseFontName(family, this_foundry, this_family);
-    QFontDatabase::parseFontName(other.family, other_foundry, other_family);
+    QFontDatabasePrivate::parseFontName(family, this_foundry, this_family);
+    QFontDatabasePrivate::parseFontName(other.family, other_foundry, other_family);
 
     return (hintingPreference == other.hintingPreference
             && weight        == other.weight
@@ -130,7 +130,7 @@ QFontEngine *QFontPrivate::engineForScript(QUnicodeTables::Script script) const
 {
     if (script > QUnicodeTables::ScriptCount)
         script = QUnicodeTables::Common;
-    return QFontDatabase::load(this, script);
+    return QFontDatabasePrivate::load(this, script);
 }
 
 void QFontPrivate::resolve(uint mask, const QFontPrivate *other)
