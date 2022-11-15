@@ -1520,19 +1520,17 @@ static void qInvokeTestMethods(QObject *testObject)
                 testFuncCleaner.cleanup();
             } else {
                 int methodCount = metaObject->methodCount();
-                QMetaMethod *testMethods = new QMetaMethod[methodCount];
+                QVector<QMetaMethod> testMethods(methodCount);
                 for (int i = 0; i != methodCount; i++)
                     testMethods[i] = metaObject->method(i);
                 if (QTest::randomOrder)
-                    randomizeList(testMethods, methodCount);
+                    randomizeList(testMethods.data(), methodCount);
                 for (int i = 0; i != methodCount; i++) {
                     if (!isValidSlot(testMethods[i]))
                         continue;
                     if (!qInvokeTestMethod(testMethods[i].signature()))
                         break;
                 }
-                delete[] testMethods;
-                testMethods = 0;
             }
         }
 
