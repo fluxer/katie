@@ -495,7 +495,7 @@ int QMetaType::registerTypedef(const char* typeName, int aliasId)
     QMutexLocker locker(customTypesLock());
     QStdVector<QCustomTypeInfo> *ct = customTypes();
     idx = qMetaTypeCustomType_unlocked(normalizedTypeName.constData(),
-                                           normalizedTypeName.size());
+                                       normalizedTypeName.size());
 
     if (idx)
         return idx;
@@ -572,6 +572,7 @@ int QMetaType::type(const char *typeName)
         return 0;
     int type = qMetaTypeStaticType(typeName, length);
     if (!type) {
+        QMutexLocker locker(customTypesLock());
         type = qMetaTypeCustomType_unlocked(typeName, length);
 #ifndef QT_NO_QOBJECT
         if (!type) {
