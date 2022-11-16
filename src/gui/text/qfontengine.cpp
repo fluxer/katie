@@ -67,7 +67,7 @@ QFixed QFontEngine::underlinePosition() const
 
 QFixed QFontEngine::xHeight() const
 {
-    QGlyphLayoutArray glyphs(2);
+    QGlyphLayoutArray<2> glyphs;
     int nglyphs = 1;
     QChar x((ushort)'x');
     stringToCMap(&x, 1, &glyphs, &nglyphs, QTextEngine::GlyphIndicesOnly);
@@ -78,7 +78,7 @@ QFixed QFontEngine::xHeight() const
 
 QFixed QFontEngine::averageCharWidth() const
 {
-    QGlyphLayoutArray glyphs(2);
+    QGlyphLayoutArray<2> glyphs;
     int nglyphs = 1;
     QChar x((ushort)'x');
     stringToCMap(&x, 1, &glyphs, &nglyphs, QTextEngine::GlyphIndicesOnly);
@@ -402,7 +402,7 @@ QFontEngine::Type QFontEngineBox::type() const
 void QFontEngineBox::addGlyphsToPath(glyph_t *glyphs, QFixedPoint *positions, int nGlyphs,
                                   QPainterPath *path)
 {
-    QGlyphLayoutArray g(nGlyphs);
+    QVarLengthGlyphLayoutArray g(nGlyphs);
 
     for (int i = 0; i < nGlyphs; ++i) {
         g.glyphs[i] = glyphs[i];

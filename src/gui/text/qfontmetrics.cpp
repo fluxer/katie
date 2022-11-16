@@ -445,7 +445,7 @@ int QFontMetrics::width(QChar ch) const
     QFontEngine *engine = d->engineForScript(script);
     Q_ASSERT(engine != 0);
 
-    QGlyphLayoutArray glyphs(2);
+    QGlyphLayoutArray<2> glyphs;
     int nglyphs = 1;
     engine->stringToCMap(&ch, 1, &glyphs, &nglyphs, 0);
     return qRound(glyphs.advances_x[0]);
@@ -1035,7 +1035,7 @@ qreal QFontMetricsF::width(QChar ch) const
     QFontEngine *engine = d->engineForScript(script);
     Q_ASSERT(engine != 0);
 
-    QGlyphLayoutArray glyphs(2);
+    QGlyphLayoutArray<2> glyphs;
     int nglyphs = 1;
     engine->stringToCMap(&ch, 1, &glyphs, &nglyphs, 0);
     return glyphs.advances_x[0].toReal();

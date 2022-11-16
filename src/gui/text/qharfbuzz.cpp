@@ -65,7 +65,7 @@ static void qHB_GetUnicodeCharProperties(HB_UChar32 ch, HB_CharCategory *categor
 
 static void qHB_GetGlyphAdvances(QFontEngine* fe, const HB_Glyph *glyphs, uint32_t numGlyphs, HB_Fixed *advances, int flags)
 {
-    QGlyphLayoutArray qglyphs(numGlyphs);
+    QVarLengthGlyphLayoutArray qglyphs(numGlyphs);
 
     for (uint32_t i = 0; i < numGlyphs; ++i)
         qglyphs.glyphs[i] = glyphs[i];
