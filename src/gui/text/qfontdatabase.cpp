@@ -415,7 +415,7 @@ static FcPattern *getFcPattern(const QFontPrivate *fp, const QFontDef &request)
 
         int stretch = request.stretch;
         if (!stretch)
-            stretch = 100;
+            stretch = QFont::Unstretched;
         FcPatternAddInteger(pattern, FC_WIDTH, stretch);
     }
 
@@ -1179,7 +1179,7 @@ QFontEngine* QFontDatabasePrivate::load(const QFontPrivate *d, int script)
         req.weight = QFont::Normal;
     }
     if (req.stretch == 0) {
-        req.stretch = 100;
+        req.stretch = QFont::Unstretched;
     }
 
     QFontCache::Key key(req, script, d->screen);

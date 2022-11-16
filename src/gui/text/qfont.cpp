@@ -1322,7 +1322,7 @@ QDataStream &operator>>(QDataStream &s, QFont &font)
 
     set_font_bits(bits, font.d.data());
 
-    qint16 stretch = 100;
+    qint16 stretch = QFont::Unstretched;
     s >> stretch;
     font.d->request.stretch = stretch;
 
