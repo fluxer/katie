@@ -618,7 +618,13 @@ QFontDatabase::QFontDatabase()
                "QFontDatabase", "New scripts have been added.");
 
     FcObjectSet *os = FcObjectSetCreate();
+    if (Q_UNLIKELY(!os)) {
+        return;
+    }
     FcPattern *pattern = FcPatternCreate();
+    if (Q_UNLIKELY(!pattern)) {
+        return;
+    }
     FcObjectSetAdd(os, FC_FAMILY);
     FcObjectSetAdd(os, FC_SCALABLE);
     FcObjectSetAdd(os, FC_FOUNDRY);
@@ -629,6 +635,9 @@ QFontDatabase::QFontDatabase()
     FcFontSet *fonts = FcFontList(0, pattern, os);
     FcObjectSetDestroy(os);
     FcPatternDestroy(pattern);
+    if (Q_UNLIKELY(!fonts)) {
+        return;
+    }
 
     for (int i = 0; i < fonts->nfont; i++) {
         FcChar8 *family_value = nullptr;
