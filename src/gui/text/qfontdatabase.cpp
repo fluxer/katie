@@ -1084,13 +1084,13 @@ bool QFontDatabase::supportsThreadedFontRendering()
 }
 
 /*!
-  \internal
+    \internal
 
-  This makes sense of the font family name:
+    This makes sense of the font family name:
 
-  if the family name contains a '[' and a ']', then we take the text
-  between the square brackets as the foundry, and the text before the
-  square brackets as the family (ie. "FreeSans [GNU]")
+    if the family name contains a '[' and a ']', then we take the text
+    between the square brackets as the foundry, and the text before the
+    square brackets as the family (ie. "FreeSans [GNU]")
 */
 void QFontDatabasePrivate::parseFontName(const QString &name, QString &foundry, QString &family)
 {

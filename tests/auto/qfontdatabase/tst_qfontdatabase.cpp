@@ -23,11 +23,46 @@
 #include <QtTest/QtTest>
 
 #include <qfontdatabase.h>
-#include <qdir.h>
+#include <qthread.h>
 #include <qdebug.h>
+
+#include <unistd.h>
 
 //TESTED_CLASS=
 //TESTED_FILES=
+
+// this default is somewhat safe
+static int s_threadcount = 100;
+
+class QFontDatabaseThread : public QThread
+{
+public:
+    QFontDatabaseThread(QObject *parent, const int threadnum);
+
+protected:
+    void run() final;
+
+private:
+    const int m_threadnum;
+};
+
+QFontDatabaseThread::QFontDatabaseThread(QObject *parent, const int threadnum)
+    : QThread(parent),
+    m_threadnum(threadnum)
+{
+}
+
+void QFontDatabaseThread::run()
+{
+    // qDebug("Thread running: %d", m_threadnum);
+
+    const QString fontfamily("FreeSans");
+    const QString fontstyle("Bold");
+
+    (void)QFontDatabase().isSmoothlyScalable(fontfamily, fontstyle);
+    (void)QFontDatabase().isScalable(fontfamily, fontstyle);
+    (void)QFontDatabase().isFixedPitch(fontfamily, fontstyle);
+}
 
 class tst_QFontDatabase : public QObject
 {
@@ -46,6 +81,8 @@ private slots:
     void resolveFamily();
 
     void styleString();
+
+    void threadSafety();
 };
 
 void tst_QFontDatabase::styles_data()
@@ -163,6 +200,36 @@ void tst_QFontDatabase::styleString()
     }
 
     QVERIFY(fdb.styleString(family) != QLatin1String("Normal"));
+}
+
+void tst_QFontDatabase::threadSafety()
+{
+#ifdef _SC_THREAD_THREADS_MAX
+    const long threadmax = ::sysconf(_SC_THREAD_THREADS_MAX);
+    // should be bellow the limit
+    if (threadmax > 10) {
+        s_threadcount = (threadmax - 10);
+    }
+    qDebug("Starting %d threads (max %d)", s_threadcount, threadmax);
+#else
+    qDebug("Starting %d threads", s_threadcount);
+#endif
+
+    QList<QFontDatabaseThread*> fdbthreads;
+    for (int i = 0; i < s_threadcount; i++) {
+        QFontDatabaseThread* fdbthread = new QFontDatabaseThread(this, i);
+        fdbthreads.append(fdbthread);
+        fdbthread->start();
+    }
+
+    qDebug("Waiting for threads");
+    for (int i = 0; i < s_threadcount; i++) {
+        QFontDatabaseThread* fdbthread = fdbthreads.at(i);
+        while (!fdbthread->isFinished()) {
+            QApplication::processEvents();
+        }
+    }
+    qDebug("Done waiting");
 }
 
 QTEST_MAIN(tst_QFontDatabase)
