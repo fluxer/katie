@@ -1564,15 +1564,10 @@ QByteArray QTextCodec::name() const
 */
 int QTextCodec::mibEnum() const
 {
-    UErrorCode error = U_ZERO_ERROR;
-    const char *iana = ucnv_getStandardName(d_ptr->name.constData(), "IANA", &error);
-
-    // some codecs and their aliases are made up by ICU (e.g. IMAP-mailbox-name)
-    if (Q_LIKELY(iana)) {
-        for (qint16 i = 0; i < MIBTblSize; i++) {
-            if (ucnv_compareNames(iana, MIBTbl[i].name) == 0) {
-                return MIBTbl[i].mib;
-            }
+    // QTextCodecPrivate::allCodecs() returns IANA names so it should be in the table
+    for (qint16 i = 0; i < MIBTblSize; i++) {
+        if (ucnv_compareNames(d_ptr->name.constData(), MIBTbl[i].name) == 0) {
+            return MIBTbl[i].mib;
         }
     }
 
