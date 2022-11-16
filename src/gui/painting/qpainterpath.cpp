@@ -1092,7 +1092,7 @@ void QPainterPath::addText(const QPointF &point, const QFont &f, const QString &
 
     static const QTextEngine::ShaperFlags shaperflags = 0;
     int nglyphs = text.size();
-    QVarLengthGlyphLayoutArray glyphs(nglyphs);
+    QGlyphLayoutArray glyphs(nglyphs);
     engine->stringToCMap(text.unicode(), nglyphs, &glyphs, &nglyphs, shaperflags);
     engine->addOutlineToPath(point.x(), point.y(), glyphs, this);
 

@@ -328,7 +328,7 @@ QVector<int> QFontSubset::getReverseMap() const
     reverseMap.resize(0x10000);
     for (uint i = 0; i < 0x10000; ++i)
         reverseMap[i] = 0;
-    QGlyphLayoutArray<2> glyphs;
+    QGlyphLayoutArray glyphs(2);
     for (uint uc = 0; uc < 0x10000; ++uc) {
         QChar ch(uc);
         int nglyphs = 1;

@@ -129,7 +129,7 @@ void QTextEngine::shapeTextWithHarfbuzz(int item) const
     bool kerningEnabled = this->font(si).d->kerning;
 
     HB_ShaperItem shaper_item;
-    memset(&shaper_item, 0, sizeof(shaper_item));
+    ::memset(&shaper_item, 0, sizeof(shaper_item));
     shaper_item.string = reinterpret_cast<const HB_UChar16 *>(layoutData->string.constData());
     shaper_item.stringLength = layoutData->string.length();
     shaper_item.item.pos = si.position;
@@ -755,7 +755,7 @@ bool QTextEngine::LayoutData::reallocate(int totalGlyphs)
 
     const int space_preGlyphLayout = space_charAttributes + space_logClusters;
     if (allocated < space_preGlyphLayout)
-        memset(memory + allocated, 0, (space_preGlyphLayout - allocated) * QT_POINTER_SIZE);
+        ::memset(memory + allocated, 0, (space_preGlyphLayout - allocated) * QT_POINTER_SIZE);
 
     glyphLayout.grow(reinterpret_cast<char *>(m), totalGlyphs);
 
@@ -771,10 +771,10 @@ void QGlyphLayout::grow(char *address, int totalGlyphs)
 
     if (numGlyphs) {
         // move the existing data
-        memmove(newLayout.attributes, oldLayout.attributes, numGlyphs * sizeof(HB_GlyphAttributes));
-        memmove(newLayout.justifications, oldLayout.justifications, numGlyphs * sizeof(QGlyphJustification));
-        memmove(newLayout.advances_x, oldLayout.advances_x, numGlyphs * sizeof(QFixed));
-        memmove(newLayout.glyphs, oldLayout.glyphs, numGlyphs * sizeof(HB_Glyph));
+        ::memmove(newLayout.attributes, oldLayout.attributes, numGlyphs * sizeof(HB_GlyphAttributes));
+        ::memmove(newLayout.justifications, oldLayout.justifications, numGlyphs * sizeof(QGlyphJustification));
+        ::memmove(newLayout.advances_x, oldLayout.advances_x, numGlyphs * sizeof(QFixed));
+        ::memmove(newLayout.glyphs, oldLayout.glyphs, numGlyphs * sizeof(HB_Glyph));
     }
 
     // clear the new data
@@ -975,7 +975,7 @@ QString QTextEngine::elidedText(Qt::TextElideMode mode, const QFixed &width, int
 
         QFontEngine *fe = fnt.d->engineForScript(QUnicodeTables::Common);
 
-        QGlyphLayoutArray<2> ellipsisGlyph;
+        QGlyphLayoutArray ellipsisGlyph(2);
         {
             if (fe->canRender(&ellipsisChar, 1)) {
                 int nGlyphs = 1;
@@ -989,7 +989,7 @@ QString QTextEngine::elidedText(Qt::TextElideMode mode, const QFixed &width, int
         } else {
             QString dotDotDot(QLatin1String("..."));
 
-            QGlyphLayoutArray<3> glyphs;
+            QGlyphLayoutArray glyphs(3);
             int nGlyphs = 3;
             if (!fe->stringToCMap(dotDotDot.constData(), 3, &glyphs, &nGlyphs, 0))
                 // should never happen...
