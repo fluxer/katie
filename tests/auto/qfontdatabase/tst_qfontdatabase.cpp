@@ -31,12 +31,7 @@
 
 class tst_QFontDatabase : public QObject
 {
-Q_OBJECT
-
-public:
-    tst_QFontDatabase();
-    virtual ~tst_QFontDatabase();
-
+    Q_OBJECT
 private slots:
     void styles_data();
     void styles();
@@ -53,35 +48,26 @@ private slots:
     void styleString();
 };
 
-tst_QFontDatabase::tst_QFontDatabase()
-{
-    QDir::setCurrent(SRCDIR);
-}
-
-tst_QFontDatabase::~tst_QFontDatabase()
-{
-
-}
 void tst_QFontDatabase::styles_data()
 {
     QTest::addColumn<QString>("font");
 
-    QTest::newRow("data0") << QString("FreeSerif [GNU]");
+    QTest::newRow("FreeSerif [GNU]") << QString("FreeSerif [GNU]");
 }
 
 void tst_QFontDatabase::styles()
 {
-    QFETCH( QString, font );
+    QFETCH(QString, font);
 
     QFontDatabase fdb;
-    QStringList styles = fdb.styles( font );
+    QStringList styles = fdb.styles(font);
     QStringList::Iterator it = styles.begin();
-    while ( it != styles.end() ) {
+    while (it != styles.end()) {
         QString style = *it;
         QString trimmed = style.trimmed();
         ++it;
 
-        QCOMPARE( style, trimmed );
+        QCOMPARE(style, trimmed);
     }
 }
 
