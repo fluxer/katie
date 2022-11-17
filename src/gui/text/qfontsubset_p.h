@@ -49,7 +49,6 @@ public:
         fontEngine->ref.deref();
     }
 
-    QByteArray toTruetype() const;
     QByteArray toType1() const;
     QByteArray type1AddedGlyphs() const;
     QByteArray widthArray() const;
