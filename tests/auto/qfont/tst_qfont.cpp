@@ -54,7 +54,6 @@ private slots:
     void resolve();
     void resetFont();
     void isCopyOf();
-    void italicOblique();
     void lastResortFamily();
 };
 
@@ -110,39 +109,6 @@ void tst_QFont::exactMatch()
     QVERIFY(!QFont("freesans").exactMatch());
     QVERIFY(!QFont("freeserif").exactMatch());
     QVERIFY(!QFont("freemono").exactMatch());
-}
-
-void tst_QFont::italicOblique()
-{
-    QFontDatabase fdb;
-
-    QStringList families = fdb.families();
-    if (families.isEmpty())
-        return;
-
-    QStringList::ConstIterator f_it, f_end = families.constEnd();
-    for (f_it = families.constBegin(); f_it != f_end; ++f_it) {
-
-        QString family = *f_it;
-        QStringList styles = fdb.styles(family);
-        QVERIFY(!styles.isEmpty());
-        QStringList::ConstIterator s_it, s_end = styles.constEnd();
-        for (s_it = styles.constBegin(); s_it != s_end; ++s_it) {
-            QString style = *s_it;
-
-            if (fdb.isSmoothlyScalable(family, style)) {
-                if (style.contains("Oblique")) {
-                    style.replace("Oblique", "Italic");
-                } else if (style.contains("Italic")) {
-                    style.replace("Italic", "Oblique");
-                } else {
-                    continue;
-                }
-                QFont f = fdb.font(family, style, 12);
-                QVERIFY(f.italic());
-            }
-        }
-    }
 }
 
 void tst_QFont::compare()
