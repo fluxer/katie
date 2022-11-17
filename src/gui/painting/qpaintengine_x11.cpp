@@ -29,13 +29,6 @@ QT_BEGIN_NAMESPACE
 extern Qt::HANDLE qt_x11Handle(const QPaintDevice *pd);
 extern const QX11Info *qt_x11Info(const QPaintDevice *pd);
 
-// hack, so we don't have to make QRegion::clipRectangles() public or include
-// X11 headers in qregion.h
-Q_GUI_EXPORT void *qt_getClipRects(const QRegion &r, int &num)
-{
-    return r.clipRectangles(num);
-}
-
 void QX11PaintEnginePrivate::init()
 {
     hd = 0;
