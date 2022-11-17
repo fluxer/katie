@@ -721,9 +721,8 @@ int QFont::pixelSize() const
     return d->request.pixelSize;
 }
 
-
 /*!
-  \fn bool QFont::italic() const
+    \fn bool QFont::italic() const
 
     Returns true if the style() of the font is not QFont::StyleNormal
 
@@ -749,11 +748,10 @@ QFont::Style QFont::style() const
     return d->request.style;
 }
 
-
 /*!
-  Sets the style of the font to \a style.
+    Sets the style of the font to \a style.
 
-  \sa italic(), QFontInfo
+    \sa italic(), QFontInfo
 */
 void QFont::setStyle(Style style)
 {

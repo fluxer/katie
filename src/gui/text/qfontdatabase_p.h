@@ -47,6 +47,7 @@ struct QFontFamily
     bool italic;
     bool bold;
     int weight;
+    double pixelsize;
 
     short preference;
     bool operator<(const QFontFamily &other) const

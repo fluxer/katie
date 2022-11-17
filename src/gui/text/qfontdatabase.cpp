@@ -635,6 +635,7 @@ QFontDatabase::QFontDatabase()
     FcObjectSetAdd(os, FC_SPACING);
     FcObjectSetAdd(os, FC_STYLE);
     FcObjectSetAdd(os, FC_SLANT);
+    FcObjectSetAdd(os, FC_PIXEL_SIZE);
     FcFontSet *fonts = FcFontList(0, pattern, os);
     FcObjectSetDestroy(os);
     FcPatternDestroy(pattern);
@@ -650,6 +651,7 @@ QFontDatabase::QFontDatabase()
         FcChar8 *style_value = nullptr;
         FcBool scalable_value = FcFalse;
         int slant_value = FC_SLANT_ROMAN;
+        double pixelsize_value = -1;
 
         if (FcPatternGetString(fonts->fonts[i], FC_FAMILY, 0, &family_value) != FcResultMatch)
             continue;
@@ -667,6 +669,8 @@ QFontDatabase::QFontDatabase()
             style_value = nullptr;
         if (FcPatternGetInteger(fonts->fonts[i], FC_SLANT, 0, &slant_value) != FcResultMatch)
             slant_value = FC_SLANT_ROMAN;
+        if (FcPatternGetDouble(fonts->fonts[i], FC_PIXEL_SIZE, 0, &pixelsize_value) != FcResultMatch)
+            pixelsize_value = -1;
 
         QFontFamily fontfamily;
         fontfamily.family = QString::fromUtf8((const char *)family_value);
@@ -676,6 +680,7 @@ QFontDatabase::QFontDatabase()
         fontfamily.italic = (slant_value >= FC_SLANT_ITALIC);
         fontfamily.bold = (weight_value >= FC_WEIGHT_BOLD); // or FC_WEIGHT_DEMIBOLD?
         fontfamily.weight = weight_value;
+        fontfamily.pixelsize = pixelsize_value;
         fontfamily.preference = -weight_value;
 
         if (fontfamily.style == normalfontstyle || fontfamily.style == regularfontstyle) {
@@ -913,6 +918,9 @@ QFont QFontDatabase::font(const QString &family, const QString &style,
         result.setStyleName(fontfamily.style);
         result.setBold(fontfamily.bold);
         result.setFixedPitch(fontfamily.fixedpitch);
+        if (fontfamily.pixelsize != -1) {
+            result.setPixelSize(fontfamily.pixelsize);
+        }
         break;
     }
     return result;

@@ -262,14 +262,14 @@ void tst_QFontDatabase::fontInfo()
     }
 
     if (font == QLatin1String("Monospace")) {
-        QEXPECT_FAIL("", "QFontInfo does not resolve aliases", Abort);
+        QEXPECT_FAIL("", "QFontInfo does not resolve aliases well", Abort);
     }
     QFont f(font);
     QFontInfo fi(f);
     QFont fdbfont = fdb.font(f.family(), f.styleName(), f.pointSize());
     QCOMPARE(fdbfont.family(), fi.family());
     QCOMPARE(fdbfont.styleName(), fi.styleName());
-    // QCOMPARE(fdbfont.pixelSize(), fi.pixelSize());
+    // QCOMPARE(fdbfont.pixelSize(), fi.pixelSize()); // may not be set by QFontDatabase::font()
     QCOMPARE(fdbfont.pointSize(), fi.pointSize());
     QCOMPARE(fdbfont.pointSizeF(), fi.pointSizeF());
     QCOMPARE(fdbfont.italic(), fi.italic());
