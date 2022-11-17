@@ -361,7 +361,7 @@ void QFontPrivate::resolve(uint mask, const QFontPrivate *other)
 */
 
 /*!
-  Constructs a font from \a font for use on the paint device \a pd.
+    Constructs a font from \a font for use on the paint device \a pd.
 */
 QFont::QFont(const QFont &font, QPaintDevice *pd)
     : resolve_mask(font.resolve_mask)
@@ -384,14 +384,16 @@ QFont::QFont(const QFont &font, QPaintDevice *pd)
 }
 
 /*!
-  \internal
+    \internal
 */
 QFont::QFont(QFontPrivate *data)
     : d(data), resolve_mask(QFont::AllPropertiesResolved)
 {
 }
 
-/*! \internal
+/*!
+    \internal
+
     Detaches the font object from common font data.
 */
 void QFont::detach()
