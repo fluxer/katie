@@ -430,12 +430,6 @@ static FcPattern *getFcPattern(const QFontPrivate *fp, const QFontDef &request)
     QByteArray cs = defaultFamily.toUtf8();
     FcPatternAddString(pattern, FC_FAMILY, (const FcChar8 *)cs.constData());
 
-    // add QFont::lastResortFamily() to the list, for compatibility with
-    // previous versions
-    defaultFamily = QFont::lastResortFamily();
-    cs = defaultFamily.toUtf8();
-    FcPatternAddString(pattern, FC_FAMILY, (const FcChar8 *)cs.constData());
-
     return pattern;
 }
 
