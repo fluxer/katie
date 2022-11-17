@@ -39,7 +39,7 @@ QT_BEGIN_NAMESPACE
 
 // hack, so we don't have to make QRegion::clipRectangles() public or include
 // X11 headers in qregion.h
-Q_GUI_EXPORT void *qt_getClipRects(const QRegion &r, int &num)
+Q_AUTOTEST_EXPORT void *qt_getClipRects(const QRegion &r, int &num)
 {
     return r.clipRectangles(num);
 }
