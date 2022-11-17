@@ -133,6 +133,8 @@ void tst_QFontDatabase::fixedPitch()
     QFont qfont(font);
     QFontInfo fi(qfont);
     QCOMPARE(fi.fixedPitch(), fixedPitch);
+    QFont fdbfont = fdb.font(qfont.family(), qfont.styleName(), qfont.pointSize());
+    QCOMPARE(fdbfont.fixedPitch(), fixedPitch);
 }
 
 void tst_QFontDatabase::widthTwoTimes_data()

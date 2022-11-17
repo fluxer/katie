@@ -897,7 +897,7 @@ QFont QFontDatabase::font(const QString &family, const QString &style,
     foreach (const QFontFamily &fontfamily, d_ptr->fontfamilies) {
         if (fontfamily.family.compare(parsedfamily, Qt::CaseInsensitive) != 0
             || (!parsedfoundry.isEmpty() && fontfamily.foundry.compare(parsedfoundry, Qt::CaseInsensitive) != 0)
-            || !isStyleMatch(fontfamily.style, style)) {
+            || (!style.isEmpty() && !isStyleMatch(fontfamily.style, style))) {
             continue;
         }
 
