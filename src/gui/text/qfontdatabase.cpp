@@ -904,6 +904,7 @@ QFont QFontDatabase::font(const QString &family, const QString &style,
         result = QFont(fontfamily.family, pointSize, fontfamily.weight, fontfamily.italic);
         result.setStyleName(fontfamily.style);
         result.setBold(fontfamily.bold);
+        result.setFixedPitch(fontfamily.fixedpitch);
         break;
     }
     return result;
