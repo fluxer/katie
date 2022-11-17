@@ -645,15 +645,17 @@ QFontDatabase::QFontDatabase()
 
     for (int i = 0; i < fonts->nfont; i++) {
         FcChar8 *family_value = nullptr;
+        FcChar8 *style_value = nullptr;
         FcChar8 *foundry_value = nullptr;
         int weight_value = FC_WEIGHT_MEDIUM;
         int spacing_value = FC_PROPORTIONAL;
-        FcChar8 *style_value = nullptr;
         FcBool scalable_value = FcFalse;
         int slant_value = FC_SLANT_ROMAN;
         double pixelsize_value = -1;
 
         if (FcPatternGetString(fonts->fonts[i], FC_FAMILY, 0, &family_value) != FcResultMatch)
+            continue;
+        if (FcPatternGetString(fonts->fonts[i], FC_STYLE, 0, &style_value) != FcResultMatch)
             continue;
         FcPatternGetBool(fonts->fonts[i], FC_SCALABLE, 0, &scalable_value);
         if (scalable_value != FcTrue)
@@ -665,8 +667,6 @@ QFontDatabase::QFontDatabase()
             weight_value = FC_WEIGHT_MEDIUM;
         if (FcPatternGetInteger(fonts->fonts[i], FC_SPACING, 0, &spacing_value) != FcResultMatch)
             spacing_value = FC_PROPORTIONAL;
-        if (FcPatternGetString(fonts->fonts[i], FC_STYLE, 0, &style_value) != FcResultMatch)
-            style_value = nullptr;
         if (FcPatternGetInteger(fonts->fonts[i], FC_SLANT, 0, &slant_value) != FcResultMatch)
             slant_value = FC_SLANT_ROMAN;
         if (FcPatternGetDouble(fonts->fonts[i], FC_PIXEL_SIZE, 0, &pixelsize_value) != FcResultMatch)
