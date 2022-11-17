@@ -89,14 +89,14 @@ tst_QFont::~tst_QFont()
 
 void tst_QFont::init()
 {
-// TODO: Add initialization code here.
-// This will be executed immediately before each test is run.
+    // TODO: Add initialization code here.
+    // This will be executed immediately before each test is run.
 }
 
 void tst_QFont::cleanup()
 {
-// TODO: Add cleanup code here.
-// This will be executed immediately after each test is run.
+    // TODO: Add cleanup code here.
+    // This will be executed immediately after each test is run.
 }
 
 void tst_QFont::exactMatch()

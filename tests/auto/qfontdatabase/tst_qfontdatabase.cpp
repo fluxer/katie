@@ -261,9 +261,6 @@ void tst_QFontDatabase::fontInfo()
         QSKIP("Font not installed", SkipSingle);
     }
 
-    if (font == QLatin1String("Monospace")) {
-        QEXPECT_FAIL("", "QFontInfo does not resolve aliases well", Abort);
-    }
     QFont f(font);
     QFontInfo fi(f);
     QFont fdbfont = fdb.font(f.family(), f.styleName(), f.pointSize());
