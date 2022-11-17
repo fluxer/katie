@@ -68,7 +68,7 @@ static inline bool isStyleMatch(const QString &style, const QString &otherstyle)
     }
     // compat, most likely going away with the next release
     if ((lowerstyle == QLatin1String("normal") && otherstyle == QLatin1String("regular"))
-        || (lowerstyle == QLatin1String("regular") || otherstyle == QLatin1String("normal"))) {
+        || (lowerstyle == QLatin1String("regular") && otherstyle == QLatin1String("normal"))) {
         return true;
     }
     return false;
