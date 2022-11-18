@@ -269,7 +269,7 @@ public:
     bool deleteDevice;
 #ifndef QT_NO_TEXTCODEC
     QTextCodec *codec;
-    QTextDecoder *decoder;
+    QTextConverter *decoder;
 #endif
     bool atEnd;
 
