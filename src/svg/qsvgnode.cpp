@@ -42,10 +42,6 @@ void QSvgNode::appendStyleProperty(QSvgStyleProperty *prop, const QString &id)
 {
     //qDebug()<<"appending "<<prop->type()<< " ("<< id <<") "<<"to "<<this<<this->type();
     switch (prop->type()) {
-        case QSvgStyleProperty::QUALITY: {
-            m_style.quality = static_cast<QSvgQualityStyle*>(prop);
-            break;
-        }
         case QSvgStyleProperty::FILL: {
             m_style.fill = static_cast<QSvgFillStyle*>(prop);
             break;
@@ -110,10 +106,6 @@ QSvgStyleProperty * QSvgNode::styleProperty(QSvgStyleProperty::Type type) const
     const QSvgNode *node = this;
     while (node) {
         switch (type) {
-        case QSvgStyleProperty::QUALITY:
-            if (node->m_style.quality)
-                return node->m_style.quality;
-            break;
         case QSvgStyleProperty::FILL:
             if (node->m_style.fill)
                 return node->m_style.fill;

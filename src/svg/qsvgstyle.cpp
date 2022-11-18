@@ -60,20 +60,6 @@ void QSvgFillStyleProperty::revert(QPainter *, QSvgExtraStates &)
     Q_ASSERT(!"This should not be called!");
 }
 
-
-QSvgQualityStyle::QSvgQualityStyle(int color)
-{
-    Q_UNUSED(color);
-}
-void QSvgQualityStyle::apply(QPainter *, const QSvgNode *, QSvgExtraStates &)
-{
-
-}
-void QSvgQualityStyle::revert(QPainter *, QSvgExtraStates &)
-{
-
-}
-
 QSvgFillStyle::QSvgFillStyle()
     : m_style(0)
     , m_fillRule(Qt::WindingFill)
@@ -425,11 +411,6 @@ void QSvgTransformStyle::revert(QPainter *p, QSvgExtraStates &)
     p->setWorldTransform(m_oldWorldTransform, false /* don't combine */);
 }
 
-QSvgStyleProperty::Type QSvgQualityStyle::type() const
-{
-    return QUALITY;
-}
-
 QSvgStyleProperty::Type QSvgFillStyle::type() const
 {
     return FILL;
@@ -494,10 +475,6 @@ QSvgStyle::~QSvgStyle()
 
 void QSvgStyle::apply(QPainter *p, const QSvgNode *node, QSvgExtraStates &states)
 {
-    if (quality) {
-        quality->apply(p, node, states);
-    }
-
     if (fill) {
         fill->apply(p, node, states);
     }
@@ -529,10 +506,6 @@ void QSvgStyle::apply(QPainter *p, const QSvgNode *node, QSvgExtraStates &states
 
 void QSvgStyle::revert(QPainter *p, QSvgExtraStates &states)
 {
-    if (quality) {
-        quality->revert(p, states);
-    }
-
     if (fill) {
         fill->revert(p, states);
     }

@@ -134,7 +134,6 @@ class QSvgStyleProperty : public QSvgRefCounted
 public:
     enum Type
     {
-        QUALITY,
         FILL,
         VIEWPORT_FILL,
         FONT,
@@ -159,38 +158,6 @@ public:
     virtual void apply(QPainter *p, const QSvgNode *node, QSvgExtraStates &states);
     virtual void revert(QPainter *p, QSvgExtraStates &states);
 };
-
-class QSvgQualityStyle : public QSvgStyleProperty
-{
-public:
-    QSvgQualityStyle(int color);
-    virtual void apply(QPainter *p, const QSvgNode *node, QSvgExtraStates &states);
-    virtual void revert(QPainter *p, QSvgExtraStates &states);
-    virtual Type type() const;
-private:
-    // color-render ing v 	v 	'auto' | 'optimizeSpeed' |
-    //                                  'optimizeQuality' | 'inherit'
-    //int m_colorRendering;
-
-    // shape-rendering v 	v 	'auto' | 'optimizeSpeed' | 'crispEdges' |
-    //                                  'geometricPrecision' | 'inherit'
-    //QSvgShapeRendering m_shapeRendering;
-
-
-    // text-rendering    v 	v 	'auto' | 'optimizeSpeed' | 'optimizeLegibility'
-    //                                | 'geometricPrecision' | 'inherit'
-    //QSvgTextRendering m_textRendering;
-
-
-    // vector-effect         v 	x 	'default' | 'non-scaling-stroke' | 'inherit'
-    //QSvgVectorEffect m_vectorEffect;
-
-    // image-rendering v 	v 	'auto' | 'optimizeSpeed' | 'optimizeQuality' |
-    //                                      'inherit'
-    //QSvgImageRendering m_imageRendering;
-};
-
-
 
 class QSvgOpacityStyle : public QSvgStyleProperty
 {
@@ -624,8 +591,7 @@ class QSvgStyle
 {
 public:
     QSvgStyle()
-        : quality(0),
-          fill(0),
+        : fill(0),
           viewportFill(0),
           font(0),
           stroke(0),
@@ -639,7 +605,7 @@ public:
 
     void apply(QPainter *p, const QSvgNode *node, QSvgExtraStates &states);
     void revert(QPainter *p, QSvgExtraStates &states);
-    QSvgRefCounter<QSvgQualityStyle>      quality;
+
     QSvgRefCounter<QSvgFillStyle>         fill;
     QSvgRefCounter<QSvgViewportFillStyle> viewportFill;
     QSvgRefCounter<QSvgFontStyle>         font;
