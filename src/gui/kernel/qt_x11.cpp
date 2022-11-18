@@ -57,9 +57,19 @@ void QX11Data::copyQImageToXImage(const QImage &image, XImage *ximage, bool *fre
     const int w = image.width();
     const int h = image.height();
     // same bytes per line, same byte order
-    if (samebpl && samebyteorder) {
+    if (samedepth && samebyteorder) {
         switch(image.format()) {
-            case QImage::Format_RGB32: {
+            case QImage::Format_RGB16: {
+                quint16 *xidata = (quint16 *)ximage->data;
+                for (int y = 0; y < h; ++y) {
+                    const quint16 *p = (const quint16 *) image.constScanLine(y);
+                    for (int x = 0; x < w; ++x) {
+                        *xidata++ = p[x];
+                    }
+                }
+                return;
+            }
+	    case QImage::Format_RGB32: {
                 uint *xidata = (uint *)ximage->data;
                 for (int y = 0; y < h; ++y) {
                     const QRgb *p = (const QRgb *) image.constScanLine(y);
