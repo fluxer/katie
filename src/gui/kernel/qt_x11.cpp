@@ -21,6 +21,7 @@
 
 #include "qcolor.h"
 #include "qimage.h"
+#include "qimage_p.h"
 #include "qdrawhelper_p.h"
 #include "qt_x11_p.h"
 #include "qx11info_x11.h"
@@ -115,15 +116,7 @@ void QX11Data::copyQImageToXImage(const QImage &image, XImage *ximage, bool *fre
     }
 }
 
-void QX11Data::destroyXImage(XImage *ximage, const bool freedata)
-{
-    if (!freedata) {
-        ximage->data = nullptr;
-    }
-    XDestroyImage(ximage);
-}
-
-void QX11Data::copyXImageToQImage(XImage *ximage, QImage &image)
+void QX11Data::copyXImageToQImage(XImage *ximage, QImage &image, bool *freedata)
 {
     Q_ASSERT(ximage);
     Q_ASSERT(ximage->width == image.width());
@@ -134,6 +127,7 @@ void QX11Data::copyXImageToQImage(XImage *ximage, QImage &image)
     if (samedepth && samebyteorder) {
         switch (image.format()) {
             case QImage::Format_RGB32: {
+                *freedata = true;
                 uchar *imagedata = image.bits();
                 const int imagebpl = image.bytesPerLine();
                 for (int h = 0; h < ximage->height; h++) {
@@ -150,7 +144,8 @@ void QX11Data::copyXImageToQImage(XImage *ximage, QImage &image)
             case QImage::Format_ARGB32:
             case QImage::Format_ARGB32_Premultiplied:
             case QImage::Format_RGB16: {
-                ::memcpy(image.bits(), ximage->data, image.byteCount());
+                *freedata = false;
+                image.d->data = (uchar*)ximage->data;
                 return;
             }
             default: {
@@ -159,6 +154,7 @@ void QX11Data::copyXImageToQImage(XImage *ximage, QImage &image)
         }
     }
 
+    *freedata = true;
     if (image.depth() == 1) {
         for (int h = 0; h < ximage->height; h++) {
             for (int w = 0; w < ximage->width; w++) {
@@ -174,6 +170,14 @@ void QX11Data::copyXImageToQImage(XImage *ximage, QImage &image)
             }
         }
     }
+}
+
+void QX11Data::destroyXImage(XImage *ximage, const bool freedata)
+{
+    if (!freedata) {
+        ximage->data = nullptr;
+    }
+    XDestroyImage(ximage);
 }
 
 uint QX11Data::XColorPixel(const int screen, const QColor &color)

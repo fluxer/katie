@@ -197,6 +197,7 @@ private:
     friend class QSpanData;
     friend class QPngHandler;
     friend class QKatHandler;
+    friend class QX11Data;
 #if !defined(QT_NO_DATASTREAM)
     friend Q_GUI_EXPORT QDataStream &operator<<(QDataStream &, const QImage &);
     friend Q_GUI_EXPORT QDataStream &operator>>(QDataStream &, QImage &);

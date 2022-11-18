@@ -1455,8 +1455,9 @@ QPixmap QPixmap::fromX11Pixmap(Qt::HANDLE pixmap)
     if (image.depth() == 1) {
         image.setColorTable(monoColorTable());
     }
-    QX11Data::copyXImageToQImage(ximage, image);
-    XDestroyImage(ximage);
+    bool freedata = false;
+    QX11Data::copyXImageToQImage(ximage, image, &freedata);
+    QX11Data::destroyXImage(ximage, freedata);
     return QPixmap::fromImage(image);
 }
 
