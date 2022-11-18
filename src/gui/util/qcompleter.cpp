@@ -1157,14 +1157,6 @@ QAbstractItemView *QCompleter::popup() const
 /*!
   \reimp
 */
-bool QCompleter::event(QEvent *ev)
-{
-    return QObject::event(ev);
-}
-
-/*!
-  \reimp
-*/
 bool QCompleter::eventFilter(QObject *o, QEvent *e)
 {
     Q_D(QCompleter);

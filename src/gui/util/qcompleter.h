@@ -121,7 +121,6 @@ public:
 
 protected:
     bool eventFilter(QObject *o, QEvent *e);
-    bool event(QEvent *);
 
 Q_SIGNALS:
     void activated(const QString &text);
