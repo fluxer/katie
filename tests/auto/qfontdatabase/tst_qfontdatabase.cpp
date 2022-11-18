@@ -250,7 +250,6 @@ void tst_QFontDatabase::fontInfo_data()
     QTest::newRow("Monospace") << QString("Monospace");
 }
 
-
 void tst_QFontDatabase::fontInfo()
 {
     QFETCH(QString, font);
