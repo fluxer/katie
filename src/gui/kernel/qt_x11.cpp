@@ -69,7 +69,7 @@ void QX11Data::copyQImageToXImage(const QImage &image, XImage *ximage, bool *fre
                 }
                 return;
             }
-	    case QImage::Format_RGB32: {
+            case QImage::Format_RGB32: {
                 uint *xidata = (uint *)ximage->data;
                 for (int y = 0; y < h; ++y) {
                     const QRgb *p = (const QRgb *) image.constScanLine(y);
@@ -129,7 +129,9 @@ void QX11Data::copyXImageToQImage(XImage *ximage, QImage &image)
     Q_ASSERT(ximage->width == image.width());
     Q_ASSERT(ximage->height == image.height());
 
-    if (ximage->bits_per_pixel == image.depth()) {
+    const bool samedepth = (ximage->depth == image.depth());
+    const bool samebyteorder = ((ximage->byte_order == MSBFirst) == (Q_BYTE_ORDER == Q_BIG_ENDIAN));
+    if (samedepth && samebyteorder) {
         switch (image.format()) {
             case QImage::Format_RGB32: {
                 uchar *imagedata = image.bits();
@@ -146,28 +148,9 @@ void QX11Data::copyXImageToQImage(XImage *ximage, QImage &image)
                 return;
             }
             case QImage::Format_ARGB32:
-            case QImage::Format_ARGB32_Premultiplied: {
-                uchar *imagedata = image.bits();
-                const int imagebpl = image.bytesPerLine();
-                for (int h = 0; h < ximage->height; h++) {
-                    uchar* imageline = QFAST_SCAN_LINE(imagedata, imagebpl, h);
-                    for (int w = 0; w < ximage->width; w++) {
-                        const uint xpixel = XGetPixel(ximage, w, h);
-                        ((uint *)imageline)[w] = xpixel;
-                    }
-                }
-                return;
-            }
+            case QImage::Format_ARGB32_Premultiplied:
             case QImage::Format_RGB16: {
-                uchar *imagedata = image.bits();
-                const int imagebpl = image.bytesPerLine();
-                for (int h = 0; h < ximage->height; h++) {
-                    uchar* imageline = QFAST_SCAN_LINE(imagedata, imagebpl, h);
-                    for (int w = 0; w < ximage->width; w++) {
-                        const quint16 xpixel = XGetPixel(ximage, w, h);
-                        ((quint16 *)imageline)[w] = xpixel;
-                    }
-                }
+                ::memcpy(image.bits(), ximage->data, image.byteCount());
                 return;
             }
             default: {
