@@ -99,9 +99,6 @@ namespace QPdf {
     QByteArray generateMatrix(const QTransform &matrix);
     QByteArray generateDashes(const QPen &pen);
     QByteArray patternForBrush(const QBrush &b);
-#ifdef USE_NATIVE_GRADIENTS
-    QByteArray generateLinearGradientShader(const QLinearGradient *lg, const QPointF *page_rect, bool alpha = false);
-#endif
 
     struct Stroker {
         Stroker();
