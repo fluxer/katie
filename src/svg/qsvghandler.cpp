@@ -2340,7 +2340,7 @@ static QSvgNode *createImageNode(QSvgNode *parent,
         return nullptr;
     }
 
-    if (image.format() == QImage::Format_ARGB32) {
+    if (image.format() < QImage::Format_ARGB32) {
         image = image.convertToFormat(QImage::Format_ARGB32_Premultiplied);
     }
 
