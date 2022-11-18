@@ -375,7 +375,7 @@ void tst_QVariant::canConvert_data()
 #endif
 #define Y true
 #define N false
-    //            bita bitm bool brsh byta col colg curs date dt dbl font icon img int inv kseq list ll map pal pen  pix pnt rect reg size sp str strl time uint ull
+    //            bita bitm bool brsh byta col curs date dt dbl font icon img int inv kseq list ll map pal pen  pix pnt rect reg size sp str strl time uint ull
 
 
     QVariant var(QBitArray(0));
