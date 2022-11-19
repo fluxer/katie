@@ -125,8 +125,9 @@ struct QXdndDropTransaction
 };
 
 class QMimeData;
-struct QX11Data
+class QX11Data
 {
+public:
     Window findClientWindow(Window, Atom);
 
     // from qclipboard_x11.cpp
