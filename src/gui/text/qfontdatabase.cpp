@@ -557,9 +557,7 @@ static inline QString styleStringHelper(const QFontDatabasePrivate *d_ptr,
 
     The most common uses of this class are to query the database for
     the list of font families() and for the pointSizes() and styles()
-    that are available for each family. An alternative to pointSizes()
-    is smoothSizes() which returns the sizes at which a given family
-    and style will look attractive.
+    that are available for each family.
 
     If the font family is available from two or more foundries the
     foundry name is included in the family name; for example:
@@ -574,7 +572,7 @@ static inline QString styleStringHelper(const QFontDatabasePrivate *d_ptr,
 
     A family and style combination can be checked to see if it is
     italic() or bold(), and to retrieve its weight(). Similarly we can
-    call isSmoothlyScalable(), isScalable() and isFixedPitch().
+    call isScalable() and isFixedPitch().
 
     Use the styleString() to obtain a text version of a style.
 
@@ -821,13 +819,13 @@ bool QFontDatabase::isFixedPitch(const QString &family, const QString &style) co
 
 /*!
     Returns true if the font that has family \a family and style \a
-    style is smoothly scalable; otherwise returns false. If this
+    style is scalable; otherwise returns false. If this
     function returns true, it's safe to scale this font to any size,
-    and the result will always look attractive.
+    and the result will always look attractive.s
 
-    \sa isScalable()
+    \sa isFixedPitch()
 */
-bool QFontDatabase::isSmoothlyScalable(const QString &family, const QString &style) const
+bool QFontDatabase::isScalable(const QString &family, const QString &style) const
 {
     QString parsedfamily, parsedfoundry;
     QFontDatabasePrivate::parseFontName(family, parsedfoundry, parsedfamily);
@@ -848,39 +846,15 @@ bool QFontDatabase::isSmoothlyScalable(const QString &family, const QString &sty
 }
 
 /*!
-    Returns true if the font that has family \a family and style \a
-    style is scalable; otherwise returns false.
-
-    \sa isSmoothlyScalable()
-*/
-bool QFontDatabase::isScalable(const QString &family, const QString &style) const
-{
-    return isSmoothlyScalable(family, style);
-}
-
-/*!
     Returns a list of the point sizes available for the font with the
     given \a family and \a style. The list may be empty.
 
-    \sa smoothSizes(), standardSizes()
+    \sa standardSizes()
 */
 QList<int> QFontDatabase::pointSizes(const QString &family, const QString &style)
 {
-    return smoothSizes(family, style);
-}
-
-/*!
-    Returns the point sizes of a font with the given \a family and \a style
-    that will look attractive. The list may be empty.
-    For non-scalable fonts and bitmap scalable fonts, this function
-    is equivalent to pointSizes().
-
-    \sa pointSizes(), standardSizes()
-*/
-QList<int> QFontDatabase::smoothSizes(const QString &family, const QString &style)
-{
     QList<int> result;
-    if (isSmoothlyScalable(family, style)) {
+    if (isScalable(family, style)) {
         result = standardSizes();
     }
     return result;
@@ -984,7 +958,6 @@ int QFontDatabase::weight(const QString &family, const QString &style) const
     return result;
 }
 
-
 /*!
     Returns true if font \a family is available, false otherwise. Aliases
     such as "Sans Serif" are resolved.
@@ -1011,7 +984,7 @@ bool QFontDatabase::hasFamily(const QString &family) const
 /*!
     Returns a list of standard font sizes.
 
-    \sa smoothSizes(), pointSizes()
+    \sa pointSizes()
 */
 QList<int> QFontDatabase::standardSizes()
 {

@@ -117,7 +117,7 @@ void tst_QFontMetrics::metrics()
         for (s_it = styles.constBegin(); s_it != s_end; ++s_it) {
             const QString &style = *s_it;
 
-            if (fdb.isSmoothlyScalable(family, style)) {
+            if (fdb.isScalable(family, style)) {
                 // smoothly scalable font... don't need to load every pointsize
                 font = fdb.font(family, style, 12);
 

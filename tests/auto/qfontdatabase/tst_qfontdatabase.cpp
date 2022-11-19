@@ -59,9 +59,9 @@ void QFontDatabaseThread::run()
     const QString fontfamily("FreeSans");
     const QString fontstyle("Bold");
 
-    (void)QFontDatabase().isSmoothlyScalable(fontfamily, fontstyle);
     (void)QFontDatabase().isScalable(fontfamily, fontstyle);
     (void)QFontDatabase().isFixedPitch(fontfamily, fontstyle);
+    (void)QFontDatabase().pointSizes(fontfamily, fontstyle);
 }
 
 class tst_QFontDatabase : public QObject
@@ -304,7 +304,7 @@ void tst_QFontDatabase::caseInsensitive()
         QSKIP("Font not installed", SkipSingle);
     }
 
-    QVERIFY(!fdb.smoothSizes(font, style).isEmpty());
+    QVERIFY(!fdb.pointSizes(font, style).isEmpty());
 }
 
 QTEST_MAIN(tst_QFontDatabase)

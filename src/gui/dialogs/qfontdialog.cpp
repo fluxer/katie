@@ -524,7 +524,7 @@ void QFontDialogPrivate::updateStyles()
                 && styleList->hasFocus())
             styleEdit->selectAll();
 
-        smoothScalable = fdb.isSmoothlyScalable(familyList->currentText(), styleList->currentText());
+        smoothScalable = fdb.isScalable(familyList->currentText(), styleList->currentText());
     }
 
     updateSizes();

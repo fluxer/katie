@@ -43,13 +43,11 @@ public:
     QStringList families() const;
     QStringList styles(const QString &family) const;
     QList<int> pointSizes(const QString &family, const QString &style = QString());
-    QList<int> smoothSizes(const QString &family, const QString &style);
     QString styleString(const QFont &font) const;
     QString styleString(const QFontInfo &fontInfo) const;
 
     QFont font(const QString &family, const QString &style, int pointSize) const;
 
-    bool isSmoothlyScalable(const QString &family, const QString &style = QString()) const;
     bool isScalable(const QString &family, const QString &style = QString()) const;
     bool isFixedPitch(const QString &family, const QString &style = QString()) const;
 

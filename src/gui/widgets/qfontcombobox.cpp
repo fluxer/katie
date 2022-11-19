@@ -51,6 +51,7 @@ public:
 
     QIcon truetype;
     QIcon bitmap;
+    QFontDatabase fdb;
 };
 
 QFontFamilyDelegate::QFontFamilyDelegate(QObject *parent)
@@ -80,7 +81,7 @@ void QFontFamilyDelegate::paint(QPainter *painter,
     }
 
     const QIcon *icon = &bitmap;
-    if (QFontDatabase().isSmoothlyScalable(text)) {
+    if (fdb.isScalable(text)) {
         icon = &truetype;
     }
     QSize actualSize = icon->actualSize(r.size());
@@ -149,7 +150,7 @@ void QFontComboBoxPrivate::_q_updateModel()
 
     for (int i = 0; i < list.size(); ++i) {
         if ((filters & scalableMask) && (filters & scalableMask) != scalableMask) {
-            if (bool(filters & QFontComboBox::ScalableFonts) != fdb.isSmoothlyScalable(list.at(i)))
+            if (bool(filters & QFontComboBox::ScalableFonts) != fdb.isScalable(list.at(i)))
                 continue;
         }
         if ((filters & spacingMask) && (filters & spacingMask) != spacingMask) {
