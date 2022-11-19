@@ -32,6 +32,8 @@ QT_USE_NAMESPACE
 #define QFILE_BENCH_FACTOR 1024*512
 #define QFILE_BENCH_TF_SIZE QFILE_BENCH_FACTOR*81
 
+#ifndef QT_NO_TEMPORARYFILE
+
 // 10 predefined (but random() seek positions
 // hardcoded to be comparable over several runs
 const int seekpos[] = {int(QFILE_BENCH_TF_SIZE*0.52),
@@ -49,8 +51,8 @@ const int sp_size = sizeof(seekpos)/sizeof(int);
 
 class tst_qfile: public QObject
 {
-Q_ENUMS(BenchmarkType)
-Q_OBJECT
+    Q_ENUMS(BenchmarkType)
+    Q_OBJECT
 public:
     enum BenchmarkType {
         QFileBenchmark = 1,
@@ -539,3 +541,9 @@ void tst_qfile::writeFileSequentialWithSeeks()
 QTEST_MAIN(tst_qfile)
 
 #include "moc_main.cpp"
+
+#else // QT_NO_TEMPORARYFILE
+
+QTEST_NOOP_MAIN
+
+#endif // QT_NO_TEMPORARYFILE

@@ -19,7 +19,6 @@
 **
 ****************************************************************************/
 
-
 #include <QtTest/QtTest>
 #include <qcoreapplication.h>
 #include <qstring.h>
@@ -37,6 +36,8 @@
 
 //TESTED_CLASS=
 //TESTED_FILES=
+
+#ifndef QT_NO_TEMPORARYFILE
 
 class tst_QTemporaryFile : public QObject
 {
@@ -587,3 +588,9 @@ void tst_QTemporaryFile::fileTemplate()
 QTEST_MAIN(tst_QTemporaryFile)
 
 #include "moc_tst_qtemporaryfile.cpp"
+
+#else // QT_NO_TEMPORARYFILE
+
+QTEST_NOOP_MAIN
+
+#endif // QT_NO_TEMPORARYFILE

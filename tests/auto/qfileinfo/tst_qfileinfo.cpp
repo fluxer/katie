@@ -177,6 +177,7 @@ static QFileInfoPrivate* getPrivate(QFileInfo &info)
 
 void tst_QFileInfo::copy()
 {
+#ifndef QT_NO_TEMPORARYFILE
     QTemporaryFile t;
     t.open();
     QFileInfo info(t.fileName());
@@ -206,6 +207,9 @@ void tst_QFileInfo::copy()
     QVERIFY(privateInfo != privateInfo3);
     QVERIFY(privateInfo2 != privateInfo3);
     QCOMPARE(privateInfo, privateInfo2);
+#else // QT_NO_TEMPORARYFILE
+    QSKIP("Katie compiled without temporary file support (QT_NO_TEMPORARYFILE)", SkipAll);
+#endif // QT_NO_TEMPORARYFILE
 }
 
 void tst_QFileInfo::isFile_data()
@@ -368,11 +372,15 @@ void tst_QFileInfo::absFilePath()
 
 void tst_QFileInfo::canonicalPath()
 {
+#ifndef QT_NO_TEMPORARYFILE
     QTemporaryFile tempFile;
     tempFile.setAutoRemove(true);
     tempFile.open();
     QFileInfo fi(tempFile.fileName());
     QCOMPARE(fi.canonicalPath(), QFileInfo(QDir::tempPath()).canonicalFilePath());
+#else // QT_NO_TEMPORARYFILE
+    QSKIP("Katie compiled without temporary file support (QT_NO_TEMPORARYFILE)", SkipAll);
+#endif // QT_NO_TEMPORARYFILE
 }
 
 void tst_QFileInfo::canonicalFilePath()

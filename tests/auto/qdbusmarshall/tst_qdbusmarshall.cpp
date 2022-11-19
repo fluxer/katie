@@ -97,7 +97,11 @@ private:
     int fileDescriptorForTest();
 
     QProcess proc;
+#ifndef QT_NO_TEMPORARYFILE
     QTemporaryFile tempFile;
+#else
+    QFile file;
+#endif
     bool fileDescriptorPassing;
 };
 
@@ -150,11 +154,18 @@ void tst_QDBusMarshall::cleanupTestCase()
 
 int tst_QDBusMarshall::fileDescriptorForTest()
 {
+#ifndef QT_NO_TEMPORARYFILE
     if (!tempFile.isOpen()) {
         tempFile.setFileTemplate(QDir::tempPath() + "/qdbusmarshalltestXXXXXX.tmp");
         tempFile.open();
     }
     return tempFile.handle();
+#else
+    if (!file.isOpen()) {
+        file.open(STDERR_FILENO, QFile::ReadOnly);
+    }
+    return file.handle();
+#endif
 }
 
 void addBasicTypesColumns()

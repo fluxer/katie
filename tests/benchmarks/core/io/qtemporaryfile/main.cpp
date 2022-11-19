@@ -27,6 +27,8 @@
 
 QT_USE_NAMESPACE
 
+#ifndef QT_NO_TEMPORARYFILE
+
 class tst_qtemporaryfile : public QObject
 {
     Q_OBJECT
@@ -82,3 +84,9 @@ void tst_qtemporaryfile::readwrite()
 QTEST_MAIN(tst_qtemporaryfile)
 
 #include "moc_main.cpp"
+
+#else // QT_NO_TEMPORARYFILE
+
+QTEST_NOOP_MAIN
+
+#endif // QT_NO_TEMPORARYFILE

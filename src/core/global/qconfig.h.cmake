@@ -139,7 +139,6 @@
 // #cmakedefine QT_NO_TABWIDGET
 // #cmakedefine QT_NO_TABLEVIEW
 // #cmakedefine QT_NO_TABLEWIDGET
-// #cmakedefine QT_NO_TEMPORARYFILE
 // #cmakedefine QT_NO_TEXTCONTROL
 // #cmakedefine QT_NO_TEXTEDIT
 // #cmakedefine QT_NO_TEXTHTMLPARSER
@@ -205,6 +204,7 @@
 #cmakedefine QT_NO_STYLE_WINDOWS
 #cmakedefine QT_NO_SYNTAXHIGHLIGHTER
 #cmakedefine QT_NO_SYSTEMTRAYICON
+#cmakedefine QT_NO_TEMPORARYFILE
 #cmakedefine QT_NO_TEXTBROWSER
 #cmakedefine QT_NO_UDPSOCKET
 #cmakedefine QT_NO_UNDOGROUP
