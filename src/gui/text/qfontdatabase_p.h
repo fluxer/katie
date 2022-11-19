@@ -33,25 +33,9 @@
 // We mean it.
 //
 
-#include "qstdcontainers_p.h"
 #include "qfontengine_p.h"
 
 QT_BEGIN_NAMESPACE
-
-struct QFontFamily
-{
-    QString family;
-    QString foundry;
-    QString style;
-    int weight;
-
-    short preference;
-    bool operator<(const QFontFamily &other) const
-    {
-        // qDebug() << Q_FUNC_INFO << preference << other.preference;
-        return (preference >= other.preference);
-    }
-};
 
 class QFontDatabasePrivate
 {
