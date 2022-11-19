@@ -86,6 +86,9 @@ private slots:
 
     void fontInfo_data();
     void fontInfo();
+
+    void caseInsensitive_data();
+    void caseInsensitive();
 };
 
 void tst_QFontDatabase::styles_data()
@@ -273,6 +276,35 @@ void tst_QFontDatabase::fontInfo()
     QCOMPARE(fdbfont.weight(), fi.weight());
     QCOMPARE(fdbfont.bold(), fi.bold());
     QCOMPARE(fdbfont.fixedPitch(), fi.fixedPitch());
+}
+
+void tst_QFontDatabase::caseInsensitive_data()
+{
+    QTest::addColumn<QString>("font");
+    QTest::addColumn<QString>("style");
+
+    // actual font families
+    QTest::newRow("FreeSans") << QString("FreeSans") << QString("rEGular");
+    QTest::newRow("freeSans [gNu ]") << QString("freeSans [gNu ]") << QString("obLique");
+    QTest::newRow("freeMono") << QString("freeMono") << QString("BOLD");
+    // aliases
+    QTest::newRow("sans serif") << QString("sans serif") << QString("bold");
+    QTest::newRow("MoNoSpAcE") << QString("MoNoSpAcE") << QString("BoLd");
+}
+
+
+void tst_QFontDatabase::caseInsensitive()
+{
+    QFETCH(QString, font);
+    QFETCH(QString, style);
+
+    QFontDatabase fdb;
+    // qDebug() << fdb.families();
+    if (!fdb.hasFamily(font)) {
+        QSKIP("Font not installed", SkipSingle);
+    }
+
+    QVERIFY(!fdb.smoothSizes(font, style).isEmpty());
 }
 
 QTEST_MAIN(tst_QFontDatabase)
