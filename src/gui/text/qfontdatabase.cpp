@@ -74,6 +74,10 @@ static inline bool isStyleMatch(const QString &style, const QString &otherstyle)
     return false;
 }
 
+static inline bool isWeightBold(const int weight)
+{
+    return (weight >= FC_WEIGHT_BOLD); // or FC_WEIGHT_DEMIBOLD?
+}
 
 static double qt_pixelSize(double pointSize, int dpi)
 {
@@ -668,7 +672,6 @@ QFontDatabase::QFontDatabase()
         fontfamily.style = QString::fromUtf8((const char *)style_value);
         fontfamily.fixedpitch = (spacing_value >= FC_MONO);
         fontfamily.italic = (slant_value >= FC_SLANT_ITALIC);
-        fontfamily.bold = (weight_value >= FC_WEIGHT_BOLD); // or FC_WEIGHT_DEMIBOLD?
         fontfamily.weight = weight_value;
         fontfamily.pixelsize = pixelsize_value;
         fontfamily.preference = -weight_value;
@@ -856,13 +859,25 @@ bool QFontDatabase::isScalable(const QString &family, const QString &style) cons
 }
 
 /*!
-    \fn QList<int> QFontDatabase::pointSizes(const QString &family, const QString &style)
     Returns a list of the point sizes available for the font with the
     given \a family and \a style. The list may be empty.
 
     \sa smoothSizes(), standardSizes()
 */
 QList<int> QFontDatabase::pointSizes(const QString &family, const QString &style)
+{
+    return smoothSizes(family, style);
+}
+
+/*!
+    Returns the point sizes of a font with the given \a family and \a style
+    that will look attractive. The list may be empty.
+    For non-scalable fonts and bitmap scalable fonts, this function
+    is equivalent to pointSizes().
+
+    \sa pointSizes(), standardSizes()
+*/
+QList<int> QFontDatabase::smoothSizes(const QString &family, const QString &style)
 {
     QString parsedfamily, parsedfoundry;
     QFontDatabasePrivate::parseFontName(family, parsedfoundry, parsedfamily);
@@ -906,40 +921,11 @@ QFont QFontDatabase::font(const QString &family, const QString &style,
 
         result = QFont(fontfamily.family, pointSize, fontfamily.weight, fontfamily.italic);
         result.setStyleName(fontfamily.style);
-        result.setBold(fontfamily.bold);
+        result.setBold(isWeightBold(fontfamily.weight));
         result.setFixedPitch(fontfamily.fixedpitch);
         if (fontfamily.pixelsize != -1) {
             result.setPixelSize(fontfamily.pixelsize);
         }
-        break;
-    }
-    return result;
-}
-
-/*!
-    \fn QList<int> QFontDatabase::smoothSizes(const QString &family, const QString &style)
-    Returns the point sizes of a font with the given \a family and \a style
-    that will look attractive. The list may be empty.
-    For non-scalable fonts and bitmap scalable fonts, this function
-    is equivalent to pointSizes().
-
-  \sa pointSizes(), standardSizes()
-*/
-QList<int> QFontDatabase::smoothSizes(const QString &family, const QString &style)
-{
-    QString parsedfamily, parsedfoundry;
-    QFontDatabasePrivate::parseFontName(family, parsedfoundry, parsedfamily);
-
-    const QString familyalias = QFontDatabasePrivate::resolveFontFamilyAlias(parsedfamily);
-
-    QList<int> result;
-    foreach (const QFontFamily &fontfamily, d_ptr->fontfamilies) {
-        if (fontfamily.family.compare(familyalias, Qt::CaseInsensitive) != 0
-            || (!parsedfoundry.isEmpty() && fontfamily.foundry.compare(parsedfoundry, Qt::CaseInsensitive) != 0)
-            || (!style.isEmpty() && !isStyleMatch(fontfamily.style, style))) {
-            continue;
-        }
-        result = standardSizes();
         break;
     }
     return result;
@@ -980,24 +966,8 @@ bool QFontDatabase::italic(const QString &family, const QString &style) const
 */
 bool QFontDatabase::bold(const QString &family, const QString &style) const
 {
-    QString parsedfamily, parsedfoundry;
-    QFontDatabasePrivate::parseFontName(family, parsedfoundry, parsedfamily);
-
-    const QString familyalias = QFontDatabasePrivate::resolveFontFamilyAlias(parsedfamily);
-
-    bool result = false;
-    foreach (const QFontFamily &fontfamily, d_ptr->fontfamilies) {
-        if (fontfamily.family.compare(familyalias, Qt::CaseInsensitive) != 0
-            || (!parsedfoundry.isEmpty() && fontfamily.foundry.compare(parsedfoundry, Qt::CaseInsensitive) != 0)
-            || (!style.isEmpty() && !isStyleMatch(fontfamily.style, style))) {
-            continue;
-        }
-        result = fontfamily.bold;
-        break;
-    }
-    return result;
+    return isWeightBold(weight(family, style));
 }
-
 
 /*!
     Returns the weight of the font that has family \a family and style

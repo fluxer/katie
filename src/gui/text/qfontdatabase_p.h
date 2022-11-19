@@ -45,7 +45,6 @@ struct QFontFamily
     QString style;
     bool fixedpitch;
     bool italic;
-    bool bold;
     int weight;
     double pixelsize;
 
