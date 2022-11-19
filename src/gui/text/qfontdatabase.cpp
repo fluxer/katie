@@ -79,7 +79,7 @@ static inline bool isWeightBold(const int weight)
     return (weight >= QFont::Bold); // or QFont::DemiBold?
 }
 
-static double qt_pixelSize(double pointSize, int dpi)
+static inline double qt_pixelSize(double pointSize, int dpi)
 {
     if (pointSize < 0)
         return -1.;
