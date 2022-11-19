@@ -879,20 +879,9 @@ QList<int> QFontDatabase::pointSizes(const QString &family, const QString &style
 */
 QList<int> QFontDatabase::smoothSizes(const QString &family, const QString &style)
 {
-    QString parsedfamily, parsedfoundry;
-    QFontDatabasePrivate::parseFontName(family, parsedfoundry, parsedfamily);
-
-    const QString familyalias = QFontDatabasePrivate::resolveFontFamilyAlias(parsedfamily);
-
     QList<int> result;
-    foreach (const QFontFamily &fontfamily, d_ptr->fontfamilies) {
-        if (fontfamily.family.compare(familyalias, Qt::CaseInsensitive) != 0
-            || (!parsedfoundry.isEmpty() && fontfamily.foundry.compare(parsedfoundry, Qt::CaseInsensitive) != 0)
-            || (!style.isEmpty() && !isStyleMatch(fontfamily.style, style))) {
-            continue;
-        }
+    if (isSmoothlyScalable(family, style)) {
         result = standardSizes();
-        break;
     }
     return result;
 }
@@ -956,7 +945,6 @@ bool QFontDatabase::italic(const QString &family, const QString &style) const
     }
     return result;
 }
-
 
 /*!
     Returns true if the font that has family \a family and style \a
