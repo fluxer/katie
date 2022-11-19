@@ -89,6 +89,9 @@ private slots:
 
     void caseInsensitive_data();
     void caseInsensitive();
+
+    void bold_data();
+    void bold();
 };
 
 void tst_QFontDatabase::styles_data()
@@ -292,7 +295,6 @@ void tst_QFontDatabase::caseInsensitive_data()
     QTest::newRow("MoNoSpAcE") << QString("MoNoSpAcE") << QString("BoLd");
 }
 
-
 void tst_QFontDatabase::caseInsensitive()
 {
     QFETCH(QString, font);
@@ -305,6 +307,37 @@ void tst_QFontDatabase::caseInsensitive()
     }
 
     QVERIFY(!fdb.pointSizes(font, style).isEmpty());
+}
+
+void tst_QFontDatabase::bold_data()
+{
+    QTest::addColumn<QString>("font");
+    QTest::addColumn<QString>("style");
+    QTest::addColumn<bool>("bold");
+
+    // actual font families
+    QTest::newRow("FreeSans") << QString("FreeSans") << QString("Regular") << false;
+    QTest::newRow("FreeSans [GNU ]") << QString("FreeSans [GNU ]") << QString("Oblique") << false;
+    QTest::newRow("FreeMono") << QString("FreeMono") << QString("Bold") << true;
+    // aliases
+    QTest::newRow("Sans Serif") << QString("Sans Serif") << QString("Bold") << true;
+    QTest::newRow("Monospace") << QString("Monospace") << QString("Bold") << true;
+}
+
+void tst_QFontDatabase::bold()
+{
+    QFETCH(QString, font);
+    QFETCH(QString, style);
+    QFETCH(bool, bold);
+
+    QFontDatabase fdb;
+    // qDebug() << fdb.families();
+    if (!fdb.hasFamily(font)) {
+        QSKIP("Font not installed", SkipSingle);
+    }
+
+    QVERIFY(!fdb.pointSizes(font, style).isEmpty());
+    QCOMPARE(fdb.bold(font, style), bold);
 }
 
 QTEST_MAIN(tst_QFontDatabase)

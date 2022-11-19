@@ -76,7 +76,7 @@ static inline bool isStyleMatch(const QString &style, const QString &otherstyle)
 
 static inline bool isWeightBold(const int weight)
 {
-    return (weight >= FC_WEIGHT_BOLD); // or FC_WEIGHT_DEMIBOLD?
+    return (weight >= QFont::Bold); // or QFont::DemiBold?
 }
 
 static double qt_pixelSize(double pointSize, int dpi)
@@ -670,7 +670,7 @@ QFontDatabase::QFontDatabase()
         fontfamily.style = QString::fromUtf8((const char *)style_value);
         fontfamily.fixedpitch = (spacing_value >= FC_MONO);
         fontfamily.italic = (slant_value >= FC_SLANT_ITALIC);
-        fontfamily.weight = weight_value;
+        fontfamily.weight = getFCWeight(weight_value);
         fontfamily.pixelsize = pixelsize_value;
         fontfamily.preference = -weight_value;
 
