@@ -154,7 +154,6 @@
 // #cmakedefine QT_NO_UNDOSTACK
 // #cmakedefine QT_NO_VALIDATOR
 // #cmakedefine QT_NO_VECTOR4D
-// #cmakedefine QT_NO_WIZARD
 // #cmakedefine QT_NO_XMLSTREAM
 // #cmakedefine QT_NO_XMLSTREAMREADER
 // #cmakedefine QT_NO_XMLSTREAMWRITER
@@ -214,6 +213,7 @@
 #cmakedefine QT_NO_VECTOR2D
 #cmakedefine QT_NO_WHATSTHIS
 #cmakedefine QT_NO_WHEELEVENT
+#cmakedefine QT_NO_WIZARD
 
 // Debugging
 #if defined(QT_NO_TEXTSTREAM) && !defined(QT_NO_DEBUG_STREAM)
