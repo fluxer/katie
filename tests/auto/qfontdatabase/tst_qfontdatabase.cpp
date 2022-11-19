@@ -223,7 +223,7 @@ void tst_QFontDatabase::threadSafety()
     if (threadmax > 10) {
         s_threadcount = (threadmax - 10);
     }
-    qDebug("Starting %d threads (max %d)", s_threadcount, threadmax);
+    qDebug("Starting %d threads (max %ld)", s_threadcount, threadmax);
 #else
     qDebug("Starting %d threads", s_threadcount);
 #endif
