@@ -707,7 +707,7 @@ QFontDatabase::~QFontDatabase()
     example, "Bold Italic", "Bold", "Italic" or "Regular". An empty
     string may be returned.
 */
-QString QFontDatabase::styleString(const QFont &font)
+QString QFontDatabase::styleString(const QFont &font) const
 {
     QString result = font.styleName();
     if (result.isEmpty()) {
@@ -721,7 +721,7 @@ QString QFontDatabase::styleString(const QFont &font)
     example, "Bold Italic", "Bold", "Italic" or "Regular". An empty
     string may be returned.
 */
-QString QFontDatabase::styleString(const QFontInfo &fontInfo)
+QString QFontDatabase::styleString(const QFontInfo &fontInfo) const
 {
     QString result = fontInfo.styleName();
     if (result.isEmpty()) {

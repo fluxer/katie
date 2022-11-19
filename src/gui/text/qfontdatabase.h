@@ -44,8 +44,8 @@ public:
     QStringList styles(const QString &family) const;
     QList<int> pointSizes(const QString &family, const QString &style = QString());
     QList<int> smoothSizes(const QString &family, const QString &style);
-    QString styleString(const QFont &font);
-    QString styleString(const QFontInfo &fontInfo);
+    QString styleString(const QFont &font) const;
+    QString styleString(const QFontInfo &fontInfo) const;
 
     QFont font(const QString &family, const QString &style, int pointSize) const;
 
