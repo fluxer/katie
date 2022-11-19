@@ -43,10 +43,7 @@ struct QFontFamily
     QString family;
     QString foundry;
     QString style;
-    bool fixedpitch;
-    bool italic;
     int weight;
-    double pixelsize;
 
     short preference;
     bool operator<(const QFontFamily &other) const
@@ -60,10 +57,7 @@ class QFontDatabasePrivate
 {
 public:
     static void parseFontName(const QString &name, QString &foundry, QString &family);
-    static QString resolveFontFamilyAlias(const QString &family);
     static QFontEngine* load(const QFontPrivate *d, int script);
-
-    QStdVector<QFontFamily> fontfamilies;
 };
 
 QT_END_NAMESPACE

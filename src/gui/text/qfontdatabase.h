@@ -32,7 +32,6 @@ QT_BEGIN_NAMESPACE
 class QFontInfo;
 class QStringList;
 template <class T> class QList;
-class QFontDatabasePrivate;
 
 class Q_GUI_EXPORT QFontDatabase
 {
@@ -60,10 +59,6 @@ public:
     static QList<int> standardSizes();
 
     static bool supportsThreadedFontRendering();
-
-private:
-    Q_DISABLE_COPY(QFontDatabase);
-    QFontDatabasePrivate *d_ptr;
 };
 
 QT_END_NAMESPACE

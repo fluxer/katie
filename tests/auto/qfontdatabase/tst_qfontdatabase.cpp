@@ -307,6 +307,7 @@ void tst_QFontDatabase::caseInsensitive()
     }
 
     QVERIFY(!fdb.pointSizes(font, style).isEmpty());
+    QVERIFY(!fdb.styles(font).isEmpty());
 }
 
 void tst_QFontDatabase::bold_data()
