@@ -196,11 +196,11 @@ static FcPattern* patternForFont(const QString &family, const QString &style)
         FcPatternAddString(pattern, FC_STYLE, (const FcChar8 *) cs.constData());
     }
 
-    FcConfigSubstitute(0, pattern, FcMatchPattern);
+    FcConfigSubstitute(NULL, pattern, FcMatchPattern);
     FcDefaultSubstitute(pattern);
 
     FcResult unused;
-    FcPattern *match = FcFontMatch(0, pattern, &unused);
+    FcPattern *match = FcFontMatch(NULL, pattern, &unused);
     if (match) {
         FcPatternDestroy(pattern);
         return match;
@@ -618,7 +618,8 @@ QFontDatabase::QFontDatabase()
     Q_ASSERT_X(int(QUnicodeTables::ScriptCount) == SpecialCharCount,
                "QFontDatabase", "New scripts have been added.");
 
-    FcInitBringUptoDate();
+    (void)FcInitBringUptoDate();
+
 #ifdef QFONTDATABASE_DEBUG
     FD_DEBUG("QFontDatabase: loaded FontConfig: %d ms", int(elapsedtimer.elapsed()));
 #endif
@@ -728,7 +729,7 @@ QStringList QFontDatabase::families() const
         familieswithfoundryit++;
     }
     qSort(result);
-#endif
+#endif // QT_NO_FONTCONFIG
     return result;
 }
 
@@ -787,7 +788,7 @@ QStringList QFontDatabase::styles(const QString &family) const
     }
 
     FcPatternDestroy(pattern);
-#endif
+#endif // QT_NO_FONTCONFIG
     return result;
 }
 
@@ -818,7 +819,7 @@ bool QFontDatabase::isFixedPitch(const QString &family, const QString &style) co
     Returns true if the font that has family \a family and style \a
     style is scalable; otherwise returns false. If this
     function returns true, it's safe to scale this font to any size,
-    and the result will always look attractive.s
+    and the result will always look attractive.
 
     \sa isFixedPitch()
 */
@@ -836,7 +837,7 @@ bool QFontDatabase::isScalable(const QString &family, const QString &style) cons
     }
     FcPatternDestroy(pattern);
     result = (scalable_value == FcTrue);
-#endif
+#endif // QT_NO_FONTCONFIG
     return result;
 }
 
@@ -896,7 +897,7 @@ QFont QFontDatabase::font(const QString &family, const QString &style,
     if (pointSize <= 0 && pixelsize_value != -1) {
         result.setPixelSize(qRound(pixelsize_value));
     }
-#endif
+#endif // QT_NO_FONTCONFIG
     return result;
 }
 
@@ -956,7 +957,7 @@ int QFontDatabase::weight(const QString &family, const QString &style) const
     }
     FcPatternDestroy(pattern);
     result = getFCWeight(weight_value);
-#endif
+#endif // QT_NO_FONTCONFIG
     return result;
 }
 
@@ -974,7 +975,7 @@ bool QFontDatabase::hasFamily(const QString &family) const
     }
     FcPatternDestroy(pattern);
     result = true;
-#endif
+#endif // QT_NO_FONTCONFIG
     return result;
 }
 
@@ -1126,7 +1127,7 @@ QFontEngine* QFontDatabasePrivate::load(const QFontPrivate *d, int script)
         const QFont appFont = QApplication::font();
         fe = loadFc(appFont.d.data(), QUnicodeTables::Common, appFont.d->request);
     }
-#endif
+#endif // QT_NO_FONTCONFIG
 
     if (!fe) {
         fe = new QFontEngineBox(req.pixelSize);
