@@ -212,7 +212,7 @@ void tst_QFontDatabase::styleString()
         QSKIP("Font not installed", SkipSingle);
     }
 
-    QVERIFY(fdb.styleString(family) != QLatin1String("Normal"));
+    QVERIFY(fdb.styleString(family) != QLatin1String("Regular"));
 }
 
 void tst_QFontDatabase::threadSafety()
