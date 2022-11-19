@@ -757,9 +757,16 @@ QStringList QFontDatabase::styles(const QString &family) const
     FcChar8 *family_value = nullptr;
     FcPatternGetString(pattern, FC_FAMILY, 0, &family_value);
     const QString fontfamily = QString::fromUtf8((const char *)family_value);
+    FcPatternDestroy(pattern);
 
-    FcResult unused;
-    FcFontSet *fonts = FcFontSort(NULL, pattern, FcTrue, NULL, &unused);
+    pattern = FcPatternCreate();
+    if (Q_UNLIKELY(!pattern)) {
+        return result;
+    }
+
+    // the only way to get all font family styles is to query all fonts
+    FcFontSet *fonts = FcFontList(NULL, pattern, NULL);
+    FcPatternDestroy(pattern);
     if (fonts) {
         for (int i = 0; i < fonts->nfont; i++) {
             FcChar8 *style_value = nullptr;
@@ -788,7 +795,22 @@ QStringList QFontDatabase::styles(const QString &family) const
         FcFontSetDestroy(fonts);
     }
 
-    FcPatternDestroy(pattern);
+    // manual sorting
+    static const QString regularfontstyle("Regular");
+    static const QString bookfontstyle("Book");
+    static const QString romanfontstyle("Roman");
+    int prioritystyleindex = result.indexOf(romanfontstyle);
+    if (prioritystyleindex > 0) {
+        result.move(prioritystyleindex, 0);
+    }
+    prioritystyleindex = result.indexOf(bookfontstyle);
+    if (prioritystyleindex > 0) {
+        result.move(prioritystyleindex, 0);
+    }
+    prioritystyleindex = result.indexOf(regularfontstyle);
+    if (prioritystyleindex > 0) {
+        result.move(prioritystyleindex, 0);
+    }
 #endif // QT_NO_FONTCONFIG
     return result;
 }
