@@ -714,6 +714,7 @@ QStringList QFontDatabase::families() const
         const QString fontfoundry = QString::fromUtf8((const char *)foundry_value);
         familieswithfoundry[fontfamily].append(fontfoundry);
     }
+    FcFontSetDestroy(fonts);
 
     QMap<QString,QStringList>::const_iterator familieswithfoundryit = familieswithfoundry.constBegin();
     while (familieswithfoundryit != familieswithfoundry.constEnd()) {

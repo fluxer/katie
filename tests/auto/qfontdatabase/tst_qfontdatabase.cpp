@@ -59,6 +59,8 @@ void QFontDatabaseThread::run()
     const QString fontfamily("FreeSans");
     const QString fontstyle("Bold");
 
+    (void)QFontDatabase().families();
+    (void)QFontDatabase().styles(fontfamily);
     (void)QFontDatabase().isScalable(fontfamily, fontstyle);
     (void)QFontDatabase().isFixedPitch(fontfamily, fontstyle);
     (void)QFontDatabase().pointSizes(fontfamily, fontstyle);
