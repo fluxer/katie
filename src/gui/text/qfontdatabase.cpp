@@ -171,7 +171,7 @@ static QFontDef qt_FcPatternToQFontDef(FcPattern *pattern, const QFontDef &reque
 
 static FcPattern* patternForFont(const QString &family, const QString &style)
 {
-    if (!qt_x11Data->has_fontconfig) {
+    if (!qt_x11Data || !qt_x11Data->has_fontconfig) {
         return nullptr;
     }
 
@@ -381,7 +381,7 @@ enum { SpecialCharCount = sizeof(specialCharsTbl) / sizeof(uint) };
 // --------------------------------------------------------------------------------------
 static FcPattern *getFcPattern(const QFontPrivate *fp, const QFontDef &request)
 {
-    if (!qt_x11Data->has_fontconfig) {
+    if (!qt_x11Data || !qt_x11Data->has_fontconfig) {
         return nullptr;
     }
 
@@ -1024,7 +1024,7 @@ bool QFontDatabase::supportsThreadedFontRendering()
 #if defined(QT_NO_FONTCONFIG)
     return false;
 #else
-    return qt_x11Data->has_fontconfig;
+    return (qt_x11Data && qt_x11Data->has_fontconfig);
 #endif
 }
 

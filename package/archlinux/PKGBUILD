@@ -3,7 +3,7 @@
 # https://wiki.archlinux.org/index.php/Arch_package_guidelines
 
 pkgname=katie-git
-pkgver=4.12.0.r7788.ac19ddd82
+pkgver=4.12.0.r7809.51bb04664
 pkgrel=1
 pkgdesc='C++ toolkit derived from the Qt 4.8 framework'
 arch=('i486' 'i686' 'pentium4' 'x86_64' 'arm')
