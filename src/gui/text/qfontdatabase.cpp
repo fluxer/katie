@@ -23,6 +23,7 @@
 #include "qfontdatabase_p.h"
 #include "qdebug.h"
 #include "qalgorithms.h"
+#include "qelapsedtimer.h"
 #include "qapplication.h"
 #include "qunicodetables_p.h"
 #include "qfontengine_p.h"
@@ -169,7 +170,7 @@ static QFontDef qt_FcPatternToQFontDef(FcPattern *pattern, const QFontDef &reque
     return fontDef;
 }
 
-static FcPattern* patternForFont(const QString &family, const QString &style)
+static FcPattern* patternForFont(const QString &family, const QString &style, const bool resolve = true)
 {
     if (!qt_x11Data || !qt_x11Data->has_fontconfig) {
         return nullptr;
@@ -196,15 +197,18 @@ static FcPattern* patternForFont(const QString &family, const QString &style)
         FcPatternAddString(pattern, FC_STYLE, (const FcChar8 *) cs.constData());
     }
 
-    FcConfigSubstitute(NULL, pattern, FcMatchPattern);
-    FcDefaultSubstitute(pattern);
+    if (resolve) {
+        FcConfigSubstitute(NULL, pattern, FcMatchPattern);
+        FcDefaultSubstitute(pattern);
 
-    FcResult unused;
-    FcPattern *match = FcFontMatch(NULL, pattern, &unused);
-    if (match) {
-        FcPatternDestroy(pattern);
-        return match;
+        FcResult unused;
+        FcPattern *match = FcFontMatch(NULL, pattern, &unused);
+        if (match) {
+            FcPatternDestroy(pattern);
+            return match;
+        }
     }
+
     return pattern;
 }
 
@@ -379,27 +383,11 @@ enum { SpecialCharCount = sizeof(specialCharsTbl) / sizeof(uint) };
 // --------------------------------------------------------------------------------------
 // font loader
 // --------------------------------------------------------------------------------------
-static FcPattern *getFcPattern(const QFontPrivate *fp, const QFontDef &request)
+static FcPattern* patternForRequest(const QFontDef &request)
 {
-    if (!qt_x11Data || !qt_x11Data->has_fontconfig) {
-        return nullptr;
-    }
-
-    FcPattern *pattern = FcPatternCreate();
+    FcPattern *pattern = patternForFont(request.family, request.styleName, false);
     if (Q_UNLIKELY(!pattern)) {
         return nullptr;
-    }
-
-    QString family, foundry;
-    QFontDatabasePrivate::parseFontName(request.family, foundry, family);
-
-    if (!family.isEmpty()) {
-        QByteArray cs = family.toUtf8();
-        FcPatternAddString(pattern, FC_FAMILY, (const FcChar8 *)cs.constData());
-    }
-    if (!foundry.isEmpty()) {
-        QByteArray cs = foundry.toUtf8();
-        FcPatternAddString(pattern, FC_FOUNDRY, (const FcChar8 *)cs.constData());
     }
 
     if (!request.ignorePitch) {
@@ -415,10 +403,7 @@ static FcPattern *getFcPattern(const QFontPrivate *fp, const QFontDef &request)
     const double size_value = qMax(qreal(1.), request.pixelSize);
     FcPatternAddDouble(pattern, FC_PIXEL_SIZE, size_value);
 
-    if (!request.styleName.isEmpty()) {
-        const QByteArray cs = request.styleName.toUtf8();
-        FcPatternAddString(pattern, FC_STYLE, (const FcChar8 *)cs.constData());
-    } else {
+    if (request.styleName.isEmpty()) {
         int weight_value = FC_WEIGHT_BLACK;
         if (request.weight == 0)
             weight_value = FC_WEIGHT_MEDIUM;
@@ -445,7 +430,7 @@ static FcPattern *getFcPattern(const QFontPrivate *fp, const QFontDef &request)
         FcPatternAddInteger(pattern, FC_WIDTH, stretch);
     }
 
-    FcConfigSubstitute(0, pattern, FcMatchPattern);
+    FcConfigSubstitute(NULL, pattern, FcMatchPattern);
     FcDefaultSubstitute(pattern);
 
     return pattern;
@@ -489,10 +474,10 @@ static QFontEngine *tryPatternLoad(FcPattern *match,
     return engine;
 }
 
-static QFontEngine *loadFc(const QFontPrivate *fp, QUnicodeTables::Script script, const QFontDef &request)
+static QFontEngine *loadFc(QUnicodeTables::Script script, const QFontDef &request)
 {
     FM_DEBUG("===================== loadFc: script=%d family='%s'\n", script, request.family.toLatin1().constData());
-    FcPattern *pattern = getFcPattern(fp, request);
+    FcPattern *pattern = patternForRequest(request);
 
 #ifdef FONT_MATCH_DEBUG
     FM_DEBUG("\n\nfinal FcPattern contains:\n");
@@ -1143,12 +1128,12 @@ QFontEngine* QFontDatabasePrivate::load(const QFontPrivate *d, int script)
 
 #ifndef QT_NO_FONTCONFIG
     if (!fe && qt_x11Data->has_fontconfig) {
-        fe = loadFc(d, static_cast<QUnicodeTables::Script>(script), req);
+        fe = loadFc(static_cast<QUnicodeTables::Script>(script), req);
     }
 
     if (!fe && qt_x11Data->has_fontconfig) {
         const QFont appFont = QApplication::font();
-        fe = loadFc(appFont.d.data(), QUnicodeTables::Common, appFont.d->request);
+        fe = loadFc(QUnicodeTables::Common, appFont.d->request);
     }
 #endif // QT_NO_FONTCONFIG
 
