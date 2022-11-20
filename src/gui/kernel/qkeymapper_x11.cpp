@@ -24,6 +24,7 @@
 #include "qtextcodec.h"
 #include "qkeymapper_p.h"
 #include "qapplication_p.h"
+#include "qtextcodec_p.h"
 #include "qcorecommon_p.h"
 #include "qt_x11_p.h"
 
@@ -36,7 +37,7 @@ extern bool qt_sendSpontaneousEvent(QObject*, QEvent*);
 
 QKeyMapper::QKeyMapper()
     : keyboardInputDirection(Qt::LeftToRight),
-    keyMapperCodec(QTextCodec::codecForLocale())
+    keyMapperCodec(nullptr)
 {
     clearMappings();
 }
@@ -51,34 +52,10 @@ void QKeyMapper::clearMappings()
     // to return the locale set via environment variable
     setlocale(LC_CTYPE, "");
 
-    XIM im = XOpenIM(qt_x11Data->display, NULL, NULL, NULL);
-    if (!im) {
-        keyMapperCodec = QTextCodec::codecForLocale();
-        keyboardInputLocale = QLocale::system();
-        return;
-    }
-    const QString imlocale = QString::fromLatin1(XLocaleOfIM(im));
-    keyboardInputLocale = QLocale(imlocale);
-    XCloseIM(im);
-
+    // X11 is known to use whatever is set by setlocale() as input method locale
+    keyMapperCodec = QTextCodec::codecForName(qt_locale_codec());
+    keyboardInputLocale = QLocale::system();
     keyboardInputDirection = keyboardInputLocale.textDirection();
-
-    // X11 is known to use whatever is set by setlocale() as input method
-    // locale, setlocale() and XLocaleOfIM() return string in the form:
-    // language[_territory][.codeset][@modifier]
-    const int dotindex = imlocale.indexOf(QLatin1Char('.'));
-    if (dotindex >= 0) {
-        QByteArray codeset = imlocale.mid(dotindex + 1).toLatin1();
-        const int atindex = codeset.indexOf('@');
-        if (atindex >= 0) {
-            codeset = codeset.left(atindex);
-        }
-        keyMapperCodec = QTextCodec::codecForName(codeset.constData());
-    }
-
-    if (!keyMapperCodec) {
-        keyMapperCodec = QTextCodec::codecForLocale();
-    }
 }
 
 extern bool qt_sm_blockUserInput;

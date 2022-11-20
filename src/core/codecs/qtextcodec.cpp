@@ -974,6 +974,47 @@ static QByteArray checkForCodec(const QByteArray &name)
     return QByteArray();
 }
 
+QByteArray qt_locale_codec()
+{
+    if (!localecodec.isEmpty()) {
+        return localecodec;
+    }
+
+    // Get the first non-empty value from $LC_ALL, $LC_CTYPE, and $LANG
+    // environment variables.
+    QByteArray lang = qgetenv("LC_ALL");
+    if (lang.isEmpty()) {
+        lang = qgetenv("LC_CTYPE");
+    }
+    if (lang.isEmpty()) {
+        lang = qgetenv("LANG");
+    }
+
+    const int indexOfDot = lang.indexOf('.');
+    if (indexOfDot != -1) {
+        localecodec = checkForCodec(lang.mid(indexOfDot + 1));
+    }
+
+    if (localecodec.isEmpty() && !lang.isEmpty()) {
+        localecodec = checkForCodec(lang);
+    }
+
+    // Fallback to implementation-defined default locale
+    if (localecodec.isEmpty()) {
+        const QByteArray charset = ::nl_langinfo(CODESET); // deep copy
+        localecodec = checkForCodec(charset);
+    }
+
+    // nl_langinfo() is documented to return empty string only if its argument
+    // is not valid
+    if (Q_UNLIKELY(localecodec.isEmpty())) {
+        qFatal("Could not detect codec for locale");
+    }
+
+    return localecodec;
+}
+
+
 QTextCodecPrivate::QTextCodecPrivate(const QByteArray &aname)
     : name(aname)
 {
@@ -1035,46 +1076,6 @@ QList<int> QTextCodecPrivate::allMibs()
     }
 
     return allmibs;
-}
-
-QByteArray QTextCodecPrivate::localeCodec()
-{
-    if (!localecodec.isEmpty()) {
-        return localecodec;
-    }
-
-    // Get the first non-empty value from $LC_ALL, $LC_CTYPE, and $LANG
-    // environment variables.
-    QByteArray lang = qgetenv("LC_ALL");
-    if (lang.isEmpty()) {
-        lang = qgetenv("LC_CTYPE");
-    }
-    if (lang.isEmpty()) {
-        lang = qgetenv("LANG");
-    }
-
-    const int indexOfDot = lang.indexOf('.');
-    if (indexOfDot != -1) {
-        localecodec = checkForCodec(lang.mid(indexOfDot + 1));
-    }
-
-    if (localecodec.isEmpty() && !lang.isEmpty()) {
-        localecodec = checkForCodec(lang);
-    }
-
-    // Fallback to implementation-defined default locale
-    if (localecodec.isEmpty()) {
-        const QByteArray charset = ::nl_langinfo(CODESET); // deep copy
-        localecodec = checkForCodec(charset);
-    }
-
-    // nl_langinfo() is documented to return empty string only if its argument
-    // is not valid
-    if (Q_UNLIKELY(localecodec.isEmpty())) {
-        qFatal("Could not detect codec for locale");
-    }
-
-    return localecodec;
 }
 
 QString QTextCodecPrivate::convertTo(const char *data, int length, const char* const codec)
@@ -1533,7 +1534,7 @@ void QTextCodec::setCodecForLocale(QTextCodec *c)
     if (c) {
         localecodec = c->name();
     } else {
-        localecodec = QTextCodecPrivate::localeCodec();
+        localecodec = qt_locale_codec();
     }
 }
 
@@ -1544,7 +1545,7 @@ void QTextCodec::setCodecForLocale(QTextCodec *c)
 QTextCodec* QTextCodec::codecForLocale()
 {
     if (localecodec.isEmpty()) {
-        localecodec = QTextCodecPrivate::localeCodec();
+        localecodec = qt_locale_codec();
     }
     return QTextCodec::codecForName(localecodec);
 }

@@ -40,6 +40,9 @@
 
 QT_BEGIN_NAMESPACE
 
+// exported for QKeyMapper
+Q_CORE_EXPORT QByteArray qt_locale_codec();
+
 // always built for one-shot conversions in QString (for performance reasons
 // and because bootstrap requires it)
 class QTextCodecPrivate
@@ -50,8 +53,6 @@ public:
 
     static QList<QByteArray> allCodecs();
     static QList<int> allMibs();
-
-    static QByteArray localeCodec();
 
     static QString convertTo(const char *data, int len, const char* const codec);
     static QByteArray convertFrom(const QChar *unicode, int len, const char* const codec);

@@ -3181,7 +3181,7 @@ QByteArray QString::toAscii() const
 
 static inline QByteArray toLocal8Bit_helper(const QChar *data, int length)
 {
-    const QByteArray localecodec = QTextCodecPrivate::localeCodec();
+    const QByteArray localecodec = qt_locale_codec();
     return QTextCodecPrivate::convertFrom(data, length, localecodec.constData());
 }
 
@@ -3333,7 +3333,7 @@ QString QString::fromLocal8Bit(const char *str, int size)
 #if !defined(QT_NO_TEXTCODEC)
     if (size < 0)
         size = qstrlen(str);
-    const QByteArray localecodec = QTextCodecPrivate::localeCodec();
+    const QByteArray localecodec = qt_locale_codec();
     return QTextCodecPrivate::convertTo(str, size, localecodec.constData());
 #else
     return fromLatin1(str, size);
