@@ -253,8 +253,8 @@ bool QKeyMapper::translateKeyEvent(QWidget *keyWidget, const XEvent *event)
     }
 
     QKeyEvent e(type, code, modifiers,
-                  event->xkey.keycode, keysym, event->xkey.state,
-                  text, autorepeat, qMax(qMax(count, 1), text.length()));
+                event->xkey.keycode, keysym, event->xkey.state,
+                text, autorepeat, qMax(qMax(count, 1), text.length()));
     return qt_sendSpontaneousEvent(keyWidget, &e);
 }
 
