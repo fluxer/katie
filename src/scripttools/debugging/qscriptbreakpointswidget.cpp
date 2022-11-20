@@ -70,11 +70,7 @@ public:
         hboxLayout->addWidget(fileNameEdit);
 
         toolOk = new QToolButton(this);
-        pix.loadFromData(
-            scripttools_plus_png, scripttools_plus_png_len,
-            qt_images_format
-        );
-        toolOk->setIcon(QIcon(pix));
+        toolOk->setIcon(QIcon::fromTheme("list-add"));
         toolOk->setAutoRaise(true);
         toolOk->setEnabled(false);
         hboxLayout->addWidget(toolOk);
@@ -272,24 +268,11 @@ QScriptBreakpointsWidget::QScriptBreakpointsWidget(QWidget *parent)
     QObject::connect(d->newBreakpointWidget, SIGNAL(newBreakpointRequest(QString,int)),
                      this, SLOT(_q_onNewBreakpointRequest(QString,int)));
 
-    QPixmap pix;
-    pix.loadFromData(
-        scripttools_new_png, scripttools_new_png_len,
-        qt_images_format
-    );
-    QIcon newBreakpointIcon;
-    newBreakpointIcon.addPixmap(pix, QIcon::Normal);
-    QAction *newBreakpointAction = new QAction(newBreakpointIcon, tr("New"), this);
+    QAction *newBreakpointAction = new QAction(QIcon::fromTheme("document-new"), tr("New"), this);
     QObject::connect(newBreakpointAction, SIGNAL(triggered()),
                      this, SLOT(_q_newBreakpoint()));
 
-    pix.loadFromData(
-        scripttools_delete_png, scripttools_delete_png_len,
-        qt_images_format
-    );
-    QIcon deleteBreakpointIcon;
-    deleteBreakpointIcon.addPixmap(pix, QIcon::Normal);
-    d->deleteBreakpointAction = new QAction(deleteBreakpointIcon, tr("Delete"), this);
+    d->deleteBreakpointAction = new QAction(QIcon::fromTheme("edit-delete"), tr("Delete"), this);
     d->deleteBreakpointAction->setEnabled(false);
     QObject::connect(d->deleteBreakpointAction, SIGNAL(triggered()),
                      this, SLOT(_q_deleteBreakpoint()));

@@ -134,22 +134,14 @@ QScriptDebuggerCodeFinderWidget::QScriptDebuggerCodeFinderWidget(QWidget *parent
     d->toolPrevious->setAutoRaise(true);
     d->toolPrevious->setText(tr("Previous"));
     d->toolPrevious->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-    pix.loadFromData(
-        scripttools_previous_png, scripttools_previous_png_len,
-        qt_images_format
-    );
-    d->toolPrevious->setIcon(QIcon(pix));
+    d->toolPrevious->setIcon(QIcon::fromTheme("go-previous"));
     hboxLayout->addWidget(d->toolPrevious);
 
     d->toolNext = new QToolButton(this);
     d->toolNext->setAutoRaise(true);
     d->toolNext->setText(tr("Next"));
     d->toolNext->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-    pix.loadFromData(
-        scripttools_next_png, scripttools_next_png_len,
-        qt_images_format
-    );
-    d->toolNext->setIcon(QIcon(pix));
+    d->toolNext->setIcon(QIcon::fromTheme("go-next"));
     hboxLayout->addWidget(d->toolNext);
 
     d->checkCase = new QCheckBox(tr("Case Sensitive"), this);

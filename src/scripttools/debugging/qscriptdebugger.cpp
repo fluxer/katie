@@ -1632,20 +1632,8 @@ QAction *QScriptDebugger::interruptAction(QObject *parent) const
 {
     Q_D(const QScriptDebugger);
     if (!d->interruptAction) {
-        QPixmap pix;
-        pix.loadFromData(
-            scripttools_interrupt_png, scripttools_interrupt_png_len,
-            qt_images_format
-        );
-        QIcon interruptIcon;
-        interruptIcon.addPixmap(pix, QIcon::Normal);
-        pix.loadFromData(
-            scripttools_d_interrupt_png, scripttools_d_interrupt_png_len,
-            qt_images_format
-        );
-        interruptIcon.addPixmap(pix, QIcon::Disabled);
         QScriptDebugger *that = const_cast<QScriptDebugger*>(this);
-        that->d_func()->interruptAction = new QAction(interruptIcon, QScriptDebugger::tr("Interrupt"), parent);
+        that->d_func()->interruptAction = new QAction(QIcon::fromTheme("process-stop"), QScriptDebugger::tr("Interrupt"), parent);
         d->interruptAction->setEnabled(!d->interactive);
         d->interruptAction->setShortcut(QScriptDebugger::tr("Shift+F5"));
         QObject::connect(d->interruptAction, SIGNAL(triggered()),
@@ -1658,20 +1646,8 @@ QAction *QScriptDebugger::continueAction(QObject *parent) const
 {
     Q_D(const QScriptDebugger);
     if (!d->continueAction) {
-        QPixmap pix;
-        pix.loadFromData(
-            scripttools_play_png, scripttools_play_png_len,
-            qt_images_format
-        );
-        QIcon continueIcon;
-        continueIcon.addPixmap(pix, QIcon::Normal);
-        pix.loadFromData(
-            scripttools_d_play_png, scripttools_d_play_png_len,
-            qt_images_format
-        );
-        continueIcon.addPixmap(pix, QIcon::Disabled);
         QScriptDebugger *that = const_cast<QScriptDebugger*>(this);
-        that->d_func()->continueAction = new QAction(continueIcon, QScriptDebugger::tr("Continue"), parent);
+        that->d_func()->continueAction = new QAction(QIcon::fromTheme("system-run"), QScriptDebugger::tr("Continue"), parent);
         d->continueAction->setEnabled(d->interactive);
         d->continueAction->setShortcut(QScriptDebugger::tr("F5"));
         QObject::connect(d->continueAction, SIGNAL(triggered()),
@@ -1844,15 +1820,8 @@ QAction *QScriptDebugger::findInScriptAction(QObject *parent) const
 {
     Q_D(const QScriptDebugger);
     if (!d->findInScriptAction) {
-        QPixmap pix;
-        pix.loadFromData(
-            scripttools_find_png, scripttools_find_png_len,
-            qt_images_format
-        );
-        QIcon findInScriptIcon;
-        findInScriptIcon.addPixmap(pix, QIcon::Normal);
         QScriptDebugger *that = const_cast<QScriptDebugger*>(this);
-        that->d_func()->findInScriptAction = new QAction(findInScriptIcon, QScriptDebugger::tr("&Find in Script..."), parent);
+        that->d_func()->findInScriptAction = new QAction(QIcon::fromTheme("edit-find"), QScriptDebugger::tr("&Find in Script..."), parent);
         d->findInScriptAction->setShortcut(QScriptDebugger::tr("Ctrl+F"));
         d->findInScriptAction->setEnabled(
             (d->codeFinderWidget != 0)
@@ -1868,9 +1837,8 @@ QAction *QScriptDebugger::findNextInScriptAction(QObject *parent) const
 {
     Q_D(const QScriptDebugger);
     if (!d->findNextInScriptAction) {
-        QIcon findNextInScriptIcon;
         QScriptDebugger *that = const_cast<QScriptDebugger*>(this);
-        that->d_func()->findNextInScriptAction = new QAction(findNextInScriptIcon, QScriptDebugger::tr("Find &Next"), parent);
+        that->d_func()->findNextInScriptAction = new QAction(QIcon::fromTheme("go-next"), QScriptDebugger::tr("Find &Next"), parent);
         d->findNextInScriptAction->setEnabled(d->codeFinderWidget && !d->codeFinderWidget->text().isEmpty());
         d->findNextInScriptAction->setShortcut(QScriptDebugger::tr("F3"));
         QObject::connect(d->findNextInScriptAction, SIGNAL(triggered()),
@@ -1883,9 +1851,8 @@ QAction *QScriptDebugger::findPreviousInScriptAction(QObject *parent) const
 {
     Q_D(const QScriptDebugger);
     if (!d->findPreviousInScriptAction) {
-        QIcon findPreviousInScriptIcon;
         QScriptDebugger *that = const_cast<QScriptDebugger*>(this);
-        that->d_func()->findPreviousInScriptAction = new QAction(findPreviousInScriptIcon, QScriptDebugger::tr("Find &Previous"), parent);
+        that->d_func()->findPreviousInScriptAction = new QAction(QIcon::fromTheme("go-previous"), QScriptDebugger::tr("Find &Previous"), parent);
         d->findPreviousInScriptAction->setEnabled(d->codeFinderWidget && !d->codeFinderWidget->text().isEmpty());
         d->findPreviousInScriptAction->setShortcut(QScriptDebugger::tr("Shift+F3"));
         QObject::connect(d->findPreviousInScriptAction, SIGNAL(triggered()),
