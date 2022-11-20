@@ -43,6 +43,7 @@
 #include <QCloseEvent>
 #include <QDebug>
 #include <QPixmap>
+#include <QGuiPlatformPlugin>
 
 #include <stdlib.h>
 
@@ -477,25 +478,26 @@ void MainWindow::paletteSelected(int)
 
 void MainWindow::updateStyleLayout()
 {
-    QString currentStyle = ui->guiStyleCombo->currentText();
-    bool autoStyle = (currentStyle == desktopThemeName);
-    ui->previewFrame->setPreviewVisible(!autoStyle);
-    ui->buildPaletteGroup->setEnabled(!autoStyle);
+    ui->previewFrame->setPreviewVisible(true);
+    ui->buildPaletteGroup->setEnabled(true);
 }
 
 void MainWindow::styleSelected(const QString &stylename)
 {
+    QString realstyle(stylename);
     if (stylename == desktopThemeName) {
-        setModified(true);
-    } else {
-        QStyle *style = QStyleFactory::create(stylename);
-        if (!style)
-            return;
-        setStyleHelper(ui->previewFrame, style);
-        delete previewstyle;
-        previewstyle = style;
-        setModified(true);
+        QGuiPlatformPlugin* platformplugin = qt_guiPlatformPlugin();
+        if (platformplugin) {
+            realstyle = platformplugin->styleName();
+        }
     }
+    QStyle *style = QStyleFactory::create(realstyle);
+    if (!style)
+        return;
+    setStyleHelper(ui->previewFrame, style);
+    delete previewstyle;
+    previewstyle = style;
+    setModified(true);
     updateStyleLayout();
 }
 

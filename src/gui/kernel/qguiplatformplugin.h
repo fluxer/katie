@@ -73,7 +73,7 @@ class Q_GUI_EXPORT QGuiPlatformPlugin : public QObject
 };
 
 // internal
-QGuiPlatformPlugin *qt_guiPlatformPlugin();
+Q_GUI_EXPORT QGuiPlatformPlugin *qt_guiPlatformPlugin();
 
 QT_END_NAMESPACE
 
