@@ -1643,7 +1643,7 @@ bool QTextCodec::canEncode(const QString& s) const
     QTextConverter textconverter = converter();
     textconverter.setFlags(QTextConverter::ConvertInvalidToNull);
     (void)textconverter.fromUnicode(s);
-    return textconverter.hasFailure();
+    return !textconverter.hasFailure();
 }
 
 /*!
