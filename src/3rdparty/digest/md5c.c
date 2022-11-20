@@ -346,3 +346,5 @@ MD5Transform(state, block)
 	/* Zeroize sensitive information. */
 	ZEROIZE((POINTER)(void *)x, sizeof (x));
 }
+
+#undef S32
