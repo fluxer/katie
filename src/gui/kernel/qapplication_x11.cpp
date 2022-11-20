@@ -630,13 +630,8 @@ bool QApplicationPrivate::x11_apply_settings()
         stylename = qt_guiPlatformPlugin()->styleName();
     }
 
-    if (QCoreApplication::startingUp()) {
-        if (!stylename.isEmpty() && QApplicationPrivate::styleOverride.isEmpty())
-            QApplicationPrivate::styleOverride = stylename;
-    } else {
-        if (stylename.compare(QApplication::style()->objectName(), Qt::CaseInsensitive) != 0) {
-            QApplication::setStyle(stylename);
-        }
+    if (stylename.compare(QApplication::style()->objectName(), Qt::CaseInsensitive) != 0) {
+        QApplication::setStyle(stylename);
     }
 
     int num = settings.value(QLatin1String("Qt/doubleClickInterval"),
