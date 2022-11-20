@@ -930,7 +930,6 @@ katie_unity_exclude(
     ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview/qgraphicsitem.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview/qgraphicsscene.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview/qgraphicsview.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/image/qbitmap.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmap.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmapfilter.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/itemviews/qitemeditorfactory.cpp
