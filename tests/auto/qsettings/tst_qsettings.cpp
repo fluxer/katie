@@ -43,8 +43,6 @@ public slots:
 private slots:
     void value_data();
     void value();
-    void sync_data();
-    void sync();
     void variant_data();
     void variant();
     void group_data();
@@ -95,29 +93,6 @@ void tst_QSettings::value()
     const QVariant fallback(true);
     QCOMPARE(settings.value("a", fallback), fallback);
 }
-
-void tst_QSettings::sync_data()
-{
-    tst_QSettings::value_data();
-}
-
-void tst_QSettings::sync()
-{
-    QFETCH(QString, filename);
-    QFETCH(QSettings::Format, format);
-
-    QSettings settings(filename, format);
-    QSettings settings2(filename, format);
-
-    settings.setValue("a", "1");
-    QCOMPARE(settings.value("a"), QVariant("1"));
-    QCOMPARE(settings2.value("a"), QVariant("1"));
-
-    settings2.setValue("b", "2");
-    QCOMPARE(settings.value("b"), QVariant("2"));
-    QCOMPARE(settings2.value("b"), QVariant("2"));
-}
-
 
 void tst_QSettings::variant_data()
 {

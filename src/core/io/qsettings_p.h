@@ -51,7 +51,6 @@ public:
 
     void read();
     void write();
-    void notify();
 
     QString toGroupKey(const QString &key) const;
 

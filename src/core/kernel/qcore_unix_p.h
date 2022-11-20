@@ -45,6 +45,10 @@
 #include <errno.h>
 #include <signal.h>
 
+#ifdef QT_HAVE_FLOCK
+#  include <sys/file.h>
+#endif
+
 #define Q_EINTR_LOOP(var, cmd)                                \
     do {                                                      \
         var = cmd;                                            \
@@ -102,6 +106,17 @@ private:
     QList<QStatInfo> m_entries;
     QByteArray m_path;
 };
+
+static inline bool qt_lock_fd(int fd, const bool forread)
+{
+#ifdef QT_HAVE_FLOCK
+    if (forread) {
+        return (::flock(fd, LOCK_SH) == 0);
+    }
+    return (::flock(fd, LOCK_EX) == 0);
+#endif // QT_HAVE_FLOCK
+    return false;
+}
 
 // Internal operator functions for timevals
 inline timeval &normalizedTimeval(timeval &t)

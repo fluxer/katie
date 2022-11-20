@@ -24,9 +24,7 @@
 #include "qsettings.h"
 #include "qjsondocument.h"
 #include "qstandardpaths.h"
-#include "qmutex.h"
 #include "qcoreapplication.h"
-#include "qlibraryinfo.h"
 #include "qcore_unix_p.h"
 
 #ifndef QT_NO_SETTINGS
@@ -34,10 +32,6 @@
 #include "qsettings_p.h"
 #include "qfile.h"
 #include "qdir.h"
-#include "qsize.h"
-#include "qpoint.h"
-#include "qrect.h"
-#include "qstdcontainers_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -48,10 +42,6 @@ struct QSettingsFormat
     QSettingsReadFunc readFunc;
     QSettingsWriteFunc writeFunc;
 };
-
-typedef QStdVector<QSettings*> QSettingsVector;
-Q_GLOBAL_STATIC(QSettingsVector, qGlobalSettings)
-Q_GLOBAL_STATIC(QMutex, qSettingsMutex)
 
 // ************************************************************************
 // Native format
@@ -256,14 +246,15 @@ void QSettingsPrivate::read()
         return;
     }
 
-    QFile file(filename);
-    if (Q_UNLIKELY(!file.open(QFile::ReadOnly))) {
+    QFile readfile(filename);
+    if (Q_UNLIKELY(!readfile.open(QFile::ReadOnly))) {
         status = QSettings::AccessError;
         qWarning("QSettingsPrivate::read: failed to open %s", filename.toLocal8Bit().constData());
         return;
     }
+    qt_lock_fd(readfile.handle(), true);
 
-    if (Q_UNLIKELY(!readFunc(file, map))) {
+    if (Q_UNLIKELY(!readFunc(readfile, map))) {
         status = QSettings::FormatError;
         qWarning("QSettingsPrivate::read: could not read %s", filename.toLocal8Bit().constData());
         return;
@@ -276,14 +267,16 @@ void QSettingsPrivate::write()
         return;
     }
 
-    QMutexLocker locker(qSettingsMutex());
     QSettings::SettingsMap mergemap;
-    QFile readfile(filename);
-    if (readfile.open(QFile::ReadOnly)) {
-        readFunc(readfile, mergemap);
-    }
-    foreach(const QString &key, map.keys()) {
-        mergemap.insert(key, map.value(key));
+    {
+        QFile readfile(filename);
+        if (readfile.open(QFile::ReadOnly)) {
+            qt_lock_fd(readfile.handle(), true);
+            readFunc(readfile, mergemap);
+        }
+        foreach(const QString &key, map.keys()) {
+            mergemap.insert(key, map.value(key));
+        }
     }
 
     QFile writefile(filename);
@@ -292,24 +285,12 @@ void QSettingsPrivate::write()
         qWarning("QSettingsPrivate::write: failed to open %s", filename.toLocal8Bit().constData());
         return;
     }
+    qt_lock_fd(writefile.handle(), false);
 
     if (Q_UNLIKELY(!writeFunc(writefile, mergemap))) {
         status = QSettings::FormatError;
         qWarning("QSettingsPrivate::write: could not write %s", filename.toLocal8Bit().constData());
         return;
-    }
-}
-
-void QSettingsPrivate::notify()
-{
-    QMutexLocker locker(qSettingsMutex());
-    shouldwrite = true;
-    for (int i = 0; i < qGlobalSettings()->size(); i++) {
-        QSettings *setting = qGlobalSettings()->at(i);
-        if (setting->d_func() != this && setting->fileName() == filename) {
-            setting->d_func()->map = map;
-            setting->d_func()->shouldwrite = false;
-        }
     }
 }
 
@@ -339,8 +320,7 @@ QString QSettingsPrivate::toGroupKey(const QString &key) const
     manner.
 
     QSettings's API is based on QVariant, allowing you to save
-    most value-based types, such as QString, QRect, and QImage,
-    with the minimum of effort.
+    most value-based types, such as QString.
 
     If all you need is a non-persistent memory-based structure,
     consider using QMap<QString, QVariant> instead.
@@ -478,12 +458,6 @@ QString QSettingsPrivate::toGroupKey(const QString &key) const
     QSettings::IniFormat as second argument. You can then use the
     QSettings object to read and write settingsin the file.
 
-    \warning No attempt is made to lock the file thus if you want to use
-    QSettings to access settings file used by applications that do not use
-    QSettings you will have to do file locking yourself. As is with QFile
-    or any other disk I/O related class, QSettings guarantees only internal
-    state integrity.
-
     \sa QVariant, QSessionManager
 */
 
@@ -505,38 +479,17 @@ QString QSettingsPrivate::toGroupKey(const QString &key) const
     \value NativeFormat  Store the settings in JSON files.
     \value IniFormat  Store the settings in INI files.
 
-    The INI file format is a Windows file format that Qt supports on
-    all platforms. In the absence of an INI standard, we try to
-    follow what Microsoft does, with the following exceptions:
+    Katie supports on both formats all platforms. In the absence of an
+    INI standard, the following should be noted:
 
     \list
-    \o  If you store types that QVariant can't convert to QString
-        (e.g., QPoint, QRect, and QSize),an \c{@}-based syntax to
-        encode the type is used. For example:
-
-        \snippet doc/src/snippets/code/src_corelib_io_qsettings.cpp 8
-
-        To minimize compatibility issues, any \c @ that doesn't
-        appear at the first position in the value or that isn't
-        followed by a type (\c Point, \c Rect, \c Size, etc.) is
-        treated as a normal character.
-
-    \o  Although backslash is a special character in INI files, most
-        Windows applications don't escape backslashes (\c{\}) in file
-        paths:
-
-        \snippet doc/src/snippets/code/src_corelib_io_qsettings.cpp 9
-
-        QSettings always treats backslash as a special character and
-        provides no API for reading or writing such entries.
-
     \o  The INI file format has severe restrictions on the syntax of
         a key. If you save a top-level setting (a key with no slashes
         in it, e.g., "someKey"), it will appear in the INI file without
         section.
 
     \o  The codec used to read and write the settings files is the
-        same codec used for C-strings, UTF-8 by default.
+        same codec used for C-strings, US-ASCII by default.
     \endlist
 */
 
@@ -550,8 +503,6 @@ QString QSettingsPrivate::toGroupKey(const QString &key) const
 QSettings::QSettings()
     : d_ptr(new QSettingsPrivate(QSettings::NativeFormat))
 {
-    QMutexLocker locker(qSettingsMutex());
-    qGlobalSettings()->append(this);
     Q_D(QSettings);
     d->read();
 }
@@ -566,8 +517,6 @@ QSettings::QSettings()
 QSettings::QSettings(Format format)
     : d_ptr(new QSettingsPrivate(format))
 {
-    QMutexLocker locker(qSettingsMutex());
-    qGlobalSettings()->append(this);
     Q_D(QSettings);
     d->read();
 }
@@ -594,8 +543,6 @@ QSettings::QSettings(Format format)
 QSettings::QSettings(const QString &fileName, Format format)
     : d_ptr(new QSettingsPrivate(fileName, format))
 {
-    QMutexLocker locker(qSettingsMutex());
-    qGlobalSettings()->append(this);
     Q_D(QSettings);
     d->read();
 }
@@ -611,9 +558,6 @@ QSettings::QSettings(const QString &fileName, Format format)
 QSettings::~QSettings()
 {
     QSettings::sync();
-    QMutexLocker locker(qSettingsMutex());
-    const int index = qGlobalSettings()->indexOf(this);
-    qGlobalSettings()->remove(index);
     delete d_ptr;
 }
 
@@ -626,7 +570,7 @@ void QSettings::clear()
 {
     Q_D(QSettings);
     d->map.clear();
-    d->notify();
+    d->shouldwrite = true;
 }
 
 /*!
@@ -643,7 +587,6 @@ void QSettings::sync()
 {
     Q_D(QSettings);
     d->write();
-    d->notify();
 }
 
 /*!
@@ -839,7 +782,7 @@ void QSettings::setValue(const QString &key, const QVariant &value)
 {
     Q_D(QSettings);
     d->map.insert(d->toGroupKey(key), value);
-    d->notify();
+    d->shouldwrite = true;
 }
 
 /*!
@@ -854,9 +797,9 @@ void QSettings::remove(const QString &key)
     foreach(const QString &key, d->map.keys()) {
         if (key.startsWith(groupkey)) {
             d->map.remove(key);
+            d->shouldwrite = true;
         }
     }
-    d->notify();
 }
 
 /*!
