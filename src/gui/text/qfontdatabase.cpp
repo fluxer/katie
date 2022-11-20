@@ -485,10 +485,10 @@ static QFontEngine *loadFc(QUnicodeTables::Script script, const QFontDef &reques
 #endif
 
     FcResult unused;
-    FcPattern *match = FcFontMatch(0, pattern, &unused);
+    FcPattern *match = FcFontMatch(NULL, pattern, &unused);
     QFontEngine *fe = tryPatternLoad(match, request, script);
     if (!fe) {
-        FcFontSet *fs = FcFontSort(0, pattern, FcTrue, 0, &unused);
+        FcFontSet *fs = FcFontSort(NULL, pattern, FcTrue, NULL, &unused);
 
         if (match) {
             FcPatternDestroy(match);
@@ -673,8 +673,18 @@ QStringList QFontDatabase::families() const
     if (Q_UNLIKELY(!pattern)) {
         return result;
     }
-    FcFontSet *fonts = FcFontList(NULL, pattern, NULL);
+
+    FcObjectSet *os = FcObjectSetCreate();
+    if (Q_UNLIKELY(!os)) {
+        FcPatternDestroy(pattern);
+        return result;
+    }
+    FcObjectSetAdd(os, FC_SCALABLE);
+    FcObjectSetAdd(os, FC_FAMILY);
+    FcObjectSetAdd(os, FC_FOUNDRY);
+    FcFontSet *fonts = FcFontList(NULL, pattern, os);
     FcPatternDestroy(pattern);
+    FcObjectSetDestroy(os);
     if (Q_UNLIKELY(!fonts)) {
         return result;
     }
@@ -744,41 +754,50 @@ QStringList QFontDatabase::styles(const QString &family) const
     const QString fontfamily = QString::fromUtf8((const char *)family_value);
     FcPatternDestroy(pattern);
 
+    FcObjectSet *os = FcObjectSetCreate();
+    if (Q_UNLIKELY(!os)) {
+        return result;
+    }
+    FcObjectSetAdd(os, FC_SCALABLE);
+    FcObjectSetAdd(os, FC_FAMILY);
+    FcObjectSetAdd(os, FC_STYLE);
     pattern = FcPatternCreate();
     if (Q_UNLIKELY(!pattern)) {
         return result;
     }
 
     // the only way to get all font family styles is to query all fonts
-    FcFontSet *fonts = FcFontList(NULL, pattern, NULL);
+    FcFontSet *fonts = FcFontList(NULL, pattern, os);
     FcPatternDestroy(pattern);
-    if (fonts) {
-        for (int i = 0; i < fonts->nfont; i++) {
-            FcChar8 *style_value = nullptr;
-            FcBool scalable_value = FcFalse;
-
-            FcPatternGetBool(fonts->fonts[i], FC_SCALABLE, 0, &scalable_value);
-            if (scalable_value != FcTrue) {
-                continue;
-            }
-            if (FcPatternGetString(fonts->fonts[i], FC_FAMILY, 0, &family_value) != FcResultMatch) {
-                continue;
-            }
-            if (FcPatternGetString(fonts->fonts[i], FC_STYLE, 0, &style_value) != FcResultMatch) {
-                continue;
-            }
-
-            const QString matchfamily = QString::fromUtf8((const char *)family_value);
-            if (matchfamily != fontfamily) {
-                continue;
-            }
-            const QString matchstyle = QString::fromUtf8((const char *)style_value);
-            if (!matchstyle.isEmpty()) {
-                result.append(matchstyle);
-            }
-        }
-        FcFontSetDestroy(fonts);
+    FcObjectSetDestroy(os);
+    if (Q_UNLIKELY(!fonts)) {
+        return result;
     }
+    for (int i = 0; i < fonts->nfont; i++) {
+        FcChar8 *style_value = nullptr;
+        FcBool scalable_value = FcFalse;
+
+        FcPatternGetBool(fonts->fonts[i], FC_SCALABLE, 0, &scalable_value);
+        if (scalable_value != FcTrue) {
+            continue;
+        }
+        if (FcPatternGetString(fonts->fonts[i], FC_FAMILY, 0, &family_value) != FcResultMatch) {
+            continue;
+        }
+        if (FcPatternGetString(fonts->fonts[i], FC_STYLE, 0, &style_value) != FcResultMatch) {
+            continue;
+        }
+
+        const QString matchfamily = QString::fromUtf8((const char *)family_value);
+        if (matchfamily != fontfamily) {
+            continue;
+        }
+        const QString matchstyle = QString::fromUtf8((const char *)style_value);
+        if (!matchstyle.isEmpty()) {
+            result.append(matchstyle);
+        }
+    }
+    FcFontSetDestroy(fonts);
 
     // manual sorting
     static const QString regularfontstyle("Regular");
