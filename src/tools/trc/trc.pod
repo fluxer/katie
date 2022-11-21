@@ -8,8 +8,7 @@ trc [options] <translation-file>
 
 =head1 DESCRIPTION
 
-trc reads a user interface definition (.po) file and creates corresponding
-.tr file.
+trc reads a program translation (.po) file and creates corresponding .tr file.
 
 =head1 OPTIONS
 
