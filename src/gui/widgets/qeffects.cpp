@@ -51,9 +51,7 @@ public:
     void run();
 
 protected:
-    void paintEvent(QPaintEvent* e);
     void closeEvent(QCloseEvent*);
-    void alphaBlend();
     bool eventFilter(QObject *, QEvent *);
 
 protected slots:
@@ -61,9 +59,6 @@ protected slots:
 
 private:
     double alpha;
-    QImage backImage;
-    QImage frontImage;
-    QImage mixedImage;
     QPointer<QWidget> widget;
     int duration;
     int elapsed;
@@ -78,25 +73,19 @@ static QAlphaWidget* q_blend = 0;
   Constructs a QAlphaWidget.
 */
 QAlphaWidget::QAlphaWidget(QWidget* w, Qt::WindowFlags f)
-    : QWidget(QApplication::desktop()->screen(QApplication::desktop()->screenNumber(w)), f)
+    : QWidget(QApplication::desktop()->screen(QApplication::desktop()->screenNumber(w)), f),
+    alpha(0.0),
+    widget(w)
 {
-    setEnabled(false);
     setAttribute(Qt::WA_NoSystemBackground, true);
-    widget = w;
-    alpha = 0;
 }
 
 QAlphaWidget::~QAlphaWidget()
 {
-}
-
-/*
-  \reimp
-*/
-void QAlphaWidget::paintEvent(QPaintEvent*)
-{
-    QPainter p(this);
-    p.drawImage(0, 0, mixedImage);
+    // Restore user-defined opacity value
+    if (widget) {
+        widget->setWindowOpacity(1);
+    }
 }
 
 /*
@@ -114,31 +103,11 @@ void QAlphaWidget::run()
     checkTime.start();
 
     showWidget = true;
-    //This is roughly equivalent to calling setVisible(true) without actually showing the widget
-    widget->setAttribute(Qt::WA_WState_ExplicitShowHide, true);
-    widget->setAttribute(Qt::WA_WState_Hidden, false);
-
     qApp->installEventFilter(this);
-
-    move(widget->geometry().x(),widget->geometry().y());
-    resize(widget->size().width(), widget->size().height());
-
-    frontImage = QPixmap::grabWidget(widget).toImage();
-    backImage = QPixmap::grabWindow(QApplication::desktop()->winId(),
-                                widget->geometry().x(), widget->geometry().y(),
-                                widget->geometry().width(), widget->geometry().height()).toImage();
-
-    if (!backImage.isNull() && checkTime.elapsed() < duration / 2) {
-        mixedImage = backImage.copy();
-        show();
-        setEnabled(false);
-
-        connect(&anim, SIGNAL(timeout()), this, SLOT(render()));
-        anim.start(1);
-    } else {
-       duration = 0;
-       render();
-    }
+    widget->setWindowOpacity(0.0);
+    widget->show();
+    connect(&anim, SIGNAL(timeout()), this, SLOT(render()));
+    anim.start(1);
 }
 
 /*
@@ -205,76 +174,26 @@ void QAlphaWidget::closeEvent(QCloseEvent *e)
 void QAlphaWidget::render()
 {
     int tempel = checkTime.elapsed();
-    if (elapsed >= tempel)
+    if (elapsed >= tempel) {
         elapsed++;
-    else
+    } else {
         elapsed = tempel;
+    }
 
-    if (duration != 0)
+    if (duration != 0) {
         alpha = tempel / double(duration);
-    else
-        alpha = 1;
+    } else {
+        alpha = 1.0;
+    }
 
-    if (alpha >= 1 || !showWidget) {
+    if (alpha >= 1.0 || !showWidget) {
         anim.stop();
         qApp->removeEventFilter(this);
-
-        if (widget) {
-            if (!showWidget) {
-                widget->hide();
-            } else {
-                //Since we are faking the visibility of the widget 
-                //we need to unset the hidden state on it before calling show
-                widget->setAttribute(Qt::WA_WState_Hidden, true);
-                widget->show();
-                lower();
-            }
-        }
+        widget->setWindowOpacity(1.0);
         q_blend = 0;
         deleteLater();
     } else {
-        alphaBlend();
-        repaint();
-    }
-}
-
-/*
-  Calculate an alphablended image.
-*/
-void QAlphaWidget::alphaBlend()
-{
-    const int a = qRound(alpha*256);
-    const int ia = 256 - a;
-
-    const int sw = frontImage.width();
-    const int sh = frontImage.height();
-    const int bpl = frontImage.bytesPerLine();
-    switch(frontImage.depth()) {
-    case 32:
-        {
-            uchar *mixed_data = mixedImage.bits();
-            const uchar *back_data = backImage.bits();
-            const uchar *front_data = frontImage.bits();
-
-            for (int sy = 0; sy < sh; sy++) {
-                quint32* mixed = (quint32*)mixed_data;
-                const quint32* back = (const quint32*)back_data;
-                const quint32* front = (const quint32*)front_data;
-                for (int sx = 0; sx < sw; sx++) {
-                    quint32 bp = back[sx];
-                    quint32 fp = front[sx];
-
-                    mixed[sx] =  qRgb((qRed(bp)*ia + qRed(fp)*a)>>8,
-                                      (qGreen(bp)*ia + qGreen(fp)*a)>>8,
-                                      (qBlue(bp)*ia + qBlue(fp)*a)>>8);
-                }
-                mixed_data += bpl;
-                back_data += bpl;
-                front_data += bpl;
-            }
-        }
-    default:
-        break;
+        widget->setWindowOpacity(alpha);
     }
 }
 
