@@ -34,145 +34,83 @@
 
 QT_BEGIN_NAMESPACE
 
-/*
-  Internal class QAlphaWidget.
+/*!
+    \internal
 
-  The QAlphaWidget is shown while the animation lasts
-  and displays the pixmap resulting from the alpha blending.
+    The QOpacityEffect object sets the widget opacity
 */
-
-class QAlphaWidget: public QWidget, private QEffects
+class QOpacityEffect: public QObject, private QEffects
 {
     Q_OBJECT
 public:
-    QAlphaWidget(QWidget* w, Qt::WindowFlags f = 0);
-    ~QAlphaWidget();
+    QOpacityEffect(QWidget* w);
+    ~QOpacityEffect();
 
     void run();
 
-protected:
-    void closeEvent(QCloseEvent*);
-    bool eventFilter(QObject *, QEvent *);
-
 protected slots:
-    void render();
+    void fade();
 
 private:
     double alpha;
     QPointer<QWidget> widget;
     int duration;
     int elapsed;
-    bool showWidget;
     QTimer anim;
     QElapsedTimer checkTime;
 };
 
-static QAlphaWidget* q_blend = 0;
+static QOpacityEffect* q_opacity = nullptr;
 
-/*
-  Constructs a QAlphaWidget.
-*/
-QAlphaWidget::QAlphaWidget(QWidget* w, Qt::WindowFlags f)
-    : QWidget(QApplication::desktop()->screen(QApplication::desktop()->screenNumber(w)), f),
+QOpacityEffect::QOpacityEffect(QWidget* w)
+    : QObject(w),
     alpha(0.0),
-    widget(w)
+    widget(w),
+    duration(150),
+    elapsed(0)
 {
-    setAttribute(Qt::WA_NoSystemBackground, true);
 }
 
-QAlphaWidget::~QAlphaWidget()
+QOpacityEffect::~QOpacityEffect()
 {
-    // Restore user-defined opacity value
+    // Restore the opacity value
     if (widget) {
         widget->setWindowOpacity(1);
     }
 }
 
 /*
-  Starts the alphablending animation.
-  The animation will take about 150 ms
+    Starts the opacity effect, the effect will take about 150 ms
 */
-void QAlphaWidget::run()
+void QOpacityEffect::run()
 {
     duration = 150;
 
-    if (!widget)
+    if (!widget) {
         return;
+    }
 
     elapsed = 0;
     checkTime.start();
 
-    showWidget = true;
-    qApp->installEventFilter(this);
     widget->setWindowOpacity(0.0);
     widget->show();
-    connect(&anim, SIGNAL(timeout()), this, SLOT(render()));
+    connect(&anim, SIGNAL(timeout()), this, SLOT(fade()));
     anim.start(1);
 }
 
 /*
-  \reimp
+    Sets the widget opacity for the time elapsed
 */
-bool QAlphaWidget::eventFilter(QObject *o, QEvent *e)
+void QOpacityEffect::fade()
 {
-    switch (e->type()) {
-        case QEvent::Move: {
-            if (o != widget)
-                break;
-            move(widget->geometry().x(),widget->geometry().y());
-            update();
-            break;
-        }
-        case QEvent::Hide:
-        case QEvent::Close: {
-            if (o != widget)
-                break;
-        }
-        case QEvent::MouseButtonPress:
-        case QEvent::MouseButtonDblClick: {
-            showWidget = false;
-            render();
-            break;
-        }
-        case QEvent::KeyPress: {
-            QKeyEvent *ke = (QKeyEvent*)e;
-            if (ke->key() == Qt::Key_Escape) {
-                showWidget = false;
-            } else {
-                duration = 0;
-            }
-            render();
-            break;
-        }
-        default:
-            break;
-    }
-    return QWidget::eventFilter(o, e);
-}
-
-/*
-  \reimp
-*/
-void QAlphaWidget::closeEvent(QCloseEvent *e)
-{
-    e->accept();
-    if (!q_blend)
+    if (!widget) {
+        anim.stop();
+        q_opacity = nullptr;
+        deleteLater();
         return;
+    }
 
-    showWidget = false;
-    render();
-
-    QWidget::closeEvent(e);
-}
-
-/*
-  Render alphablending for the time elapsed.
-
-  Show the blended widget and free all allocated source
-  if the blending is finished.
-*/
-void QAlphaWidget::render()
-{
     int tempel = checkTime.elapsed();
     if (elapsed >= tempel) {
         elapsed++;
@@ -186,24 +124,22 @@ void QAlphaWidget::render()
         alpha = 1.0;
     }
 
-    if (alpha >= 1.0 || !showWidget) {
+    if (alpha >= 1.0) {
         anim.stop();
-        qApp->removeEventFilter(this);
         widget->setWindowOpacity(1.0);
-        q_blend = 0;
+        q_opacity = nullptr;
         deleteLater();
     } else {
         widget->setWindowOpacity(alpha);
     }
 }
 
-/*
-  Internal class QRollEffect
+/*!
+    \internal
 
-  The QRollEffect widget is shown while the animation lasts
-  and displays a scrolling pixmap.
+    The QRollEffect widget is shown while the animation lasts and displays a
+    scrolling pixmap
 */
-
 class QRollEffect : public QWidget, private QEffects
 {
     Q_OBJECT
@@ -239,13 +175,11 @@ private:
     QPixmap pm;
 };
 
-static QRollEffect* q_roll = 0;
+static QRollEffect* q_roll = nullptr;
 
-/*
-  Construct a QRollEffect widget.
-*/
 QRollEffect::QRollEffect(QWidget* w, Qt::WindowFlags f, DirFlags orient)
-    : QWidget(0, f), orientation(orient)
+    : QWidget(0, f),
+    orientation(orient)
 {
     setEnabled(false);
 
@@ -273,8 +207,8 @@ QRollEffect::QRollEffect(QWidget* w, Qt::WindowFlags f, DirFlags orient)
     pm = QPixmap::grabWidget(widget);
 }
 
-/*
-  \reimp
+/*!
+    \reimp
 */
 void QRollEffect::paintEvent(QPaintEvent*)
 {
@@ -285,14 +219,15 @@ void QRollEffect::paintEvent(QPaintEvent*)
     p.drawPixmap(x, y, pm);
 }
 
-/*
-  \reimp
+/*!
+    \reimp
 */
 void QRollEffect::closeEvent(QCloseEvent *e)
 {
     e->accept();
-    if (done)
+    if (done) {
         return;
+    }
 
     showWidget = false;
     done = true;
@@ -302,22 +237,23 @@ void QRollEffect::closeEvent(QCloseEvent *e)
 }
 
 /*
-  Start the animation.
-
-  The animation time is calculated
+    Start the effect and calculates its time
 */
 void QRollEffect::run()
 {
-    if (!widget)
+    if (!widget) {
         return;
+    }
 
     elapsed = 0;
 
     int dist = 0;
-    if (orientation & (RightScroll|LeftScroll))
+    if (orientation & (RightScroll|LeftScroll)) {
         dist += totalWidth - currentWidth;
-    if (orientation & (DownScroll|UpScroll))
+    }
+    if (orientation & (DownScroll|UpScroll)) {
         dist += totalHeight - currentHeight;
+    }
     duration = qMin(qMax(dist/3, 50), 120);
 
     connect(&anim, SIGNAL(timeout()), this, SLOT(scroll()));
@@ -325,7 +261,7 @@ void QRollEffect::run()
     move(widget->geometry().x(),widget->geometry().y());
     resize(qMin(currentWidth, totalWidth), qMin(currentHeight, totalHeight));
 
-    //This is roughly equivalent to calling setVisible(true) without actually showing the widget
+    // This is roughly equivalent to calling setVisible(true) without actually showing the widget
     widget->setAttribute(Qt::WA_WState_ExplicitShowHide, true);
     widget->setAttribute(Qt::WA_WState_Hidden, false);
 
@@ -341,16 +277,17 @@ void QRollEffect::run()
 }
 
 /*
-  Roll according to the time elapsed.
+    Roll according to the time elapsed.
 */
 void QRollEffect::scroll()
 {
     if (!done && widget) {
         int tempel = checkTime.elapsed();
-        if (elapsed >= tempel)
+        if (elapsed >= tempel) {
             elapsed++;
-        else
+        } else {
             elapsed = tempel;
+        }
 
         if (currentWidth != totalWidth) {
             currentWidth = totalWidth * (elapsed/duration)
@@ -380,12 +317,15 @@ void QRollEffect::scroll()
             h = qMin(currentHeight, totalHeight);
 
         setUpdatesEnabled(false);
-        if (orientation & UpScroll)
+        if (orientation & UpScroll) {
             y = widget->geometry().y() + qMax(0, totalHeight - currentHeight);
-        if (orientation & LeftScroll)
+        }
+        if (orientation & LeftScroll) {
             x = widget->geometry().x() + qMax(0, totalWidth - currentWidth);
-        if (orientation & UpScroll || orientation & LeftScroll)
+        }
+        if (orientation & UpScroll || orientation & LeftScroll) {
             move(x, y);
+        }
 
         resize(w, h);
         setUpdatesEnabled(true);
@@ -398,14 +338,14 @@ void QRollEffect::scroll()
             if (!showWidget) {
                 widget->hide();
             } else {
-                //Since we are faking the visibility of the widget 
-                //we need to unset the hidden state on it before calling show
+                // Since we are faking the visibility of the widget
+                // we need to unset the hidden state on it before calling show
                 widget->setAttribute(Qt::WA_WState_Hidden, true);
                 widget->show();
                 lower();
             }
         }
-        q_roll = 0;
+        q_roll = nullptr;
         deleteLater();
     }
 }
@@ -417,11 +357,12 @@ void qScrollEffect(QWidget* w, QEffects::DirFlags orient)
 {
     if (q_roll) {
         q_roll->deleteLater();
-        q_roll = 0;
+        q_roll = nullptr;
     }
 
-    if (!w)
+    if (!w) {
         return;
+    }
 
     QApplication::sendPostedEvents(w, QEvent::Move);
     QApplication::sendPostedEvents(w, QEvent::Resize);
@@ -436,28 +377,24 @@ void qScrollEffect(QWidget* w, QEffects::DirFlags orient)
 */
 void qFadeEffect(QWidget* w)
 {
-    if (q_blend) {
-        q_blend->deleteLater();
-        q_blend = 0;
+    if (q_opacity) {
+        q_opacity->deleteLater();
+        q_opacity = 0;
     }
 
-    if (!w)
+    if (!w) {
         return;
+    }
 
     QApplication::sendPostedEvents(w, QEvent::Move);
     QApplication::sendPostedEvents(w, QEvent::Resize);
 
     // those can be popups - they would steal the focus, but are disabled
-    q_blend = new QAlphaWidget(w, Qt::ToolTip);
-
-    q_blend->run();
+    q_opacity = new QOpacityEffect(w);
+    q_opacity->run();
 }
 
 QT_END_NAMESPACE
-
-/*
-  Delete this after timeout
-*/
 
 #include "moc_qeffects.cpp"
 
