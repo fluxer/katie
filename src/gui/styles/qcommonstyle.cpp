@@ -5342,8 +5342,21 @@ QIcon QCommonStyle::standardIcon(StandardPixmap standardicon, const QStyleOption
     return icon;
 }
 
-// in qpixmapfilter.cpp
-extern Q_GUI_EXPORT void qt_grayscale(const QImage &image, QImage &dest);
+
+// grayscales the image to dest (same as source).
+static void qt_grayscale(const QImage &image, QImage &dest)
+{
+    Q_ASSERT(image.depth() == 32 && dest.depth() == 32);
+
+    unsigned int *outData = (unsigned int *)dest.bits();
+    const unsigned int *data = (const unsigned int *)image.constBits();
+    // grayscaling everything
+    const int pixels = dest.width() * dest.height();
+    for (int i = 0; i < pixels; ++i) {
+        int val = qGray(data[i]);
+        outData[i] = qRgba(val, val, val, qAlpha(data[i]));
+    }
+}
 
 /*! \reimp */
 QPixmap QCommonStyle::generatedIconPixmap(QIcon::Mode iconMode, const QPixmap &pixmap,

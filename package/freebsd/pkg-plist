@@ -418,10 +418,6 @@ include/katie/QtGui/QGradientStop
 include/katie/QtGui/QGradientStops
 include/katie/QtGui/QGraphicsAnchor
 include/katie/QtGui/QGraphicsAnchorLayout
-include/katie/QtGui/QGraphicsBlurEffect
-include/katie/QtGui/QGraphicsColorizeEffect
-include/katie/QtGui/QGraphicsDropShadowEffect
-include/katie/QtGui/QGraphicsEffect
 include/katie/QtGui/QGraphicsEllipseItem
 include/katie/QtGui/QGraphicsGridLayout
 include/katie/QtGui/QGraphicsItem
@@ -432,7 +428,6 @@ include/katie/QtGui/QGraphicsLayoutItem
 include/katie/QtGui/QGraphicsLineItem
 include/katie/QtGui/QGraphicsLinearLayout
 include/katie/QtGui/QGraphicsObject
-include/katie/QtGui/QGraphicsOpacityEffect
 include/katie/QtGui/QGraphicsPathItem
 include/katie/QtGui/QGraphicsPixmapItem
 include/katie/QtGui/QGraphicsPolygonItem
@@ -757,7 +752,6 @@ include/katie/QtGui/qformlayout.h
 include/katie/QtGui/qframe.h
 include/katie/QtGui/qgenericmatrix.h
 include/katie/QtGui/qgraphicsanchorlayout.h
-include/katie/QtGui/qgraphicseffect.h
 include/katie/QtGui/qgraphicsgridlayout.h
 include/katie/QtGui/qgraphicsitem.h
 include/katie/QtGui/qgraphicsitemanimation.h

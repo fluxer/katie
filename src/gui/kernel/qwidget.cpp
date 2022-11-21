@@ -43,7 +43,6 @@
 #include "qdebug.h"
 #include "qstylesheetstyle_p.h"
 #include "qstyle_p.h"
-#include "qgraphicseffect_p.h"
 #include "qwindowsurface_p.h"
 #include "qbackingstore_p.h"
 #include "qpaintengine_raster_p.h"
@@ -174,7 +173,6 @@ QWidgetPrivate::QWidgetPrivate()
       , widgetItem(0)
       , extraPaintEngine(0)
       , polished(0)
-      , graphicsEffect(0)
       , inheritedFontResolveMask(0)
       , inheritedPaletteResolveMask(0)
       , leftmargin(0)
@@ -221,10 +219,6 @@ QWidgetPrivate::~QWidgetPrivate()
 
     if (extra)
         deleteExtra();
-
-#ifndef QT_NO_GRAPHICSEFFECT
-    delete graphicsEffect;
-#endif //QT_NO_GRAPHICSEFFECT
 }
 
 QWindowSurface *QWidgetPrivate::createDefaultWindowSurface()
@@ -1324,9 +1318,9 @@ bool QWidgetPrivate::isOverlapped(const QRect &rect) const
                 continue;
             }
 
-            if (qRectIntersects(sibling->d_func()->effectiveRectFor(sibling->data->crect), r)) {
+            if (qRectIntersects(sibling->data->crect, r)) {
                 const QWExtra *siblingExtra = sibling->d_func()->extra;
-                if (siblingExtra && siblingExtra->hasMask && !sibling->d_func()->graphicsEffect
+                if (siblingExtra && siblingExtra->hasMask
                     && !siblingExtra->mask.translated(sibling->data->crect.topLeft()).intersects(r)) {
                     continue;
                 }
@@ -1424,7 +1418,7 @@ QRect QWidgetPrivate::clipRect() const
     const QWidget * w = q;
     if (!w->isVisible())
         return QRect();
-    QRect r = effectiveRectFor(q->rect());
+    QRect r = q->rect();
     int ox = 0;
     int oy = 0;
     while (w
@@ -1479,32 +1473,11 @@ QRegion QWidgetPrivate::clipRegion() const
     return r;
 }
 
-#ifndef QT_NO_GRAPHICSEFFECT
-void QWidgetPrivate::invalidateGraphicsEffectsRecursively()
-{
-    Q_Q(QWidget);
-    QWidget *w = q;
-    do {
-        if (w->graphicsEffect()) {
-            QWidgetEffectSourcePrivate *sourced =
-                static_cast<QWidgetEffectSourcePrivate *>(w->graphicsEffect()->source()->d_func());
-            if (!sourced->updateDueToGraphicsEffect)
-                w->graphicsEffect()->source()->d_func()->invalidateCache();
-        }
-        w = w->parentWidget();
-    } while (w);
-}
-#endif //QT_NO_GRAPHICSEFFECT
-
 void QWidgetPrivate::setDirtyOpaqueRegion()
 {
     Q_Q(QWidget);
 
     dirtyOpaqueChildren = true;
-
-#ifndef QT_NO_GRAPHICSEFFECT
-    invalidateGraphicsEffectsRecursively();
-#endif //QT_NO_GRAPHICSEFFECT
 
     if (q->isWindow())
         return;
@@ -1583,13 +1556,13 @@ void QWidgetPrivate::subtractOpaqueSiblings(QRegion &sourceRegion, bool *hasDirt
             break;
         QWidgetPrivate *pd = w->parentWidget()->d_func();
         const int myIndex = pd->children.indexOf(const_cast<QWidget *>(w));
-        const QRect widgetGeometry = w->d_func()->effectiveRectFor(w->data->crect);
+        const QRect widgetGeometry = w->data->crect;
         for (int i = myIndex + 1; i < pd->children.size(); ++i) {
             QWidget *sibling = qobject_cast<QWidget *>(pd->children.at(i));
             if (!sibling || !sibling->isVisible() || sibling->isWindow())
                 continue;
 
-            const QRect siblingGeometry = sibling->d_func()->effectiveRectFor(sibling->data->crect);
+            const QRect siblingGeometry = sibling->data->crect;
             if (!qRectIntersects(siblingGeometry, widgetGeometry))
                 continue;
 
@@ -1610,8 +1583,7 @@ void QWidgetPrivate::subtractOpaqueSiblings(QRegion &sourceRegion, bool *hasDirt
             const QRect siblingClipRect(sibling->d_func()->clipRect());
             QRegion siblingDirty(parentClip);
             siblingDirty &= (siblingClipRect.translated(siblingPos));
-            const bool hasMask = sibling->d_func()->extra && sibling->d_func()->extra->hasMask
-                                 && !sibling->d_func()->graphicsEffect;
+            const bool hasMask = sibling->d_func()->extra && sibling->d_func()->extra->hasMask;
             if (hasMask)
                 siblingDirty &= sibling->d_func()->extra->mask.translated(siblingPos);
             if (siblingDirty.isEmpty())
@@ -1653,13 +1625,6 @@ void QWidgetPrivate::clipToEffectiveMask(QRegion &region) const
     const QWidget *w = q;
     QPoint offset;
 
-#ifndef QT_NO_GRAPHICSEFFECT
-    if (graphicsEffect) {
-        w = q->parentWidget();
-        offset -= data.crect.topLeft();
-    }
-#endif //QT_NO_GRAPHICSEFFECT
-
     while (w) {
         const QWidgetPrivate *wd = w->d_func();
         if (wd->extra && wd->extra->hasMask)
@@ -1691,16 +1656,7 @@ void QWidgetPrivate::updateIsOpaque()
     // hw: todo: only needed if opacity actually changed
     setDirtyOpaqueRegion();
 
-#ifndef QT_NO_GRAPHICSEFFECT
-    if (graphicsEffect) {
-        // ### We should probably add QGraphicsEffect::isOpaque at some point.
-        setOpaque(false);
-        return;
-    }
-#endif //QT_NO_GRAPHICSEFFECT
-
     Q_Q(QWidget);
-
 
     if (q->testAttribute(Qt::WA_OpaquePaintEvent) || q->testAttribute(Qt::WA_PaintOnScreen)) {
         setOpaque(true);
@@ -4315,72 +4271,6 @@ void QWidget::render(QPainter *painter, const QPoint &targetOffset,
     d->extra->inRenderWithPainter = false;
 }
 
-/*!
-    \brief The graphicsEffect function returns a pointer to the
-    widget's graphics effect.
-
-    If the widget has no graphics effect, 0 is returned.
-
-    \since 4.6
-
-    \sa setGraphicsEffect()
-*/
-#ifndef QT_NO_GRAPHICSEFFECT
-QGraphicsEffect *QWidget::graphicsEffect() const
-{
-    Q_D(const QWidget);
-    return d->graphicsEffect;
-}
-#endif //QT_NO_GRAPHICSEFFECT
-
-/*!
-
-  \brief The setGraphicsEffect function is for setting the widget's graphics effect.
-
-    Sets \a effect as the widget's effect. If there already is an effect installed
-    on this widget, QWidget will delete the existing effect before installing
-    the new \a effect.
-
-    If \a effect is the installed on a different widget, setGraphicsEffect() will remove
-    the effect from the widget and install it on this widget.
-
-    QWidget takes ownership of \a effect.
-
-    \note This function will apply the effect on itself and all its children.
-
-    \note Graphics effects are not supported on Mac, so they will not cause any difference
-    to the rendering of the widget.
-
-    \since 4.6
-
-    \sa graphicsEffect()
-*/
-#ifndef QT_NO_GRAPHICSEFFECT
-void QWidget::setGraphicsEffect(QGraphicsEffect *effect)
-{
-    Q_D(QWidget);
-    if (d->graphicsEffect == effect)
-        return;
-
-    if (d->graphicsEffect) {
-        d->invalidateBuffer(rect());
-        delete d->graphicsEffect;
-        d->graphicsEffect = 0;
-    }
-
-    if (effect) {
-        // Set new effect.
-        QGraphicsEffectSourcePrivate *sourced = new QWidgetEffectSourcePrivate(this);
-        QGraphicsEffectSource *source = new QGraphicsEffectSource(*sourced);
-        d->graphicsEffect = effect;
-        effect->d_func()->setGraphicsEffectSource(source);
-        update();
-    }
-
-    d->updateIsOpaque();
-}
-#endif //QT_NO_GRAPHICSEFFECT
-
 bool QWidgetPrivate::isAboutToShow() const
 {
     if (data.in_show)
@@ -4514,38 +4404,6 @@ void QWidgetPrivate::drawWidget(QPaintDevice *pdev, const QRegion &rgn, const QP
         return;
 
     Q_Q(QWidget);
-#if !defined(QT_NO_GRAPHICSEFFECT)
-    if (graphicsEffect && graphicsEffect->isEnabled()) {
-        QGraphicsEffectSource *source = graphicsEffect->d_func()->source;
-        QWidgetEffectSourcePrivate *sourced = static_cast<QWidgetEffectSourcePrivate *>
-                                                         (source->d_func());
-        if (!sourced->context) {
-            QWidgetPaintContext context(pdev, rgn, offset, flags, sharedPainter, backingStore);
-            sourced->context = &context;
-            if (!sharedPainter) {
-                QPaintEngine *paintEngine = pdev->paintEngine();
-                paintEngine->d_func()->systemClip = rgn.translated(offset);
-                QPainter p(pdev);
-                p.translate(offset);
-                context.painter = &p;
-                graphicsEffect->draw(&p);
-                paintEngine->d_func()->systemClip = QRegion();
-            } else {
-                context.painter = sharedPainter;
-                if (sharedPainter->worldTransform() != sourced->lastEffectTransform) {
-                    sourced->invalidateCache();
-                    sourced->lastEffectTransform = sharedPainter->worldTransform();
-                }
-                sharedPainter->save();
-                sharedPainter->translate(offset);
-                graphicsEffect->draw(sharedPainter);
-                sharedPainter->restore();
-            }
-            sourced->context = 0;
-            return;
-        }
-    }
-#endif //QT_NO_GRAFFICSEFFECT
 
     const bool asRoot = flags & DrawAsRoot;
     const bool alsoOnScreen = flags & DrawPaintOnScreen;
@@ -4735,7 +4593,7 @@ void QWidgetPrivate::paintSiblingsRecursive(QPaintDevice *pdev, const QObjectLis
                 dirtyBoundingRect = false;
             }
 
-            if (qRectIntersects(boundingRect, x->d_func()->effectiveRectFor(x->data->crect))) {
+            if (qRectIntersects(boundingRect, x->data->crect)) {
                 w = x;
                 break;
             }
@@ -4748,7 +4606,7 @@ void QWidgetPrivate::paintSiblingsRecursive(QPaintDevice *pdev, const QObjectLis
 
     QWidgetPrivate *wd = w->d_func();
     const QPoint widgetPos(w->data->crect.topLeft());
-    const bool hasMask = wd->extra && wd->extra->hasMask && !wd->graphicsEffect;
+    const bool hasMask = wd->extra && wd->extra->hasMask;
     if (index > 0) {
         QRegion wr(rgn);
         if (wd->isOpaque)
@@ -4763,87 +4621,13 @@ void QWidgetPrivate::paintSiblingsRecursive(QPaintDevice *pdev, const QObjectLis
 #endif //QT_NO_GRAPHICSVIEW
        ) {
         QRegion wRegion(rgn);
-        wRegion &= wd->effectiveRectFor(w->data->crect);
+        wRegion &= w->data->crect;
         wRegion.translate(-widgetPos);
         if (hasMask)
             wRegion &= wd->extra->mask;
         wd->drawWidget(pdev, wRegion, offset + widgetPos, flags, sharedPainter, backingStore);
     }
 }
-
-#ifndef QT_NO_GRAPHICSEFFECT
-QRectF QWidgetEffectSourcePrivate::boundingRect(Qt::CoordinateSystem system) const
-{
-    if (system != Qt::DeviceCoordinates)
-        return m_widget->rect();
-
-    if (Q_UNLIKELY(!context)) {
-        // Device coordinates without context not yet supported.
-        qWarning("QGraphicsEffectSource::boundingRect: Not yet implemented, lacking device context");
-        return QRectF();
-    }
-
-    return context->painter->worldTransform().mapRect(m_widget->rect());
-}
-
-void QWidgetEffectSourcePrivate::draw(QPainter *painter)
-{
-    if (!context || context->painter != painter) {
-        m_widget->render(painter);
-        return;
-    }
-
-    // The region saved in the context is neither clipped to the rect
-    // nor the mask, so we have to clip it here before calling drawWidget.
-    QRegion toBePainted = context->rgn;
-    toBePainted &= m_widget->rect();
-    QWidgetPrivate *wd = qt_widget_private(m_widget);
-    if (wd->extra && wd->extra->hasMask)
-        toBePainted &= wd->extra->mask;
-
-    wd->drawWidget(context->pdev, toBePainted, context->offset, context->flags,
-                   context->sharedPainter, context->backingStore);
-}
-
-QPixmap QWidgetEffectSourcePrivate::pixmap(Qt::CoordinateSystem system, QPoint *offset,
-                                           QGraphicsEffect::PixmapPadMode mode) const
-{
-    const bool deviceCoordinates = (system == Qt::DeviceCoordinates);
-    if (Q_UNLIKELY(!context && deviceCoordinates)) {
-        // Device coordinates without context not yet supported.
-        qWarning("QGraphicsEffectSource::pixmap: Not yet implemented, lacking device context");
-        return QPixmap();
-    }
-
-    QPoint pixmapOffset;
-    QRectF sourceRect = m_widget->rect();
-
-    if (deviceCoordinates) {
-        const QTransform &painterTransform = context->painter->worldTransform();
-        sourceRect = painterTransform.mapRect(sourceRect);
-        pixmapOffset = painterTransform.map(pixmapOffset);
-    }
-
-    QRect effectRect;
-
-    if (mode == QGraphicsEffect::PadToEffectiveBoundingRect)
-        effectRect = m_widget->graphicsEffect()->boundingRectFor(sourceRect).toAlignedRect();
-    else if (mode == QGraphicsEffect::PadToTransparentBorder)
-        effectRect = sourceRect.adjusted(-1, -1, 1, 1).toAlignedRect();
-    else
-        effectRect = sourceRect.toAlignedRect();
-
-    if (offset)
-        *offset = effectRect.topLeft();
-
-    pixmapOffset -= effectRect.topLeft();
-
-    QPixmap pixmap(effectRect.size());
-    pixmap.fill(Qt::transparent);
-    m_widget->render(&pixmap, pixmapOffset, QRegion(), QWidget::DrawChildren);
-    return pixmap;
-}
-#endif //QT_NO_GRAPHICSEFFECT
 
 #ifndef QT_NO_GRAPHICSVIEW
 /*!

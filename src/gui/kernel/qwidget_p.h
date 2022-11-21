@@ -42,7 +42,6 @@
 #include "QtGui/qsizepolicy.h"
 #include "QtGui/qstyle.h"
 #include "QtGui/qapplication.h"
-#include "qgraphicseffect_p.h"
 #include "QtGui/qgraphicsproxywidget.h"
 #include "QtGui/qgraphicsscene.h"
 #include "QtGui/qgraphicsview.h"
@@ -321,9 +320,6 @@ public:
     void setOpaque(bool opaque);
     void updateIsTranslucent();
     bool paintOnScreen() const;
-#ifndef QT_NO_GRAPHICSEFFECT
-    void invalidateGraphicsEffectsRecursively();
-#endif //QT_NO_GRAPHICSEFFECT
 
     const QRegion &getOpaqueChildren() const;
     void setDirtyOpaqueRegion();
@@ -466,15 +462,6 @@ public:
         return extra ? extra->nativeChildrenForced : false;
     }
 
-    inline QRect effectiveRectFor(const QRect &rect) const
-    {
-#ifndef QT_NO_GRAPHICSEFFECT
-        if (graphicsEffect && graphicsEffect->isEnabled())
-            return graphicsEffect->boundingRectFor(rect).toAlignedRect();
-#endif //QT_NO_GRAPHICSEFFECT
-        return rect;
-    }
-
     QSize adjustedSize() const;
 
     inline void handleSoftwareInputPanel(Qt::MouseButton button, bool clickCausedFocus)
@@ -517,7 +504,6 @@ public:
     QWidgetItemV2 *widgetItem;
     QPaintEngine *extraPaintEngine;
     mutable const QMetaObject *polished;
-    QGraphicsEffect *graphicsEffect;
     // All widgets are added into the allWidgets set. Once
     // they receive a window id they are also added to the mapper.
     // This should just ensure that all widgets are deleted by QApplication
@@ -601,61 +587,6 @@ struct QWidgetPaintContext
     QWidgetBackingStore *backingStore;
     QPainter *painter;
 };
-
-#ifndef QT_NO_GRAPHICSEFFECT
-class QWidgetEffectSourcePrivate : public QGraphicsEffectSourcePrivate
-{
-public:
-    QWidgetEffectSourcePrivate(QWidget *widget)
-        : QGraphicsEffectSourcePrivate(), m_widget(widget), context(0), updateDueToGraphicsEffect(false)
-    {}
-
-    inline void detach()
-    { m_widget->d_func()->graphicsEffect = 0; }
-
-    inline const QGraphicsItem *graphicsItem() const
-    { return nullptr; }
-
-    inline const QWidget *widget() const
-    { return m_widget; }
-
-    inline void update()
-    {
-        updateDueToGraphicsEffect = true;
-        m_widget->update();
-        updateDueToGraphicsEffect = false;
-    }
-
-    inline bool isPixmap() const
-    { return false; }
-
-    inline void effectBoundingRectChanged()
-    {
-        // ### This function should take a rect parameter; then we can avoid
-        // updating too much on the parent widget.
-        if (QWidget *parent = m_widget->parentWidget())
-            parent->update();
-        else
-            update();
-    }
-
-    inline const QStyleOption *styleOption() const
-    { return nullptr; }
-
-    inline QRect deviceRect() const
-    { return m_widget->window()->rect(); }
-
-    QRectF boundingRect(Qt::CoordinateSystem system) const;
-    void draw(QPainter *p);
-    QPixmap pixmap(Qt::CoordinateSystem system, QPoint *offset,
-                   QGraphicsEffect::PixmapPadMode mode) const;
-
-    QWidget *m_widget;
-    QWidgetPaintContext *context;
-    QTransform lastEffectTransform;
-    bool updateDueToGraphicsEffect;
-};
-#endif //QT_NO_GRAPHICSEFFECT
 
 inline QWExtra *QWidgetPrivate::extraData() const
 {

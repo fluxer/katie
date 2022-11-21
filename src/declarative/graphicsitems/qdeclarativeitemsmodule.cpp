@@ -23,7 +23,6 @@
 
 #include <QtGui/qaction.h>
 #include <QtGui/qvalidator.h>
-#include <QtGui/qgraphicseffect.h>
 
 #include "qdeclarativeevents_p_p.h"
 #include "qdeclarativescalegrid_p_p.h"
@@ -147,9 +146,6 @@ void QDeclarativeItemModule::defineModule()
 #endif
     qmlRegisterType<QDeclarativePen>();
     qmlRegisterType<QDeclarativeFlickableVisibleArea>();
-#ifndef QT_NO_GRAPHICSEFFECT
-    qmlRegisterType<QGraphicsEffect>();
-#endif
 
     qmlRegisterUncreatableType<QDeclarativeKeyNavigationAttached>("QtQuick",1,0,"KeyNavigation",QDeclarativeKeyNavigationAttached::tr("KeyNavigation is only available via attached properties"));
     qmlRegisterUncreatableType<QDeclarativeKeysAttached>("QtQuick",1,0,"Keys",QDeclarativeKeysAttached::tr("Keys is only available via attached properties"));

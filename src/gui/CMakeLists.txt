@@ -66,7 +66,6 @@ set(GUI_PUBLIC_HEADERS
     QFrame
     QGenericMatrix
     QGraphicsAnchorLayout
-    QGraphicsEffect
     QGraphicsGridLayout
     QGraphicsItem
     QGraphicsItemAnimation
@@ -251,8 +250,6 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qfileinfogatherer_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qwizard.h
     ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qprintpreviewdialog.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/effects/qgraphicseffect.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/effects/qgraphicseffect_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview/qgraphicsgridlayout.h
     ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview/qgraphicsitem.h
     ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview/qgraphicsitem_p.h
@@ -297,7 +294,6 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmap.h
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmapcache.h
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmapdata_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmapfilter_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qppmhandler_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qxpmhandler_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qpnghandler_p.h
@@ -610,7 +606,6 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qprintsettingsoutput.ui
     ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qprintwidget.ui
     ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qprintpropertieswidget.ui
-    ${CMAKE_CURRENT_SOURCE_DIR}/effects/qgraphicseffect.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview/qgraphicsgridlayout.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview/qgraphicsitem.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview/qgraphicsitemanimation.cpp
@@ -643,7 +638,6 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmap.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmapcache.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmapdata.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmapfilter.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qiconengine.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qiconengineplugin.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qmovie.cpp
@@ -931,7 +925,6 @@ katie_unity_exclude(
     ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview/qgraphicsscene.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview/qgraphicsview.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmap.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmapfilter.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/itemviews/qitemeditorfactory.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qapplication.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qapplication_x11.cpp

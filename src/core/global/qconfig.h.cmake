@@ -174,7 +174,6 @@
 #cmakedefine QT_NO_FORMLAYOUT
 #cmakedefine QT_NO_FRAME
 #cmakedefine QT_NO_FSCOMPLETER
-#cmakedefine QT_NO_GRAPHICSEFFECT
 #cmakedefine QT_NO_IDENTITYPROXYMODEL
 #cmakedefine QT_NO_IMAGEFORMAT_KAT
 #cmakedefine QT_NO_IMAGEFORMAT_PPM
@@ -348,11 +347,6 @@
 // QColorDialog
 #if !defined(QT_NO_COLORDIALOG) && defined(QT_NO_SPINBOX)
 #  define QT_NO_COLORDIALOG
-#endif
-
-// QGraphicsEffect
-#if !defined(QT_NO_GRAPHICSEFFECT) && defined(QT_NO_GRAPHICSVIEW)
-#  define QT_NO_GRAPHICSEFFECT
 #endif
 
 // The Model/View Framework

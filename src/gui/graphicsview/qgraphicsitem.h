@@ -40,7 +40,6 @@ QT_BEGIN_NAMESPACE
 class QBrush;
 class QCursor;
 class QFocusEvent;
-class QGraphicsEffect;
 class QGraphicsItemGroup;
 class QGraphicsObject;
 class QGraphicsSceneContextMenuEvent;
@@ -204,12 +203,6 @@ public:
     qreal opacity() const;
     qreal effectiveOpacity() const;
     void setOpacity(qreal opacity);
-
-#ifndef QT_NO_GRAPHICSEFFECT
-    // Effect
-    QGraphicsEffect *graphicsEffect() const;
-    void setGraphicsEffect(QGraphicsEffect *effect);
-#endif //QT_NO_GRAPHICSEFFECT
 
     Qt::MouseButtons acceptedMouseButtons() const;
     void setAcceptedMouseButtons(Qt::MouseButtons buttons);
@@ -510,9 +503,6 @@ class Q_GUI_EXPORT QGraphicsObject : public QObject, public QGraphicsItem
     Q_PROPERTY(qreal rotation READ rotation WRITE setRotation NOTIFY rotationChanged)
     Q_PROPERTY(qreal scale READ scale WRITE setScale NOTIFY scaleChanged)
     Q_PROPERTY(QPointF transformOriginPoint READ transformOriginPoint WRITE setTransformOriginPoint)
-#ifndef QT_NO_GRAPHICSEFFECT
-    Q_PROPERTY(QGraphicsEffect *effect READ graphicsEffect WRITE setGraphicsEffect)
-#endif
     Q_PRIVATE_PROPERTY(QGraphicsItem::d_func(), QDeclarativeListProperty<QGraphicsObject> children READ childrenList DESIGNABLE false NOTIFY childrenChanged)
     Q_PRIVATE_PROPERTY(QGraphicsItem::d_func(), qreal width READ width WRITE setWidth NOTIFY widthChanged RESET resetWidth FINAL)
     Q_PRIVATE_PROPERTY(QGraphicsItem::d_func(), qreal height READ height WRITE setHeight NOTIFY heightChanged RESET resetHeight FINAL)

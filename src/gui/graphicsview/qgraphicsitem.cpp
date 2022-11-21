@@ -708,7 +708,6 @@
 #include <QtGui/qpixmapcache.h>
 #include <QtGui/qstyleoption.h>
 #include <QtGui/qevent.h>
-#include <QtGui/qgraphicseffect.h>
 #include "qgraphicsitem_p.h"
 #include "qgraphicswidget_p.h"
 #include "qtextcontrol_p.h"
@@ -1094,10 +1093,6 @@ void QGraphicsItemPrivate::setParentItemHelper(QGraphicsItem *newParent, const Q
         p = p->d_ptr->parent;
     }
 
-    // Update graphics effect optimization flag
-    if (newParent && (graphicsEffect || mayHaveChildWithGraphicsEffect))
-        newParent->d_ptr->updateChildWithGraphicsEffectFlagRecursively();
-
     // Update focus scope item ptr in new scope.
     QGraphicsItem *newFocusScopeItem = subFocusItem ? subFocusItem : parentFocusScopeItem;
     if (newFocusScopeItem && newParent) {
@@ -1235,14 +1230,14 @@ void QGraphicsItemPrivate::childrenBoundingRectHelper(QTransform *x, QRectF *rec
             QTransform matrix = childd->transformToParent();
             if (x)
                 matrix *= *x;
-            *rect |= matrix.mapRect(child->d_ptr->effectiveBoundingRect(topMostEffectItem));
+            *rect |= matrix.mapRect(child->boundingRect());
             if (!childd->children.isEmpty())
                 childd->childrenBoundingRectHelper(&matrix, rect, topMostEffectItem);
         } else {
             if (x)
-                *rect |= x->mapRect(child->d_ptr->effectiveBoundingRect(topMostEffectItem));
+                *rect |= x->mapRect(child->boundingRect());
             else
-                *rect |= child->d_ptr->effectiveBoundingRect(topMostEffectItem);
+                *rect |= child->boundingRect();
             if (!childd->children.isEmpty())
                 childd->childrenBoundingRectHelper(x, rect, topMostEffectItem);
         }
@@ -1417,9 +1412,6 @@ QGraphicsItem::~QGraphicsItem()
         setParentItem(0);
     }
 
-#ifndef QT_NO_GRAPHICSEFFECT
-    delete d_ptr->graphicsEffect;
-#endif //QT_NO_GRAPHICSEFFECT
     if (d_ptr->transformData) {
         for(int i = 0; i < d_ptr->transformData->graphicsTransforms.size(); ++i) {
             QGraphicsTransform *t = d_ptr->transformData->graphicsTransforms.at(i);
@@ -2172,9 +2164,6 @@ void QGraphicsItemPrivate::setVisibleHelper(bool newVisible, bool explicitly, bo
         if (c)
             c->purge();
         if (scene) {
-#ifndef QT_NO_GRAPHICSEFFECT
-            invalidateParentGraphicsEffectsRecursively();
-#endif //QT_NO_GRAPHICSEFFECT
             scene->d_func()->markDirty(q_ptr, QRectF(), /*invalidateChildren=*/false, /*force=*/true);
         }
     }
@@ -2610,11 +2599,6 @@ void QGraphicsItem::setOpacity(qreal opacity)
 
     // Update.
     if (d_ptr->scene) {
-#ifndef QT_NO_GRAPHICSEFFECT
-        d_ptr->invalidateParentGraphicsEffectsRecursively();
-        if (!(d_ptr->flags & ItemDoesntPropagateOpacityToChildren))
-            d_ptr->invalidateChildGraphicsEffectsRecursively(QGraphicsItemPrivate::OpacityChanged);
-#endif //QT_NO_GRAPHICSEFFECT
         d_ptr->scene->d_func()->markDirty(this, QRectF(),
                                           /*invalidateChildren=*/true,
                                           /*force=*/false,
@@ -2625,138 +2609,6 @@ void QGraphicsItem::setOpacity(qreal opacity)
 
     if (d_ptr->isObject)
         emit static_cast<QGraphicsObject *>(this)->opacityChanged();
-}
-
-/*!
-    Returns a pointer to this item's effect if it has one; otherwise 0.
-
-    \since 4.6
-*/
-#ifndef QT_NO_GRAPHICSEFFECT
-QGraphicsEffect *QGraphicsItem::graphicsEffect() const
-{
-    return d_ptr->graphicsEffect;
-}
-
-/*!
-    Sets \a effect as the item's effect. If there already is an effect installed
-    on this item, QGraphicsItem will delete the existing effect before installing
-    the new \a effect.
-
-    If \a effect is the installed on a different item, setGraphicsEffect() will remove
-    the effect from the item and install it on this item.
-
-    QGraphicsItem takes ownership of \a effect.
-
-    \note This function will apply the effect on itself and all its children.
-
-    \since 4.6
-*/
-void QGraphicsItem::setGraphicsEffect(QGraphicsEffect *effect)
-{
-    if (d_ptr->graphicsEffect == effect)
-        return;
-
-    if (d_ptr->graphicsEffect) {
-        delete d_ptr->graphicsEffect;
-        d_ptr->graphicsEffect = 0;
-    } else if (d_ptr->parent) {
-        d_ptr->parent->d_ptr->updateChildWithGraphicsEffectFlagRecursively();
-    }
-
-    if (effect) {
-        // Set new effect.
-        QGraphicsEffectSourcePrivate *sourced = new QGraphicsItemEffectSourcePrivate(this);
-        QGraphicsEffectSource *source = new QGraphicsEffectSource(*sourced);
-        d_ptr->graphicsEffect = effect;
-        effect->d_func()->setGraphicsEffectSource(source);
-        prepareGeometryChange();
-    }
-}
-#endif //QT_NO_GRAPHICSEFFECT
-
-void QGraphicsItemPrivate::updateChildWithGraphicsEffectFlagRecursively()
-{
-#ifndef QT_NO_GRAPHICSEFFECT
-    QGraphicsItemPrivate *itemPrivate = this;
-    do {
-        // parent chain already notified?
-        if (itemPrivate->mayHaveChildWithGraphicsEffect)
-            return;
-        itemPrivate->mayHaveChildWithGraphicsEffect = true;
-    } while ((itemPrivate = itemPrivate->parent ? itemPrivate->parent->d_ptr.data() : 0));
-#endif
-}
-
-/*!
-    \internal
-    \since 4.6
-    Returns the effective bounding rect of the given item space rect.
-    If the item has no effect, the rect is returned unmodified.
-    If the item has an effect, the effective rect can be extend beyond the
-    item's bounding rect, depending on the effect.
-
-    \sa boundingRect()
-*/
-QRectF QGraphicsItemPrivate::effectiveBoundingRect(const QRectF &rect) const
-{
-#ifndef QT_NO_GRAPHICSEFFECT
-    Q_Q(const QGraphicsItem);
-    QGraphicsEffect *effect = graphicsEffect;
-    if (scene && effect && effect->isEnabled()) {
-        if (scene->d_func()->views.isEmpty())
-            return effect->boundingRectFor(rect);
-        QRectF sceneRect = q->mapRectToScene(rect);
-        QRectF sceneEffectRect;
-        foreach (QGraphicsView *view, scene->views()) {
-            QRectF deviceRect = view->d_func()->mapRectFromScene(sceneRect);
-            QRect deviceEffectRect = effect->boundingRectFor(deviceRect).toAlignedRect();
-            sceneEffectRect |= view->d_func()->mapRectToScene(deviceEffectRect);
-        }
-        return q->mapRectFromScene(sceneEffectRect);
-    }
-#endif //QT_NO_GRAPHICSEFFECT
-    return rect;
-}
-
-/*!
-    \internal
-    \since 4.6
-    Returns the effective bounding rect of the item.
-    If the item has no effect, this is the same as the item's bounding rect.
-    If the item has an effect, the effective rect can be larger than the item's
-    bouding rect, depending on the effect.
-
-    \sa boundingRect()
-*/
-QRectF QGraphicsItemPrivate::effectiveBoundingRect(QGraphicsItem *topMostEffectItem) const
-{
-#ifndef QT_NO_GRAPHICSEFFECT
-    Q_Q(const QGraphicsItem);
-    QRectF brect = effectiveBoundingRect(q_ptr->boundingRect());
-    if (ancestorFlags & QGraphicsItemPrivate::AncestorClipsChildren || topMostEffectItem == q)
-        return brect;
-
-    const QGraphicsItem *effectParent = parent;
-    while (effectParent) {
-        QGraphicsEffect *effect = effectParent->d_ptr->graphicsEffect;
-        if (scene && effect && effect->isEnabled()) {
-            const QRectF brectInParentSpace = q->mapRectToItem(effectParent, brect);
-            const QRectF effectRectInParentSpace = effectParent->d_ptr->effectiveBoundingRect(brectInParentSpace);
-            brect = effectParent->mapRectToItem(q, effectRectInParentSpace);
-        }
-        if (effectParent->d_ptr->ancestorFlags & QGraphicsItemPrivate::AncestorClipsChildren
-            || topMostEffectItem == effectParent) {
-            return brect;
-        }
-        effectParent = effectParent->d_ptr->parent;
-    }
-
-    return brect;
-#else //QT_NO_GRAPHICSEFFECT
-    return q_ptr->boundingRect();
-#endif //QT_NO_GRAPHICSEFFECT
-
 }
 
 /*!
@@ -2784,7 +2636,7 @@ QRectF QGraphicsItemPrivate::sceneEffectiveBoundingRect() const
         offset += itemd->pos;
     } while ((parentItem = itemd->parent));
 
-    QRectF br = effectiveBoundingRect();
+    QRectF br = q_ptr->boundingRect();
     br.translate(offset);
     return !parentItem ? br : parentItem->sceneTransform().mapRect(br);
 }
@@ -5200,40 +5052,6 @@ int QGraphicsItemPrivate::depth() const
 /*!
     \internal
 */
-#ifndef QT_NO_GRAPHICSEFFECT
-void QGraphicsItemPrivate::invalidateParentGraphicsEffectsRecursively()
-{
-    QGraphicsItemPrivate *itemPrivate = this;
-    do {
-        if (itemPrivate->graphicsEffect && !itemPrivate->updateDueToGraphicsEffect) {
-            itemPrivate->notifyInvalidated = true;
-            static_cast<QGraphicsItemEffectSourcePrivate *>(itemPrivate->graphicsEffect->d_func()->source->d_func())->invalidateCache();
-        }
-    } while ((itemPrivate = itemPrivate->parent ? itemPrivate->parent->d_ptr.data() : 0));
-}
-
-void QGraphicsItemPrivate::invalidateChildGraphicsEffectsRecursively(QGraphicsItemPrivate::InvalidateReason reason)
-{
-    if (!mayHaveChildWithGraphicsEffect)
-        return;
-
-    for (int i = 0; i < children.size(); ++i) {
-        QGraphicsItemPrivate *childPrivate = children.at(i)->d_ptr.data();
-        if (reason == OpacityChanged && (childPrivate->flags & QGraphicsItem::ItemIgnoresParentOpacity))
-            continue;
-        if (childPrivate->graphicsEffect) {
-            childPrivate->notifyInvalidated = true;
-            static_cast<QGraphicsItemEffectSourcePrivate *>(childPrivate->graphicsEffect->d_func()->source->d_func())->invalidateCache();
-        }
-
-        childPrivate->invalidateChildGraphicsEffectsRecursively(reason);
-    }
-}
-#endif //QT_NO_GRAPHICSEFFECT
-
-/*!
-    \internal
-*/
 void QGraphicsItemPrivate::invalidateDepthRecursively()
 {
     if (itemDepth == -1)
@@ -5488,32 +5306,21 @@ void QGraphicsItem::update(const QRectF &rect)
     if (rect.isEmpty() && !rect.isNull())
         return;
 
-    // Make sure we notify effects about invalidated source.
-#ifndef QT_NO_GRAPHICSEFFECT
-    d_ptr->invalidateParentGraphicsEffectsRecursively();
-#endif //QT_NO_GRAPHICSEFFECT
-
-#ifndef QT_NO_GRAPHICSEFFECT
-    if (!d_ptr->updateDueToGraphicsEffect) {
-#endif
-        if (d_ptr->cacheMode != NoCache) {
-            // Invalidate cache.
-            QGraphicsItemCache *cache = d_ptr->extraItemCache();
-            if (!cache->allExposed) {
-                if (rect.isNull()) {
-                    cache->allExposed = true;
-                    cache->exposed.clear();
-                } else {
-                    cache->exposed.append(rect);
-                }
+    if (d_ptr->cacheMode != NoCache) {
+        // Invalidate cache.
+        QGraphicsItemCache *cache = d_ptr->extraItemCache();
+        if (!cache->allExposed) {
+            if (rect.isNull()) {
+                cache->allExposed = true;
+                cache->exposed.clear();
+            } else {
+                cache->exposed.append(rect);
             }
-            // Only invalidate cache; item is already dirty.
-            if (d_ptr->fullUpdatePending)
-                return;
         }
-#ifndef QT_NO_GRAPHICSEFFECT
+        // Only invalidate cache; item is already dirty.
+        if (d_ptr->fullUpdatePending)
+            return;
     }
-#endif
 
     if (d_ptr->scene)
         d_ptr->scene->d_func()->markDirty(this, rect);
@@ -10327,149 +10134,6 @@ int QGraphicsItemGroup::type() const
 {
     return Type;
 }
-
-#ifndef QT_NO_GRAPHICSEFFECT
-QRectF QGraphicsItemEffectSourcePrivate::boundingRect(Qt::CoordinateSystem system) const
-{
-    const bool deviceCoordinates = (system == Qt::DeviceCoordinates);
-    if (!info && deviceCoordinates) {
-        // Device coordinates without info not yet supported.
-        qWarning("QGraphicsEffectSource::boundingRect: Not yet implemented, lacking device context");
-        return QRectF();
-    }
-
-    QRectF rect = item->boundingRect();
-    if (!item->d_ptr->children.isEmpty())
-        rect |= item->childrenBoundingRect();
-
-    if (deviceCoordinates) {
-        Q_ASSERT(info->painter);
-        rect = info->painter->worldTransform().mapRect(rect);
-    }
-
-    return rect;
-}
-
-void QGraphicsItemEffectSourcePrivate::draw(QPainter *painter)
-{
-    if (!info) {
-        qWarning("QGraphicsEffectSource::draw: Can only begin as a result of QGraphicsEffect::draw");
-        return;
-    }
-
-    Q_ASSERT(item->d_ptr->scene);
-    QGraphicsScenePrivate *scened = item->d_ptr->scene->d_func();
-    if (painter == info->painter) {
-        scened->draw(item, painter, info->viewTransform, info->transformPtr, info->exposedRegion,
-                     info->widget, info->opacity, info->effectTransform, info->wasDirtySceneTransform,
-                     info->drawItem);
-    } else {
-        QTransform effectTransform = info->painter->worldTransform().inverted();
-        effectTransform *= painter->worldTransform();
-        scened->draw(item, painter, info->viewTransform, info->transformPtr, info->exposedRegion,
-                     info->widget, info->opacity, &effectTransform, info->wasDirtySceneTransform,
-                     info->drawItem);
-    }
-}
-
-// sourceRect must be in the given coordinate system
-QRect QGraphicsItemEffectSourcePrivate::paddedEffectRect(Qt::CoordinateSystem system, QGraphicsEffect::PixmapPadMode mode, const QRectF &sourceRect, bool *unpadded) const
-{
-    QRectF effectRectF;
-
-    if (unpadded)
-        *unpadded = false;
-
-    if (mode == QGraphicsEffect::PadToEffectiveBoundingRect) {
-        if (info) {
-            QRectF deviceRect = system == Qt::DeviceCoordinates ? sourceRect : info->painter->worldTransform().mapRect(sourceRect);
-            effectRectF = item->graphicsEffect()->boundingRectFor(deviceRect);
-            if (unpadded)
-                *unpadded = (effectRectF.size() == sourceRect.size());
-            if (info && system == Qt::LogicalCoordinates)
-                effectRectF = info->painter->worldTransform().inverted().mapRect(effectRectF);
-        } else {
-            // no choice but to send a logical coordinate bounding rect to boundingRectFor
-            effectRectF = item->graphicsEffect()->boundingRectFor(sourceRect);
-        }
-    } else if (mode == QGraphicsEffect::PadToTransparentBorder) {
-        // adjust by 1.5 to account for cosmetic pens
-        effectRectF = sourceRect.adjusted(-1.5, -1.5, 1.5, 1.5);
-    } else {
-        effectRectF = sourceRect;
-        if (unpadded)
-            *unpadded = true;
-    }
-
-    return effectRectF.toAlignedRect();
-}
-
-QPixmap QGraphicsItemEffectSourcePrivate::pixmap(Qt::CoordinateSystem system, QPoint *offset,
-                                                 QGraphicsEffect::PixmapPadMode mode) const
-{
-    const bool deviceCoordinates = (system == Qt::DeviceCoordinates);
-    if (!info && deviceCoordinates) {
-        // Device coordinates without info not yet supported.
-        qWarning("QGraphicsEffectSource::pixmap: Not yet implemented, lacking device context");
-        return QPixmap();
-    }
-    if (!item->d_ptr->scene)
-        return QPixmap();
-    QGraphicsScenePrivate *scened = item->d_ptr->scene->d_func();
-
-    bool unpadded;
-    const QRectF sourceRect = boundingRect(system);
-    QRect effectRect = paddedEffectRect(system, mode, sourceRect, &unpadded);
-
-    if (offset)
-        *offset = effectRect.topLeft();
-
-    bool untransformed = !deviceCoordinates
-            || info->painter->worldTransform().type() <= QTransform::TxTranslate;
-    if (untransformed && unpadded && isPixmap()) {
-        if (offset)
-            *offset = boundingRect(system).topLeft().toPoint();
-        return static_cast<QGraphicsPixmapItem *>(item)->pixmap();
-    }
-
-    if (effectRect.isEmpty())
-        return QPixmap();
-
-    QPixmap pixmap(effectRect.size());
-    pixmap.fill(Qt::transparent);
-    QPainter pixmapPainter(&pixmap);
-    pixmapPainter.setRenderHints(info ? info->painter->renderHints() : QPainter::TextAntialiasing);
-
-    QTransform effectTransform = QTransform::fromTranslate(-effectRect.x(), -effectRect.y());
-    if (deviceCoordinates && info->effectTransform)
-        effectTransform *= *info->effectTransform;
-
-    if (!info) {
-        // Logical coordinates without info.
-        QTransform sceneTransform = item->sceneTransform();
-        QTransform newEffectTransform = sceneTransform.inverted();
-        newEffectTransform *= effectTransform;
-        scened->draw(item, &pixmapPainter, 0, &sceneTransform, 0, 0, qreal(1.0),
-                     &newEffectTransform, false, true);
-    } else if (deviceCoordinates) {
-        // Device coordinates with info.
-        scened->draw(item, &pixmapPainter, info->viewTransform, info->transformPtr, 0,
-                     info->widget, info->opacity, &effectTransform, info->wasDirtySceneTransform,
-                     info->drawItem);
-    } else {
-        // Item coordinates with info.
-        QTransform newEffectTransform = info->transformPtr->inverted();
-        newEffectTransform *= effectTransform;
-        scened->draw(item, &pixmapPainter, info->viewTransform, info->transformPtr, 0,
-                     info->widget, info->opacity, &newEffectTransform, info->wasDirtySceneTransform,
-                     info->drawItem);
-    }
-
-    pixmapPainter.end();
-
-    return pixmap;
-}
-#endif //QT_NO_GRAPHICSEFFECT
 
 #ifndef QT_NO_DEBUG_STREAM
 QDebug operator<<(QDebug debug, QGraphicsItem *item)

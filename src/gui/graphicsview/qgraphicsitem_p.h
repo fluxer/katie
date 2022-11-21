@@ -39,11 +39,7 @@
 #include "qgraphicsview_p.h"
 #include "qgraphicstransform.h"
 #include "qgraphicstransform_p.h"
-
-#include "qgraphicseffect_p.h"
-#include "qgraphicseffect.h"
-
-#include <QtCore/qpoint.h>
+#include "qpoint.h"
 
 #ifndef QT_NO_GRAPHICSVIEW
 
@@ -157,7 +153,6 @@ public:
         scene(0),
         parent(0),
         transformData(0),
-        graphicsEffect(0),
         index(-1),
         siblingIndex(-1),
         itemDepth(-1),
@@ -202,10 +197,8 @@ public:
         wantsActive(false),
         holesInSiblingIndex(false),
         sequentialOrdering(true),
-        updateDueToGraphicsEffect(false),
         scenePosDescendants(false),
         pendingPolish(false),
-        mayHaveChildWithGraphicsEffect(false),
         isDeclarativeItem(false),
         sendParentChangeNotification(false),
         cacheMode(QGraphicsItem::NoCache),
@@ -229,7 +222,6 @@ public:
         return item->d_ptr.data();
     }
 
-    void updateChildWithGraphicsEffectFlagRecursively();
     void updateAncestorFlag(QGraphicsItem::GraphicsItemFlag childFlag,
                             AncestorFlag flag = NoFlag, bool enabled = false, bool root = true);
     void updateAncestorFlags();
@@ -258,13 +250,6 @@ public:
                               bool ignoreDirtyBit = false, bool ignoreOpacity = false) const;
     virtual void transformChanged() {}
     int depth() const;
-#ifndef QT_NO_GRAPHICSEFFECT
-    enum InvalidateReason {
-        OpacityChanged
-    };
-    void invalidateParentGraphicsEffectsRecursively();
-    void invalidateChildGraphicsEffectsRecursively(InvalidateReason reason);
-#endif //QT_NO_GRAPHICSEFFECT
     void invalidateDepthRecursively();
     void resolveDepth();
     void addChild(QGraphicsItem *child);
@@ -275,10 +260,7 @@ public:
     void childrenBoundingRectHelper(QTransform *x, QRectF *rect, QGraphicsItem *topMostEffectItem);
     void initStyleOption(QStyleOptionGraphicsItem *option, const QTransform &worldTransform,
                          const QRegion &exposedRegion, bool allItems = false) const;
-    QRectF effectiveBoundingRect(QGraphicsItem *topMostEffectItem = 0) const;
     QRectF sceneEffectiveBoundingRect() const;
-
-    QRectF effectiveBoundingRect(const QRectF &rect) const;
 
     virtual void resolveFont(uint inheritedMask)
     {
@@ -481,7 +463,6 @@ public:
     QList<QGraphicsItem *> children;
     struct TransformData;
     TransformData *transformData;
-    QGraphicsEffect *graphicsEffect;
     QTransform sceneTransform;
     int index;
     int siblingIndex;
@@ -529,10 +510,8 @@ public:
     bool wantsActive;
     bool holesInSiblingIndex;
     bool sequentialOrdering;
-    bool updateDueToGraphicsEffect;
     bool scenePosDescendants;
     bool pendingPolish;
-    bool mayHaveChildWithGraphicsEffect;
     bool isDeclarativeItem ;
     bool sendParentChangeNotification;
 
@@ -612,68 +591,6 @@ struct QGraphicsItemPaintInfo
     bool wasDirtySceneTransform;
     bool drawItem;
 };
-
-#ifndef QT_NO_GRAPHICSEFFECT
-class QGraphicsItemEffectSourcePrivate : public QGraphicsEffectSourcePrivate
-{
-public:
-    QGraphicsItemEffectSourcePrivate(QGraphicsItem *i)
-        : QGraphicsEffectSourcePrivate(), item(i), info(0)
-    {}
-
-    inline void detach()
-    {
-        item->d_ptr->graphicsEffect = 0;
-        item->prepareGeometryChange();
-    }
-
-    inline const QGraphicsItem *graphicsItem() const
-    { return item; }
-
-    inline const QWidget *widget() const
-    { return nullptr; }
-
-    inline void update() {
-        item->d_ptr->updateDueToGraphicsEffect = true;
-        item->update();
-        item->d_ptr->updateDueToGraphicsEffect = false;
-    }
-
-    inline void effectBoundingRectChanged()
-    { item->prepareGeometryChange(); }
-
-    inline bool isPixmap() const
-    {
-        return item->type() == QGraphicsPixmapItem::Type
-               && !(item->flags() & QGraphicsItem::ItemIsSelectable)
-               && item->d_ptr->children.size() == 0;
-            //|| (item->d_ptr->isObject && qobject_cast<QDeclarativeImage *>(q_func()));
-    }
-
-    inline const QStyleOption *styleOption() const
-    { return info ? info->option : 0; }
-
-    inline QRect deviceRect() const
-    {
-        if (!info || !info->widget) {
-            qWarning("QGraphicsEffectSource::deviceRect: Not yet implemented, lacking device context");
-            return QRect();
-        }
-        return info->widget->rect();
-    }
-
-    QRectF boundingRect(Qt::CoordinateSystem system) const;
-    void draw(QPainter *);
-    QPixmap pixmap(Qt::CoordinateSystem system,
-                   QPoint *offset,
-                   QGraphicsEffect::PixmapPadMode mode) const;
-    QRect paddedEffectRect(Qt::CoordinateSystem system, QGraphicsEffect::PixmapPadMode mode, const QRectF &sourceRect, bool *unpadded = 0) const;
-
-    QGraphicsItem *item;
-    QGraphicsItemPaintInfo *info;
-    QTransform lastEffectTransform;
-};
-#endif //QT_NO_GRAPHICSEFFECT
 
 /*!
     Returns true if \a item1 is on top of \a item2.
@@ -807,13 +724,6 @@ inline bool QGraphicsItemPrivate::insertionOrder(QGraphicsItem *a, QGraphicsItem
 inline void QGraphicsItemPrivate::markParentDirty(bool updateBoundingRect)
 {
     QGraphicsItemPrivate *parentp = this;
-#ifndef QT_NO_GRAPHICSEFFECT
-    if (updateBoundingRect && parentp->graphicsEffect && !parentp->inSetPosHelper) {
-        parentp->notifyInvalidated = true;
-        static_cast<QGraphicsItemEffectSourcePrivate *>(parentp->graphicsEffect->d_func()
-                                                        ->source->d_func())->invalidateCache();
-    }
-#endif
     while (parentp->parent) {
         parentp = parentp->parent->d_ptr.data();
         parentp->dirtyChildren = 1;
@@ -823,19 +733,6 @@ inline void QGraphicsItemPrivate::markParentDirty(bool updateBoundingRect)
             // ### Only do this if the parent's effect applies to the entire subtree.
             parentp->notifyBoundingRectChanged = true;
         }
-#ifndef QT_NO_GRAPHICSEFFECT
-        if (parentp->graphicsEffect) {
-            if (updateBoundingRect) {
-                static_cast<QGraphicsItemEffectSourcePrivate *>(parentp->graphicsEffect->d_func()
-                                                                ->source->d_func())->invalidateCache();
-                parentp->notifyInvalidated = true;
-            }
-            if (parentp->scene && parentp->graphicsEffect->isEnabled()) {
-                parentp->dirty = true;
-                parentp->fullUpdatePending = true;
-            }
-        }
-#endif
     }
 }
 

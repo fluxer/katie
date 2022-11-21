@@ -60,7 +60,6 @@ class QIcon;
 class QWindowSurface;
 class QLocale;
 class QGraphicsProxyWidget;
-class QGraphicsEffect;
 #if defined(Q_WS_X11)
 class QX11Info;
 #endif
@@ -287,11 +286,6 @@ public:
     void render(QPainter *painter, const QPoint &targetOffset = QPoint(),
                 const QRegion &sourceRegion = QRegion(),
                 RenderFlags renderFlags = RenderFlags(DrawWindowBackground | DrawChildren));
-
-#ifndef QT_NO_GRAPHICSEFFECT
-    QGraphicsEffect *graphicsEffect() const;
-    void setGraphicsEffect(QGraphicsEffect *effect);
-#endif //QT_NO_GRAPHICSEFFECT
 
 public Q_SLOTS:
     void setWindowTitle(const QString &);
@@ -599,7 +593,6 @@ private:
     friend class QX11EmbedWidgetPrivate;
     friend class QX11EmbedContainerPrivate;
     friend struct QWidgetExceptionCleaner;
-    friend class QWidgetEffectSourcePrivate;
 
 #ifdef Q_WS_X11
     friend void qt_net_update_user_time(QWidget *tlw, unsigned long timestamp);
