@@ -60,7 +60,6 @@ protected slots:
     void render();
 
 private:
-    QPixmap pm;
     double alpha;
     QImage backImage;
     QImage frontImage;
@@ -97,7 +96,7 @@ QAlphaWidget::~QAlphaWidget()
 void QAlphaWidget::paintEvent(QPaintEvent*)
 {
     QPainter p(this);
-    p.drawPixmap(0, 0, pm);
+    p.drawImage(0, 0, mixedImage);
 }
 
 /*
@@ -131,7 +130,6 @@ void QAlphaWidget::run()
 
     if (!backImage.isNull() && checkTime.elapsed() < duration / 2) {
         mixedImage = backImage.copy();
-        pm = QPixmap::fromImage(mixedImage);
         show();
         setEnabled(false);
 
@@ -236,7 +234,6 @@ void QAlphaWidget::render()
         deleteLater();
     } else {
         alphaBlend();
-        pm = QPixmap::fromImage(mixedImage);
         repaint();
     }
 }
