@@ -1003,8 +1003,7 @@ void QApplication::setStyle(QStyle *style)
     Requests a QStyle object for \a style from the QStyleFactory.
 
     The string must be one of the QStyleFactory::keys(), typically one of
-    "windows", "motif", "cde", "plastique", "windowsxp", or "macintosh". Style
-    names are case insensitive.
+    "cleanlooks" or "windows". Style names are case insensitive.
 
     Returns 0 if an unknown \a style is passed, otherwise the QStyle object
     returned is set as the application's GUI style.
