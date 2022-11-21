@@ -616,7 +616,7 @@ bool QApplicationPrivate::x11_apply_settings()
 #ifndef QT_NO_LIBRARY
     // read library (ie. plugin) path list
     QStringList pathlist = settings.value(QLatin1String("Qt/libraryPath")).toString().split(QLatin1Char(':'));
-    if (! pathlist.isEmpty()) {
+    if (!pathlist.isEmpty()) {
         QStringList::ConstIterator it = pathlist.constBegin();
         while (it != pathlist.constEnd())
             QApplication::addLibraryPath(*it++);
@@ -625,13 +625,13 @@ bool QApplicationPrivate::x11_apply_settings()
 
     // read new QStyle
     QString stylename = settings.value(QLatin1String("Qt/style")).toString();
-
     if (stylename.isEmpty() && QApplicationPrivate::styleOverride.isEmpty()) {
         stylename = qt_guiPlatformPlugin()->styleName();
     }
-
-    if (stylename.compare(QApplication::style()->objectName(), Qt::CaseInsensitive) != 0) {
-        QApplication::setStyle(stylename);
+    if (!stylename.isEmpty() && QApplicationPrivate::styleOverride.isEmpty()) {
+        if (stylename.compare(QApplication::style()->objectName(), Qt::CaseInsensitive) != 0) {
+            QApplication::setStyle(stylename);
+        }
     }
 
     int num = settings.value(QLatin1String("Qt/doubleClickInterval"),
