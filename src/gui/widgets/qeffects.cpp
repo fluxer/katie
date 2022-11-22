@@ -34,7 +34,7 @@
 
 QT_BEGIN_NAMESPACE
 
-static const int s_duration = 150;
+static const double s_duration = 150.0;
 
 /*!
     \internal
@@ -86,8 +86,7 @@ QOpacityEffect::~QOpacityEffect()
 */
 void QOpacityEffect::fade()
 {
-    const int tempel = checkTime.elapsed();
-    const double alpha = tempel / double(s_duration);
+    const double alpha = (double(checkTime.elapsed()) / s_duration);
 
     if (alpha >= 1.0 || !widget) {
         anim.stop();
