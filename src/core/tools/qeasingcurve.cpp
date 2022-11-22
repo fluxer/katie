@@ -333,13 +333,17 @@
 
 QT_BEGIN_NAMESPACE
 
+static const qreal s_defaultperiod = qreal(0.3);
+static const qreal s_defaultamplitude = qreal(1.0);
+static const qreal s_defaultovershoot = qreal(1.70158);
+
 class QEasingCurvePrivate
 {
 public:
     QEasingCurvePrivate()
         : type(QEasingCurve::Linear),
           func(nullptr),
-          per(0.3), amp(1.0), over(1.70158)
+          per(s_defaultperiod), amp(s_defaultamplitude), over(s_defaultovershoot)
     { }
     QEasingCurvePrivate(const QEasingCurvePrivate &other)
         : type(other.type),
@@ -541,6 +545,10 @@ QEasingCurve::EasingFunction QEasingCurve::customType() const
     return d_ptr->type == QEasingCurve::Custom ? d_ptr->func : nullptr;
 }
 
+#define BOUND_PERIOD(per) (per < 0) ? s_defaultperiod : per
+#define BOUND_AMPLITUDE(amp) (amp < 0) ? s_defaultamplitude : amp
+#define BOUND_OVERSHOOT(over) (over < 0) ? s_defaultovershoot : over
+
 /*!
     Return the effective progress for the easing curve at \a progress.
     While  \a progress must be between 0 and 1, the returned effective progress
@@ -655,50 +663,41 @@ qreal QEasingCurve::valueForProgress(qreal progress) const
         case QEasingCurve::CosineCurve: {
             return easeCosineCurve(progress);
         }
-        default: {
-            break;
-        }
-    }
-
-    qreal p = (d_ptr->per < 0) ? qreal(0.3) : d_ptr->per;
-    qreal a = (d_ptr->amp < 0) ? qreal(1.0) : d_ptr->amp;
-    qreal o = (d_ptr->over < 0) ? qreal(1.70158) : d_ptr->over;
-    switch (d_ptr->type) {
         case QEasingCurve::InElastic: {
-            return easeInElastic(progress, a, p);
+            return easeInElastic(progress, BOUND_AMPLITUDE(d_ptr->amp), BOUND_PERIOD(d_ptr->per));
         }
         case QEasingCurve::OutElastic: {
-            return easeOutElastic(progress, a, p);
+            return easeOutElastic(progress, BOUND_AMPLITUDE(d_ptr->amp), BOUND_PERIOD(d_ptr->per));
         }
         case QEasingCurve::InOutElastic: {
-            return easeInOutElastic(progress, a, p);
+            return easeInOutElastic(progress, BOUND_AMPLITUDE(d_ptr->amp), BOUND_PERIOD(d_ptr->per));
         }
         case QEasingCurve::OutInElastic: {
-            return easeOutInElastic(progress, a, p);
+            return easeOutInElastic(progress, BOUND_AMPLITUDE(d_ptr->amp), BOUND_PERIOD(d_ptr->per));
         }
         case QEasingCurve::InBounce: {
-            return easeInBounce(progress, a);
+            return easeInBounce(progress, BOUND_AMPLITUDE(d_ptr->amp));
         }
         case QEasingCurve::OutBounce: {
-            return easeOutBounce(progress, a);
+            return easeOutBounce(progress, BOUND_AMPLITUDE(d_ptr->amp));
         }
         case QEasingCurve::InOutBounce: {
-            return easeInOutBounce(progress, a);
+            return easeInOutBounce(progress, BOUND_AMPLITUDE(d_ptr->amp));
         }
         case QEasingCurve::OutInBounce: {
-            return easeOutInBounce(progress, a);
+            return easeOutInBounce(progress, BOUND_AMPLITUDE(d_ptr->amp));
         }
         case QEasingCurve::InBack: {
-            return easeInBack(progress, o);
+            return easeInBack(progress, BOUND_OVERSHOOT(d_ptr->over));
         }
         case QEasingCurve::OutBack: {
-            return easeOutBack(progress, o);
+            return easeOutBack(progress, BOUND_OVERSHOOT(d_ptr->over));
         }
         case QEasingCurve::InOutBack: {
-            return easeInOutBack(progress, o);
+            return easeInOutBack(progress, BOUND_OVERSHOOT(d_ptr->over));
         }
         case QEasingCurve::OutInBack: {
-            return easeOutInBack(progress, o);
+            return easeOutInBack(progress, BOUND_OVERSHOOT(d_ptr->over));
         }
         default: {
             break;
@@ -707,6 +706,9 @@ qreal QEasingCurve::valueForProgress(qreal progress) const
 
     return progress;
 }
+#undef BOUND_PERIOD
+#undef BOUND_AMPLITUDE
+#undef BOUND_OVERSHOOT
 
 #ifndef QT_NO_DEBUG_STREAM
 static const char* const easingTypeName(const QEasingCurve::Type type)
@@ -923,4 +925,3 @@ QDataStream &operator>>(QDataStream &stream, QEasingCurve &easing)
 QT_END_NAMESPACE
 
 #include "moc_qeasingcurve.h"
-
