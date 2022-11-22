@@ -643,7 +643,6 @@ qreal QEasingCurve::valueForProgress(qreal progress) const
         case QEasingCurve::OutInCirc: {
             return easeOutInCirc(progress);
         }
-        // Internal for, compatibility with QTimeLine only ??
         case QEasingCurve::InCurve: {
             return easeInCurve(progress);
         }
