@@ -337,8 +337,8 @@ void QRollEffect::scroll()
 void qScrollEffect(QWidget* w, QEffects::DirFlags orient, int duration)
 {
     if (q_roll) {
-        q_roll->deleteLater();
         q_roll = nullptr;
+        q_roll->deleteLater();
     }
 
     if (!w) {
@@ -358,8 +358,8 @@ void qScrollEffect(QWidget* w, QEffects::DirFlags orient, int duration)
 void qFadeEffect(QWidget* w)
 {
     if (q_opacity) {
-        q_opacity->deleteLater();
         q_opacity = nullptr;
+        q_opacity->deleteLater();
     }
 
     if (!w) {
