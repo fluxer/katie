@@ -19,14 +19,10 @@
 **
 ****************************************************************************/
 
-#include "qapplication.h"
-#ifndef QT_NO_EFFECTS
-#include "qdesktopwidget.h"
 #include "qeffects_p.h"
-#include "qevent.h"
-#include "qimage.h"
-#include "qpainter.h"
-#include "qpixmap.h"
+
+#ifndef QT_NO_EFFECTS
+#include "qwidget.h"
 #include "qpointer.h"
 #include "qtimer.h"
 #include "qelapsedtimer.h"
@@ -53,31 +49,31 @@ private slots:
     void cancel();
 
 private:
-    QPointer<QWidget> widget;
-    QTimer anim;
-    QElapsedTimer checkTime;
+    QPointer<QWidget> m_widget;
+    QTimer m_fadetimer;
+    QElapsedTimer m_elapsedtimer;
 };
 
 static QOpacityEffect* q_opacity = nullptr;
 
 QOpacityEffect::QOpacityEffect(QWidget* w)
     : QObject(w),
-    widget(w)
+    m_widget(w)
 {
-    connect(widget, SIGNAL(destroyed()), this, SLOT(cancel()));
+    connect(m_widget, SIGNAL(destroyed()), this, SLOT(cancel()));
 
-    checkTime.start();
-    widget->setWindowOpacity(0.0);
-    widget->show();
-    connect(&anim, SIGNAL(timeout()), this, SLOT(fade()));
-    anim.start(1);
+    m_widget->setWindowOpacity(0.0);
+    m_widget->show();
+    connect(&m_fadetimer, SIGNAL(timeout()), this, SLOT(fade()));
+    m_elapsedtimer.start();
+    m_fadetimer.start(1);
 }
 
 QOpacityEffect::~QOpacityEffect()
 {
     // Restore the opacity value
-    if (widget) {
-        widget->setWindowOpacity(1);
+    if (m_widget) {
+        m_widget->setWindowOpacity(1);
     }
 }
 
@@ -86,46 +82,46 @@ QOpacityEffect::~QOpacityEffect()
 */
 void QOpacityEffect::fade()
 {
-    const double alpha = (double(checkTime.elapsed()) / s_duration);
+    const double alpha = (double(m_elapsedtimer.elapsed()) / s_duration);
 
-    if (alpha >= 1.0 || !widget) {
-        anim.stop();
-        if (widget) {
-            widget->setWindowOpacity(1.0);
+    if (alpha >= 1.0 || !m_widget) {
+        m_fadetimer.stop();
+        if (m_widget) {
+            m_widget->setWindowOpacity(1.0);
         }
         q_opacity = nullptr;
         deleteLater();
     } else {
-        widget->setWindowOpacity(alpha);
+        m_widget->setWindowOpacity(alpha);
     }
 }
 
 void QOpacityEffect::cancel()
 {
-    anim.stop();
+    m_fadetimer.stop();
     q_opacity = nullptr;
     deleteLater();
 }
 
 /*!
-    Fade in widget \a w.
+    Fade in widget \a widget, if \a widget is null the effect is canceled.
 */
-void qFadeEffect(QWidget* w)
+void qFadeEffect(QWidget* widget)
 {
     if (q_opacity) {
         q_opacity = nullptr;
         q_opacity->deleteLater();
     }
 
-    if (!w) {
+    if (!widget) {
         return;
     }
 
-    q_opacity = new QOpacityEffect(w);
+    q_opacity = new QOpacityEffect(widget);
 }
 
 QT_END_NAMESPACE
 
 #include "moc_qeffects.cpp"
 
-#endif //QT_NO_EFFECTS
+#endif // QT_NO_EFFECTS
