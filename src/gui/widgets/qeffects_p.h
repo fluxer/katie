@@ -54,7 +54,7 @@ struct QEffects
     typedef uint DirFlags;
 };
 
-extern void Q_GUI_EXPORT qScrollEffect(QWidget*, QEffects::DirFlags dir = QEffects::DownScroll);
+extern void Q_GUI_EXPORT qScrollEffect(QWidget*, QEffects::DirFlags dir = QEffects::DownScroll, int duration = 0);
 extern void Q_GUI_EXPORT qFadeEffect(QWidget*);
 
 QT_END_NAMESPACE

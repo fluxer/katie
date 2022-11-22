@@ -134,7 +134,7 @@ class QRollEffect : public QWidget, private QEffects
 {
     Q_OBJECT
 public:
-    QRollEffect(QWidget* w, Qt::WindowFlags f, DirFlags orient);
+    QRollEffect(QWidget* w, Qt::WindowFlags f, DirFlags orient, int duration);
 
     void run();
 
@@ -167,9 +167,10 @@ private:
 
 static QRollEffect* q_roll = nullptr;
 
-QRollEffect::QRollEffect(QWidget* w, Qt::WindowFlags f, DirFlags orient)
+QRollEffect::QRollEffect(QWidget* w, Qt::WindowFlags f, DirFlags orient, int dur)
     : QWidget(0, f),
     widget(w),
+    duration(dur),
     elapsed(0),
     done(false),
     orientation(orient)
@@ -206,7 +207,9 @@ QRollEffect::QRollEffect(QWidget* w, Qt::WindowFlags f, DirFlags orient)
     if (orientation & (DownScroll|UpScroll)) {
         dist += totalHeight - currentHeight;
     }
-    duration = qMin(qMax(dist/3, 50), 120);
+    if (!duration) {
+        duration = qMin(qMax(dist/3, 50), 120);
+    }
 
     connect(&anim, SIGNAL(timeout()), this, SLOT(scroll()));
 
@@ -333,7 +336,7 @@ void QRollEffect::scroll()
 /*!
     Scroll widget \a w. \a orient may be 1 (vertical), 2 (horizontal) or 3 (diagonal).
 */
-void qScrollEffect(QWidget* w, QEffects::DirFlags orient)
+void qScrollEffect(QWidget* w, QEffects::DirFlags orient, int duration)
 {
     if (q_roll) {
         q_roll->deleteLater();
@@ -348,7 +351,7 @@ void qScrollEffect(QWidget* w, QEffects::DirFlags orient)
     QApplication::sendPostedEvents(w, QEvent::Resize);
 
     // those can be popups - they would steal the focus, but are disabled
-    q_roll = new QRollEffect(w, Qt::ToolTip, orient);
+    q_roll = new QRollEffect(w, Qt::ToolTip, orient, duration);
 }
 
 /*!
