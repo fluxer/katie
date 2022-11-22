@@ -70,7 +70,7 @@ QOpacityEffect::QOpacityEffect(QWidget* w)
     duration(150),
     elapsed(0)
 {
-    connect(w, SIGNAL(destroyed()), this, SLOT(cancel()));
+    connect(widget, SIGNAL(destroyed()), this, SLOT(cancel()));
 
     checkTime.start();
     widget->setWindowOpacity(0.0);
@@ -169,13 +169,14 @@ static QRollEffect* q_roll = nullptr;
 
 QRollEffect::QRollEffect(QWidget* w, Qt::WindowFlags f, DirFlags orient)
     : QWidget(0, f),
+    widget(w),
+    elapsed(0),
+    done(false),
     orientation(orient)
 {
-    setEnabled(false);
-
-    widget = w;
     Q_ASSERT(widget);
 
+    setEnabled(false);
     setAttribute(Qt::WA_NoSystemBackground, true);
 
     if (widget->testAttribute(Qt::WA_Resized)) {
@@ -189,12 +190,41 @@ QRollEffect::QRollEffect(QWidget* w, Qt::WindowFlags f, DirFlags orient)
     currentHeight = totalHeight;
     currentWidth = totalWidth;
 
-    if (orientation & (RightScroll|LeftScroll))
+    if (orientation & (RightScroll|LeftScroll)) {
         currentWidth = 0;
-    if (orientation & (DownScroll|UpScroll))
+    }
+    if (orientation & (DownScroll|UpScroll)) {
         currentHeight = 0;
+    }
 
     pm = QPixmap::grabWidget(widget);
+
+    int dist = 0;
+    if (orientation & (RightScroll|LeftScroll)) {
+        dist += totalWidth - currentWidth;
+    }
+    if (orientation & (DownScroll|UpScroll)) {
+        dist += totalHeight - currentHeight;
+    }
+    duration = qMin(qMax(dist/3, 50), 120);
+
+    connect(&anim, SIGNAL(timeout()), this, SLOT(scroll()));
+
+    move(widget->geometry().x(),widget->geometry().y());
+    resize(qMin(currentWidth, totalWidth), qMin(currentHeight, totalHeight));
+
+    // This is roughly equivalent to calling setVisible(true) without actually showing the widget
+    widget->setAttribute(Qt::WA_WState_ExplicitShowHide, true);
+    widget->setAttribute(Qt::WA_WState_Hidden, false);
+
+    show();
+    setEnabled(false);
+
+    qApp->installEventFilter(this);
+
+    showWidget = true;
+    anim.start(1);
+    checkTime.start();
 }
 
 /*!
@@ -224,46 +254,6 @@ void QRollEffect::closeEvent(QCloseEvent *e)
     scroll();
 
     QWidget::closeEvent(e);
-}
-
-/*
-    Start the effect and calculates its time
-*/
-void QRollEffect::run()
-{
-    if (!widget) {
-        return;
-    }
-
-    elapsed = 0;
-
-    int dist = 0;
-    if (orientation & (RightScroll|LeftScroll)) {
-        dist += totalWidth - currentWidth;
-    }
-    if (orientation & (DownScroll|UpScroll)) {
-        dist += totalHeight - currentHeight;
-    }
-    duration = qMin(qMax(dist/3, 50), 120);
-
-    connect(&anim, SIGNAL(timeout()), this, SLOT(scroll()));
-
-    move(widget->geometry().x(),widget->geometry().y());
-    resize(qMin(currentWidth, totalWidth), qMin(currentHeight, totalHeight));
-
-    // This is roughly equivalent to calling setVisible(true) without actually showing the widget
-    widget->setAttribute(Qt::WA_WState_ExplicitShowHide, true);
-    widget->setAttribute(Qt::WA_WState_Hidden, false);
-
-    show();
-    setEnabled(false);
-
-    qApp->installEventFilter(this);
-
-    showWidget = true;
-    done = false;
-    anim.start(1);
-    checkTime.start();
 }
 
 /*
@@ -359,7 +349,6 @@ void qScrollEffect(QWidget* w, QEffects::DirFlags orient)
 
     // those can be popups - they would steal the focus, but are disabled
     q_roll = new QRollEffect(w, Qt::ToolTip, orient);
-    q_roll->run();
 }
 
 /*!
