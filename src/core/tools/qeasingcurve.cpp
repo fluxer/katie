@@ -356,7 +356,7 @@ public:
 
 /*!
     Constructs an easing curve of the given \a type.
- */
+*/
 QEasingCurve::QEasingCurve(Type type)
     : d_ptr(new QEasingCurvePrivate())
 {
@@ -373,8 +373,7 @@ QEasingCurve::QEasingCurve(const QEasingCurve &other)
 
 /*!
     Destructor.
- */
-
+*/
 QEasingCurve::~QEasingCurve()
 {
     delete d_ptr;
@@ -382,7 +381,7 @@ QEasingCurve::~QEasingCurve()
 
 /*!
     Copy \a other.
- */
+*/
 QEasingCurve &QEasingCurve::operator=(const QEasingCurve &other)
 {
     if (*this != other) {
@@ -398,7 +397,7 @@ QEasingCurve &QEasingCurve::operator=(const QEasingCurve &other)
 /*!
     Compare this easing curve with \a other and returns true if they are
     equal. It will also compare the properties of a curve.
- */
+*/
 bool QEasingCurve::operator==(const QEasingCurve &other) const
 {
     bool res = d_ptr->type == other.d_ptr->type
@@ -425,7 +424,7 @@ bool QEasingCurve::operator==(const QEasingCurve &other) const
     QEasingCurve::InBounce, QEasingCurve::OutBounce, QEasingCurve::InOutBounce,
     QEasingCurve::OutInBounce, QEasingCurve::InElastic, QEasingCurve::OutElastic,
     QEasingCurve::InOutElastic or QEasingCurve::OutInElastic).
- */
+*/
 qreal QEasingCurve::amplitude() const
 {
     return d_ptr->amp;
@@ -469,7 +468,7 @@ void QEasingCurve::setPeriod(qreal period)
     Returns the overshoot. This is not applicable for all curve types.
     It is only applicable if type() is QEasingCurve::InBack, QEasingCurve::OutBack,
     QEasingCurve::InOutBack or QEasingCurve::OutInBack.
- */
+*/
 qreal QEasingCurve::overshoot() const
 {
     return d_ptr->over;
@@ -547,7 +546,7 @@ QEasingCurve::EasingFunction QEasingCurve::customType() const
     While  \a progress must be between 0 and 1, the returned effective progress
     can be outside those bounds. For instance, QEasingCurve::InBack will
     return negative values in the beginning of the function.
- */
+*/
 qreal QEasingCurve::valueForProgress(qreal progress) const
 {
     progress = qBound<qreal>(0, progress, 1);
@@ -880,15 +879,13 @@ QDebug operator<<(QDebug debug, const QEasingCurve &easing)
 
 #ifndef QT_NO_DATASTREAM
 /*!
-    \fn QDataStream &operator<<(QDataStream &stream, const QEasingCurve &easing)
     \relates QEasingCurve
 
     Writes the given \a easing curve to the given \a stream and returns a
     reference to the stream.
 
-    \sa {Serializing Qt Data Types}
+    \sa {Serializing Katie Data Types}
 */
-
 QDataStream &operator<<(QDataStream &stream, const QEasingCurve &easing)
 {
     stream << quint8(easing.d_ptr->type);
@@ -900,14 +897,13 @@ QDataStream &operator<<(QDataStream &stream, const QEasingCurve &easing)
 }
 
 /*!
-    \fn QDataStream &operator>>(QDataStream &stream, QEasingCurve &easing)
+    \relates QEasingCurve
 
     Reads an easing curve from the given \a stream into the given \a
     easing curve and returns a reference to the stream.
 
-    \sa {Serializing Qt Data Types}
+    \sa {Serializing Katie Data Types}
 */
-
 QDataStream &operator>>(QDataStream &stream, QEasingCurve &easing)
 {
     quint8 int_type;
