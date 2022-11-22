@@ -160,7 +160,7 @@ private:
     QTimer anim;
     QElapsedTimer checkTime;
 
-    QPixmap pm;
+    QImage img;
 };
 
 static QRollEffect* q_roll = nullptr;
@@ -196,7 +196,7 @@ QRollEffect::QRollEffect(QWidget* w, Qt::WindowFlags f, DirFlags orient, int dur
         currentHeight = 0;
     }
 
-    pm = QPixmap::grabWidget(widget);
+    img = QPixmap::grabWidget(widget).toImage();
 
     int dist = 0;
     if (orientation & (RightScroll|LeftScroll)) {
@@ -237,7 +237,7 @@ void QRollEffect::paintEvent(QPaintEvent*)
     int y = orientation & DownScroll ? qMin(0, currentHeight - totalHeight) : 0;
 
     QPainter p(this);
-    p.drawPixmap(x, y, pm);
+    p.drawImage(x, y, img);
 }
 
 /*!
