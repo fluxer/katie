@@ -155,12 +155,8 @@ public:
 #endif
 
     static bool animate_ui;
-    static bool animate_menu;
-    static bool animate_tooltip;
-    static bool animate_combo;
     static bool fade_menu;
     static bool fade_tooltip;
-    static bool animate_toolbox;
 
     static void setSystemPalette(const QPalette &pal);
     static void setPalette_helper(const QPalette &palette, const char* className, bool clearWidgetPaletteHash);

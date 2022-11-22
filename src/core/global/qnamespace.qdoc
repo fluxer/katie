@@ -585,12 +585,8 @@
 
     \omitvalue UI_General
 
-    \value UI_AnimateMenu Show animated menus.
     \value UI_FadeMenu Show faded menus.
-    \value UI_AnimateCombo Show animated comboboxes.
-    \value UI_AnimateTooltip Show tooltip animations.
     \value UI_FadeTooltip Show tooltip fading effects.
-    \value UI_AnimateToolBox Reserved
 
     \sa QApplication::setEffectEnabled()
 */

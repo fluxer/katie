@@ -125,7 +125,7 @@ void tst_QMenu::getSetCheck()
 
 tst_QMenu::tst_QMenu()
 {
-    QApplication::setEffectEnabled(Qt::UI_AnimateMenu, false);
+    QApplication::setEffectEnabled(Qt::UI_FadeMenu, false);
 }
 
 tst_QMenu::~tst_QMenu()

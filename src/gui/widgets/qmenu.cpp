@@ -543,8 +543,7 @@ void QMenuPrivate::setCurrentAction(QAction *action, int popup, SelectionReason 
         activeMenu = 0;
 #ifndef QT_NO_EFFECTS
         // kill any running effect
-        qFadeEffect(0);
-        qScrollEffect(0);
+        qFadeEffect(nullptr);
 #endif
         hideMenu(hideActiveMenu);
     }
@@ -1825,25 +1824,7 @@ void QMenu::popup(const QPoint &p, QAction *atAction)
     }
     setGeometry(QRect(pos, size));
 #ifndef QT_NO_EFFECTS
-    int hGuess = isRightToLeft() ? QEffects::LeftScroll : QEffects::RightScroll;
-    int vGuess = QEffects::DownScroll;
-    if (isRightToLeft()) {
-        if ((snapToMouse && (pos.x() + size.width() / 2 > mouse.x())) ||
-           (qobject_cast<QMenu*>(d->causedPopup.widget) && pos.x() + size.width() / 2 > d->causedPopup.widget->x()))
-            hGuess = QEffects::RightScroll;
-    } else {
-        if ((snapToMouse && (pos.x() + size.width() / 2 < mouse.x())) ||
-           (qobject_cast<QMenu*>(d->causedPopup.widget) && pos.x() + size.width() / 2 < d->causedPopup.widget->x()))
-            hGuess = QEffects::LeftScroll;
-    }
-
-#ifndef QT_NO_MENUBAR
-    if ((snapToMouse && (pos.y() + size.height() / 2 < mouse.y())) ||
-       (qobject_cast<QMenuBar*>(d->causedPopup.widget) &&
-        pos.y() + size.width() / 2 < d->causedPopup.widget->mapToGlobal(d->causedPopup.widget->pos()).y()))
-       vGuess = QEffects::UpScroll;
-#endif
-    if (QApplication::isEffectEnabled(Qt::UI_AnimateMenu)) {
+    if (QApplication::isEffectEnabled(Qt::UI_FadeMenu)) {
         bool doChildEffects = true;
 #ifndef QT_NO_MENUBAR
         if (QMenuBar *mb = qobject_cast<QMenuBar*>(d->causedPopup.widget)) {
@@ -1857,16 +1838,10 @@ void QMenu::popup(const QPoint &p, QAction *atAction)
         }
 
         if (doChildEffects) {
-            if (QApplication::isEffectEnabled(Qt::UI_FadeMenu))
-                qFadeEffect(this);
-            else if (d->causedPopup.widget)
-                qScrollEffect(this, qobject_cast<QMenu*>(d->causedPopup.widget) ? hGuess : vGuess);
-            else
-                qScrollEffect(this, hGuess | vGuess);
+            qFadeEffect(this);
         } else {
             // kill any running effect
-            qFadeEffect(0);
-            qScrollEffect(0);
+            qFadeEffect(nullptr);
 
             show();
         }

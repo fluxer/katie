@@ -515,32 +515,12 @@
                </widget>
               </item>
               <item row="1" column="0">
-               <widget class="QLabel" name="comboEffectLabel">
-                <property name="text">
-                 <string>C&amp;omboBox Effect:</string>
-                </property>
-                <property name="buddy">
-                 <cstring>comboEffectCombo</cstring>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="0">
                <widget class="QLabel" name="toolTipEffectLabel">
                 <property name="text">
                  <string>&amp;ToolTip Effect:</string>
                 </property>
                 <property name="buddy">
                  <cstring>toolTipEffectCombo</cstring>
-                </property>
-               </widget>
-              </item>
-              <item row="3" column="0">
-               <widget class="QLabel" name="toolBoxEffectLabel">
-                <property name="text">
-                 <string>Tool&amp;Box Effect:</string>
-                </property>
-                <property name="buddy">
-                 <cstring>toolBoxEffectCombo</cstring>
                 </property>
                </widget>
               </item>
@@ -559,31 +539,12 @@
                 </item>
                 <item>
                  <property name="text">
-                  <string>Animate</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
                   <string>Fade</string>
                  </property>
                 </item>
                </widget>
               </item>
               <item row="1" column="1">
-               <widget class="QComboBox" name="comboEffectCombo">
-                <item>
-                 <property name="text">
-                  <string>Disable</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>Animate</string>
-                 </property>
-                </item>
-               </widget>
-              </item>
-              <item row="2" column="1">
                <widget class="QComboBox" name="toolTipEffectCombo">
                 <item>
                  <property name="text">
@@ -592,26 +553,7 @@
                 </item>
                 <item>
                  <property name="text">
-                  <string>Animate</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
                   <string>Fade</string>
-                 </property>
-                </item>
-               </widget>
-              </item>
-              <item row="3" column="1">
-               <widget class="QComboBox" name="toolBoxEffectCombo">
-                <item>
-                 <property name="text">
-                  <string>Disable</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>Animate</string>
                  </property>
                 </item>
                </widget>
@@ -833,9 +775,7 @@
   <tabstop>resolveLinksCheckBox</tabstop>
   <tabstop>effectsCheckBox</tabstop>
   <tabstop>menuEffectCombo</tabstop>
-  <tabstop>comboEffectCombo</tabstop>
   <tabstop>toolTipEffectCombo</tabstop>
-  <tabstop>toolBoxEffectCombo</tabstop>
   <tabstop>strutWidthSpinBox</tabstop>
   <tabstop>strutHeightSpinBox</tabstop>
   <tabstop>rtlExtensionsCheckBox</tabstop>

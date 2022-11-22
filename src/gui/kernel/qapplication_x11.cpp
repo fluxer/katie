@@ -657,18 +657,10 @@ bool QApplicationPrivate::x11_apply_settings()
     QStringList effects = settings.value(QLatin1String("Qt/GUIEffects")).toStringList();
     QApplication::setEffectEnabled(Qt::UI_General,
                                    effects.contains(QLatin1String("general")));
-    QApplication::setEffectEnabled(Qt::UI_AnimateMenu,
-                                   effects.contains(QLatin1String("animatemenu")));
     QApplication::setEffectEnabled(Qt::UI_FadeMenu,
                                    effects.contains(QLatin1String("fademenu")));
-    QApplication::setEffectEnabled(Qt::UI_AnimateCombo,
-                                   effects.contains(QLatin1String("animatecombo")));
-    QApplication::setEffectEnabled(Qt::UI_AnimateTooltip,
-                                   effects.contains(QLatin1String("animatetooltip")));
     QApplication::setEffectEnabled(Qt::UI_FadeTooltip,
                                    effects.contains(QLatin1String("fadetooltip")));
-    QApplication::setEffectEnabled(Qt::UI_AnimateToolBox,
-                                   effects.contains(QLatin1String("animatetoolbox")));
 
     qt_use_rtl_extensions = settings.value(QLatin1String("Qt/useRtlExtensions"), false).toBool();
 
@@ -3343,29 +3335,11 @@ int QApplication::wheelScrollLines()
 void QApplication::setEffectEnabled(Qt::UIEffect effect, bool enable)
 {
     switch (effect) {
-    case Qt::UI_AnimateMenu:
-        if (enable) QApplicationPrivate::fade_menu = false;
-        QApplicationPrivate::animate_menu = enable;
-        break;
     case Qt::UI_FadeMenu:
-        if (enable)
-            QApplicationPrivate::animate_menu = true;
         QApplicationPrivate::fade_menu = enable;
         break;
-    case Qt::UI_AnimateCombo:
-        QApplicationPrivate::animate_combo = enable;
-        break;
-    case Qt::UI_AnimateTooltip:
-        if (enable) QApplicationPrivate::fade_tooltip = false;
-        QApplicationPrivate::animate_tooltip = enable;
-        break;
     case Qt::UI_FadeTooltip:
-        if (enable)
-            QApplicationPrivate::animate_tooltip = true;
         QApplicationPrivate::fade_tooltip = enable;
-        break;
-    case Qt::UI_AnimateToolBox:
-        QApplicationPrivate::animate_toolbox = enable;
         break;
     default:
         QApplicationPrivate::animate_ui = enable;
@@ -3379,18 +3353,10 @@ bool QApplication::isEffectEnabled(Qt::UIEffect effect)
         return false;
 
     switch(effect) {
-    case Qt::UI_AnimateMenu:
-        return QApplicationPrivate::animate_menu;
     case Qt::UI_FadeMenu:
         return QApplicationPrivate::fade_menu;
-    case Qt::UI_AnimateCombo:
-        return QApplicationPrivate::animate_combo;
-    case Qt::UI_AnimateTooltip:
-        return QApplicationPrivate::animate_tooltip;
     case Qt::UI_FadeTooltip:
         return QApplicationPrivate::fade_tooltip;
-    case Qt::UI_AnimateToolBox:
-        return QApplicationPrivate::animate_toolbox;
     default:
         return QApplicationPrivate::animate_ui;
     }

@@ -2337,12 +2337,6 @@ void QComboBox::showPopup()
 
     const bool updatesEnabled = container->updatesEnabled();
 
-    bool scrollDown = (listRect.topLeft() == below);
-    if (QApplication::isEffectEnabled(Qt::UI_AnimateCombo)
-        && !style->styleHint(QStyle::SH_ComboBox_Popup, &opt, this) && !window()->testAttribute(Qt::WA_DontShowOnScreen)) {
-        qScrollEffect(container, scrollDown ? QEffects::DownScroll : QEffects::UpScroll, 150);
-    }
-
     // windows are displayed immediately on this platform, which means that the window will
     // be visible before the call to container->show() returns. If updates are disabled at
     // this point we'll miss our chance at painting the popup menu before it's shown, causing

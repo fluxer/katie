@@ -150,12 +150,10 @@ MainWindow::MainWindow()
     connect(ui->helpAboutQtAction, SIGNAL(triggered()), SLOT(helpAboutQt()));
     connect(ui->mainTabWidget, SIGNAL(currentChanged(int)), SLOT(pageChanged(int)));
     connect(ui->paletteCombo, SIGNAL(activated(int)), SLOT(paletteSelected(int)));
-    connect(ui->toolBoxEffectCombo, SIGNAL(activated(int)), SLOT(somethingModified()));
     connect(ui->doubleClickIntervalSpinBox, SIGNAL(valueChanged(int)), SLOT(somethingModified()));
     connect(ui->cursorFlashTimeSpinBox, SIGNAL(valueChanged(int)), SLOT(somethingModified()));
     connect(ui->wheelScrollLinesSpinBox, SIGNAL(valueChanged(int)), SLOT(somethingModified()));
     connect(ui->menuEffectCombo, SIGNAL(activated(int)), SLOT(somethingModified()));
-    connect(ui->comboEffectCombo, SIGNAL(activated(int)), SLOT(somethingModified()));
     connect(ui->toolTipEffectCombo, SIGNAL(activated(int)), SLOT(somethingModified()));
     connect(ui->strutWidthSpinBox, SIGNAL(valueChanged(int)), SLOT(somethingModified()));
     connect(ui->strutHeightSpinBox, SIGNAL(valueChanged(int)), SLOT(somethingModified()));
@@ -224,20 +222,10 @@ MainWindow::MainWindow()
     ui->effectsFrame->setEnabled(ui->effectsCheckBox->isChecked());
 
     if (QApplication::isEffectEnabled(Qt::UI_FadeMenu))
-        ui->menuEffectCombo->setCurrentIndex(2);
-    else if (QApplication::isEffectEnabled(Qt::UI_AnimateMenu))
         ui->menuEffectCombo->setCurrentIndex(1);
 
-    if (QApplication::isEffectEnabled(Qt::UI_AnimateCombo))
-        ui->comboEffectCombo->setCurrentIndex(1);
-
     if (QApplication::isEffectEnabled(Qt::UI_FadeTooltip))
-        ui->toolTipEffectCombo->setCurrentIndex(2);
-    else if (QApplication::isEffectEnabled(Qt::UI_AnimateTooltip))
         ui->toolTipEffectCombo->setCurrentIndex(1);
-
-    if (QApplication::isEffectEnabled(Qt::UI_AnimateToolBox))
-        ui->toolBoxEffectCombo->setCurrentIndex(1);
 
     QSize globalStrut = QApplication::globalStrut();
     ui->strutWidthSpinBox->setValue(globalStrut.width());
@@ -379,21 +367,11 @@ void MainWindow::fileSave()
             effects << QLatin1String("general");
 
             switch (ui->menuEffectCombo->currentIndex()) {
-            case 1: effects << QLatin1String("animatemenu"); break;
-            case 2: effects << QLatin1String("fademenu"); break;
-            }
-
-            switch (ui->comboEffectCombo->currentIndex()) {
-            case 1: effects << QLatin1String("animatecombo"); break;
+                case 1: effects << QLatin1String("fademenu"); break;
             }
 
             switch (ui->toolTipEffectCombo->currentIndex()) {
-            case 1: effects << QLatin1String("animatetooltip"); break;
-            case 2: effects << QLatin1String("fadetooltip"); break;
-            }
-
-            switch (ui->toolBoxEffectCombo->currentIndex()) {
-            case 1: effects << QLatin1String("animatetoolbox"); break;
+                case 1: effects << QLatin1String("fadetooltip"); break;
             }
         } else
             effects << QLatin1String("none");

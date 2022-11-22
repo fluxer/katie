@@ -733,12 +733,8 @@ public:
 
     enum UIEffect {
         UI_General,
-        UI_AnimateMenu,
         UI_FadeMenu,
-        UI_AnimateCombo,
-        UI_AnimateTooltip,
-        UI_FadeTooltip,
-        UI_AnimateToolBox
+        UI_FadeTooltip
     };
 
     enum CursorShape {

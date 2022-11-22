@@ -323,12 +323,8 @@ static int drag_distance = 4;
 static Qt::LayoutDirection layout_direction = Qt::LeftToRight;
 QSize QApplicationPrivate::app_strut = QSize(0,0); // no default application strut
 bool QApplicationPrivate::animate_ui = true;
-bool QApplicationPrivate::animate_menu = false;
 bool QApplicationPrivate::fade_menu = false;
-bool QApplicationPrivate::animate_combo = false;
-bool QApplicationPrivate::animate_tooltip = false;
 bool QApplicationPrivate::fade_tooltip = false;
-bool QApplicationPrivate::animate_toolbox = false;
 
 static bool force_reverse = false;
 
@@ -709,10 +705,7 @@ QApplication::~QApplication()
     layout_direction = Qt::LeftToRight;
     QApplicationPrivate::app_strut = QSize(0, 0);
     QApplicationPrivate::animate_ui = true;
-    QApplicationPrivate::animate_menu = false;
     QApplicationPrivate::fade_menu = false;
-    QApplicationPrivate::animate_combo = false;
-    QApplicationPrivate::animate_tooltip = false;
     QApplicationPrivate::fade_tooltip = false;
 }
 
