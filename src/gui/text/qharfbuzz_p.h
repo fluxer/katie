@@ -68,15 +68,10 @@ class QFontEngine;
  * PROVIDE MAINTENANCE, SUPPORT, UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
 */
 
-#define HB_MIN(a, b) ((a) < (b) ? (a) : (b))
-#define HB_MAX(a, b) ((a) > (b) ? (a) : (b))
-
 #define HB_IsControlChar(uc) \
     ((uc >= 0x200b && uc <= 0x200f /* ZW Space, ZWNJ, ZWJ, LRM and RLM */) \
      || (uc >= 0x2028 && uc <= 0x202f /* LS, PS, LRE, RLE, PDF, LRO, RLO, NNBSP */) \
      || (uc >= 0x206a && uc <= 0x206f /* ISS, ASS, IAFS, AFS, NADS, NODS */))
-
-#define HB_FIXED_CONSTANT(v) ((v) * 64)
 
 #define HB_IsHighSurrogate(ucs) \
     (((ucs) & 0xfc00) == 0xd800)
