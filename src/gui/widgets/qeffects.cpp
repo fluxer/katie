@@ -48,8 +48,9 @@ public:
 
     void run();
 
-protected slots:
+private slots:
     void fade();
+    void cancel();
 
 private:
     double alpha;
@@ -69,6 +70,13 @@ QOpacityEffect::QOpacityEffect(QWidget* w)
     duration(150),
     elapsed(0)
 {
+    connect(w, SIGNAL(destroyed()), this, SLOT(cancel()));
+
+    checkTime.start();
+    widget->setWindowOpacity(0.0);
+    widget->show();
+    connect(&anim, SIGNAL(timeout()), this, SLOT(fade()));
+    anim.start(1);
 }
 
 QOpacityEffect::~QOpacityEffect()
@@ -80,37 +88,10 @@ QOpacityEffect::~QOpacityEffect()
 }
 
 /*
-    Starts the opacity effect, the effect will take about 150 ms
-*/
-void QOpacityEffect::run()
-{
-    duration = 150;
-
-    if (!widget) {
-        return;
-    }
-
-    elapsed = 0;
-    checkTime.start();
-
-    widget->setWindowOpacity(0.0);
-    widget->show();
-    connect(&anim, SIGNAL(timeout()), this, SLOT(fade()));
-    anim.start(1);
-}
-
-/*
     Sets the widget opacity for the time elapsed
 */
 void QOpacityEffect::fade()
 {
-    if (!widget) {
-        anim.stop();
-        q_opacity = nullptr;
-        deleteLater();
-        return;
-    }
-
     int tempel = checkTime.elapsed();
     if (elapsed >= tempel) {
         elapsed++;
@@ -124,14 +105,23 @@ void QOpacityEffect::fade()
         alpha = 1.0;
     }
 
-    if (alpha >= 1.0) {
+    if (alpha >= 1.0 || !widget) {
         anim.stop();
-        widget->setWindowOpacity(1.0);
+        if (widget) {
+            widget->setWindowOpacity(1.0);
+        }
         q_opacity = nullptr;
         deleteLater();
     } else {
         widget->setWindowOpacity(alpha);
     }
+}
+
+void QOpacityEffect::cancel()
+{
+    anim.stop();
+    q_opacity = nullptr;
+    deleteLater();
 }
 
 /*!
@@ -379,7 +369,7 @@ void qFadeEffect(QWidget* w)
 {
     if (q_opacity) {
         q_opacity->deleteLater();
-        q_opacity = 0;
+        q_opacity = nullptr;
     }
 
     if (!w) {
@@ -391,7 +381,6 @@ void qFadeEffect(QWidget* w)
 
     // those can be popups - they would steal the focus, but are disabled
     q_opacity = new QOpacityEffect(w);
-    q_opacity->run();
 }
 
 QT_END_NAMESPACE
