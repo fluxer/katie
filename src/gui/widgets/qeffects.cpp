@@ -122,10 +122,6 @@ void qFadeEffect(QWidget* w)
         return;
     }
 
-    QApplication::sendPostedEvents(w, QEvent::Move);
-    QApplication::sendPostedEvents(w, QEvent::Resize);
-
-    // those can be popups - they would steal the focus, but are disabled
     q_opacity = new QOpacityEffect(w);
 }
 
