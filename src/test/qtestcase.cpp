@@ -1599,7 +1599,6 @@ FatalSignalHandler::FatalSignalHandler()
     }
 }
 
-
 FatalSignalHandler::~FatalSignalHandler()
 {
     // Unregister any of our remaining signal handlers
@@ -1619,8 +1618,7 @@ FatalSignalHandler::~FatalSignalHandler()
             sigaction(i, &oldact, 0);
     }
 }
-
-#endif
+#endif // Q_OS_UNIX
 
 
 } // namespace
@@ -1685,7 +1683,7 @@ int QTest::qExec(QObject *testObject, int argc, char **argv)
 #if defined(Q_OS_UNIX)
             QScopedPointer<FatalSignalHandler> handler;
             if (!noCrashHandler)
-                handler.reset(new FatalSignalHandler);
+                handler.reset(new FatalSignalHandler());
 #endif
             qInvokeTestMethods(testObject);
         }
