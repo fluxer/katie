@@ -34,6 +34,8 @@
 
 QT_BEGIN_NAMESPACE
 
+static const int s_duration = 150;
+
 /*!
     \internal
 
@@ -53,10 +55,7 @@ private slots:
     void cancel();
 
 private:
-    double alpha;
     QPointer<QWidget> widget;
-    int duration;
-    int elapsed;
     QTimer anim;
     QElapsedTimer checkTime;
 };
@@ -65,10 +64,7 @@ static QOpacityEffect* q_opacity = nullptr;
 
 QOpacityEffect::QOpacityEffect(QWidget* w)
     : QObject(w),
-    alpha(0.0),
-    widget(w),
-    duration(150),
-    elapsed(0)
+    widget(w)
 {
     connect(widget, SIGNAL(destroyed()), this, SLOT(cancel()));
 
@@ -92,18 +88,8 @@ QOpacityEffect::~QOpacityEffect()
 */
 void QOpacityEffect::fade()
 {
-    int tempel = checkTime.elapsed();
-    if (elapsed >= tempel) {
-        elapsed++;
-    } else {
-        elapsed = tempel;
-    }
-
-    if (duration != 0) {
-        alpha = tempel / double(duration);
-    } else {
-        alpha = 1.0;
-    }
+    const int tempel = checkTime.elapsed();
+    const double alpha = tempel / double(s_duration);
 
     if (alpha >= 1.0 || !widget) {
         anim.stop();
