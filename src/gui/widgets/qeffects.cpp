@@ -136,8 +136,6 @@ class QRollEffect : public QWidget, private QEffects
 public:
     QRollEffect(QWidget* w, Qt::WindowFlags f, DirFlags orient, int duration);
 
-    void run();
-
 protected:
     void paintEvent(QPaintEvent*);
     void closeEvent(QCloseEvent*);
