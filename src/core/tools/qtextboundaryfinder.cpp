@@ -139,7 +139,7 @@ QTextBoundaryFinderPrivate::~QTextBoundaryFinderPrivate()
     \enum QTextBoundaryFinder::BoundaryType
 
     \value Grapheme Finds a grapheme which is the smallest boundary. It
-    including letters, punctation marks, numerals and more.
+    including letters, punctuation marks, numerals and more.
     \value Word Finds a word.
     \value Line Finds possible positions for breaking the text into multiple
     lines.
