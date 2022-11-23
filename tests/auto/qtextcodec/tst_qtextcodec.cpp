@@ -36,6 +36,9 @@ public slots:
 private slots:
     void mibEnum_data();
     void mibEnum();
+
+    void hasFailure_data();
+    void hasFailure();
 };
 
 void tst_QTextCodec::init()
@@ -63,6 +66,31 @@ void tst_QTextCodec::mibEnum()
     QVERIFY(codec != nullptr);
     QCOMPARE(codec->mibEnum(), mib);
     QVERIFY(codec->mibEnum() != 2);
+}
+
+void tst_QTextCodec::hasFailure_data()
+{
+    QTest::addColumn<int>("mib");
+    QTest::addColumn<bool>("hasfailure");
+    QTest::addColumn<QString>("data");
+
+    QTest::newRow("latin1-from-latin1") << int(4) << false << QString("foo");
+    QTest::newRow("latin1-from-utf8") << int(4) << true << QString::fromUtf8("бар");
+}
+
+void tst_QTextCodec::hasFailure()
+{
+    QFETCH(int, mib);
+    QFETCH(bool, hasfailure);
+    QFETCH(QString, data);
+
+    QTextConverter converter(mib);
+    const QByteArray result = converter.fromUnicode(data);
+    QCOMPARE(converter.hasFailure(), hasfailure);
+    if (hasfailure) {
+        const QByteArray expected(data.size(), '?');
+        QCOMPARE(result, expected);
+    }
 }
 
 QTEST_MAIN(tst_QTextCodec)
