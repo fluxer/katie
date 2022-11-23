@@ -1143,7 +1143,7 @@ static void icu_from_callback(
         // reset error code so that conversion continues
         *pErrorCode = U_ZERO_ERROR;
     }
-    UCNV_FROM_U_CALLBACK_SUBSTITUTE(context, args, codeUnits, length, codePoint, reason, pErrorCode);
+    UCNV_FROM_U_CALLBACK_SUBSTITUTE(NULL, args, codeUnits, length, codePoint, reason, pErrorCode);
 }
 
 static void icu_to_callback (
@@ -1159,7 +1159,7 @@ static void icu_to_callback (
         codec->invalidChars(length);
         *pErrorCode = U_ZERO_ERROR;
     }
-    UCNV_TO_U_CALLBACK_SUBSTITUTE(context, args, codeUnits, length, reason, pErrorCode);
+    UCNV_TO_U_CALLBACK_SUBSTITUTE(NULL, args, codeUnits, length, reason, pErrorCode);
 }
 
 QTextConverterPrivate::QTextConverterPrivate(const QByteArray &aname)
