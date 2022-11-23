@@ -169,6 +169,7 @@ QTextBoundaryFinder::QTextBoundaryFinder()
 QTextBoundaryFinder::QTextBoundaryFinder(const QTextBoundaryFinder &other)
     : d(new QTextBoundaryFinderPrivate(other.d->type, other.d->string))
 {
+    d->pos = other.d->pos;
 }
 
 /*!
