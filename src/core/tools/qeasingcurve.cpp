@@ -281,7 +281,7 @@ QEasingCurve::QEasingCurve(Type type)
 
 /*!
     Construct a copy of \a other.
- */
+*/
 QEasingCurve::QEasingCurve(const QEasingCurve &other)
     : d_ptr(new QEasingCurvePrivate(*other.d_ptr))
 {
@@ -361,7 +361,7 @@ void QEasingCurve::setAmplitude(qreal amplitude)
     Returns the period. This is not applicable for all curve types.
     It is only applicable if type() is QEasingCurve::InElastic, QEasingCurve::OutElastic,
     QEasingCurve::InOutElastic or QEasingCurve::OutInElastic.
- */
+*/
 qreal QEasingCurve::period() const
 {
     return d_ptr->per;
@@ -414,8 +414,6 @@ QEasingCurve::Type QEasingCurve::type() const
 */
 void QEasingCurve::setType(Type type)
 {
-    if (d_ptr->type == type)
-        return;
     if (Q_UNLIKELY(type < Linear || type >= QEasingCurve::NCurveTypes - 1)) {
         qWarning("QEasingCurve: Invalid curve type %d", type);
         return;
