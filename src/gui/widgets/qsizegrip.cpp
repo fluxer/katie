@@ -54,7 +54,6 @@ class QSizeGripPrivate : public QWidgetPrivate
 public:
     QPoint p;
     QRect r;
-    int d;
     int dxMax;
     int dyMax;
     Qt::Corner m_corner;
