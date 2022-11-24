@@ -1288,8 +1288,8 @@ bool QDockWidget::event(QEvent *event)
         const QPoint parentTopLeft = isWindow() ?
             QApplication::desktop()->availableGeometry(this).topLeft() : QPoint(0, 0);
         emit visibilityChanged(geometry().right() >= parentTopLeft.x() && geometry().bottom() >= parentTopLeft.y());
-}
         break;
+    }
 #endif
     case QEvent::ApplicationLayoutDirectionChange:
     case QEvent::LayoutDirectionChange:
