@@ -1832,7 +1832,6 @@ QTextCodec *QTextCodec::codecForText(const QByteArray &ba)
     \value DefaultConversion  No flag is set.
     \value ConvertInvalidToNull  If this flag is set, each invalid input
                                  character is output as a null character.
-    \value IgnoreHeader  Ignore any Unicode byte-order mark and don't generate any.
 */
 
 /*!
@@ -1958,7 +1957,6 @@ QByteArray QTextConverter::fromUnicode(const QChar *data, int length) const
     UErrorCode error = U_ZERO_ERROR;
     const int convresult = ucnv_fromUChars(conv, result, maxbytes,
         reinterpret_cast<const UChar *>(data), length, &error);
-
     return QByteArray(result, convresult);
 }
 
@@ -1976,21 +1974,9 @@ QString QTextConverter::toUnicode(const char *data, int length) const
 
     const int maxbytes = UCNV_GET_MAX_BYTES_FOR_STRING(length, ucnv_getMaxCharSize(conv));
     QSTACKARRAY(UChar, result, maxbytes);
-    int resultoffset = 0;
     UErrorCode error = U_ZERO_ERROR;
     const int convresult = ucnv_toUChars(conv, result, maxbytes, data, length, &error);
-
-    if (d_ptr->flags & QTextConverter::IgnoreHeader) {
-        // ICU always generates BOMs when converter is UTF-32/UTF-16 so no check is done to
-        // verify that, unless someone makes it an option
-        if (qstrnicmp("UTF-32", d_ptr->name.constData(), 6) == 0) {
-            resultoffset = 4;
-        } else if (qstrnicmp("UTF-16", d_ptr->name.constData(), 6) == 0) {
-            resultoffset = 2;
-        }
-    }
-
-    return QString(reinterpret_cast<QChar*>(result) + resultoffset, convresult - resultoffset);
+    return QString(reinterpret_cast<QChar*>(result), convresult);
 }
 
 #endif // QT_NO_TEXTCODEC

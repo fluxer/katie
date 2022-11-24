@@ -2836,7 +2836,6 @@ QXmlStreamWriterPrivate::QXmlStreamWriterPrivate()
 #ifndef QT_NO_TEXTCODEC
     codec = QTextCodec::codecForMib(106); // utf8
     encoder = new QTextConverter(codec->name());
-    encoder->setFlags(QTextConverter::IgnoreHeader); // no byte order mark for utf8
 #endif
     checkIfASCIICompatibleCodec();
     inStartElement = inEmptyElement = false;
@@ -3124,7 +3123,6 @@ void QXmlStreamWriter::setCodec(QTextCodec *codec)
         d->codec = codec;
         delete d->encoder;
         d->encoder = new QTextConverter(codec->name());
-        d->encoder->setFlags(QTextConverter::IgnoreHeader); // no byte order mark for utf8
         d->checkIfASCIICompatibleCodec();
     }
 }

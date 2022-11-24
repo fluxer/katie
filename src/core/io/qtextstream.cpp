@@ -337,6 +337,7 @@ public:
     inline void write(const QString &data);
     inline void putString(const QString &ch, bool number = false);
     void putNumber(qulonglong number, bool negative);
+    void writeBOM();
 
     // buffers
     bool fillReadBuffer(qint64 maxBytes = -1);
@@ -359,6 +360,8 @@ public:
 
     // status
     QTextStream::TextStatus status;
+    bool generatebom;
+    bool bomwritten;
 
     QLocale locale;
 };
@@ -409,13 +412,13 @@ void QTextStreamPrivate::reset()
 #ifndef QT_NO_TEXTCODEC
     codec = QTextCodec::codecForLocale();
     readConverter = codec->converter();
-    readConverter.setFlags(QTextConverter::DefaultConversion);
     writeConverter = codec->converter();
-    writeConverter.setFlags(QTextConverter::IgnoreHeader);
     readConverterSaved.reset();
-    readConverterSaved.setFlags(QTextConverter::DefaultConversion);
     autoDetectUnicode = true;
 #endif
+
+    generatebom = false;
+    bomwritten = false;
 }
 
 /*! \internal
@@ -447,7 +450,6 @@ bool QTextStreamPrivate::fillReadBuffer(qint64 maxBytes)
         codec = QTextCodec::codecForUtfText(buffer, codec);
         if (!codec) {
             codec = QTextCodec::codecForLocale();
-            writeConverter.setFlags(writeConverter.flags() | QTextConverter::IgnoreHeader);
         }
     }
 #if defined (QTEXTSTREAM_DEBUG)
@@ -545,7 +547,7 @@ void QTextStreamPrivate::flushWriteBuffer()
         codec = QTextCodec::codecForLocale();
 #if defined (QTEXTSTREAM_DEBUG)
     qDebug("QTextStreamPrivate::flushWriteBuffer(), using %s codec (%s generating BOM)",
-           codec->name().constData(), writeConverter.flags() & QTextConverter::IgnoreHeader ? "not" : "");
+           codec->name().constData(), generatebom ? "not" : "");
 #endif
 
     // convert from unicode to raw data
@@ -771,6 +773,10 @@ inline void QTextStreamPrivate::restoreToSavedConverterState()
 */
 inline void QTextStreamPrivate::write(const QString &data)
 {
+    if (generatebom && !bomwritten) {
+        writeBOM();
+    }
+
     if (string) {
         // ### What about seek()??
         string->append(data);
@@ -1052,11 +1058,8 @@ bool QTextStream::seek(qint64 pos)
 #ifndef QT_NO_TEXTCODEC
         // Reset the codec converter states.
         d->readConverter.reset();
-        d->readConverter.setFlags(QTextConverter::DefaultConversion);
         d->writeConverter.reset();
-        d->writeConverter.setFlags(QTextConverter::IgnoreHeader);
         d->readConverterSaved.reset();
-        d->readConverterSaved.setFlags(QTextConverter::DefaultConversion);
 #endif
         return true;
     }
@@ -2177,6 +2180,59 @@ void QTextStreamPrivate::putNumber(qulonglong number, bool negative)
 }
 
 /*!
+    \internal
+ */
+void QTextStreamPrivate::writeBOM()
+{
+    Q_ASSERT(generatebom);
+    Q_ASSERT(!bomwritten);
+
+#ifndef QT_NO_TEXTCODEC
+    bomwritten = true;
+    const QByteArray codecname = codec->name();
+    const uchar* bomptr = nullptr;
+    int bomptrsize = 0;
+    if (qstricmp("UTF-32BE", codecname.constData()) == 0) {
+        bomptr = q_utf32be_bom;
+        bomptrsize = sizeof(q_utf32be_bom);
+    } else if (qstricmp("UTF-32LE", codecname.constData()) == 0) {
+        bomptr = q_utf32le_bom;
+        bomptrsize = sizeof(q_utf32le_bom);
+    } else if (qstricmp("UTF-16BE", codecname.constData()) == 0) {
+        bomptr = q_utf16be_bom;
+        bomptrsize = sizeof(q_utf16be_bom);
+    } else if (qstricmp("UTF-16LE", codecname.constData()) == 0) {
+        bomptr = q_utf16le_bom;
+        bomptrsize = sizeof(q_utf16le_bom);
+    } else if (qstricmp("UTF-32", codecname.constData()) == 0) {
+#if Q_BYTE_ORDER == Q_LITTLE_ENDIAN
+        bomptr = q_utf32le_bom;
+        bomptrsize = sizeof(q_utf32le_bom);
+#else
+        bomptr = q_utf32be_bom;
+        bomptrsize = sizeof(q_utf32be_bom);
+#endif
+    } else if (qstricmp("UTF-16", codecname.constData()) == 0) {
+#if Q_BYTE_ORDER == Q_LITTLE_ENDIAN
+        bomptr = q_utf16le_bom;
+        bomptrsize = sizeof(q_utf16le_bom);
+#else
+        bomptr = q_utf16be_bom;
+        bomptrsize = sizeof(q_utf16be_bom);
+#endif
+    }
+
+    if (bomptr && bomptrsize) {
+        if (string) {
+            string->append(QString::fromRawData(reinterpret_cast<const QChar*>(bomptr), bomptrsize / sizeof(QChar)));
+        } else {
+            device->write(QByteArray::fromRawData(reinterpret_cast<const char*>(bomptr), bomptrsize));
+        }
+    }
+#endif // QT_NO_TEXTCODEC
+}
+
+/*!
     Writes the character \a c to the stream, then returns a reference
     to the QTextStream.
 
@@ -2527,10 +2583,7 @@ void QTextStream::setGenerateByteOrderMark(bool generate)
 {
     Q_D(QTextStream);
     if (d->writeBuffer.isEmpty()) {
-        if (generate)
-            d->writeConverter.setFlags(d->writeConverter.flags() & ~QTextConverter::IgnoreHeader);
-        else
-            d->writeConverter.setFlags(d->writeConverter.flags() | QTextConverter::IgnoreHeader);
+        d->generatebom = generate;
     }
 }
 
@@ -2544,9 +2597,8 @@ void QTextStream::setGenerateByteOrderMark(bool generate)
 bool QTextStream::generateByteOrderMark() const
 {
     Q_D(const QTextStream);
-    return (d->writeConverter.flags() & QTextConverter::IgnoreHeader) == 0;
+    return d->generatebom;
 }
-
 #endif
 
 /*!
