@@ -559,10 +559,6 @@ qreal QEasingCurve::valueForProgress(qreal progress) const
 {
     progress = qBound<qreal>(0, progress, 1);
 
-    if (d_ptr->func) {
-        return d_ptr->func(progress);
-    }
-
     switch (d_ptr->type) {
         case QEasingCurve::Linear: {
             return easeNone(progress);
@@ -699,7 +695,13 @@ qreal QEasingCurve::valueForProgress(qreal progress) const
         case QEasingCurve::OutInBack: {
             return easeOutInBack(progress, BOUND_OVERSHOOT(d_ptr->over));
         }
-        default: {
+        case QEasingCurve::Custom: {
+            if (Q_LIKELY(d_ptr->func)) {
+                return d_ptr->func(progress);
+            }
+            break;
+        }
+        case QEasingCurve::NCurveTypes: {
             break;
         }
     }
