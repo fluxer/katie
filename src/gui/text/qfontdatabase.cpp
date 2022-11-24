@@ -92,6 +92,17 @@ static inline int getFCWeight(int fc_weight)
     return QFont::Black;
 }
 
+static inline QFont::Style getFCSlant(int fc_slant)
+{
+    if (fc_slant == FC_SLANT_ITALIC) {
+        return QFont::StyleItalic;
+    }
+    if (fc_slant == FC_SLANT_OBLIQUE) {
+        return QFont::StyleOblique;
+    }
+    return QFont::StyleNormal;
+}
+
 static QFontDef qt_FcPatternToQFontDef(FcPattern *pattern, const QFontDef &request)
 {
     QFontDef fontDef;
@@ -123,37 +134,35 @@ static QFontDef qt_FcPatternToQFontDef(FcPattern *pattern, const QFontDef &reque
     }
 #endif // FC_HINT_STYLE
 
-    FcChar8 *value = 0;
-    if (FcPatternGetString(pattern, FC_FAMILY, 0, &value) == FcResultMatch) {
-        fontDef.family = QString::fromUtf8(reinterpret_cast<const char *>(value));
+    FcChar8* family_value = nullptr;
+    if (FcPatternGetString(pattern, FC_FAMILY, 0, &family_value) == FcResultMatch) {
+        fontDef.family = QString::fromUtf8(reinterpret_cast<const char*>(family_value));
     }
 
-    double dpi;
-    if (FcPatternGetDouble(pattern, FC_DPI, 0, &dpi) != FcResultMatch) {
-        dpi = QX11Info::appDpiY();
+    double dpi_value = QX11Info::appDpiY();
+    if (FcPatternGetDouble(pattern, FC_DPI, 0, &dpi_value) != FcResultMatch) {
+        dpi_value = QX11Info::appDpiY();
     }
 
-    double size;
-    if (FcPatternGetDouble(pattern, FC_PIXEL_SIZE, 0, &size) == FcResultMatch)
-        fontDef.pixelSize = size;
-    else
-        fontDef.pixelSize = 12;
+    double size_value = 12.0;
+    if (FcPatternGetDouble(pattern, FC_PIXEL_SIZE, 0, &size_value) == FcResultMatch) {
+        fontDef.pixelSize = size_value;
+    } else {
+        fontDef.pixelSize = 12.0;
+    }
+    fontDef.pointSize = qt_pointSize(fontDef.pixelSize, qRound(dpi_value));
 
-    fontDef.pointSize = qt_pointSize(fontDef.pixelSize, qRound(dpi));
+    int weight_value = FC_WEIGHT_MEDIUM;
+    if (FcPatternGetInteger(pattern, FC_WEIGHT, 0, &weight_value) != FcResultMatch) {
+        weight_value = FC_WEIGHT_MEDIUM;
+    }
+    fontDef.weight = getFCWeight(weight_value);
 
-    int weight;
-    if (FcPatternGetInteger(pattern, FC_WEIGHT, 0, &weight) != FcResultMatch)
-        weight = FC_WEIGHT_MEDIUM;
-    fontDef.weight = getFCWeight(weight);
-
-    int slant;
-    if (FcPatternGetInteger(pattern, FC_SLANT, 0, &slant) != FcResultMatch)
-        slant = FC_SLANT_ROMAN;
-    fontDef.style = (slant == FC_SLANT_ITALIC)
-                    ? QFont::StyleItalic
-                    : ((slant == FC_SLANT_OBLIQUE)
-                       ? QFont::StyleOblique
-                       : QFont::StyleNormal);
+    int slant_value = FC_SLANT_ROMAN;
+    if (FcPatternGetInteger(pattern, FC_SLANT, 0, &slant_value) != FcResultMatch) {
+        slant_value = FC_SLANT_ROMAN;
+    }
+    fontDef.style = getFCSlant(slant_value);
 
 
     fontDef.stretch = request.stretch;
@@ -176,7 +185,7 @@ static FcPattern* patternForFont(const QString &family, const QString &style, co
         return nullptr;
     }
 
-    FcPattern *pattern = FcPatternCreate();
+    FcPattern* pattern = FcPatternCreate();
     if (Q_UNLIKELY(!pattern)) {
         return nullptr;
     }
@@ -385,7 +394,7 @@ enum { SpecialCharCount = sizeof(specialCharsTbl) / sizeof(uint) };
 // --------------------------------------------------------------------------------------
 static FcPattern* patternForRequest(const QFontDef &request)
 {
-    FcPattern *pattern = patternForFont(request.family, request.styleName, false);
+    FcPattern* pattern = patternForFont(request.family, request.styleName, false);
     if (Q_UNLIKELY(!pattern)) {
         return nullptr;
     }
@@ -669,12 +678,12 @@ QStringList QFontDatabase::families() const
 {
     QStringList result;
 #ifndef QT_NO_FONTCONFIG
-    FcPattern *pattern = FcPatternCreate();
+    FcPattern* pattern = FcPatternCreate();
     if (Q_UNLIKELY(!pattern)) {
         return result;
     }
 
-    FcObjectSet *os = FcObjectSetCreate();
+    FcObjectSet* os = FcObjectSetCreate();
     if (Q_UNLIKELY(!os)) {
         FcPatternDestroy(pattern);
         return result;
@@ -682,7 +691,7 @@ QStringList QFontDatabase::families() const
     FcObjectSetAdd(os, FC_SCALABLE);
     FcObjectSetAdd(os, FC_FAMILY);
     FcObjectSetAdd(os, FC_FOUNDRY);
-    FcFontSet *fonts = FcFontList(NULL, pattern, os);
+    FcFontSet* fonts = FcFontList(NULL, pattern, os);
     FcPatternDestroy(pattern);
     FcObjectSetDestroy(os);
     if (Q_UNLIKELY(!fonts)) {
@@ -690,8 +699,8 @@ QStringList QFontDatabase::families() const
     }
     QMap<QString,QStringList> familieswithfoundry;
     for (int i = 0; i < fonts->nfont; i++) {
-        FcChar8 *family_value = nullptr;
-        FcChar8 *foundry_value = nullptr;
+        FcChar8* family_value = nullptr;
+        FcChar8* foundry_value = nullptr;
         FcBool scalable_value = FcFalse;
 
         FcPatternGetBool(fonts->fonts[i], FC_SCALABLE, 0, &scalable_value);
@@ -705,8 +714,8 @@ QStringList QFontDatabase::families() const
             foundry_value = nullptr;
         }
 
-        const QString fontfamily = QString::fromUtf8((const char *)family_value);
-        const QString fontfoundry = QString::fromUtf8((const char *)foundry_value);
+        const QString fontfamily = QString::fromUtf8((const char*)family_value);
+        const QString fontfoundry = QString::fromUtf8((const char*)foundry_value);
         familieswithfoundry[fontfamily].append(fontfoundry);
     }
     FcFontSetDestroy(fonts);
@@ -744,17 +753,17 @@ QStringList QFontDatabase::styles(const QString &family) const
 {
     QStringList result;
 #ifndef QT_NO_FONTCONFIG
-    FcPattern *pattern = patternForFont(family, QString());
+    FcPattern* pattern = patternForFont(family, QString());
     if (!pattern) {
         return result;
     }
 
-    FcChar8 *family_value = nullptr;
+    FcChar8* family_value = nullptr;
     FcPatternGetString(pattern, FC_FAMILY, 0, &family_value);
-    const QString fontfamily = QString::fromUtf8((const char *)family_value);
+    const QString fontfamily = QString::fromUtf8((const char*)family_value);
     FcPatternDestroy(pattern);
 
-    FcObjectSet *os = FcObjectSetCreate();
+    FcObjectSet* os = FcObjectSetCreate();
     if (Q_UNLIKELY(!os)) {
         return result;
     }
@@ -774,7 +783,7 @@ QStringList QFontDatabase::styles(const QString &family) const
         return result;
     }
     for (int i = 0; i < fonts->nfont; i++) {
-        FcChar8 *style_value = nullptr;
+        FcChar8* style_value = nullptr;
         FcBool scalable_value = FcFalse;
 
         FcPatternGetBool(fonts->fonts[i], FC_SCALABLE, 0, &scalable_value);
@@ -788,11 +797,11 @@ QStringList QFontDatabase::styles(const QString &family) const
             continue;
         }
 
-        const QString matchfamily = QString::fromUtf8((const char *)family_value);
+        const QString matchfamily = QString::fromUtf8((const char*)family_value);
         if (matchfamily != fontfamily) {
             continue;
         }
-        const QString matchstyle = QString::fromUtf8((const char *)style_value);
+        const QString matchstyle = QString::fromUtf8((const char*)style_value);
         if (!matchstyle.isEmpty()) {
             result.append(matchstyle);
         }
@@ -898,8 +907,8 @@ QFont QFontDatabase::font(const QString &family, const QString &style,
     if (!pattern) {
         return result;
     }
-    FcChar8 *family_value = nullptr;
-    FcChar8 *style_value = nullptr;
+    FcChar8* family_value = nullptr;
+    FcChar8* style_value = nullptr;
     int weight_value = FC_WEIGHT_MEDIUM;
     int spacing_value = FC_PROPORTIONAL;
     int slant_value = FC_SLANT_ROMAN;
@@ -910,8 +919,8 @@ QFont QFontDatabase::font(const QString &family, const QString &style,
     FcPatternGetInteger(pattern, FC_SPACING, 0, &spacing_value);
     FcPatternGetInteger(pattern, FC_SLANT, 0, &slant_value);
     FcPatternGetDouble(pattern, FC_PIXEL_SIZE, 0, &pixelsize_value);
-    const QString resultfamily = QString::fromUtf8((const char *)family_value);
-    const QString resultstyle = QString::fromUtf8((const char *)style_value);
+    const QString resultfamily = QString::fromUtf8((const char*)family_value);
+    const QString resultstyle = QString::fromUtf8((const char*)style_value);
     FcPatternDestroy(pattern);
     if (resultfamily.isEmpty() || resultstyle.isEmpty()) {
         return result;
