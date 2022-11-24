@@ -103,7 +103,6 @@
 // #cmakedefine QT_NO_FILEICONPROVIDER
 // #cmakedefine QT_NO_FILESYSTEMMODEL
 // #cmakedefine QT_NO_FONTCOMBOBOX
-// #cmakedefine QT_NO_FONTDIALOG
 // #cmakedefine QT_NO_GRAPHICSVIEW
 // #cmakedefine QT_NO_GROUPBOX
 // #cmakedefine QT_NO_ICON
@@ -171,6 +170,7 @@
 #cmakedefine QT_NO_EFFECTS
 #cmakedefine QT_NO_FILESYSTEMITERATOR
 #cmakedefine QT_NO_FILESYSTEMWATCHER
+#cmakedefine QT_NO_FONTDIALOG
 #cmakedefine QT_NO_FORMLAYOUT
 #cmakedefine QT_NO_FRAME
 #cmakedefine QT_NO_FSCOMPLETER
