@@ -35,9 +35,9 @@ class Q_CORE_EXPORT QTextConverter
 {
 public:
     enum ConversionFlag {
-        DefaultConversion,
-        ConvertInvalidToNull = 0x80000000,
-        IgnoreHeader = 0x1
+        DefaultConversion = 0x0,
+        IgnoreHeader = 0x1,
+        ConvertInvalidToNull = 0x2
     };
     Q_DECLARE_FLAGS(ConversionFlags, ConversionFlag)
 
