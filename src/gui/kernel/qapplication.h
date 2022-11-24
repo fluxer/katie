@@ -208,7 +208,6 @@ private:
     friend class QWidget;
     friend class QWidgetPrivate;
     friend class QETWidget;
-    friend class QWidgetAnimator;
 #ifndef QT_NO_SHORTCUT
     friend class QShortcut;
     friend class QLineEdit;
