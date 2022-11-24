@@ -39,11 +39,6 @@
 #include "qwidget_p.h"
 #include <QtGui/qabstractscrollarea.h>
 
-#define SZ_SIZEBOTTOMRIGHT  0xf008
-#define SZ_SIZEBOTTOMLEFT   0xf007
-#define SZ_SIZETOPLEFT      0xf004
-#define SZ_SIZETOPRIGHT     0xf005
-
 QT_BEGIN_NAMESPACE
 
 static QWidget *qt_sizegrip_topLevelWidget(QWidget* w)
