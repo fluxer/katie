@@ -181,9 +181,7 @@ void QSvgIconEngine::addFile(const QString &fileName, const QSize &,
                              QIcon::Mode mode, QIcon::State state)
 {
     if (!fileName.isEmpty()) {
-        QString abs = fileName;
-        if (fileName.at(0) != QLatin1Char(':'))
-            abs = QFileInfo(fileName).absoluteFilePath();
+        QString abs = QFileInfo(fileName).absoluteFilePath();
         if (abs.endsWith(QLatin1String(".svg"), Qt::CaseInsensitive)
                 || abs.endsWith(QLatin1String(".svgz"), Qt::CaseInsensitive)
                 || abs.endsWith(QLatin1String(".svg.gz"), Qt::CaseInsensitive))
