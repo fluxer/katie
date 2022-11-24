@@ -547,7 +547,7 @@ void QTextStreamPrivate::flushWriteBuffer()
         codec = QTextCodec::codecForLocale();
 #if defined (QTEXTSTREAM_DEBUG)
     qDebug("QTextStreamPrivate::flushWriteBuffer(), using %s codec (%s generating BOM)",
-           codec->name().constData(), generatebom ? "not" : "");
+           codec->name().constData(), generatebom ? "" : "not");
 #endif
 
     // convert from unicode to raw data
