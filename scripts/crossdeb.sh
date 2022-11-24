@@ -22,8 +22,10 @@ unmount_pseudo() {
 trap unmount_pseudo EXIT INT TERM
 
 rm -rf "$crossdir"
-
-debootstrap $@ stable "$crossdir"
+# make rm -rf above comment to resume
+if [ ! -d "$crossdir" ];then
+    debootstrap $@ stable "$crossdir"
+fi
 
 for i in dev dev/pts proc sys tmp;do
     if ! mountpoint -q "$crossdir/$i" ;then
@@ -45,7 +47,7 @@ apt-get update
 apt-get install --yes git crossbuild-essential-$crossarch qemu-user-static
 
 git clone --depth=1 git://git.osdn.net/gitroot/kde/Katie.git
-cd katie
+cd Katie
 ln -sv package/debian .
 apt-get build-dep --yes -a $crossarch .
 dpkg-buildpackage -uc -nc -b --no-sign -a $crossarch
