@@ -1015,10 +1015,10 @@ void QWindowsStyle::drawPrimitive(PrimitiveElement pe, const QStyleOption *opt, 
         break;
     }
     case PE_FrameWindow: {
-         QPalette popupPal = opt->palette;
-         popupPal.setColor(QPalette::Light, opt->palette.background().color());
-         popupPal.setColor(QPalette::Midlight, opt->palette.light().color());
-         qDrawWinPanel(p, opt->rect, popupPal, opt->state & State_Sunken);
+        QPalette popupPal = opt->palette;
+        popupPal.setColor(QPalette::Light, opt->palette.background().color());
+        popupPal.setColor(QPalette::Midlight, opt->palette.light().color());
+        qDrawWinPanel(p, opt->rect, popupPal, opt->state & State_Sunken);
         break;
     }
 #ifndef QT_NO_DOCKWIDGET
