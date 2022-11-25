@@ -262,17 +262,12 @@ bool QPngHandler::write(const QImage &image)
         png_set_filler(png_ptr, 0, QFILLER_ORDER);
     }
 
-    png_bytep* row_pointers = new png_bytep[height];
-    for (int y=0; y<height; y++) {
-        row_pointers[y] = (png_bytep)copy.constScanLine(y);
+    for (int y = 0; y < height; y++) {
+        png_write_row(png_ptr, (png_const_bytep)copy.constScanLine(y));
     }
-    png_write_image(png_ptr, row_pointers);
-
     png_write_end(png_ptr, info_ptr);
 
     png_destroy_write_struct(&png_ptr, &info_ptr);
-
-    delete [] row_pointers;
 
     return true;
 }
