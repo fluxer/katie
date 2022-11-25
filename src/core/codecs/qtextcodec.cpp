@@ -32,6 +32,7 @@
 #include "qmutex.h"
 #include "qhash.h"
 #include "qcorecommon_p.h"
+#include "qdebug.h"
 
 #include <stdlib.h>
 #include <ctype.h>
@@ -1976,6 +1977,24 @@ QString QTextConverter::toUnicode(const char *data, int length) const
     QSTACKARRAY(UChar, result, maxbytes);
     UErrorCode error = U_ZERO_ERROR;
     const int convresult = ucnv_toUChars(conv, result, maxbytes, data, length, &error);
+    // regardless if the data has BOM or not, BOMs shall be generated explicitly only by QTextStream
+    if (convresult >= 4 && qstrnicmp("UTF-32", d_ptr->name.constData(), 6) == 0) {
+        const uchar* resultuchar = reinterpret_cast<uchar*>(result);
+        Q_ASSERT(sizeof(qt_utf32le_bom) == sizeof(qt_utf32be_bom));
+        if (::memcmp(resultuchar, qt_utf32le_bom, sizeof(qt_utf32le_bom)) == 0
+            || ::memcmp(resultuchar, qt_utf32be_bom, sizeof(qt_utf32be_bom))) {
+            const int bomoffset = (sizeof(qt_utf32le_bom) / sizeof(QChar));
+            return QString(reinterpret_cast<QChar*>(result) + bomoffset, convresult - bomoffset);
+        }
+    } else if (convresult >= 2 && qstrnicmp("UTF-16", d_ptr->name.constData(), 6) == 0) {
+        const uchar* resultuchar = reinterpret_cast<uchar*>(result);
+        Q_ASSERT(sizeof(qt_utf16le_bom) == sizeof(qt_utf16be_bom));
+        if (::memcmp(resultuchar, qt_utf16le_bom, sizeof(qt_utf16le_bom)) == 0
+            || ::memcmp(resultuchar, qt_utf16be_bom, sizeof(qt_utf16be_bom))) {
+            const int bomoffset = (sizeof(qt_utf16le_bom) / sizeof(QChar));
+            return QString(reinterpret_cast<QChar*>(result) + bomoffset, convresult - bomoffset);
+        }
+    }
     return QString(reinterpret_cast<QChar*>(result), convresult);
 }
 

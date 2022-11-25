@@ -2193,32 +2193,32 @@ void QTextStreamPrivate::writeBOM()
     const uchar* bomptr = nullptr;
     int bomptrsize = 0;
     if (qstricmp("UTF-32BE", codecname.constData()) == 0) {
-        bomptr = q_utf32be_bom;
-        bomptrsize = sizeof(q_utf32be_bom);
+        bomptr = qt_utf32be_bom;
+        bomptrsize = sizeof(qt_utf32be_bom);
     } else if (qstricmp("UTF-32LE", codecname.constData()) == 0) {
-        bomptr = q_utf32le_bom;
-        bomptrsize = sizeof(q_utf32le_bom);
+        bomptr = qt_utf32le_bom;
+        bomptrsize = sizeof(qt_utf32le_bom);
     } else if (qstricmp("UTF-16BE", codecname.constData()) == 0) {
-        bomptr = q_utf16be_bom;
-        bomptrsize = sizeof(q_utf16be_bom);
+        bomptr = qt_utf16be_bom;
+        bomptrsize = sizeof(qt_utf16be_bom);
     } else if (qstricmp("UTF-16LE", codecname.constData()) == 0) {
-        bomptr = q_utf16le_bom;
-        bomptrsize = sizeof(q_utf16le_bom);
+        bomptr = qt_utf16le_bom;
+        bomptrsize = sizeof(qt_utf16le_bom);
     } else if (qstricmp("UTF-32", codecname.constData()) == 0) {
 #if Q_BYTE_ORDER == Q_LITTLE_ENDIAN
-        bomptr = q_utf32le_bom;
-        bomptrsize = sizeof(q_utf32le_bom);
+        bomptr = qt_utf32le_bom;
+        bomptrsize = sizeof(qt_utf32le_bom);
 #else
-        bomptr = q_utf32be_bom;
-        bomptrsize = sizeof(q_utf32be_bom);
+        bomptr = qt_utf32be_bom;
+        bomptrsize = sizeof(qt_utf32be_bom);
 #endif
     } else if (qstricmp("UTF-16", codecname.constData()) == 0) {
 #if Q_BYTE_ORDER == Q_LITTLE_ENDIAN
-        bomptr = q_utf16le_bom;
-        bomptrsize = sizeof(q_utf16le_bom);
+        bomptr = qt_utf16le_bom;
+        bomptrsize = sizeof(qt_utf16le_bom);
 #else
-        bomptr = q_utf16be_bom;
-        bomptrsize = sizeof(q_utf16be_bom);
+        bomptr = qt_utf16be_bom;
+        bomptrsize = sizeof(qt_utf16be_bom);
 #endif
     }
 

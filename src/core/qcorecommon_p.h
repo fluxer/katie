@@ -30,10 +30,10 @@ static const qreal q_deg2rad = qreal(0.01745329251994329576923690768489); /* pi/
 static const qreal q_rad2deg = qreal(57.295779513082320876798154814105); /* 180/pi */
 
 #ifndef QT_NO_TEXTCODEC
-static const uchar q_utf32le_bom[] = { 0xff, 0xfe, 0x00, 0x00 }; // MIB 1019
-static const uchar q_utf32be_bom[] = { 0x00, 0x00, 0xfe, 0xff }; // MIB 1018
-static const uchar q_utf16le_bom[] = { 0xff, 0xfe }; // MIB 1014
-static const uchar q_utf16be_bom[] = { 0xfe, 0xff }; // MIB 1013
+static const uchar qt_utf32le_bom[] = { 0xff, 0xfe, 0x00, 0x00 }; // MIB 1019
+static const uchar qt_utf32be_bom[] = { 0x00, 0x00, 0xfe, 0xff }; // MIB 1018
+static const uchar qt_utf16le_bom[] = { 0xff, 0xfe }; // MIB 1014
+static const uchar qt_utf16be_bom[] = { 0xfe, 0xff }; // MIB 1013
 #endif
 
 static inline uint foldCase(const ushort *ch, const ushort *start)
