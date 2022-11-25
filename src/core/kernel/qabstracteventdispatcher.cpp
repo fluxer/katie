@@ -35,7 +35,7 @@ QT_BEGIN_NAMESPACE
 // digit. could implement fallback to int-sized set if limit is reached
 enum { QTimerMax = 2048 };
 
-class QTimersSet : public std::bitset<QTimerMax>
+class QTimersSet : private std::bitset<QTimerMax>
 {
 public:
     void unsetBit(const int bit);
