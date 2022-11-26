@@ -177,6 +177,10 @@ QTextBoundaryFinder::QTextBoundaryFinder(const QTextBoundaryFinder &other)
 */
 QTextBoundaryFinder &QTextBoundaryFinder::operator=(const QTextBoundaryFinder &other)
 {
+    if (d == other.d) {
+        return *this;
+    }
+
     d->type = other.d->type;
     d->pos = other.d->pos;
     d->string = other.d->string;
