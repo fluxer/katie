@@ -312,9 +312,8 @@ int QTextBoundaryFinder::toNextBoundary()
         return -1;
     }
     if (d->pos != -1) {
-        ubrk_following(d->breakiter, d->pos - 1);
+        d->pos = ubrk_following(d->breakiter, d->pos);
     }
-    d->pos = ubrk_next(d->breakiter);
     return d->pos;
 }
 
@@ -329,9 +328,8 @@ int QTextBoundaryFinder::toPreviousBoundary()
         return -1;
     }
     if (d->pos != -1) {
-        ubrk_preceding(d->breakiter, d->pos + 1);
+        d->pos = ubrk_preceding(d->breakiter, d->pos);
     }
-    d->pos = ubrk_previous(d->breakiter);
     return d->pos;
 }
 
