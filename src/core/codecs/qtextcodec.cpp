@@ -1982,7 +1982,7 @@ QString QTextConverter::toUnicode(const char *data, int length) const
         const uchar* resultuchar = reinterpret_cast<uchar*>(result);
         Q_ASSERT(sizeof(qt_utf32le_bom) == sizeof(qt_utf32be_bom));
         if (::memcmp(resultuchar, qt_utf32le_bom, sizeof(qt_utf32le_bom)) == 0
-            || ::memcmp(resultuchar, qt_utf32be_bom, sizeof(qt_utf32be_bom))) {
+            || ::memcmp(resultuchar, qt_utf32be_bom, sizeof(qt_utf32be_bom)) == 0) {
             const int bomoffset = (sizeof(qt_utf32le_bom) / sizeof(QChar));
             return QString(reinterpret_cast<QChar*>(result) + bomoffset, convresult - bomoffset);
         }
@@ -1990,7 +1990,7 @@ QString QTextConverter::toUnicode(const char *data, int length) const
         const uchar* resultuchar = reinterpret_cast<uchar*>(result);
         Q_ASSERT(sizeof(qt_utf16le_bom) == sizeof(qt_utf16be_bom));
         if (::memcmp(resultuchar, qt_utf16le_bom, sizeof(qt_utf16le_bom)) == 0
-            || ::memcmp(resultuchar, qt_utf16be_bom, sizeof(qt_utf16be_bom))) {
+            || ::memcmp(resultuchar, qt_utf16be_bom, sizeof(qt_utf16be_bom)) == 0) {
             const int bomoffset = (sizeof(qt_utf16le_bom) / sizeof(QChar));
             return QString(reinterpret_cast<QChar*>(result) + bomoffset, convresult - bomoffset);
         }
