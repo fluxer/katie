@@ -220,10 +220,10 @@ bool QKeyMapper::translateKeyEvent(QWidget *keyWidget, const XEvent *event)
 
     bool autorepeat = false;
     static const int qt_x11_autorepeat = getX11AutoRepeat();
+    static qt_auto_repeat_data curr_autorep = { 0, 0, 0, 0 };
     // modifier keys should not auto-repeat
     if (qt_x11_autorepeat && code != Qt::Key_Shift && code != Qt::Key_Control
         && code != Qt::Key_Meta && code != Qt::Key_Alt) {
-        static qt_auto_repeat_data curr_autorep = { 0, 0, 0, 0 };
         if (curr_autorep.serial == event->xkey.serial ||
             (event->xkey.window == curr_autorep.window &&
             event->xkey.keycode == curr_autorep.keycode &&
@@ -239,7 +239,7 @@ bool QKeyMapper::translateKeyEvent(QWidget *keyWidget, const XEvent *event)
     }
 
 #if 0
-    qDebug() << "translateKeyEvent" << modifiers << count << text << autorepeat << qt_x11_autorepeat;
+    qDebug() << "translateKeyEvent" << modifiers << code << count << text << autorepeat << qt_x11_autorepeat;
 #endif
 
     // try the menu key first
