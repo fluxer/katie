@@ -222,12 +222,12 @@ bool QKeyMapper::translateKeyEvent(QWidget *keyWidget, const XEvent *event)
     static const int qt_x11_autorepeat = getX11AutoRepeat();
     static qt_auto_repeat_data curr_autorep = { 0, 0, 0, 0 };
     // modifier keys should not auto-repeat
-    if (qt_x11_autorepeat && code != Qt::Key_Shift && code != Qt::Key_Control
+    if (event->type == XKeyPress && qt_x11_autorepeat && code != Qt::Key_Shift && code != Qt::Key_Control
         && code != Qt::Key_Meta && code != Qt::Key_Alt) {
-        if (curr_autorep.serial == event->xkey.serial ||
+        if ((curr_autorep.serial == event->xkey.serial ||
             (event->xkey.window == curr_autorep.window &&
-            event->xkey.keycode == curr_autorep.keycode &&
-            event->xkey.time - curr_autorep.time < qulonglong(qt_x11_autorepeat))) {
+            event->xkey.keycode == curr_autorep.keycode)) &&
+            event->xkey.time - curr_autorep.time < qulonglong(qt_x11_autorepeat)) {
             autorepeat = true;
         }
         curr_autorep = {
