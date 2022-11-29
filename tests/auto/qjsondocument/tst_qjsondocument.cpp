@@ -117,7 +117,7 @@ void tst_QJsonDocument::read()
     QCOMPARE(NestedObject, QVariantList() << 2 << "b");
 
     UTF8 = jsonmap.value("UTF8").toString();
-    QCOMPARE(UTF8, QString("УТФ"));
+    QCOMPARE(UTF8, QString::fromUtf8("УТФ"));
 
     // TODO: test other types too
 }
