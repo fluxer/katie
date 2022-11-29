@@ -34,71 +34,6 @@
 
 QT_BEGIN_NAMESPACE
 
-static QPixmap getPixmap(QTextDocument *doc, const QTextImageFormat &format)
-{
-    QPixmap pm;
-
-    const QString name(format.name());
-    const QUrl url = QUrl::fromEncoded(name.toUtf8());
-    const QVariant data = doc->resource(QTextDocument::ImageResource, url);
-    if (data.type() == QVariant::Pixmap || data.type() == QVariant::Image) {
-        pm = qvariant_cast<QPixmap>(data);
-    } else if (data.type() == QVariant::ByteArray) {
-        pm.loadFromData(data.toByteArray());
-    }
-
-    if (pm.isNull()) {
-        QImage img;
-        // try direct loading
-        if (name.isEmpty() || !img.load(name)) {
-            return QApplication::style()->standardPixmap(QStyle::SP_FileIcon);
-        }
-        pm = QPixmap::fromImage(img);
-        doc->addResource(QTextDocument::ImageResource, url, pm);
-    }
-
-    return pm;
-}
-
-static QSize getPixmapSize(QTextDocument *doc, const QTextImageFormat &format)
-{
-    QPixmap pm;
-
-    const bool hasWidth = format.hasProperty(QTextFormat::ImageWidth);
-    const int width = qRound(format.width());
-    const bool hasHeight = format.hasProperty(QTextFormat::ImageHeight);
-    const int height = qRound(format.height());
-
-    QSize size(width, height);
-    if (!hasWidth || !hasHeight) {
-        pm = getPixmap(doc, format);
-        if (!hasWidth) {
-            if (!hasHeight)
-                size.setWidth(pm.width());
-            else
-                size.setWidth(qRound(height * (pm.width() / (qreal) pm.height())));
-        }
-        if (!hasHeight) {
-            if (!hasWidth)
-                size.setHeight(pm.height());
-            else
-                size.setHeight(qRound(width * (pm.height() / (qreal) pm.width())));
-        }
-    }
-
-    qreal scale = 1.0;
-    QPaintDevice *pdev = doc->documentLayout()->paintDevice();
-    if (pdev) {
-        if (pm.isNull())
-            pm = getPixmap(doc, format);
-        if (!pm.isNull())
-            scale = qreal(pdev->logicalDpiY()) / qreal(QX11Info::appDpiY());
-    }
-    size *= scale;
-
-    return size;
-}
-
 static QImage getImage(QTextDocument *doc, const QTextImageFormat &format)
 {
     QImage image;
@@ -106,7 +41,7 @@ static QImage getImage(QTextDocument *doc, const QTextImageFormat &format)
     const QString name(format.name());
     const QUrl url = QUrl::fromEncoded(name.toUtf8());
     const QVariant data = doc->resource(QTextDocument::ImageResource, url);
-    if (data.type() == QVariant::Image) {
+    if (data.type() == QVariant::Image || data.type() == QVariant::Pixmap) {
         image = qvariant_cast<QImage>(data);
     } else if (data.type() == QVariant::ByteArray) {
         image.loadFromData(data.toByteArray());
@@ -162,25 +97,14 @@ QTextImageHandler::QTextImageHandler(QObject *parent)
 QSizeF QTextImageHandler::intrinsicSize(QTextDocument *doc, int posInDocument, const QTextFormat &format)
 {
     Q_UNUSED(posInDocument)
-    const QTextImageFormat imageFormat = format.toImageFormat();
-
-    if (qApp->thread() != QThread::currentThread())
-        return getImageSize(doc, imageFormat);
-    return getPixmapSize(doc, imageFormat);
+    return getImageSize(doc, format.toImageFormat());
 }
 
 void QTextImageHandler::drawObject(QPainter *p, const QRectF &rect, QTextDocument *doc, int posInDocument, const QTextFormat &format)
 {
     Q_UNUSED(posInDocument)
-    const QTextImageFormat imageFormat = format.toImageFormat();
-
-    if (qApp->thread() != QThread::currentThread()) {
-        const QImage image = getImage(doc, imageFormat);
-        p->drawImage(rect, image, image.rect());
-    } else {
-        const QPixmap pixmap = getPixmap(doc, imageFormat);
-        p->drawPixmap(rect, pixmap, pixmap.rect());
-    }
+    const QImage image = getImage(doc, format.toImageFormat());
+    p->drawImage(rect, image, image.rect());
 }
 
 

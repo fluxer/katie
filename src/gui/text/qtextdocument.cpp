@@ -1796,16 +1796,9 @@ QVariant QTextDocument::loadResource(int type, const QUrl &name)
 
     if (!r.isNull()) {
         if (type == ImageResource && r.type() == QVariant::ByteArray) {
-            if (qApp->thread() != QThread::currentThread()) {
-                // must use images in non-GUI threads
-                QImage image = QImage::fromData(r.toByteArray());
-                if (!image.isNull())
-                    r = image;
-            } else {
-                QPixmap pm;
-                pm.loadFromData(r.toByteArray());
-                if (!pm.isNull())
-                    r = pm;
+            QImage image = QImage::fromData(r.toByteArray());
+            if (!image.isNull()) {
+                r = image;
             }
         }
         d->cachedResources.insert(name, r);

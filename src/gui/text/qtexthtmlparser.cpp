@@ -1349,26 +1349,13 @@ void QTextHtmlParserNode::applyBackgroundImage(const QString &url, const QTextDo
 {
     if (!url.isEmpty() && resourceProvider) {
         QVariant val = resourceProvider->resource(QTextDocument::ImageResource, url);
-
-        if (qApp->thread() != QThread::currentThread()) {
-            // must use images in non-GUI threads
-            if (val.type() == QVariant::Image) {
-                QImage image = qvariant_cast<QImage>(val);
+        if (val.type() == QVariant::Image || val.type() == QVariant::Pixmap) {
+            QImage image = qvariant_cast<QImage>(val);
+            charFormat.setBackground(image);
+        } else if (val.type() == QVariant::ByteArray) {
+            QImage image = QImage::fromData(val.toByteArray());
+            if (!image.isNull()) {
                 charFormat.setBackground(image);
-            } else if (val.type() == QVariant::ByteArray) {
-                QImage image = QImage::fromData(val.toByteArray());
-                if (!image.isNull()) {
-                    charFormat.setBackground(image);
-                }
-            }
-        } else {
-            if (val.type() == QVariant::Image || val.type() == QVariant::Pixmap) {
-                charFormat.setBackground(qvariant_cast<QPixmap>(val));
-            } else if (val.type() == QVariant::ByteArray) {
-                QPixmap pm;
-                if (pm.loadFromData(val.toByteArray())) {
-                    charFormat.setBackground(pm);
-                }
             }
         }
     }

@@ -71,6 +71,7 @@ static bool qt_painter_thread_test(int devType, const char *what, bool extraCond
 {
     switch (devType) {
     case QInternal::Image:
+    case QInternal::Pixmap:
     case QInternal::Printer:
         // can be drawn onto these devices safely from any thread
         if (extraCondition)
