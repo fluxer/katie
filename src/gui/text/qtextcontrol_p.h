@@ -228,8 +228,6 @@ public:
 protected:
     virtual void timerEvent(QTimerEvent *e);
 
-    virtual bool event(QEvent *e);
-
 private:
     Q_DISABLE_COPY(QTextControl)
     Q_PRIVATE_SLOT(d_func(), void _q_updateCurrentCharFormatAndSelection())

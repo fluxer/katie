@@ -1070,11 +1070,6 @@ void QTextControl::processEvent(QEvent *e, const QMatrix &matrix, QWidget *conte
     }
 }
 
-bool QTextControl::event(QEvent *e)
-{
-    return QObject::event(e);
-}
-
 void QTextControl::timerEvent(QTimerEvent *e)
 {
     Q_D(QTextControl);
