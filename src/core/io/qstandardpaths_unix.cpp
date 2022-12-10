@@ -287,7 +287,9 @@ QString QStandardPaths::findExecutable(const QString &executableName, const QStr
     }
 
     if (paths.isEmpty()) {
-        return searchExecutable(qGetEnvList("PATH"), executableName);
+        QStringList locations = standardLocations(QStandardPaths::ExecutableLocation);
+        locations += qGetEnvList("PATH");
+        return searchExecutable(locations, executableName);
     }
 
     return searchExecutable(paths, executableName);
