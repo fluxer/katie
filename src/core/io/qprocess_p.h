@@ -144,7 +144,7 @@ public:
     QSocketNotifier *deathNotifier;
 
     void startProcess();
-    void execChild(const char *workingDirectory, char **path, char **argv, char **envp);
+    void execChild(const char *workingDirectory, char **argv, char **envp);
     bool processStarted();
     void terminateProcess();
     void killProcess();

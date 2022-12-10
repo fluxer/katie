@@ -471,8 +471,20 @@ void QProcessPrivate::startProcess()
     char **argv = new char *[arguments.count() + 2];
     argv[arguments.count() + 1] = 0;
 
+
     // Encode the program name.
-    const QByteArray encodedProgramName = QFile::encodeName(program);
+    QByteArray encodedProgramName;
+    // If the program does not specify a path, try to find it.
+    if (!program.contains(QLatin1Char('/'))) {
+        const QString programPath = QStandardPaths::findExecutable(program);
+        if (!programPath.isEmpty()) {
+            encodedProgramName = QFile::encodeName(programPath);
+        }
+    }
+    if (encodedProgramName.isEmpty()) {
+        encodedProgramName = QFile::encodeName(program);
+    }
+
     // Add the program name to the argument list.
     argv[0] = (char*)encodedProgramName.data();
 
@@ -497,32 +509,9 @@ void QProcessPrivate::startProcess()
         workingDirPtr = encodedWorkingDirectory.constData();
     }
 
-    // If the program does not specify a path, generate a list of possible
-    // locations for the binary using the PATH environment variable.
-    char **path = 0;
-    int pathc = 0;
-    if (!program.contains(QLatin1Char('/'))) {
-        const QString pathEnv = QString::fromLocal8Bit(::getenv("PATH"));
-        if (!pathEnv.isEmpty()) {
-            QStringList pathEntries = pathEnv.split(QLatin1Char(':'), QString::SkipEmptyParts);
-            if (!pathEntries.isEmpty()) {
-                pathc = pathEntries.size();
-                path = new char *[pathc + 1];
-                path[pathc] = 0;
-
-                for (int k = 0; k < pathEntries.size(); ++k) {
-                    QByteArray tmp = QFile::encodeName(pathEntries.at(k));
-                    if (!tmp.endsWith('/')) tmp += '/';
-                    tmp += encodedProgramName;
-                    path[k] = ::strdup(tmp.constData());
-                }
-            }
-        }
-    }
-
     // Start the process manager, and fork off the child process.
     processManager()->lock();
-    const pid_t childPid = fork();
+    const pid_t childPid = ::fork();
     const int lastForkErrno = errno;
     if (childPid != 0) {
         // Clean up duplicated memory.
@@ -530,11 +519,8 @@ void QProcessPrivate::startProcess()
             free(argv[i]);
         for (int i = 0; i < envc; ++i)
             free(envp[i]);
-        for (int i = 0; i < pathc; ++i)
-            free(path[i]);
         delete [] argv;
         delete [] envp;
-        delete [] path;
     }
 
     if (childPid < 0) {
@@ -553,7 +539,7 @@ void QProcessPrivate::startProcess()
 
     // Start the child.
     if (childPid == 0) {
-        execChild(workingDirPtr, path, argv, envp);
+        execChild(workingDirPtr, argv, envp);
         ::_exit(-1);
     }
 
@@ -591,7 +577,7 @@ void QProcessPrivate::startProcess()
         ::fcntl(stderrChannel.pipe[0], F_SETFL, ::fcntl(stderrChannel.pipe[0], F_GETFL) | O_NONBLOCK);
 }
 
-void QProcessPrivate::execChild(const char *workingDir, char **path, char **argv, char **envp)
+void QProcessPrivate::execChild(const char *workingDir, char **argv, char **envp)
 {
     ::signal(SIGPIPE, SIG_DFL);         // reset the signal that we ignored
 
@@ -627,22 +613,10 @@ void QProcessPrivate::execChild(const char *workingDir, char **path, char **argv
     if (!envp) {
         qt_safe_execvp(argv[0], argv);
     } else {
-        if (path) {
-            char **arg = path;
-            while (*arg) {
-                argv[0] = *arg;
 #if defined (QPROCESS_DEBUG)
-                fprintf(stderr, "QProcessPrivate::execChild() searching / starting %s\n", argv[0]);
+        fprintf(stderr, "QProcessPrivate::execChild() starting %s\n", argv[0]);
 #endif
-                qt_safe_execve(argv[0], argv, envp);
-                ++arg;
-            }
-        } else {
-#if defined (QPROCESS_DEBUG)
-            fprintf(stderr, "QProcessPrivate::execChild() starting %s\n", argv[0]);
-#endif
-            qt_safe_execve(argv[0], argv, envp);
-        }
+        qt_safe_execve(argv[0], argv, envp);
     }
 
     // notify failure
@@ -1036,7 +1010,7 @@ bool QProcessPrivate::startDetached(const QString &program, const QStringList &a
         return false;
     }
 
-    pid_t childPid = fork();
+    pid_t childPid = ::fork();
     if (childPid == 0) {
         struct sigaction noaction;
         memset(&noaction, 0, sizeof(noaction));
@@ -1048,7 +1022,7 @@ bool QProcessPrivate::startDetached(const QString &program, const QStringList &a
         qt_safe_close(startedPipe[0]);
         qt_safe_close(pidPipe[0]);
 
-        pid_t doubleForkPid = fork();
+        pid_t doubleForkPid = ::fork();
         if (doubleForkPid == 0) {
             qt_safe_close(pidPipe[1]);
 
@@ -1065,18 +1039,18 @@ bool QProcessPrivate::startDetached(const QString &program, const QStringList &a
             }
             argv[arguments.size() + 1] = 0;
 
+            QByteArray encodedProgram;
             if (!program.contains(QLatin1Char('/'))) {
                 const QString path = QStandardPaths::findExecutable(program);
                 if (!path.isEmpty()) {
-                    QByteArray tmp = QFile::encodeName(path);
-                    argv[0] = tmp.data();
-                    qt_safe_execv(argv[0], argv);
+                    encodedProgram = QFile::encodeName(path);
                 }
-            } else {
-                QByteArray tmp = QFile::encodeName(program);
-                argv[0] = tmp.data();
-                qt_safe_execv(argv[0], argv);
             }
+            if (encodedProgram.isEmpty()) {
+                encodedProgram = QFile::encodeName(program);
+            }
+            argv[0] = encodedProgram.data();
+            qt_safe_execv(argv[0], argv);
 
             struct sigaction noaction;
             memset(&noaction, 0, sizeof(noaction));
