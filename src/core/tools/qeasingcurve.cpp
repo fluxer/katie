@@ -218,16 +218,7 @@
     \value OutCurve
     \value SineCurve
     \value CosineCurve
-    \value Custom       This is returned if the user specified a custom curve type with
-                        setCustomType(). Note that you cannot call setType() with this value,
-                        but type() can return it.
     \omitvalue NCurveTypes
-*/
-
-/*!
-    \typedef QEasingCurve::EasingFunction
-
-    This is a typedef for a pointer to a function.
 */
 
 #include "qeasingcurve.h"
@@ -254,17 +245,14 @@ class QEasingCurvePrivate
 public:
     QEasingCurvePrivate()
         : type(QEasingCurve::Linear),
-          func(nullptr),
           per(s_defaultperiod), amp(s_defaultamplitude), over(s_defaultovershoot)
     { }
     QEasingCurvePrivate(const QEasingCurvePrivate &other)
         : type(other.type),
-          func(other.func),
           per(other.per), amp(other.amp), over(other.over)
     { }
 
     QEasingCurve::Type type;
-    QEasingCurve::EasingFunction func;
     qreal per;
     qreal amp;
     qreal over;
@@ -302,7 +290,6 @@ QEasingCurve &QEasingCurve::operator=(const QEasingCurve &other)
 {
     if (*this != other) {
         d_ptr->type = other.d_ptr->type;
-        d_ptr->func = other.d_ptr->func;
         d_ptr->per = other.d_ptr->per;
         d_ptr->amp = other.d_ptr->amp;
         d_ptr->over = other.d_ptr->over;
@@ -316,7 +303,7 @@ QEasingCurve &QEasingCurve::operator=(const QEasingCurve &other)
 */
 bool QEasingCurve::operator==(const QEasingCurve &other) const
 {
-    bool res = (d_ptr->type == other.d_ptr->type && d_ptr->func == other.d_ptr->func);
+    bool res = (d_ptr->type == other.d_ptr->type);
     if (res) {
         res = qFuzzyCompare(period(), other.period()) &&
               qFuzzyCompare(amplitude(), other.amplitude()) &&
@@ -414,43 +401,11 @@ QEasingCurve::Type QEasingCurve::type() const
 */
 void QEasingCurve::setType(Type type)
 {
-    if (Q_UNLIKELY(type < Linear || type >= QEasingCurve::NCurveTypes - 1)) {
+    if (Q_UNLIKELY(type < Linear || type >= QEasingCurve::NCurveTypes)) {
         qWarning("QEasingCurve: Invalid curve type %d", type);
         return;
     }
     d_ptr->type = type;
-    d_ptr->func = nullptr;
-}
-
-/*!
-    Sets a custom easing curve that is defined by the user in the function \a func.
-    The signature of the function is qreal myEasingFunction(qreal progress),
-    where \e progress and the return value is considered to be normalized between 0 and 1.
-    (In some cases the return value can be outside that range)
-    After calling this function type() will return QEasingCurve::Custom.
-    \a func cannot be zero.
-
-    \sa customType()
-    \sa valueForProgress()
-*/
-void QEasingCurve::setCustomType(EasingFunction func)
-{
-    if (Q_UNLIKELY(!func)) {
-        qWarning("QEasingCurve: Function pointer must not be null");
-        return;
-    }
-    d_ptr->type = QEasingCurve::Custom;
-    d_ptr->func = func;
-}
-
-/*!
-    Returns the function pointer to the custom easing curve.
-    If type() does not return QEasingCurve::Custom, this function
-    will return 0.
-*/
-QEasingCurve::EasingFunction QEasingCurve::customType() const
-{
-    return (d_ptr->type == QEasingCurve::Custom ? d_ptr->func : nullptr);
 }
 
 #define BOUND_PERIOD(per) (per < 0) ? s_defaultperiod : per
@@ -603,12 +558,6 @@ qreal QEasingCurve::valueForProgress(qreal progress) const
         case QEasingCurve::OutInBack: {
             return easeOutInBack(progress, BOUND_OVERSHOOT(d_ptr->over));
         }
-        case QEasingCurve::Custom: {
-            if (Q_LIKELY(d_ptr->func)) {
-                return d_ptr->func(progress);
-            }
-            break;
-        }
         case QEasingCurve::NCurveTypes: {
             break;
         }
@@ -759,9 +708,6 @@ static const char* const easingTypeName(const QEasingCurve::Type type)
         case QEasingCurve::OutInBack: {
             return "OutInBack";
         }
-        case QEasingCurve::Custom: {
-            return "Custom";
-        }
         default: {
             Q_ASSERT(false);
             return "";
@@ -800,7 +746,6 @@ QDebug operator<<(QDebug debug, const QEasingCurve &easing)
 QDataStream &operator<<(QDataStream &stream, const QEasingCurve &easing)
 {
     stream << quint8(easing.d_ptr->type);
-    stream << quint64(quintptr(easing.d_ptr->func));
     stream << easing.d_ptr->per;
     stream << easing.d_ptr->amp;
     stream << easing.d_ptr->over;
@@ -820,10 +765,6 @@ QDataStream &operator>>(QDataStream &stream, QEasingCurve &easing)
     quint8 int_type;
     stream >> int_type;
     easing.setType(static_cast<QEasingCurve::Type>(int_type));
-
-    quint64 ptr_func;
-    stream >> ptr_func;
-    easing.d_ptr->func = QEasingCurve::EasingFunction(quintptr(ptr_func));
 
     stream >> easing.d_ptr->per;
     stream >> easing.d_ptr->amp;

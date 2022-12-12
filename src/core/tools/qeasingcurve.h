@@ -49,7 +49,7 @@ public:
         InBack, OutBack, InOutBack, OutInBack,
         InBounce, OutBounce, InOutBounce, OutInBounce,
         InCurve, OutCurve, SineCurve, CosineCurve,
-        Custom, NCurveTypes
+        NCurveTypes
     };
 
     QEasingCurve(Type type = Linear);
@@ -72,9 +72,6 @@ public:
 
     Type type() const;
     void setType(Type type);
-    typedef qreal (*EasingFunction)(qreal progress);
-    void setCustomType(EasingFunction func);
-    EasingFunction customType() const;
 
     qreal valueForProgress(qreal progress) const;
 private:

@@ -471,7 +471,6 @@ void QProcessPrivate::startProcess()
     char **argv = new char *[arguments.count() + 2];
     argv[arguments.count() + 1] = 0;
 
-
     // Encode the program name.
     QByteArray encodedProgramName;
     // If the program does not specify a path, try to find it.

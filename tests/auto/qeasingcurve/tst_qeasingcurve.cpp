@@ -43,7 +43,6 @@ private slots:
     void propertyDefaults();
     void valueForProgress_data();
     void valueForProgress();
-    void setCustomType();
     void operators();
     void properties();
     void metaTypes();
@@ -106,10 +105,6 @@ void tst_QEasingCurve::type()
     QTest::ignoreMessage(QtWarningMsg, QString::fromAscii("QEasingCurve: Invalid curve type %1")
                         .arg(QEasingCurve::NCurveTypes).toLatin1().constData());
     curve.setType(QEasingCurve::NCurveTypes);
-    QCOMPARE(curve.type(), QEasingCurve::InCubic);
-    QTest::ignoreMessage(QtWarningMsg, QString::fromAscii("QEasingCurve: Invalid curve type %1")
-                        .arg(QEasingCurve::Custom).toLatin1().constData());
-    curve.setType(QEasingCurve::Custom);
     QCOMPARE(curve.type(), QEasingCurve::InCubic);
     QTest::ignoreMessage(QtWarningMsg, QString::fromAscii("QEasingCurve: Invalid curve type %1")
                         .arg(-1).toLatin1().constData());
@@ -380,7 +375,7 @@ void tst_QEasingCurve::valueForProgress()
     // used to generate data tables...
     QFile out;
     out.open(stdout, QIODevice::WriteOnly);
-    for (int c = QEasingCurve::Linear; c < QEasingCurve::NCurveTypes - 1; ++c) {
+    for (int c = QEasingCurve::Linear; c < QEasingCurve::NCurveTypes; ++c) {
         QEasingCurve curve((QEasingCurve::Type)c);
         QMetaObject mo = QEasingCurve::staticMetaObject;
         QString strCurve = QLatin1String(mo.enumerator(mo.indexOfEnumerator("Type")).key(c));
@@ -420,50 +415,11 @@ void tst_QEasingCurve::valueForProgress()
 #endif
 }
 
-static qreal discreteEase(qreal progress)
-{
-    return qFloor(progress * 10) / qreal(10.0);
-}
-
-void tst_QEasingCurve::setCustomType()
-{
-    QEasingCurve curve;
-    curve.setCustomType(&discreteEase);
-    QCOMPARE(curve.type(), QEasingCurve::Custom);
-    QCOMPARE(curve.valueForProgress(0.0), 0.0);
-    QCOMPARE(curve.valueForProgress(0.05), 0.0);
-    QCOMPARE(curve.valueForProgress(0.10), 0.1);
-    QCOMPARE(curve.valueForProgress(0.15), 0.1);
-    QCOMPARE(curve.valueForProgress(0.20), 0.2);
-    QCOMPARE(curve.valueForProgress(0.25), 0.2);
-    QCOMPARE(curve.valueForProgress(0.30), 0.3);
-    QCOMPARE(curve.valueForProgress(0.35), 0.3);
-    QCOMPARE(curve.valueForProgress(0.999999), 0.9);
-
-    curve.setType(QEasingCurve::Linear);
-    QCOMPARE(curve.type(), QEasingCurve::Linear);
-    QCOMPARE(curve.valueForProgress(0.0), 0.0);
-    QCOMPARE(curve.valueForProgress(0.1), 0.1);
-    QCOMPARE(curve.valueForProgress(0.5), 0.5);
-    QCOMPARE(curve.valueForProgress(0.99), 0.99);
-}
-
 void tst_QEasingCurve::operators()
 {
     // operator=
     QEasingCurve curve;
     QEasingCurve curve2;
-    curve.setCustomType(&discreteEase);
-    curve2 = curve;
-    QCOMPARE(curve2.type(), QEasingCurve::Custom);
-    QCOMPARE(curve2.valueForProgress(0.0), 0.0);
-    QCOMPARE(curve2.valueForProgress(0.05), 0.0);
-    QCOMPARE(curve2.valueForProgress(0.15), 0.1);
-    QCOMPARE(curve2.valueForProgress(0.25), 0.2);
-    QCOMPARE(curve2.valueForProgress(0.35), 0.3);
-    QCOMPARE(curve2.valueForProgress(0.999999), 0.9);
-
-    // operator==
     curve.setType(QEasingCurve::InBack);
     curve2 = curve;
     curve2.setOvershoot(qreal(1.70158));
