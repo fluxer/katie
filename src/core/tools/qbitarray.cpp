@@ -191,11 +191,10 @@ void QBitArray::resize(int size)
     \sa isEmpty()
 */
 
-/*! \fn bool QBitArray::fill(bool value, int size = -1)
+/*! \fn void QBitArray::fill(bool value, int size = -1)
 
-    Sets every bit in the bit array to \a value, returning true if successful;
-    otherwise returns false. If \a size is different from -1 (the default),
-    the bit array is resized to \a size beforehand.
+    Sets every bit in the bit array to \a value. If \a size is different
+    from -1 (the default), the bit array is resized to \a size beforehand.
 
     Example:
     \snippet doc/src/snippets/code/src_corelib_tools_qbitarray.cpp 6
