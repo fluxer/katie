@@ -4067,16 +4067,6 @@ void QWidget::unsetLayoutDirection()
 */
 
 /*!
-    \fn QFontInfo QWidget::fontInfo() const
-
-    Returns the font info for the widget's current font.
-    Equivalent to QFontInto(widget->font()).
-
-    \sa font(), fontMetrics(), setFont()
-*/
-
-
-/*!
     \property QWidget::cursor
     \brief the cursor shape for this widget
 

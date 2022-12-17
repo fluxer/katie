@@ -21,11 +21,8 @@
 
 
 #include <QtTest/QtTest>
-
-
 #include <qfont.h>
 #include <qfontdatabase.h>
-#include <qfontinfo.h>
 #include <qstringlist.h>
 #include <qapplication.h>
 #include <qwidget.h>

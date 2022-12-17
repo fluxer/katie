@@ -407,7 +407,6 @@ include/katie/QtGui/QFont
 include/katie/QtGui/QFontComboBox
 include/katie/QtGui/QFontDatabase
 include/katie/QtGui/QFontDialog
-include/katie/QtGui/QFontInfo
 include/katie/QtGui/QFontMetrics
 include/katie/QtGui/QFontMetricsF
 include/katie/QtGui/QFormLayout
@@ -746,7 +745,6 @@ include/katie/QtGui/qfont.h
 include/katie/QtGui/qfontcombobox.h
 include/katie/QtGui/qfontdatabase.h
 include/katie/QtGui/qfontdialog.h
-include/katie/QtGui/qfontinfo.h
 include/katie/QtGui/qfontmetrics.h
 include/katie/QtGui/qformlayout.h
 include/katie/QtGui/qframe.h

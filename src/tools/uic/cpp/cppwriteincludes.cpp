@@ -199,7 +199,6 @@ static const struct ClassTblData {
     { QLatin1String("QFontComboBox"), QLatin1String("QtGui/qfontcombobox.h") },
     { QLatin1String("QFontDatabase"), QLatin1String("QtGui/qfontdatabase.h") },
     { QLatin1String("QFontDialog"), QLatin1String("QtGui/qfontdialog.h") },
-    { QLatin1String("QFontInfo"), QLatin1String("QtGui/qfontinfo.h") },
     { QLatin1String("QFontMetrics"), QLatin1String("QtGui/qfontmetrics.h") },
     { QLatin1String("QFontMetricsF"), QLatin1String("QtGui/qfontmetrics.h") },
     { QLatin1String("QFormBuilder"), QLatin1String("QtUiTools/formbuilder.h") },

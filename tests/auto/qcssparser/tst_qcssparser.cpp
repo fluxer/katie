@@ -1504,7 +1504,7 @@ void tst_QCssParser::extractFontFamily_data()
     QTest::addColumn<QString>("css");
     QTest::addColumn<QString>("expectedFamily");
 
-    const QString invalidfamily = QFontInfo(QFont("invalid font")).family();
+    const QString invalidfamily = QFontDatabase().font("invalid font", "invalid style", 12).family();
     QTest::newRow("unquoted-family-name") << "font-family: FreeSerif" << QString("FreeSerif");
     QTest::newRow("quoted-family-name") << "font-family: 'FreeSerif'" << QString("FreeSerif");
     QTest::newRow("quoted-family-name2") << "font-family: \"FreeSerif\"" << QString("FreeSerif");
@@ -1520,6 +1520,7 @@ void tst_QCssParser::extractFontFamily_data()
 void tst_QCssParser::extractFontFamily()
 {
     QFETCH(QString, css);
+    QFETCH(QString, expectedFamily);
     css.prepend("dummy {");
     css.append("}");
 
@@ -1538,8 +1539,8 @@ void tst_QCssParser::extractFontFamily()
     int adjustment = 0;
     QFont fnt;
     extractor.extractFont(&fnt, &adjustment);
-    QFontInfo info(fnt);
-    QTEST(info.family(), "expectedFamily");
+    QFont sf = QFontDatabase().font(fnt.family(), fnt.styleName(), fnt.pointSize());
+    QCOMPARE(sf.family(), expectedFamily);
 }
 
 void tst_QCssParser::extractBorder_data()

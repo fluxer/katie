@@ -111,7 +111,7 @@ static const Qt::WindowFlags DefaultFontWindowFlags =
 
   \image plastique-fontdialog.png A font dialog in the Plastique widget style.
 
-  \sa QFont, QFontInfo, QFontMetrics, QColorDialog, QFileDialog, QPrintDialog,
+  \sa QFont, QFontMetrics, QColorDialog, QFileDialog, QPrintDialog,
       {Standard Dialogs Example}
 */
 
@@ -720,8 +720,8 @@ void QFontDialog::setCurrentFont(const QFont &font)
     d->style = d->fdb.styleString(font);
     d->size = font.pointSize();
     if (d->size == -1) {
-        QFontInfo fi(font);
-        d->size = fi.pointSize();
+        QFont sf = d->fdb.font(font.family(), font.styleName(), font.pointSize());
+        d->size = sf.pointSize();
     }
     d->strikeout->setChecked(font.strikeOut());
     d->underline->setChecked(font.underline());

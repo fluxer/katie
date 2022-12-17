@@ -60,7 +60,6 @@ set(GUI_PUBLIC_HEADERS
     QFontComboBox
     QFontDatabase
     QFontDialog
-    QFontInfo
     QFontMetrics
     QFormLayout
     QFrame
@@ -450,7 +449,6 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qfontdatabase.h
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qfontdatabase_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qfontengine_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/text/qfontinfo.h
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qfontmetrics.h
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qfont_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qfontsubset_p.h

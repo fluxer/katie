@@ -86,9 +86,6 @@ private slots:
 
     void threadSafety();
 
-    void fontInfo_data();
-    void fontInfo();
-
     void caseInsensitive_data();
     void caseInsensitive();
 
@@ -142,8 +139,6 @@ void tst_QFontDatabase::fixedPitch()
     QCOMPARE(fdb.isFixedPitch(font), fixedPitch);
 
     QFont f(font);
-    QFontInfo fi(f);
-    QCOMPARE(fi.fixedPitch(), fixedPitch);
     QFont fdbfont = fdb.font(f.family(), f.styleName(), f.pointSize());
     QCOMPARE(fdbfont.fixedPitch(), fixedPitch);
 }
@@ -243,44 +238,6 @@ void tst_QFontDatabase::threadSafety()
         }
     }
     qDebug("Done waiting");
-}
-
-void tst_QFontDatabase::fontInfo_data()
-{
-    QTest::addColumn<QString>("font");
-
-    // actual font families
-    QTest::newRow("FreeSans") << QString("FreeSans");
-    QTest::newRow("FreeSans [GNU ]") << QString("FreeSans [GNU ]");
-    QTest::newRow("FreeMono") << QString("FreeMono");
-    // aliases
-    QTest::newRow("Sans Serif") << QString("Sans Serif");
-    QTest::newRow("Monospace") << QString("Monospace");
-}
-
-void tst_QFontDatabase::fontInfo()
-{
-    QFETCH(QString, font);
-
-    QFontDatabase fdb;
-    // qDebug() << fdb.families();
-    if (!fdb.hasFamily(font)) {
-        QSKIP("Font not installed", SkipSingle);
-    }
-
-    QFont f(font);
-    QFontInfo fi(f);
-    QFont fdbfont = fdb.font(f.family(), f.styleName(), f.pointSize());
-    QCOMPARE(fdbfont.family(), fi.family());
-    QCOMPARE(fdbfont.styleName(), fi.styleName());
-    // QCOMPARE(fdbfont.pixelSize(), fi.pixelSize()); // may not be set by QFontDatabase::font()
-    QCOMPARE(fdbfont.pointSize(), fi.pointSize());
-    QCOMPARE(fdbfont.pointSizeF(), fi.pointSizeF());
-    QCOMPARE(fdbfont.italic(), fi.italic());
-    QCOMPARE(fdbfont.style(), fi.style());
-    QCOMPARE(fdbfont.weight(), fi.weight());
-    QCOMPARE(fdbfont.bold(), fi.bold());
-    QCOMPARE(fdbfont.fixedPitch(), fi.fixedPitch());
 }
 
 void tst_QFontDatabase::caseInsensitive_data()

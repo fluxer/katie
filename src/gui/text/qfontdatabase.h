@@ -29,7 +29,6 @@
 
 QT_BEGIN_NAMESPACE
 
-class QFontInfo;
 class QStringList;
 template <class T> class QList;
 
@@ -43,7 +42,6 @@ public:
     QStringList styles(const QString &family) const;
     QList<int> pointSizes(const QString &family, const QString &style = QString());
     QString styleString(const QFont &font) const;
-    QString styleString(const QFontInfo &fontInfo) const;
 
     QFont font(const QString &family, const QString &style, int pointSize) const;
 

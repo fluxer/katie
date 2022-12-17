@@ -25,7 +25,6 @@
 #include <QtCore/qmargins.h>
 #include <QtGui/qpalette.h>
 #include <QtGui/qfontmetrics.h>
-#include <QtGui/qfontinfo.h>
 #include <QtGui/qsizepolicy.h>
 #include <QtGui/qcursor.h>
 #include <QtGui/qkeysequence.h>
@@ -262,7 +261,6 @@ public:
     const QFont &font() const;
     void setFont(const QFont &);
     QFontMetrics fontMetrics() const;
-    QFontInfo fontInfo() const;
 
 #ifndef QT_NO_CURSOR
     QCursor cursor() const;
@@ -578,7 +576,6 @@ private:
     friend class QPainterPrivate;
     friend class QPixmap; // for QPixmap::grabWidget()
     friend class QFontMetrics;
-    friend class QFontInfo;
     friend class QETWidget;
     friend class QLayout;
     friend class QWidgetItem;
@@ -674,9 +671,6 @@ inline const QFont &QWidget::font() const
 
 inline QFontMetrics QWidget::fontMetrics() const
 { return QFontMetrics(data->fnt); }
-
-inline QFontInfo QWidget::fontInfo() const
-{ return QFontInfo(data->fnt); }
 
 inline void QWidget::setMouseTracking(bool enable)
 { setAttribute(Qt::WA_MouseTracking, enable); }

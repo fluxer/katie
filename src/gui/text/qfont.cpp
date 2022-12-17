@@ -24,7 +24,6 @@
 #include "qpaintdevice.h"
 #include "qfontdatabase_p.h"
 #include "qfontmetrics.h"
-#include "qfontinfo.h"
 #include "qhash.h"
 #include "qdatastream.h"
 #include "qapplication.h"
@@ -193,7 +192,7 @@ void QFontPrivate::resolve(uint mask, const QFontPrivate *other)
     you want the font to have. Qt will use the font with the specified
     attributes, or if no matching font exists, Qt will use the closest
     matching installed font. The attributes of the font that is
-    actually used are retrievable from a QFontInfo object. If the
+    actually used are retrievable from a QFontDatabase object. If the
     window system provides an exact match exactMatch() returns true.
     Use QFontMetrics to get measurements, e.g. the pixel length of a
     string using QFontMetrics::width().
@@ -213,16 +212,10 @@ void QFontPrivate::resolve(uint mask, const QFontPrivate *other)
     \snippet doc/src/snippets/code/src_gui_text_qfont.cpp 0
 
     The attributes set in the constructor can also be set later, e.g.
-    setFamily(), setPointSize(), setPointSizeFloat(), setWeight() and
+    setFamily(), setPointSize(), setPointSizeF(), setWeight() and
     setItalic(). The remaining attributes must be set after
     contstruction, e.g. setBold(), setUnderline(), setOverline(),
-    setStrikeOut() and setFixedPitch(). QFontInfo objects should be
-    created \e after the font's attributes have been set. A QFontInfo
-    object will not change, even if you change the font's
-    attributes. The corresponding "get" functions, e.g. family(),
-    pointSize(), etc., return the values that were set, even though
-    the values used may differ. The actual values are available from a
-    QFontInfo object.
+    setStrikeOut() and setFixedPitch().
 
     The font-matching algorithm has a lastResortFamily() in cases
     where a suitable match cannot be found.
@@ -281,35 +274,17 @@ void QFontPrivate::resolve(uint mask, const QFontPrivate *other)
 
     The actual family, font size, weight and other font attributes
     used for drawing text will depend on what's available for the
-    chosen family under the window system. A QFontInfo object can be
-    used to determine the actual values used for drawing the text.
-
-    Examples:
-
-    \snippet doc/src/snippets/code/src_gui_text_qfont.cpp 1
-    If you had both an Adobe and a Cronyx Helvetica, you might get
-    either.
-
-    \snippet doc/src/snippets/code/src_gui_text_qfont.cpp 2
-
-    You can specify the foundry you want in the family name. The font f
-    in the above example will be set to "FreeSans [GNU]".
-
-    To determine the attributes of the font actually used in the window
-    system, use a QFontInfo object, e.g.
-
-    \snippet doc/src/snippets/code/src_gui_text_qfont.cpp 3
-
-    To find out font metrics use a QFontMetrics object, e.g.
-
-    \snippet doc/src/snippets/code/src_gui_text_qfont.cpp 4
+    chosen family under the window system. A QFontDatabase object can
+    be used to determine the actual values used for drawing the text.
+    If you have both an Adobe and a Cronyx Helvetica for example, you
+    might get either. To find out font metrics use QFontMetrics.
 
     For more general information on fonts, see the
     \link http://nwalsh.com/comp.fonts/FAQ/ comp.fonts FAQ.\endlink
     Information on encodings can be found from
     \link http://czyborra.com/ Roman Czyborra's\endlink page.
 
-    \sa QFontComboBox, QFontMetrics, QFontInfo, QFontDatabase, {Character Map Example}
+    \sa QFontComboBox, QFontMetrics, QFontDatabase, {Character Map Example}
 */
 
 /*!
@@ -504,7 +479,7 @@ QString QFont::family() const
     foundry is chosen. If the family isn't available a family will be
     set using the \l{QFont}{font matching} algorithm.
 
-    \sa family(), QFontInfo
+    \sa family(), QFontDatabase
 */
 void QFont::setFamily(const QString &family)
 {
@@ -680,7 +655,7 @@ void QFont::setPointSizeF(qreal pointSize)
     Returns the point size of the font. Returns -1 if the font size was
     specified in pixels.
 
-    \sa pointSize() setPointSizeF() pixelSize() QFontInfo::pointSize() QFontInfo::pixelSize()
+    \sa pointSize(), setPointSizeF(), pixelSize()
 */
 qreal QFont::pointSizeF() const
 {
@@ -716,7 +691,7 @@ void QFont::setPixelSize(int pixelSize)
     setPixelSize(). Returns -1 if the size was set with setPointSize()
     or setPointSizeF().
 
-    \sa setPixelSize() pointSize() QFontInfo::pointSize() QFontInfo::pixelSize()
+    \sa setPixelSize(), pointSize()
 */
 int QFont::pixelSize() const
 {
@@ -728,7 +703,7 @@ int QFont::pixelSize() const
 
     Returns true if the style() of the font is not QFont::StyleNormal
 
-    \sa setItalic() style()
+    \sa setItalic(), style()
 */
 
 /*!
@@ -737,7 +712,7 @@ int QFont::pixelSize() const
   Sets the style() of the font to QFont::StyleItalic if \a enable is true;
   otherwise the style is set to QFont::StyleNormal.
 
-  \sa italic() QFontInfo
+  \sa italic()
 */
 
 /*!
@@ -753,7 +728,7 @@ QFont::Style QFont::style() const
 /*!
     Sets the style of the font to \a style.
 
-    \sa italic(), QFontInfo
+    \sa italic()
 */
 void QFont::setStyle(Style style)
 {
@@ -767,7 +742,7 @@ void QFont::setStyle(Style style)
     Returns the weight of the font which is one of the enumerated
     values from \l{QFont::Weight}.
 
-    \sa setWeight(), Weight, QFontInfo
+    \sa setWeight(), Weight
 */
 int QFont::weight() const
 {
@@ -794,7 +769,7 @@ int QFont::weight() const
     Sets the weight the font to \a weight, which should be a value
     from the \l QFont::Weight enumeration.
 
-    \sa weight(), QFontInfo
+    \sa weight()
 */
 void QFont::setWeight(int weight)
 {
@@ -812,7 +787,7 @@ void QFont::setWeight(int weight)
     Returns true if weight() is a value greater than \link Weight
     QFont::Normal \endlink; otherwise returns false.
 
-    \sa weight(), setBold(), QFontInfo::bold()
+    \sa weight(), setBold()
 */
 
 /*!
@@ -841,7 +816,7 @@ bool QFont::underline() const
     If \a enable is true, sets underline on; otherwise sets underline
     off.
 
-    \sa underline(), QFontInfo
+    \sa underline()
 */
 void QFont::setUnderline(bool enable)
 {
@@ -862,9 +837,9 @@ bool QFont::overline() const
 }
 
 /*!
-  If \a enable is true, sets overline on; otherwise sets overline off.
+    If \a enable is true, sets overline on; otherwise sets overline off.
 
-  \sa overline(), QFontInfo
+    \sa overline()
 */
 void QFont::setOverline(bool enable)
 {
@@ -888,7 +863,7 @@ bool QFont::strikeOut() const
     If \a enable is true, sets strikeout on; otherwise sets strikeout
     off.
 
-    \sa strikeOut(), QFontInfo
+    \sa strikeOut()
 */
 void QFont::setStrikeOut(bool enable)
 {
@@ -901,7 +876,7 @@ void QFont::setStrikeOut(bool enable)
 /*!
     Returns true if fixed pitch has been set; otherwise returns false.
 
-    \sa setFixedPitch(), QFontInfo::fixedPitch()
+    \sa setFixedPitch()
 */
 bool QFont::fixedPitch() const
 {
@@ -912,7 +887,7 @@ bool QFont::fixedPitch() const
     If \a enable is true, sets fixed pitch on; otherwise sets fixed
     pitch off.
 
-    \sa fixedPitch(), QFontInfo
+    \sa fixedPitch()
 */
 void QFont::setFixedPitch(bool enable)
 {
@@ -1014,7 +989,7 @@ void QFont::setStretch(int factor)
     Returns true if a window system font exactly matching the settings
     of this font is available.
 
-    \sa QFontInfo
+    \sa QFontDatabase
 */
 bool QFont::exactMatch() const
 {
@@ -1329,235 +1304,6 @@ QDataStream &operator>>(QDataStream &s, QFont &font)
     return s;
 }
 #endif // QT_NO_DATASTREAM
-
-/*****************************************************************************
-  QFontInfo member functions
- *****************************************************************************/
-
-/*!
-    \class QFontInfo
-    \reentrant
-
-    \brief The QFontInfo class provides general information about fonts.
-
-    \ingroup appearance
-    \ingroup shared
-
-    The QFontInfo class provides the same access functions as QFont,
-    e.g. family(), pointSize(), italic(), weight(), fixedPitch(),
-    etc. But whilst the QFont access functions return the values that
-    were set, a QFontInfo object returns the values that apply to
-    the font that will actually be used to draw the text.
-
-    For example, when the program asks for a 25pt FreeMono font on a
-    machine that has a non-scalable 24pt FreeMono font, QFont will
-    (normally) use the 24pt FreeMono for rendering. In this case,
-    QFont::pointSize() returns 25 and QFontInfo::pointSize() returns
-    24.
-
-    There are three ways to create a QFontInfo object.
-    \list 1
-    \o Calling the QFontInfo constructor with a QFont creates a font
-    info object for a screen-compatible font, i.e. the font cannot be
-    a printer font. If the font is changed later, the font
-    info object is \e not updated.
-
-    (Note: If you use a printer font the values returned may be
-    inaccurate. Printer fonts are not always accessible so the nearest
-    screen font is used if a printer font is supplied.)
-
-    \o QWidget::fontInfo() returns the font info for a widget's font.
-    This is equivalent to calling QFontInfo(widget->font()). If the
-    widget's font is changed later, the font info object is \e not
-    updated.
-
-    \o QPainter::fontInfo() returns the font info for a painter's
-    current font. If the painter's font is changed later, the font
-    info object is \e not updated.
-    \endlist
-
-    \sa QFont QFontMetrics QFontDatabase
-*/
-
-/*!
-    Constructs a font info object for \a font.
-
-    The font must be screen-compatible, i.e. a font you use when
-    drawing text in \link QWidget widgets\endlink or \link QPixmap
-    pixmaps\endlink, not QPrinter.
-
-    The font info object holds the information for the font that is
-    passed in the constructor at the time it is created, and is not
-    updated if the font's attributes are changed later.
-
-    Use QPainter::fontInfo() to get the font info when painting.
-    This will give correct results also when painting on paint device
-    that is not screen-compatible.
-*/
-QFontInfo::QFontInfo(const QFont &font)
-    : d(font.d.data())
-{
-}
-
-/*!
-    Constructs a copy of \a fi.
-*/
-QFontInfo::QFontInfo(const QFontInfo &fi)
-    : d(fi.d.data())
-{
-}
-
-/*!
-    Destroys the font info object.
-*/
-QFontInfo::~QFontInfo()
-{
-}
-
-/*!
-    Assigns the font info in \a fi.
-*/
-QFontInfo &QFontInfo::operator=(const QFontInfo &fi)
-{
-    d = fi.d.data();
-    return *this;
-}
-
-/*!
-    Returns the family name of the matched window system font.
-
-    \sa QFont::family()
-*/
-QString QFontInfo::family() const
-{
-    QFontEngine *engine = d->engineForScript(QUnicodeTables::Common);
-    Q_ASSERT(engine != 0);
-    return engine->fontDef.family;
-}
-
-/*!
-    \since 4.8
-
-    Returns the style name of the matched window system font on
-    system that supports it.
-
-    \sa QFont::styleName()
-*/
-QString QFontInfo::styleName() const
-{
-    QFontEngine *engine = d->engineForScript(QUnicodeTables::Common);
-    Q_ASSERT(engine != 0);
-    return engine->fontDef.styleName;
-}
-
-/*!
-    Returns the point size of the matched window system font.
-
-    \sa pointSizeF() QFont::pointSize()
-*/
-int QFontInfo::pointSize() const
-{
-    QFontEngine *engine = d->engineForScript(QUnicodeTables::Common);
-    Q_ASSERT(engine != 0);
-    return qRound(engine->fontDef.pointSize);
-}
-
-/*!
-    Returns the point size of the matched window system font.
-
-    \sa QFont::pointSizeF()
-*/
-qreal QFontInfo::pointSizeF() const
-{
-    QFontEngine *engine = d->engineForScript(QUnicodeTables::Common);
-    Q_ASSERT(engine != 0);
-    return engine->fontDef.pointSize;
-}
-
-/*!
-    Returns the pixel size of the matched window system font.
-
-    \sa QFont::pointSize()
-*/
-int QFontInfo::pixelSize() const
-{
-    QFontEngine *engine = d->engineForScript(QUnicodeTables::Common);
-    Q_ASSERT(engine != 0);
-    return engine->fontDef.pixelSize;
-}
-
-/*!
-    Returns the italic value of the matched window system font.
-
-    \sa QFont::italic()
-*/
-bool QFontInfo::italic() const
-{
-    QFontEngine *engine = d->engineForScript(QUnicodeTables::Common);
-    Q_ASSERT(engine != 0);
-    return engine->fontDef.style != QFont::StyleNormal;
-}
-
-/*!
-    Returns the style value of the matched window system font.
-
-    \sa QFont::style()
-*/
-QFont::Style QFontInfo::style() const
-{
-    QFontEngine *engine = d->engineForScript(QUnicodeTables::Common);
-    Q_ASSERT(engine != 0);
-    return engine->fontDef.style;
-}
-
-/*!
-    Returns the weight of the matched window system font.
-
-    \sa QFont::weight(), bold()
-*/
-int QFontInfo::weight() const
-{
-    QFontEngine *engine = d->engineForScript(QUnicodeTables::Common);
-    Q_ASSERT(engine != 0);
-    return engine->fontDef.weight;
-
-}
-
-/*!
-    \fn bool QFontInfo::bold() const
-
-    Returns true if weight() would return a value greater than
-    QFont::Normal; otherwise returns false.
-
-    \sa weight(), QFont::bold()
-*/
-
-/*!
-    Returns the fixed pitch value of the matched window system font.
-
-    \sa QFont::fixedPitch()
-*/
-bool QFontInfo::fixedPitch() const
-{
-    QFontEngine *engine = d->engineForScript(QUnicodeTables::Common);
-    Q_ASSERT(engine != 0);
-    return engine->fontDef.fixedPitch;
-}
-
-/*!
-    Returns true if the matched window system font is exactly the same
-    as the one specified by the font; otherwise returns false.
-
-    \sa QFont::exactMatch()
-*/
-bool QFontInfo::exactMatch() const
-{
-    QFontEngine *engine = d->engineForScript(QUnicodeTables::Common);
-    Q_ASSERT(engine != 0);
-    return d->request.exactMatch(engine->fontDef);
-}
-
-
 
 
 // **********************************************************************

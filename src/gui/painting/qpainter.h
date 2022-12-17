@@ -36,7 +36,6 @@
 QT_BEGIN_NAMESPACE
 
 class QBrush;
-class QFontInfo;
 class QFontMetrics;
 class QPaintDevice;
 class QPainterPath;
@@ -110,7 +109,6 @@ public:
     void setFont(const QFont &f);
 
     QFontMetrics fontMetrics() const;
-    QFontInfo fontInfo() const;
 
     void setPen(const QColor &color);
     void setPen(const QPen &pen);

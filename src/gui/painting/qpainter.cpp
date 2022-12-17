@@ -1532,24 +1532,6 @@ QFontMetrics QPainter::fontMetrics() const
     return QFontMetrics(d->state->font);
 }
 
-
-/*!
-    Returns the font info for the painter if the painter is
-    active. Otherwise, the return value is undefined.
-
-    \sa font(), isActive(), {QPainter#Settings}{Settings}
-*/
-
-QFontInfo QPainter::fontInfo() const
-{
-    Q_D(const QPainter);
-    if (Q_UNLIKELY(!d->engine)) {
-        qWarning("QPainter::fontInfo: Painter not active");
-        return QFontInfo(QFont());
-    }
-    return QFontInfo(d->state->font);
-}
-
 /*!
     \since 4.2
 

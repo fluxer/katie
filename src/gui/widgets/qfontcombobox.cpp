@@ -67,7 +67,8 @@ void QFontFamilyDelegate::paint(QPainter *painter,
 {
     QString text = index.data(Qt::DisplayRole).toString();
     QFont font(option.font);
-    font.setPointSize(QFontInfo(font).pointSize() * 3 / 2);
+    QFont systemfont = fdb.font(font.family(), font.styleName(), font.pointSize());
+    font.setPointSize(systemfont.pointSize() * 3 / 2);
     font.setFamily(text);
 
     QRect r = option.rect;
@@ -109,8 +110,9 @@ QSize QFontFamilyDelegate::sizeHint(const QStyleOptionViewItem &option,
 {
     QString text = index.data(Qt::DisplayRole).toString();
     QFont font(option.font);
-//     font.setFamily(text);
-    font.setPointSize(QFontInfo(font).pointSize() * 3/2);
+    // font.setFamily(text);
+    QFont systemfont = fdb.font(font.family(), font.styleName(), font.pointSize());
+    font.setPointSize(systemfont.pointSize() * 3/2);
     QFontMetrics fontMetrics(font);
     return QSize(fontMetrics.width(text), fontMetrics.height());
 }
@@ -146,7 +148,7 @@ void QFontComboBoxPrivate::_q_updateModel()
     QStringList result;
 
     int offset = 0;
-    QFontInfo fi(currentFont);
+    QFont sf = fdb.font(currentFont.family(), currentFont.styleName(), currentFont.pointSize());
 
     for (int i = 0; i < list.size(); ++i) {
         if ((filters & scalableMask) && (filters & scalableMask) != scalableMask) {
@@ -158,7 +160,7 @@ void QFontComboBoxPrivate::_q_updateModel()
                 continue;
         }
         result += list.at(i);
-        if (list.at(i) == fi.family() || list.at(i).startsWith(fi.family() + QLatin1String(" [")))
+        if (list.at(i) == sf.family() || list.at(i).startsWith(sf.family() + QLatin1String(" [")))
             offset = result.count() - 1;
     }
     list = result;
@@ -218,7 +220,7 @@ void QFontComboBoxPrivate::_q_currentChanged(const QString &text)
 
     \image windowsxp-fontcombobox.png Screenshot of QFontComboBox on Windows XP
 
-    \sa QComboBox, QFont, QFontInfo, QFontMetrics, QFontDatabase, {Character Map Example}
+    \sa QComboBox, QFont, QFontMetrics, QFontDatabase, {Character Map Example}
 */
 
 /*!

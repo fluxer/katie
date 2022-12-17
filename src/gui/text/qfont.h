@@ -142,7 +142,6 @@ public:
     void setHintingPreference(HintingPreference hintingPreference);
     HintingPreference hintingPreference() const;
 
-    // duplicated from QFontInfo
     bool exactMatch() const;
 
     QFont &operator=(const QFont &);
@@ -184,7 +183,6 @@ private:
     friend class QFontDialogPrivate;
     friend class QFontMetrics;
     friend class QFontMetricsF;
-    friend class QFontInfo;
     friend class QPainter;
     friend class QPainterPrivate;
     friend class QApplication;

@@ -170,7 +170,6 @@ classlist = [
     "QFontComboBox",
     "QFontDatabase",
     "QFontDialog",
-    "QFontInfo",
     "QFontMetrics",
     "QFontMetricsF",
     "QFormLayout",

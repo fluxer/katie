@@ -27,7 +27,6 @@
 #include "qapplication.h"
 #include "qunicodetables_p.h"
 #include "qfontengine_p.h"
-#include "qfontinfo.h"
 #include "qfontengine_ft_p.h"
 #include "qx11info_x11.h"
 
@@ -590,7 +589,7 @@ static inline QString styleStringHelper(const QString &family, int weight, QFont
     each combination of family and style, displaying this information
     in a tree view.
 
-    \sa QFont, QFontInfo, QFontMetrics, QFontComboBox, {Character Map Example}
+    \sa QFont, QFontMetrics, QFontComboBox, {Character Map Example}
 */
 
 /*!
@@ -640,26 +639,6 @@ QString QFontDatabase::styleString(const QFont &font) const
     }
     if (result.isEmpty()) {
         const QStringList fontstyles = styles(font.family());
-        if (!fontstyles.isEmpty()) {
-            result = fontstyles.first();
-        }
-    }
-    return result;
-}
-
-/*!
-    Returns a string that describes the style of the \a fontInfo. For
-    example, "Bold Italic", "Bold", "Italic" or "Regular". An empty
-    string may be returned.
-*/
-QString QFontDatabase::styleString(const QFontInfo &fontInfo) const
-{
-    QString result = fontInfo.styleName();
-    if (result.isEmpty()) {
-        result = styleStringHelper(fontInfo.family(), fontInfo.weight(), fontInfo.style());
-    }
-    if (result.isEmpty()) {
-        const QStringList fontstyles = styles(fontInfo.family());
         if (!fontstyles.isEmpty()) {
             result = fontstyles.first();
         }
@@ -1133,7 +1112,7 @@ QFontEngine* QFontDatabasePrivate::load(const QFontPrivate *d, int script)
     }
 
     QFontCache::Key key(req, script, d->screen);
-    // set it to the actual pointsize, so QFontInfo will do the right thing
+    // set it to the actual pointsize, so QFont will do the right thing
     if (req.pointSize < 0) {
         req.pointSize = qt_pointSize(req.pixelSize, d->dpi);
     }
