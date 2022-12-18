@@ -1498,13 +1498,14 @@ void tst_QCssParser::gradient()
 
 void tst_QCssParser::extractFontFamily_data()
 {
-    if (!QFontDatabase().hasFamily("FreeSerif"))
+    QFontDatabase fontdb;
+    if (!fontdb.hasFamily("FreeSerif"))
         QSKIP("'FreeSerif' font not found ", SkipAll);
 
     QTest::addColumn<QString>("css");
     QTest::addColumn<QString>("expectedFamily");
 
-    const QString invalidfamily = QFontDatabase().font("invalid font", "invalid style", 12).family();
+    const QString invalidfamily = fontdb.font("invalid font", "invalid style", 12).family();
     QTest::newRow("unquoted-family-name") << "font-family: FreeSerif" << QString("FreeSerif");
     QTest::newRow("quoted-family-name") << "font-family: 'FreeSerif'" << QString("FreeSerif");
     QTest::newRow("quoted-family-name2") << "font-family: \"FreeSerif\"" << QString("FreeSerif");
