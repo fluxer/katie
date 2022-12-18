@@ -29,7 +29,7 @@ QT_BEGIN_NAMESPACE
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 // generated via gentld.py
-static const char* TLDTbl[9463] = {
+static const char* TLDTbl[9466] = {
     "ac",
     "com.ac",
     "edu.ac",
@@ -6260,7 +6260,6 @@ static const char* TLDTbl[9463] = {
     "accountants",
     "aco",
     "actor",
-    "adac",
     "ads",
     "adult",
     "aeg",
@@ -7341,7 +7340,6 @@ static const char* TLDTbl[9463] = {
     "网络",
     "ком",
     "亚马逊",
-    "诺基亚",
     "食品",
     "飞利浦",
     "手机",
@@ -7404,6 +7402,7 @@ static const char* TLDTbl[9463] = {
     "graphox.us",
     "*.devcdnaccesso.com",
     "*.on-acorn.io",
+    "activetrail.biz",
     "adobeaemcloud.com",
     "*.dev.adobeaemcloud.com",
     "hlx.live",
@@ -7678,8 +7677,11 @@ static const char* TLDTbl[9463] = {
     "cloudcontrolled.com",
     "cloudcontrolapp.com",
     "*.cloudera.site",
-    "pages.dev",
+    "cf-ipfs.com",
+    "cloudflare-ipfs.com",
     "trycloudflare.com",
+    "pages.dev",
+    "r2.dev",
     "workers.dev",
     "wnext.app",
     "co.ca",
@@ -9297,6 +9299,8 @@ static const char* TLDTbl[9463] = {
     "vpnplus.to",
     "direct.quickconnect.to",
     "tabitorder.co.il",
+    "mytabit.co.il",
+    "mytabit.com",
     "taifun-dns.de",
     "beta.tailscale.net",
     "ts.net",
@@ -9330,7 +9334,6 @@ static const char* TLDTbl[9463] = {
     "pages.torproject.net",
     "bloxcms.com",
     "townnews-staging.com",
-    "tbits.me",
     "12hp.at",
     "2ix.at",
     "4lima.at",
@@ -9494,7 +9497,7 @@ static const char* TLDTbl[9463] = {
     "virtualserver.io",
     "enterprisecloud.nu",
 };
-static const qint16 TLDTblSize = 9463;
+static const qint16 TLDTblSize = 9466;
 
 static inline bool containsTLDEntry(const QString &entry)
 {
