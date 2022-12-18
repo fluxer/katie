@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 #-*- coding: UTF-8 -*-
 
-# Data is from https://unicode.org/Public/cldr/41/core.zip
+# Data is from https://unicode.org/Public/cldr/42/core.zip
 
 import os, sys, glob, re
 import xml.etree.ElementTree as ET

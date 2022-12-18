@@ -1474,9 +1474,9 @@ void tst_QLocale::dateFormat()
     QCOMPARE(nn.dateFormat(QLocale::ShortFormat), QLatin1String("dd.MM.yyyy"));
     QCOMPARE(nn.dateFormat(QLocale::LongFormat), QLatin1String("d. MMMM yyyy"));
 
-    const QLocale ca("en_CA");
-    QCOMPARE(ca.dateFormat(QLocale::ShortFormat), QLatin1String("yyyy-MM-dd"));
-    QCOMPARE(ca.dateFormat(QLocale::LongFormat), QLatin1String("MMMM d, yyyy"));
+    const QLocale wae("wae_CH");
+    QCOMPARE(wae.dateFormat(QLocale::ShortFormat), QLatin1String("yyyy-MM-dd"));
+    QCOMPARE(wae.dateFormat(QLocale::LongFormat), QLatin1String("d. MMMM yyyy"));
 
     const QLocale ja("ja_JP");
     QCOMPARE(ja.dateFormat(QLocale::ShortFormat), QLatin1String("yyyy/MM/dd"));
@@ -1493,9 +1493,9 @@ void tst_QLocale::timeFormat()
     QCOMPARE(nn.timeFormat(QLocale::ShortFormat), QLatin1String("HH:mm"));
     QCOMPARE(nn.timeFormat(QLocale::LongFormat), QLatin1String("HH:mm:ss Z"));
 
-    const QLocale en("en_FJ");
-    QCOMPARE(en.timeFormat(QLocale::ShortFormat), QLatin1String("h:mm AP"));
-    QCOMPARE(en.timeFormat(QLocale::LongFormat), QLatin1String("h:mm:ss AP Z"));
+    const QLocale hi("hi_Latn_IN");
+    QCOMPARE(hi.timeFormat(QLocale::ShortFormat), QLatin1String("h:mm AP"));
+    QCOMPARE(hi.timeFormat(QLocale::LongFormat), QLatin1String("h:mm:ss AP Z"));
 
     const QLocale cat("ca_ES");
     QCOMPARE(cat.timeFormat(QLocale::ShortFormat), QLatin1String("H:mm"));

@@ -83,7 +83,7 @@
     \note For the current keyboard input locale take a look at
     QApplication::keyboardInputLocale().
 
-    QLocale's data is based on Common Locale Data Repository v41.
+    QLocale's data is based on Common Locale Data Repository v42.
 
     The double-to-string and string-to-double conversion functions are
     covered by the following licenses:
@@ -300,7 +300,7 @@
     \value Frafra
     \value French
     \value Friulian
-    \value Fulah
+    \value Fula
     \value Ga
     \value Gagauz
     \value Galician
@@ -329,12 +329,14 @@
     \value HaitianCreole
     \value HakkaChinese
     \value Halkomelem
+    \value Haryanvi
     \value Hausa
     \value Hawaiian
     \value Hebrew
     \value Herero
     \value Hiligaynon
     \value Hindi
+    \value Hinglish
     \value HiriMotu
     \value Hittite
     \value Hmong
@@ -423,7 +425,6 @@
     \value Kwasio
     \value Kyrgyz
     \value Ladino
-    \value Lahnda
     \value Lakota
     \value Lamba
     \value Langi
@@ -472,7 +473,7 @@
     \value Malagasy
     \value Malay
     \value Malayalam
-    \value Malecite
+    \value MaliseetPassamaquoddy
     \value Maltese
     \value Manchu
     \value Mandar
@@ -561,6 +562,7 @@
     \value NyasaTonga
     \value Nyoro
     \value Nzima
+    \value Obolo
     \value Occitan
     \value Odia
     \value OjiCree
@@ -590,6 +592,7 @@
     \value Phoenician
     \value Picard
     \value Piedmontese
+    \value Pijin
     \value PlainsCree
     \value Plautdietsch
     \value Pohnpeian
@@ -616,8 +619,8 @@
     \value Russian
     \value Rusyn
     \value Rwa
+    \value Saamia
     \value Saho
-    \value Sakha
     \value SamaritanAramaic
     \value Samburu
     \value SamiInari
@@ -720,6 +723,7 @@
     \value Tlingit
     \value TokPisin
     \value TokelauLanguage
+    \value TokiPona
     \value Tongan
     \value TornedalenFinnish
     \value Torwali
@@ -774,12 +778,14 @@
     \value WesternFrisian
     \value WesternMari
     \value WesternOjibwa
+    \value WesternPanjabi
     \value Wolaytta
     \value Wolof
     \value WoodsCree
     \value WuChinese
     \value Xhosa
     \value XiangChinese
+    \value Yakut
     \value Yangben
     \value Yao
     \value Yapese
@@ -818,6 +824,7 @@
     \value Anguilla
     \value Antarctica
     \value AntiguaAndBarbuda
+    \value AotearoaNewZealand
     \value Argentina
     \value Armenia
     \value Aruba
@@ -1086,6 +1093,7 @@
     \value TristandaCunha
     \value Tunisia
     \value Turkey
+    \value Turkiye
     \value Turkmenistan
     \value TurksAndCaicosIslands
     \value Tuvalu
