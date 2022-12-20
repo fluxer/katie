@@ -34,7 +34,6 @@ QFileSystemWatcherEngineUnix::QFileSystemWatcherEngineUnix()
     : timer(this)
 {
     connect(&timer, SIGNAL(timeout()), this, SLOT(timeout()));
-    timer.start(PollingInterval);
 }
 
 QStringList QFileSystemWatcherEngineUnix::addPaths(const QStringList &paths,
@@ -96,11 +95,10 @@ void QFileSystemWatcherEngineUnix::timeout()
         if (x.value() != fi) {
             if (!fi.exists()) {
                 fit.remove();
-                emit fileChanged(path, true);
             } else {
                 x.value() = fi;
-                emit fileChanged(path, false);
             }
+            emit fileChanged(path);
         }
     }
     QMutableHashIterator<QString, QStatInfo> dit(directories);
@@ -113,11 +111,10 @@ void QFileSystemWatcherEngineUnix::timeout()
         if (!fi.dirEquals(x.value())) {
             if (!fi.exists()) {
                 dit.remove();
-                emit directoryChanged(path, true);
             } else {
                 x.value() = fi;
-                emit directoryChanged(path, false);
             }
+            emit directoryChanged(path);
         }
     }
 }

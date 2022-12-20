@@ -35,47 +35,6 @@ QFileSystemWatcherPrivate::QFileSystemWatcherPrivate()
 {
 }
 
-
-void QFileSystemWatcherPrivate::init()
-{
-    Q_Q(const QFileSystemWatcher);
-    QObject::connect(watcher,
-                     SIGNAL(fileChanged(QString,bool)),
-                     q,
-                     SLOT(_q_fileChanged(QString,bool)));
-    QObject::connect(watcher,
-                     SIGNAL(directoryChanged(QString,bool)),
-                     q,
-                     SLOT(_q_directoryChanged(QString,bool)));
-}
-
-
-void QFileSystemWatcherPrivate::_q_fileChanged(const QString &path, bool removed)
-{
-    Q_Q(QFileSystemWatcher);
-    if (!files.contains(path)) {
-        // the path was removed after a change was detected, but before we delivered the signal
-        return;
-    }
-    if (removed)
-        files.removeAll(path);
-    emit q->fileChanged(path);
-}
-
-void QFileSystemWatcherPrivate::_q_directoryChanged(const QString &path, bool removed)
-{
-    Q_Q(QFileSystemWatcher);
-    if (!directories.contains(path)) {
-        // perhaps the path was removed after a change was detected, but before we delivered the signal
-        return;
-    }
-    if (removed)
-        directories.removeAll(path);
-    emit q->directoryChanged(path);
-}
-
-
-
 /*!
     \class QFileSystemWatcher
     \brief The QFileSystemWatcher class provides an interface for monitoring files and directories for modifications.
@@ -111,7 +70,15 @@ void QFileSystemWatcherPrivate::_q_directoryChanged(const QString &path, bool re
 QFileSystemWatcher::QFileSystemWatcher(QObject *parent)
     : QObject(*new QFileSystemWatcherPrivate, parent)
 {
-    d_func()->init();
+    Q_D(QFileSystemWatcher);
+    connect(
+        d->watcher, SIGNAL(fileChanged(QString)),
+        this, SIGNAL(fileChanged(QString))
+    );
+    connect(
+        d->watcher, SIGNAL(directoryChanged(QString)),
+        this, SIGNAL(directoryChanged(QString))
+    );
 }
 
 /*!
@@ -121,7 +88,15 @@ QFileSystemWatcher::QFileSystemWatcher(QObject *parent)
 QFileSystemWatcher::QFileSystemWatcher(const QStringList &paths, QObject *parent)
     : QObject(*new QFileSystemWatcherPrivate, parent)
 {
-    d_func()->init();
+    Q_D(QFileSystemWatcher);
+    connect(
+        d->watcher, SIGNAL(fileChanged(QString)),
+        this, SIGNAL(fileChanged(QString))
+    );
+    connect(
+        d->watcher, SIGNAL(directoryChanged(QString)),
+        this, SIGNAL(directoryChanged(QString))
+    );
     addPaths(paths);
 }
 

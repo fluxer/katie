@@ -50,14 +50,9 @@ class QFileSystemWatcherPrivate : public QObjectPrivate
 
 public:
     QFileSystemWatcherPrivate();
-    void init();
 
     QFileSystemWatcherEngineUnix *watcher;
     QStringList files, directories;
-
-    // private slots
-    void _q_fileChanged(const QString &path, bool removed);
-    void _q_directoryChanged(const QString &path, bool removed);
 };
 
 QT_END_NAMESPACE

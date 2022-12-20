@@ -61,8 +61,8 @@ public:
     QStringList removePaths(const QStringList &paths, QStringList *files, QStringList *directories);
 
 Q_SIGNALS:
-    void fileChanged(const QString &path, bool removed);
-    void directoryChanged(const QString &path, bool removed);
+    void fileChanged(const QString &path);
+    void directoryChanged(const QString &path);
 
 private Q_SLOTS:
     void timeout();
