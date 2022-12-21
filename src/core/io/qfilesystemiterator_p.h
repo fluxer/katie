@@ -55,7 +55,6 @@ private:
 
     // Platform-specific data
     QT_DIR *dir;
-    QT_DIRENT *dirEntry;
 
     Q_DISABLE_COPY(QFileSystemIterator)
 };

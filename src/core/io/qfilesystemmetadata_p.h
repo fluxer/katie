@@ -157,7 +157,7 @@ public:
     inline uint groupId() const                   { return groupId_; }
 
     void fillFromStatBuf(const QT_STATBUF &statBuffer);
-    void fillFromDirEnt(const QT_DIRENT &direntBuffer, const QFileSystemEntry::NativePath &nativePath);
+    void fillFromDirEnt(const QT_DIRENT *direntBuffer, const QFileSystemEntry::NativePath &nativePath);
 
     static const uint nobodyID;
 

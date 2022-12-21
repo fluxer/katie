@@ -568,11 +568,12 @@ void QFileSystemMetaData::fillFromStatBuf(const QT_STATBUF &statBuffer)
     groupId_ = statBuffer.st_gid;
 }
 
-void QFileSystemMetaData::fillFromDirEnt(const QT_DIRENT &entry, const QFileSystemEntry::NativePath &nativePath)
+void QFileSystemMetaData::fillFromDirEnt(const QT_DIRENT *entry, const QFileSystemEntry::NativePath &nativePath)
 {
+    Q_ASSERT(entry);
     // ### This will clear all entry flags
 #ifdef QT_HAVE_DIRENT_D_TYPE
-    switch (entry.d_type) {
+    switch (entry->d_type) {
         case DT_DIR: {
             entryFlags = QFileSystemMetaData::DirectoryType
                 | QFileSystemMetaData::ExistsAttribute;
