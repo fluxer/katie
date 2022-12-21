@@ -47,7 +47,8 @@ bool QLibraryPrivate::load_sys()
         dlFlags |= RTLD_LOCAL;
     }
 
-    pHnd = ::dlopen(QFile::encodeName(fileName).constData(), dlFlags);
+    const QByteArray fileNameBytes = QFile::encodeName(fileName);
+    pHnd = ::dlopen(fileNameBytes.constData(), dlFlags);
     if (!pHnd) {
         errorString = QLibrary::tr("Cannot load library %1: %2").arg(fileName).arg(qdlerror());
     } else {
