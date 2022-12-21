@@ -40,29 +40,22 @@ Q_GLOBAL_STATIC(QStdVector<QFactoryLoader*>, qGlobalFactoryLoaders)
 class QFactoryLoaderPrivate
 {
 public:
-    QFactoryLoaderPrivate();
-    ~QFactoryLoaderPrivate();
+    QFactoryLoaderPrivate(const QString &suffix);
 
     QMutex mutex;
     QHash<QString,QPluginLoader*> pluginMap;
     QHash<QString,QString> keyMap;
-    QString suffix;
+    const QString suffix;
 };
 
-QFactoryLoaderPrivate::QFactoryLoaderPrivate()
-{
-}
-
-QFactoryLoaderPrivate::~QFactoryLoaderPrivate()
+QFactoryLoaderPrivate::QFactoryLoaderPrivate(const QString &asuffix)
+    : suffix(asuffix)
 {
 }
 
 QFactoryLoader::QFactoryLoader(const QString &suffix)
-    : d_ptr(new QFactoryLoaderPrivate())
+    : d_ptr(new QFactoryLoaderPrivate(suffix))
 {
-    Q_D(QFactoryLoader);
-    d->suffix = suffix;
-
     QMutexLocker locker(qGlobalFactoryLoaderMutex());
     update();
     qGlobalFactoryLoaders()->append(this);
