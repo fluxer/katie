@@ -25,14 +25,87 @@
 #ifndef QT_NO_FILESYSTEMWATCHER
 
 #include "qdebug.h"
-#include "qfilesystemwatcher_unix_p.h"
 
 QT_BEGIN_NAMESPACE
 
 
+enum { PollingInterval = 1000 };
+
 QFileSystemWatcherPrivate::QFileSystemWatcherPrivate()
-    : watcher(new QFileSystemWatcherEngineUnix())
+    : timer(q_ptr)
 {
+}
+
+QStringList QFileSystemWatcherPrivate::addPaths(const QStringList &paths)
+{
+    QStringList p = paths;
+    foreach (const QString &path, paths) {
+        QStatInfo fi(path, true);
+        if (fi.isDir() || path.endsWith(QLatin1Char('/'))) {
+            if (!path.endsWith(QLatin1Char('/')))
+                fi = QStatInfo(path + QLatin1Char('/'), true);
+            directories.insert(path, fi);
+        } else {
+            files.insert(path, fi);
+        }
+        p.removeAll(path);
+    }
+    if ((!files.isEmpty() || !directories.isEmpty()) && !timer.isActive()) {
+        timer.start(PollingInterval);
+    }
+    return p;
+}
+
+QStringList QFileSystemWatcherPrivate::removePaths(const QStringList &paths)
+{
+    QStringList p = paths;
+    foreach (const QString &path, paths) {
+        if (directories.remove(path)) {
+            p.removeAll(path);
+        } else if (files.remove(path)) {
+            p.removeAll(path);
+        }
+    }
+    if (files.isEmpty() && directories.isEmpty()) {
+        timer.stop();
+    }
+    return p;
+}
+
+void QFileSystemWatcherPrivate::_q_timeout()
+{
+    Q_Q(QFileSystemWatcher);
+
+    QMutableHashIterator<QString, QStatInfo> fit(files);
+    while (fit.hasNext()) {
+        QHash<QString, QStatInfo>::iterator x = fit.next();
+        QString path = x.key();
+        QStatInfo fi(path);
+        if (x.value() != fi) {
+            if (!fi.exists()) {
+                fit.remove();
+            } else {
+                x.value() = fi;
+            }
+            emit q->fileChanged(path);
+        }
+    }
+    QMutableHashIterator<QString, QStatInfo> dit(directories);
+    while (dit.hasNext()) {
+        QHash<QString, QStatInfo>::iterator x = dit.next();
+        QString path = x.key();
+        QStatInfo fi(path, true);
+        if (!path.endsWith(QLatin1Char('/')))
+            fi = QStatInfo(path + QLatin1Char('/'), true);
+        if (!fi.dirEquals(x.value())) {
+            if (!fi.exists()) {
+                dit.remove();
+            } else {
+                x.value() = fi;
+            }
+            emit q->directoryChanged(path);
+        }
+    }
 }
 
 /*!
@@ -71,14 +144,7 @@ QFileSystemWatcher::QFileSystemWatcher(QObject *parent)
     : QObject(*new QFileSystemWatcherPrivate, parent)
 {
     Q_D(QFileSystemWatcher);
-    connect(
-        d->watcher, SIGNAL(fileChanged(QString)),
-        this, SIGNAL(fileChanged(QString))
-    );
-    connect(
-        d->watcher, SIGNAL(directoryChanged(QString)),
-        this, SIGNAL(directoryChanged(QString))
-    );
+    connect(&d->timer, SIGNAL(timeout()), this, SLOT(_q_timeout()));
 }
 
 /*!
@@ -89,15 +155,8 @@ QFileSystemWatcher::QFileSystemWatcher(const QStringList &paths, QObject *parent
     : QObject(*new QFileSystemWatcherPrivate, parent)
 {
     Q_D(QFileSystemWatcher);
-    connect(
-        d->watcher, SIGNAL(fileChanged(QString)),
-        this, SIGNAL(fileChanged(QString))
-    );
-    connect(
-        d->watcher, SIGNAL(directoryChanged(QString)),
-        this, SIGNAL(directoryChanged(QString))
-    );
     addPaths(paths);
+    connect(&d->timer, SIGNAL(timeout()), this, SLOT(_q_timeout()));
 }
 
 /*!
@@ -106,10 +165,7 @@ QFileSystemWatcher::QFileSystemWatcher(const QStringList &paths, QObject *parent
 QFileSystemWatcher::~QFileSystemWatcher()
 {
     Q_D(QFileSystemWatcher);
-    if (d->watcher) {
-        delete d->watcher;
-        d->watcher = nullptr;
-    }
+    d->timer.stop();
 }
 
 /*!
@@ -157,10 +213,7 @@ void QFileSystemWatcher::addPaths(const QStringList &paths)
         return;
     }
 
-    QStringList p = paths;
-    if (Q_LIKELY(d->watcher))
-        p = d->watcher->addPaths(paths);
-
+    QStringList p = d->addPaths(paths);
     if (Q_UNLIKELY(!p.isEmpty())) {
         qWarning("QFileSystemWatcher: failed to add paths: %s",
                  qPrintable(p.join(QLatin1String(", "))));
@@ -193,8 +246,29 @@ void QFileSystemWatcher::removePaths(const QStringList &paths)
         return;
     }
     Q_D(QFileSystemWatcher);
-    if (Q_LIKELY(d->watcher))
-        d->watcher->removePaths(paths);
+    d->removePaths(paths);
+}
+
+/*!
+    Returns a list of paths to directories that are being watched.
+
+    \sa files()
+*/
+QStringList QFileSystemWatcher::directories() const
+{
+    Q_D(const QFileSystemWatcher);
+    return d->directories.keys();
+}
+
+/*!
+    Returns a list of paths to files that are being watched.
+
+    \sa directories()
+*/
+QStringList QFileSystemWatcher::files() const
+{
+    Q_D(const QFileSystemWatcher);
+    return d->files.keys();
 }
 
 /*!
@@ -218,34 +292,6 @@ void QFileSystemWatcher::removePaths(const QStringList &paths)
 
     \sa fileChanged()
 */
-
-/*!
-    \fn QStringList QFileSystemWatcher::directories() const
-
-    Returns a list of paths to directories that are being watched.
-
-    \sa files()
-*/
-
-/*!
-    \fn QStringList QFileSystemWatcher::files() const
-
-    Returns a list of paths to files that are being watched.
-
-    \sa directories()
-*/
-
-QStringList QFileSystemWatcher::directories() const
-{
-    Q_D(const QFileSystemWatcher);
-    return d->watcher->directories.keys();
-}
-
-QStringList QFileSystemWatcher::files() const
-{
-    Q_D(const QFileSystemWatcher);
-    return d->watcher->files.keys();
-}
 
 QT_END_NAMESPACE
 

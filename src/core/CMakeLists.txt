@@ -126,7 +126,6 @@ set(CORE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qstandardpaths.h
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemwatcher.h
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemwatcher_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemwatcher_unix_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystementry_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemengine_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemmetadata_p.h
@@ -243,7 +242,6 @@ set(CORE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qsettings.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qstandardpaths.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemwatcher.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemwatcher_unix.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystementry.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemengine_unix.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qprocess_unix.cpp

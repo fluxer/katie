@@ -53,6 +53,9 @@ public:
 Q_SIGNALS:
     void fileChanged(const QString &path);
     void directoryChanged(const QString &path);
+
+private:
+    Q_PRIVATE_SLOT(d_func(), void _q_timeout())
 };
 
 QT_END_NAMESPACE
