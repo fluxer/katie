@@ -137,7 +137,7 @@ static bool qt_unix_query(const QString &library, QLibraryPrivate *lib)
 {
     const QByteArray libpath = QFile::encodeName(library);
     const int libfd = qt_safe_open(libpath.constData(), QT_OPEN_RDONLY);
-    if (libfd == -1) {
+    if (Q_UNLIKELY(libfd == -1)) {
         const int savederrno = errno;
         lib->errorString = qt_error_string(savederrno);
         if (qt_debug_component()) {
