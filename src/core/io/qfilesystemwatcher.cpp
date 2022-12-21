@@ -159,7 +159,7 @@ void QFileSystemWatcher::addPaths(const QStringList &paths)
 
     QStringList p = paths;
     if (Q_LIKELY(d->watcher))
-        p = d->watcher->addPaths(paths, &d->files, &d->directories);
+        p = d->watcher->addPaths(paths);
 
     if (Q_UNLIKELY(!p.isEmpty())) {
         qWarning("QFileSystemWatcher: failed to add paths: %s",
@@ -194,7 +194,7 @@ void QFileSystemWatcher::removePaths(const QStringList &paths)
     }
     Q_D(QFileSystemWatcher);
     if (Q_LIKELY(d->watcher))
-        d->watcher->removePaths(paths, &d->files, &d->directories);
+        d->watcher->removePaths(paths);
 }
 
 /*!
@@ -238,13 +238,13 @@ void QFileSystemWatcher::removePaths(const QStringList &paths)
 QStringList QFileSystemWatcher::directories() const
 {
     Q_D(const QFileSystemWatcher);
-    return d->directories;
+    return d->watcher->directories.keys();
 }
 
 QStringList QFileSystemWatcher::files() const
 {
     Q_D(const QFileSystemWatcher);
-    return d->files;
+    return d->watcher->files.keys();
 }
 
 QT_END_NAMESPACE

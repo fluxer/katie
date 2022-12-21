@@ -52,7 +52,6 @@ public:
     QFileSystemWatcherPrivate();
 
     QFileSystemWatcherEngineUnix *watcher;
-    QStringList files, directories;
 };
 
 QT_END_NAMESPACE

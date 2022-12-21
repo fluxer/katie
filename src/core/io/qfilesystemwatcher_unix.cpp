@@ -36,50 +36,37 @@ QFileSystemWatcherEngineUnix::QFileSystemWatcherEngineUnix()
     connect(&timer, SIGNAL(timeout()), this, SLOT(timeout()));
 }
 
-QStringList QFileSystemWatcherEngineUnix::addPaths(const QStringList &paths,
-                                                      QStringList *files,
-                                                      QStringList *directories)
+QStringList QFileSystemWatcherEngineUnix::addPaths(const QStringList &paths)
 {
     QStringList p = paths;
     foreach (const QString &path, paths) {
         QStatInfo fi(path, true);
         if (fi.isDir() || path.endsWith(QLatin1Char('/'))) {
-            if (!directories->contains(path))
-                directories->append(path);
             if (!path.endsWith(QLatin1Char('/')))
                 fi = QStatInfo(path + QLatin1Char('/'), true);
-            this->directories.insert(path, fi);
+            directories.insert(path, fi);
         } else {
-            if (!files->contains(path))
-                files->append(path);
-            this->files.insert(path, fi);
+            files.insert(path, fi);
         }
         p.removeAll(path);
     }
-    if ((!this->files.isEmpty() ||
-         !this->directories.isEmpty()) &&
-        !timer.isActive()) {
+    if ((!files.isEmpty() || !directories.isEmpty()) && !timer.isActive()) {
         timer.start(PollingInterval);
     }
     return p;
 }
 
-QStringList QFileSystemWatcherEngineUnix::removePaths(const QStringList &paths,
-                                                         QStringList *files,
-                                                         QStringList *directories)
+QStringList QFileSystemWatcherEngineUnix::removePaths(const QStringList &paths)
 {
     QStringList p = paths;
     foreach (const QString &path, paths) {
-        if (this->directories.remove(path)) {
-            directories->removeAll(path);
+        if (directories.remove(path)) {
             p.removeAll(path);
-        } else if (this->files.remove(path)) {
-            files->removeAll(path);
+        } else if (files.remove(path)) {
             p.removeAll(path);
         }
     }
-    if (this->files.isEmpty() &&
-        this->directories.isEmpty()) {
+    if (files.isEmpty() && directories.isEmpty()) {
         timer.stop();
     }
     return p;

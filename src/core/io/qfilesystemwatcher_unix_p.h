@@ -52,13 +52,13 @@ class QFileSystemWatcherEngineUnix : public QObject
 {
     Q_OBJECT
 
-    QHash<QString, QStatInfo> files, directories;
-
 public:
     QFileSystemWatcherEngineUnix();
 
-    QStringList addPaths(const QStringList &paths, QStringList *files, QStringList *directories);
-    QStringList removePaths(const QStringList &paths, QStringList *files, QStringList *directories);
+    QStringList addPaths(const QStringList &paths);
+    QStringList removePaths(const QStringList &paths);
+
+    QHash<QString, QStatInfo> files, directories;
 
 Q_SIGNALS:
     void fileChanged(const QString &path);

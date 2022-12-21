@@ -446,11 +446,11 @@ void tst_QFileSystemWatcher::nonExistingFileAndDirectory()
 {
     // Don't crash and watch for its creation
     const QStringList nonexistingfiles = QStringList()
-        << "file_that_does_not_exist.txt"
-        << "foo/bar.txt";
+        << "foo/bar.txt"
+        << "file_that_does_not_exist.txt";
     const QStringList nonexistingdirs = QStringList()
-        << "dir_that_does_not_exist/"
-        << "dir_foo/dir_bar/";
+        << "dir_foo/dir_bar/"
+        << "dir_that_does_not_exist/";
     QFileSystemWatcher watcher;
     watcher.addPaths(nonexistingfiles);
     watcher.addPaths(nonexistingdirs);
