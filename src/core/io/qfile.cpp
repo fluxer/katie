@@ -485,7 +485,6 @@ QString QFile::readLink() const
 }
 
 /*!
-    \fn static QString QFile::readLink(const QString &fileName)
     \since 4.2
 
     Returns the absolute path of the file or directory referred to by the
@@ -497,6 +496,7 @@ QString QFile::readLink() const
 */
 QString QFile::readLink(const QString &fileName)
 {
+    // ###: static QFileSystemEngine method for this
     return QFileInfo(fileName).readLink();
 }
 
@@ -542,7 +542,8 @@ bool QFile::remove()
 */
 bool QFile::remove(const QString &fileName)
 {
-    return QFile(fileName).remove();
+    int error = 0;
+    return QFileSystemEngine::removeFile(QFileSystemEntry(fileName), &error);
 }
 
 /*!
@@ -564,7 +565,7 @@ bool QFile::rename(const QString &newName)
         return false;
     }
 #ifndef QT_HAVE_RENAMEAT2
-    if (QFile(newName).exists()) {
+    if (QFile::exists(newName)) {
         // ### Race condition. If a file is moved in after this, it /will/ be
         // overwritten. On Unix, the proper solution is to use hardlinks:
         // return ::link(old, new) && ::remove(old);
@@ -607,7 +608,13 @@ bool QFile::rename(const QString &newName)
 */
 bool QFile::rename(const QString &oldName, const QString &newName)
 {
-    return QFile(oldName).rename(newName);
+#ifndef QT_HAVE_RENAMEAT2
+    if (QFile::exists(newName)) {
+        return false;
+    }
+#endif
+    int error = 0;
+    return QFileSystemEngine::renameFile(QFileSystemEntry(oldName), QFileSystemEntry(newName), &error);
 }
 
 /*!
@@ -655,7 +662,8 @@ bool QFile::link(const QString &linkName)
 */
 bool QFile::link(const QString &fileName, const QString &linkName)
 {
-    return QFile(fileName).link(linkName);
+    int error = 0;
+    return QFileSystemEngine::createLink(QFileSystemEntry(fileName), QFileSystemEntry(linkName), &error);
 }
 
 /*!
@@ -703,7 +711,8 @@ bool QFile::copy(const QString &newName)
 */
 bool QFile::copy(const QString &fileName, const QString &newName)
 {
-    return QFile(fileName).copy(newName);
+    int error = 0;
+    return QFileSystemEngine::copyFile(QFileSystemEntry(fileName), QFileSystemEntry(newName), &error);
 }
 
 /*!
@@ -966,22 +975,23 @@ bool QFile::open(int fd, OpenMode mode, FileHandleFlags handleFlags)
 
 
 /*!
-  Returns the file handle of the file.
+    Returns the file handle of the file.
 
-  This is a small positive integer, suitable for use with C library
-  functions such as fdopen() and fcntl(). On systems that use file
-  descriptors for sockets (i.e. Unix systems, but not Windows) the handle
-  can be used with QSocketNotifier as well.
+    This is a small positive integer, suitable for use with C library
+    functions such as fdopen() and fcntl(). On systems that use file
+    descriptors for sockets (i.e. Unix systems, but not Windows) the handle
+    can be used with QSocketNotifier as well.
 
-  If the file is not open, or there is an error, handle() returns -1.
+    If the file is not open, or there is an error, handle() returns -1.
 
-  \sa QSocketNotifier
+    \sa QSocketNotifier
 */
 int QFile::handle() const
 {
     Q_D(const QFile);
-    if (!isOpen())
+    if (!isOpen()) {
         return -1;
+    }
 
     return d->fd;
 }
@@ -1040,6 +1050,7 @@ bool QFile::resize(qint64 sz)
 */
 bool QFile::resize(const QString &fileName, qint64 sz)
 {
+    // ###: static QFileSystemEngine method for this
     return QFile(fileName).resize(sz);
 }
 
@@ -1066,6 +1077,7 @@ QFile::Permissions QFile::permissions() const
 */
 QFile::Permissions QFile::permissions(const QString &fileName)
 {
+    // ###: static QFileSystemEngine method for this
     return QFile(fileName).permissions();
 }
 
@@ -1080,7 +1092,7 @@ bool QFile::setPermissions(Permissions permissions)
 {
     Q_D(QFile);
     int error = 0;
-    if (!QFileSystemEngine::setPermissions(d->fileEntry, QFile::Permissions(permissions), &error)) {
+    if (!QFileSystemEngine::setPermissions(d->fileEntry, permissions, &error)) {
         d->setError(QFile::PermissionsError, qt_error_string(error));
         return false;
     }
@@ -1095,7 +1107,8 @@ bool QFile::setPermissions(Permissions permissions)
 */
 bool QFile::setPermissions(const QString &fileName, Permissions permissions)
 {
-    return QFile(fileName).setPermissions(permissions);
+    int error = 0;
+    return QFileSystemEngine::setPermissions(QFileSystemEntry(fileName), permissions, &error);
 }
 
 /*!
