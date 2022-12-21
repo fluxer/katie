@@ -136,18 +136,20 @@ QT_BEGIN_NAMESPACE
 */
 static bool qt_unix_query(const QString &library, QLibraryPrivate *lib)
 {
-    QFile file(library);
-    if (!file.open(QIODevice::ReadOnly)) {
-        lib->errorString = file.errorString();
+    const QByteArray libpath = QFile::encodeName(library);
+    const int libfd = qt_safe_open(libpath.constData(), QT_OPEN_RDONLY);
+    if (libfd == -1) {
+        const int savederrno = errno;
+        lib->errorString = qt_error_string(savederrno);
         if (qt_debug_component()) {
-            qWarning("%s: %s", QFile::encodeName(library).data(),
-                qPrintable(lib->errorString));
+            qWarning("%s: %s", libpath.constData(), qPrintable(lib->errorString));
         }
         return false;
     }
 
     QSTACKARRAY(char, elfheader, EI_CLASS + 1);
-    const qint64 elfread = file.read(elfheader, EI_CLASS + 1);
+    const qint64 elfread = qt_safe_read(libfd, elfheader, EI_CLASS + 1);
+    qt_safe_close(libfd);
 
     // basic ELF checks to avoid crashing
     if (elfread < (EI_CLASS + 1) || ::memcmp(elfheader, ELFMAG, SELFMAG) != 0) {
