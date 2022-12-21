@@ -318,6 +318,7 @@ QFile::QFile(QObject *parent)
     : QIODevice(*new QFilePrivate, parent)
 {
 }
+
 /*!
     Constructs a new file object to represent the file with the given \a name.
 */
@@ -327,6 +328,7 @@ QFile::QFile(const QString &name)
     Q_D(QFile);
     d->fileEntry = QFileSystemEntry(name);
 }
+
 /*!
     Constructs a new file object with the given \a parent to represent the
     file with the specified \a name.
@@ -337,6 +339,7 @@ QFile::QFile(const QString &name, QObject *parent)
     Q_D(QFile);
     d->fileEntry = QFileSystemEntry(name);
 }
+
 /*!
     \internal
 */
@@ -396,15 +399,6 @@ void QFile::setFileName(const QString &name)
 }
 
 /*!
-    \fn QString QFile::decodeName(const char *localFileName)
-
-    \overload
-
-    Returns the Unicode version of the given \a localFileName. See
-    encodeName() for details.
-*/
-
-/*!
     This function converts \a fileName to the local 8-bit encoding
     determined by the user's locale. This is sufficient forfile names
     that the user chooses. File names hard-coded into the
@@ -423,11 +417,19 @@ QByteArray QFile::encodeName(const QString &fileName)
 
     \sa setDecodingFunction(), encodeName()
 */
-
 QString QFile::decodeName(const QByteArray &localFileName)
 {
     return QString::fromLocal8Bit(localFileName.constData());
 }
+
+/*!
+    \fn QString QFile::decodeName(const char *localFileName)
+
+    \overload
+
+    Returns the Unicode version of the given \a localFileName. See
+    encodeName() for details.
+*/
 
 /*!
     \overload
@@ -437,7 +439,6 @@ QString QFile::decodeName(const QByteArray &localFileName)
 
     \sa fileName(), setFileName()
 */
-
 bool QFile::exists() const
 {
     Q_D(const QFile);
@@ -451,7 +452,6 @@ bool QFile::exists() const
     Returns true if the file specified by \a fileName exists; otherwise
     returns false.
 */
-
 bool QFile::exists(const QString &fileName)
 {
     QFileInfo info(fileName);
@@ -472,7 +472,6 @@ bool QFile::exists(const QString &fileName)
 
     \sa fileName() setFileName()
 */
-
 QString QFile::readLink() const
 {
     Q_D(const QFile);
@@ -496,7 +495,6 @@ QString QFile::readLink() const
     This name may not represent an existing file; it is only a string.
     QFile::exists() returns true if the symlink points to an existing file.
 */
-
 QString QFile::readLink(const QString &fileName)
 {
     return QFileInfo(fileName).readLink();
@@ -510,7 +508,6 @@ QString QFile::readLink(const QString &fileName)
 
     \sa setFileName()
 */
-
 bool QFile::remove()
 {
     Q_D(QFile);
@@ -543,9 +540,7 @@ bool QFile::remove()
 
     \sa remove()
 */
-
-bool
-QFile::remove(const QString &fileName)
+bool QFile::remove(const QString &fileName)
 {
     return QFile(fileName).remove();
 }
@@ -561,9 +556,7 @@ QFile::remove(const QString &fileName)
 
     \sa setFileName()
 */
-
-bool
-QFile::rename(const QString &newName)
+bool QFile::rename(const QString &newName)
 {
     Q_D(QFile);
     if (Q_UNLIKELY(d->fileEntry.isEmpty())) {
@@ -612,9 +605,7 @@ QFile::rename(const QString &newName)
 
     \sa rename()
 */
-
-bool
-QFile::rename(const QString &oldName, const QString &newName)
+bool QFile::rename(const QString &oldName, const QString &newName)
 {
     return QFile(oldName).rename(newName);
 }
@@ -634,7 +625,6 @@ QFile::rename(const QString &oldName, const QString &newName)
 
     \sa setFileName()
 */
-
 bool QFile::link(const QString &linkName)
 {
     Q_D(QFile);
@@ -663,9 +653,7 @@ bool QFile::link(const QString &linkName)
 
     \sa link()
 */
-
-bool
-QFile::link(const QString &fileName, const QString &linkName)
+bool QFile::link(const QString &fileName, const QString &linkName)
 {
     return QFile(fileName).link(linkName);
 }
@@ -681,9 +669,7 @@ QFile::link(const QString &fileName, const QString &linkName)
 
     \sa setFileName()
 */
-
-bool
-QFile::copy(const QString &newName)
+bool QFile::copy(const QString &newName)
 {
     Q_D(QFile);
     if (Q_UNLIKELY(d->fileEntry.isEmpty())) {
@@ -715,9 +701,7 @@ QFile::copy(const QString &newName)
 
     \sa rename()
 */
-
-bool
-QFile::copy(const QString &fileName, const QString &newName)
+bool QFile::copy(const QString &fileName, const QString &newName)
 {
     return QFile(fileName).copy(newName);
 }
@@ -993,7 +977,6 @@ bool QFile::open(int fd, OpenMode mode, FileHandleFlags handleFlags)
 
   \sa QSocketNotifier
 */
-
 int QFile::handle() const
 {
     Q_D(const QFile);
@@ -1023,7 +1006,6 @@ int QFile::handle() const
 
     \sa size(), setFileName()
 */
-
 bool QFile::resize(qint64 sz)
 {
     Q_D(QFile);
@@ -1056,7 +1038,6 @@ bool QFile::resize(qint64 sz)
 
     \sa resize()
 */
-
 bool QFile::resize(const QString &fileName, qint64 sz)
 {
     return QFile(fileName).resize(sz);
@@ -1068,7 +1049,6 @@ bool QFile::resize(const QString &fileName, qint64 sz)
 
     \sa setPermissions(), setFileName()
 */
-
 QFile::Permissions QFile::permissions() const
 {
     Q_D(const QFile);
@@ -1084,7 +1064,6 @@ QFile::Permissions QFile::permissions() const
     Returns the complete OR-ed together combination of
     QFile::Permission for \a fileName.
 */
-
 QFile::Permissions QFile::permissions(const QString &fileName)
 {
     return QFile(fileName).permissions();
@@ -1097,7 +1076,6 @@ QFile::Permissions QFile::permissions(const QString &fileName)
 
     \sa permissions(), setFileName()
 */
-
 bool QFile::setPermissions(Permissions permissions)
 {
     Q_D(QFile);
@@ -1115,7 +1093,6 @@ bool QFile::setPermissions(Permissions permissions)
 
     Sets the permissions for \a fileName file to \a permissions.
 */
-
 bool QFile::setPermissions(const QString &fileName, Permissions permissions)
 {
     return QFile(fileName).setPermissions(permissions);
@@ -1125,7 +1102,6 @@ bool QFile::setPermissions(const QString &fileName, Permissions permissions)
     Flushes any buffered data to the file. Returns true if successful;
     otherwise returns false.
 */
-
 bool QFile::flush()
 {
     Q_D(QFile);
@@ -1201,19 +1177,17 @@ qint64 QFile::size() const
     0. Therefore, you should not depend on atEnd() when reading data from such a
     file, but rather call read() until no more data can be read.
 */
-
 bool QFile::atEnd() const
 {
-    if (!isOpen())
+    if (!isOpen()) {
         return true;
+    }
 
     // Check how much is available (will re-stat file).
     return bytesAvailable() == 0;
 }
 
 /*!
-    \fn bool QFile::seek(qint64 pos)
-
     For random-access devices, this function sets the current position
     to \a pos, returning true on success, or false if an error occurred.
     For sequential devices, the default behavior is to do nothing and
@@ -1226,7 +1200,6 @@ bool QFile::atEnd() const
     previous end of file and the newly written data is UNDEFINED and
     varies between platforms and file systems.
 */
-
 bool QFile::seek(qint64 off)
 {
     Q_D(QFile);
@@ -1258,7 +1231,7 @@ bool QFile::seek(qint64 off)
 }
 
 /*!
-  \reimp
+    \reimp
 */
 qint64 QFile::readLineData(char *data, qint64 maxlen)
 {
@@ -1283,7 +1256,7 @@ qint64 QFile::readLineData(char *data, qint64 maxlen)
 }
 
 /*!
-  \reimp
+    \reimp
 */
 qint64 QFile::readData(char *data, qint64 len)
 {
@@ -1317,7 +1290,7 @@ qint64 QFile::readData(char *data, qint64 len)
 }
 
 /*!
-  \reimp
+    \reimp
 */
 qint64 QFile::writeData(const char *data, qint64 len)
 {
@@ -1358,7 +1331,6 @@ qint64 QFile::writeData(const char *data, qint64 len)
 
     \sa errorString(), unsetError()
 */
-
 QFile::FileError QFile::error() const
 {
     Q_D(const QFile);
@@ -1372,7 +1344,6 @@ QFile::FileError QFile::error() const
 
     \sa error(), unsetError()
 */
-
 QString QFile::errorString() const
 {
     Q_D(const QFile);
