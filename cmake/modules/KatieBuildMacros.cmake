@@ -29,9 +29,6 @@ endfunction()
 
 # a function to check for C function/definition, works for external functions
 function(KATIE_CHECK_DEFINED FORDEFINITION FROMHEADER)
-    # see comment in top-level CMake file
-    set(CMAKE_REQUIRED_INCLUDES /usr/X11R6/include /usr/X11R7/include /usr/pkg/include /usr/local/include /usr/include)
-    set(CMAKE_REQUIRED_LINK_OPTIONS -L/usr/X11R6/lib -L/usr/X11R7/lib -L/usr/pkg/lib -L/usr/local/lib -L/usr/lib -L/lib)
     check_cxx_source_compiles(
         "
 #include <stdio.h>
