@@ -140,7 +140,7 @@ bool QPngHandler::read(QImage *image)
     int bit_depth;
     int color_type;
     png_get_IHDR(png_ptr, info_ptr, &width, &height, &bit_depth, &color_type, 0, 0, 0);
-    png_set_interlace_handling(png_ptr);
+    const int passes = png_set_interlace_handling(png_ptr);
 
     if (bit_depth == 16) {
         png_set_strip_16(png_ptr);
@@ -181,8 +181,10 @@ bool QPngHandler::read(QImage *image)
 
     uchar *data = image->d->data;
     const int bpl = image->bytesPerLine();
-    for (uint y = 0; y < height; y++) {
-        png_read_row(png_ptr, QFAST_SCAN_LINE(data, bpl, y), NULL);
+    for (int p = 0; p < passes; p++) {
+        for (uint y = 0; y < height; y++) {
+            png_read_row(png_ptr, QFAST_SCAN_LINE(data, bpl, y), NULL);
+        }
     }
 
     image->d->dpmx = png_get_x_pixels_per_meter(png_ptr, info_ptr);
