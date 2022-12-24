@@ -270,30 +270,6 @@ function(KATIE_SETUP_PLUGIN FORPLUGIN)
     add_dependencies(plugins_dependant_tests ${FORPLUGIN})
 endfunction()
 
-# a macro to ensure that object targets are build with PIC if the target they
-# are going to be used in (like $<TARGET_OBJECTS:foo>) is build with PIC or
-# PIC has been enabled for all module/library/executable targets. in addition
-# the macro will add the object include directories and definitions to the
-# target properties
-macro(KATIE_SETUP_OBJECT FORTARGET)
-    get_target_property(target_pic ${FORTARGET} POSITION_INDEPENDENT_CODE)
-
-    foreach(objtarget ${ARGN})
-        if(CMAKE_POSITION_INDEPENDENT_CODE OR target_pic)
-            set_target_properties(${objtarget} PROPERTIES
-                POSITION_INDEPENDENT_CODE TRUE
-            )
-        endif()
-
-        get_target_property(object_definitions ${objtarget} COMPILE_DEFINITIONS)
-        get_target_property(object_includes ${objtarget} INCLUDE_DIRECTORIES)
-        if(object_definitions)
-            target_compile_definitions(${FORTARGET} PRIVATE ${object_definitions})
-        endif()
-        target_include_directories(${FORTARGET} PRIVATE ${object_includes})
-    endforeach()
-endmacro()
-
 # a macro to remove conditional code from headers which is only relevant to the
 # process of building Katie itself
 macro(KATIE_OPTIMIZE_HEADERS DIR)
