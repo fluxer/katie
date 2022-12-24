@@ -58,7 +58,6 @@ public:
         Size,
         ScaledSize,
         CompressionLevel,
-        Gamma,
         Quality,
         Animation,
         BackgroundColor

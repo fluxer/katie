@@ -62,9 +62,6 @@ public:
     void setCompression(int compression);
     int compression() const;
 
-    void setGamma(float gamma);
-    float gamma() const;
-
     bool canWrite() const;
     bool write(const QImage &image);
 

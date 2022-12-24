@@ -75,10 +75,6 @@
     compression level depending on the value of this option (an int)
     when writing. The value is usually in the 0-9 range.
 
-    \value Gamma The gamma level of the image. A handler that supports
-    this option is expected to set the image gamma level depending on
-    the value of this option (a float) when writing.
-
     \value Quality The quality level of the image. A handler that
     supports this option is expected to set the image quality level
     depending on the value of this option (an int) when writing.

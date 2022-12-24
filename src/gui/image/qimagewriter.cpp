@@ -29,18 +29,17 @@
     \ingroup io
 
     QImageWriter supports setting format specific options, such as the
-    gamma level, compression level and quality, prior to storing the
-    image. If you do not need such options, you can use QImage::save()
-    or QPixmap::save() instead.
+    compression level and quality, prior to storing the image. If you
+    do not need such options, you can use QImage::save() or
+    QPixmap::save() instead.
 
     To store an image, you start by constructing a QImageWriter
     object.  Pass either a file name or a device pointer, and the
     image format to QImageWriter's constructor. You can then set
-    several options, such as the gamma level (by calling setGamma())
-    and quality (by calling setQuality()). canWrite() returns true if
-    QImageWriter can write the image (i.e., the image format is
-    supported and the device is open for writing). Call write() to
-    write the image to the device.
+    several options, such as the quality (by calling setQuality()).
+    canWrite() returns true if QImageWriter can write the image (i.e.,
+    the image format is supported and the device is open for writing).
+    Call write() to write the image to the device.
 
     If any error occurs when writing the image, write() will return
     false. You can then call error() to find the type of error that
@@ -146,7 +145,6 @@ public:
     // image options
     int quality;
     int compression;
-    float gamma;
 
     // error
     QImageWriter::ImageWriterError imageWriterError;
@@ -161,7 +159,6 @@ QImageWriterPrivate::QImageWriterPrivate()
     handler(nullptr),
     quality(-1),
     compression(1),
-    gamma(0.0),
     imageWriterError(QImageWriter::UnknownError)
 {
 }
@@ -363,31 +360,6 @@ int QImageWriter::compression() const
 }
 
 /*!
-    This is an image format specific function that sets the gamma
-    level of the image to \a gamma. For image formats that do not
-    support setting the gamma level, this value is ignored.
-
-    The value range of \a gamma depends on the image format. For
-    example, the "png" format supports a gamma range from 0.0 to 1.0.
-
-    \sa quality()
-*/
-void QImageWriter::setGamma(float gamma)
-{
-    d->gamma = gamma;
-}
-
-/*!
-    Returns the gamma level of the image.
-
-    \sa setGamma()
-*/
-float QImageWriter::gamma() const
-{
-    return d->gamma;
-}
-
-/*!
     Returns true if QImageWriter can write the image; i.e., the image
     format is supported and the assigned device is open for reading.
 
@@ -426,8 +398,6 @@ bool QImageWriter::write(const QImage &image)
         d->handler->setOption(QImageIOHandler::Quality, d->quality);
     if (d->handler->supportsOption(QImageIOHandler::CompressionLevel))
         d->handler->setOption(QImageIOHandler::CompressionLevel, d->compression);
-    if (d->handler->supportsOption(QImageIOHandler::Gamma))
-        d->handler->setOption(QImageIOHandler::Gamma, d->gamma);
 
     if (!d->handler->write(image))
         return false;
