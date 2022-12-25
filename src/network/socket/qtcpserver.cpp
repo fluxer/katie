@@ -102,11 +102,7 @@ public:
     quint16 port;
     QHostAddress address;
 
-    QAbstractSocket::SocketState state;
     QAbstractSocketEngine *socketEngine;
-
-    QAbstractSocket::SocketError serverSocketError;
-    QString serverSocketErrorString;
 
     int maxConnections;
 
@@ -121,9 +117,7 @@ public:
 */
 QTcpServerPrivate::QTcpServerPrivate()
     : port(0),
-    state(QAbstractSocket::UnconnectedState),
     socketEngine(nullptr),
-    serverSocketError(QAbstractSocket::UnknownSocketError),
     maxConnections(30)
 {
 }
@@ -203,7 +197,7 @@ QTcpServer::~QTcpServer()
 bool QTcpServer::listen(const QHostAddress &address, quint16 port)
 {
     Q_D(QTcpServer);
-    if (Q_UNLIKELY(d->state == QAbstractSocket::ListeningState)) {
+    if (Q_UNLIKELY(isListening())) {
         qWarning("QTcpServer::listen() called when already listening");
         return false;
     }
@@ -211,8 +205,6 @@ bool QTcpServer::listen(const QHostAddress &address, quint16 port)
     delete d->socketEngine;
     d->socketEngine = new QAbstractSocketEngine(this);
     if (!d->socketEngine->initialize(QAbstractSocket::TcpSocket, address.protocol())) {
-        d->serverSocketError = d->socketEngine->error();
-        d->serverSocketErrorString = d->socketEngine->errorString();
         return false;
     }
 
@@ -227,21 +219,16 @@ bool QTcpServer::listen(const QHostAddress &address, quint16 port)
     d->socketEngine->setOption(QAbstractSocketEngine::AddressReusable, 1);
 
     if (!d->socketEngine->bind(address, port)) {
-        d->serverSocketError = d->socketEngine->error();
-        d->serverSocketErrorString = d->socketEngine->errorString();
         return false;
     }
 
     if (!d->socketEngine->listen()) {
-        d->serverSocketError = d->socketEngine->error();
-        d->serverSocketErrorString = d->socketEngine->errorString();
         return false;
     }
 
     d->socketEngine->setReceiver(d);
     d->socketEngine->setReadNotificationEnabled(true);
 
-    d->state = QAbstractSocket::ListeningState;
     d->address = d->socketEngine->localAddress();
     d->port = d->socketEngine->localPort();
 
@@ -283,8 +270,6 @@ void QTcpServer::close()
         d->socketEngine->deleteLater();
         d->socketEngine = 0;
     }
-
-    d->state = QAbstractSocket::UnconnectedState;
 }
 
 /*!
@@ -320,11 +305,9 @@ bool QTcpServer::setSocketDescriptor(int socketDescriptor)
     delete d->socketEngine;
     d->socketEngine = new QAbstractSocketEngine(this);
     if (!d->socketEngine->initialize(socketDescriptor, QAbstractSocket::ListeningState)) {
-        d->serverSocketError = d->socketEngine->error();
-        d->serverSocketErrorString = d->socketEngine->errorString();
 #if defined (QTCPSERVER_DEBUG)
         qDebug("QTcpServer::setSocketDescriptor(%i) failed (%s)", socketDescriptor,
-               d->serverSocketErrorString.toLatin1().constData());
+               d->socketEngine->errorString().toLatin1().constData());
 #endif
         return false;
     }
@@ -332,7 +315,6 @@ bool QTcpServer::setSocketDescriptor(int socketDescriptor)
     d->socketEngine->setReceiver(d);
     d->socketEngine->setReadNotificationEnabled(true);
 
-    d->state = d->socketEngine->state();
     d->address = d->socketEngine->localAddress();
     d->port = d->socketEngine->localPort();
 
@@ -390,12 +372,10 @@ QHostAddress QTcpServer::serverAddress() const
 bool QTcpServer::waitForNewConnection(int msec, bool *timedOut)
 {
     Q_D(QTcpServer);
-    if (d->state != QAbstractSocket::ListeningState)
+    if (!isListening())
         return false;
 
     if (!d->socketEngine->waitForRead(msec, timedOut)) {
-        d->serverSocketError = d->socketEngine->error();
-        d->serverSocketErrorString = d->socketEngine->errorString();
         return false;
     }
 
@@ -532,7 +512,9 @@ int QTcpServer::maxPendingConnections() const
 */
 QAbstractSocket::SocketError QTcpServer::serverError() const
 {
-    return d_func()->serverSocketError;
+    Q_D(const QTcpServer);
+    Q_CHECK_SOCKETENGINE(QAbstractSocket::UnknownSocketError);
+    return d_func()->socketEngine->error();
 }
 
 /*!
@@ -543,7 +525,9 @@ QAbstractSocket::SocketError QTcpServer::serverError() const
 */
 QString QTcpServer::errorString() const
 {
-    return d_func()->serverSocketErrorString;
+    Q_D(const QTcpServer);
+    Q_CHECK_SOCKETENGINE(tr("Unknown error"));
+    return d->socketEngine->errorString();
 }
 
 QT_END_NAMESPACE
