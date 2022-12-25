@@ -120,11 +120,11 @@ public:
 /*! \internal
 */
 QTcpServerPrivate::QTcpServerPrivate()
- : port(0)
- , state(QAbstractSocket::UnconnectedState)
- , socketEngine(0)
- , serverSocketError(QAbstractSocket::UnknownSocketError)
- , maxConnections(30)
+    : port(0),
+    state(QAbstractSocket::UnconnectedState),
+    socketEngine(nullptr),
+    serverSocketError(QAbstractSocket::UnknownSocketError),
+    maxConnections(30)
 {
 }
 
@@ -209,13 +209,7 @@ bool QTcpServer::listen(const QHostAddress &address, quint16 port)
     }
 
     delete d->socketEngine;
-    d->socketEngine = nullptr;
     d->socketEngine = new QAbstractSocketEngine(this);
-    if (!d->socketEngine) {
-        d->serverSocketError = QAbstractSocket::UnsupportedSocketOperationError;
-        d->serverSocketErrorString = tr("Operation on socket is not supported");
-        return false;
-    }
     if (!d->socketEngine->initialize(QAbstractSocket::TcpSocket, address.protocol())) {
         d->serverSocketError = d->socketEngine->error();
         d->serverSocketErrorString = d->socketEngine->errorString();
@@ -323,8 +317,7 @@ bool QTcpServer::setSocketDescriptor(int socketDescriptor)
         return false;
     }
 
-    if (d->socketEngine)
-        delete d->socketEngine;
+    delete d->socketEngine;
     d->socketEngine = new QAbstractSocketEngine(this);
     if (!d->socketEngine->initialize(socketDescriptor, QAbstractSocket::ListeningState)) {
         d->serverSocketError = d->socketEngine->error();
