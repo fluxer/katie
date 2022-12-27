@@ -22,6 +22,7 @@
 #include "qcore_unix_p.h"
 #include "qelapsedtimer.h"
 #include "qbytearray.h"
+#include "qfilesystemmetadata_p.h"
 #include "qdebug.h"
 
 #include <sys/select.h>
@@ -30,10 +31,19 @@
 
 QT_BEGIN_NAMESPACE
 
+QStatInfo::QStatInfo()
+    : m_mode(0),
+    m_uid(QFileSystemMetaData::nobodyID),
+    m_gid(QFileSystemMetaData::nobodyID),
+    m_mtime(0),
+    m_size(0)
+{
+}
+
 QStatInfo::QStatInfo(const QString &path, const bool listdir)
     : m_mode(0),
-    m_uid(-2),
-    m_gid(-2),
+    m_uid(QFileSystemMetaData::nobodyID),
+    m_gid(QFileSystemMetaData::nobodyID),
     m_mtime(0),
     m_size(0),
     m_path(path.toLocal8Bit())

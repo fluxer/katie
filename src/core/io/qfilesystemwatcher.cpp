@@ -94,9 +94,12 @@ void QFileSystemWatcherPrivate::_q_timeout()
     while (dit.hasNext()) {
         QHash<QString, QStatInfo>::iterator x = dit.next();
         QString path = x.key();
-        QStatInfo fi(path, true);
-        if (!path.endsWith(QLatin1Char('/')))
+        QStatInfo fi;
+        if (!path.endsWith(QLatin1Char('/'))) {
             fi = QStatInfo(path + QLatin1Char('/'), true);
+        } else {
+            fi = QStatInfo(path, true);
+        }
         if (!fi.dirEquals(x.value())) {
             if (!fi.exists()) {
                 dit.remove();
