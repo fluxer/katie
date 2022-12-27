@@ -126,30 +126,6 @@ bool QWriteNotifier::event(QEvent *e)
     return QSocketNotifier::event(e);
 }
 
-class QExceptionNotifier : public QSocketNotifier
-{
-public:
-    QExceptionNotifier(int fd, QAbstractSocketEngine *parent)
-        : QSocketNotifier(fd, QSocketNotifier::Exception, parent) { engine = parent; }
-
-protected:
-    bool event(QEvent *);
-
-    QAbstractSocketEngine *engine;
-};
-
-bool QExceptionNotifier::event(QEvent *e)
-{
-    if (e->type() == QEvent::SockAct) {
-        if (engine->state() == QAbstractSocket::ConnectingState)
-            engine->connectionNotification();
-        else
-            engine->exceptionNotification();
-        return true;
-    }
-    return QSocketNotifier::event(e);
-}
-
 /*! \internal
     Constructs the private class and initializes all data members.
 */
@@ -157,7 +133,6 @@ QAbstractSocketEnginePrivate::QAbstractSocketEnginePrivate()
     : socketDescriptor(-1)
     , readNotifier(0)
     , writeNotifier(0)
-    , exceptNotifier(0)
     , socketError(QAbstractSocket::UnknownSocketError)
     , hasSetSocketError(false)
     , socketErrorString(QLatin1String(QT_TRANSLATE_NOOP(QSocketLayer, "Unknown error")))
@@ -234,12 +209,6 @@ void QAbstractSocketEngine::writeNotification()
 {
     if (QAbstractSocketEngineReceiver *receiver = d_func()->receiver)
         receiver->writeNotification();
-}
-
-void QAbstractSocketEngine::exceptionNotification()
-{
-    if (QAbstractSocketEngineReceiver *receiver = d_func()->receiver)
-        receiver->exceptionNotification();
 }
 
 /*!
@@ -903,8 +872,6 @@ void QAbstractSocketEngine::close()
         d->readNotifier->setEnabled(false);
     if (d->writeNotifier)
         d->writeNotifier->setEnabled(false);
-    if (d->exceptNotifier)
-        d->exceptNotifier->setEnabled(false);
 
     if(d->socketDescriptor != -1) {
         d->nativeClose();
@@ -923,10 +890,6 @@ void QAbstractSocketEngine::close()
     if (d->writeNotifier) {
         delete d->writeNotifier;
         d->writeNotifier = 0;
-    }
-    if (d->exceptNotifier) {
-        delete d->exceptNotifier;
-        d->exceptNotifier = 0;
     }
 }
 
@@ -1074,23 +1037,6 @@ void QAbstractSocketEngine::setWriteNotificationEnabled(bool enable)
     } else if (enable && d->threadData->eventDispatcher) {
         d->writeNotifier = new QWriteNotifier(d->socketDescriptor, this);
         d->writeNotifier->setEnabled(true);
-    }
-}
-
-bool QAbstractSocketEngine::isExceptionNotificationEnabled() const
-{
-    Q_D(const QAbstractSocketEngine);
-    return d->exceptNotifier && d->exceptNotifier->isEnabled();
-}
-
-void QAbstractSocketEngine::setExceptionNotificationEnabled(bool enable)
-{
-    Q_D(QAbstractSocketEngine);
-    if (d->exceptNotifier) {
-        d->exceptNotifier->setEnabled(enable);
-    } else if (enable && d->threadData->eventDispatcher) {
-        d->exceptNotifier = new QExceptionNotifier(d->socketDescriptor, this);
-        d->exceptNotifier->setEnabled(true);
     }
 }
 

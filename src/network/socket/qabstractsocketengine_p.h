@@ -47,11 +47,10 @@ class QSocketNotifier;
 
 class QAbstractSocketEngineReceiver {
 public:
-    virtual ~QAbstractSocketEngineReceiver(){}
-    virtual void readNotification()= 0;
-    virtual void writeNotification()= 0;
-    virtual void exceptionNotification()= 0;
-    virtual void connectionNotification()= 0;
+    virtual ~QAbstractSocketEngineReceiver() {}
+    virtual void readNotification() = 0;
+    virtual void writeNotification() = 0;
+    virtual void connectionNotification() = 0;
 };
 
 class Q_AUTOTEST_EXPORT QAbstractSocketEngine : public QObject
@@ -136,13 +135,10 @@ public:
     void setReadNotificationEnabled(bool enable);
     bool isWriteNotificationEnabled() const;
     void setWriteNotificationEnabled(bool enable);
-    bool isExceptionNotificationEnabled() const;
-    void setExceptionNotificationEnabled(bool enable);
 
 public Q_SLOTS:
     void readNotification();
     void writeNotification();
-    void exceptionNotification();
     void connectionNotification();
 
 public:
@@ -239,7 +235,7 @@ public:
     bool fetchConnectionParameters();
 
     int socketDescriptor;
-    QSocketNotifier *readNotifier, *writeNotifier, *exceptNotifier;
+    QSocketNotifier *readNotifier, *writeNotifier;
     QAbstractSocket::SocketError socketError;
     bool hasSetSocketError;
     QString socketErrorString;

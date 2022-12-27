@@ -55,7 +55,6 @@ public:
     // from QAbstractSocketEngineReceiver
     inline void readNotification() { canReadNotification(); }
     inline void writeNotification() { canWriteNotification(); }
-    inline void exceptionNotification() {}
     void connectionNotification();
 
     bool canReadNotification();

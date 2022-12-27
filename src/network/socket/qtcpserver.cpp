@@ -109,7 +109,6 @@ public:
     // from QAbstractSocketEngineReceiver
     void readNotification();
     inline void writeNotification() {}
-    inline void exceptionNotification() {}
     inline void connectionNotification() {}
 };
 
@@ -372,8 +371,9 @@ QHostAddress QTcpServer::serverAddress() const
 bool QTcpServer::waitForNewConnection(int msec, bool *timedOut)
 {
     Q_D(QTcpServer);
-    if (!isListening())
+    if (!isListening()) {
         return false;
+    }
 
     if (!d->socketEngine->waitForRead(msec, timedOut)) {
         return false;
