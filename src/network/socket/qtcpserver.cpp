@@ -99,9 +99,6 @@ public:
 
     QStdVector<QTcpSocket *> pendingConnections;
 
-    quint16 port;
-    QHostAddress address;
-
     QAbstractSocketEngine *socketEngine;
 
     int maxConnections;
@@ -115,8 +112,7 @@ public:
 /*! \internal
 */
 QTcpServerPrivate::QTcpServerPrivate()
-    : port(0),
-    socketEngine(nullptr),
+    : socketEngine(nullptr),
     maxConnections(30)
 {
 }
@@ -228,9 +224,6 @@ bool QTcpServer::listen(const QHostAddress &address, quint16 port)
     d->socketEngine->setReceiver(d);
     d->socketEngine->setReadNotificationEnabled(true);
 
-    d->address = d->socketEngine->localAddress();
-    d->port = d->socketEngine->localPort();
-
 #if defined (QTCPSERVER_DEBUG)
     qDebug("QTcpServer::listen(%i, \"%s\") == true (listening on port %i)", port,
            address.toString().toLatin1().constData(), d->socketEngine->localPort());
@@ -313,9 +306,6 @@ bool QTcpServer::setSocketDescriptor(int socketDescriptor)
 
     d->socketEngine->setReceiver(d);
     d->socketEngine->setReadNotificationEnabled(true);
-
-    d->address = d->socketEngine->localAddress();
-    d->port = d->socketEngine->localPort();
 
 #if defined (QTCPSERVER_DEBUG)
     qDebug("QTcpServer::setSocketDescriptor(%i) succeeded.", socketDescriptor);
