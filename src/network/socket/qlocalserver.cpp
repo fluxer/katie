@@ -67,7 +67,7 @@ QT_BEGIN_NAMESPACE
     \sa listen()
  */
 QLocalServer::QLocalServer(QObject *parent)
-        : QObject(*new QLocalServerPrivate, parent)
+    : QObject(*new QLocalServerPrivate, parent)
 {
 }
 
@@ -82,8 +82,9 @@ QLocalServer::QLocalServer(QObject *parent)
  */
 QLocalServer::~QLocalServer()
 {
-    if (isListening())
+    if (isListening()) {
         close();
+    }
 }
 
 /*!
@@ -95,8 +96,9 @@ QLocalServer::~QLocalServer()
 void QLocalServer::close()
 {
     Q_D(QLocalServer);
-    if (!isListening())
+    if (!isListening()) {
         return;
+    }
     qDeleteAll(d->pendingConnections);
     d->pendingConnections.clear();
     d->closeServer();
@@ -246,11 +248,13 @@ int QLocalServer::maxPendingConnections() const
 QLocalSocket *QLocalServer::nextPendingConnection()
 {
     Q_D(QLocalServer);
-    if (d->pendingConnections.isEmpty())
-        return 0;
+    if (d->pendingConnections.isEmpty()) {
+        return nullptr;
+    }
     QLocalSocket *nextSocket = d->pendingConnections.dequeue();
-    if (d->pendingConnections.size() <= d->maxPendingConnections)
+    if (d->pendingConnections.size() <= d->maxPendingConnections) {
         d->socketNotifier->setEnabled(true);
+    }
     return nextSocket;
 }
 
@@ -346,11 +350,13 @@ void QLocalServer::setMaxPendingConnections(int numConnections)
 bool QLocalServer::waitForNewConnection(int msec, bool *timedOut)
 {
     Q_D(QLocalServer);
-    if (timedOut)
+    if (timedOut) {
         *timedOut = false;
+    }
 
-    if (!isListening())
+    if (!isListening()) {
         return false;
+    }
 
     d->waitForNewConnection(msec, timedOut);
 
