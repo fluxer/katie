@@ -3516,7 +3516,7 @@ QString QUrl::fromAce(const QByteArray &domain)
     (like \c "example.com") to be written using international
     characters.
 
-    This function return an empty QByteArra if \a domain is not a valid
+    This function return an empty QByteArray if \a domain is not a valid
     hostname. Note, in particular, that IPv6 literals are not valid domain
     names.
 */
