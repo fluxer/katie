@@ -32,6 +32,7 @@ inline bool operator<(int priority, const QPair<QRunnable *, int> &p)
 {
     return p.second < priority;
 }
+
 inline bool operator<(const QPair<QRunnable *, int> &p, int priority)
 {
     return priority < p.second;
@@ -57,18 +58,12 @@ public:
 /*
     QThreadPool private class.
 */
-
-
-/*!\internal
-
-*/
 QThreadPoolThread::QThreadPoolThread(QThreadPoolPrivate *manager)
-    :manager(manager), runnable(nullptr)
-{ }
+    : manager(manager),
+    runnable(nullptr)
+{
+}
 
-/* \internal
-
-*/
 void QThreadPoolThread::run()
 {
     QMutexLocker locker(&manager->mutex);
@@ -79,7 +74,6 @@ void QThreadPoolThread::run()
         do {
             if (r) {
                 const bool autoDelete = r->autoDelete();
-
 
                 // run the task
                 locker.unlock();
@@ -94,13 +88,15 @@ void QThreadPoolThread::run()
                 }
                 locker.relock();
 
-                if (autoDelete && !--r->ref)
+                if (autoDelete && !--r->ref) {
                     delete r;
+                }
             }
 
             // if too many threads are active, expire this thread
-            if (manager->tooManyThreadsActive())
+            if (manager->tooManyThreadsActive()) {
                 break;
+            }
 
             r = !manager->queue.isEmpty() ? manager->queue.takeFirst().first : nullptr;
         } while (r != nullptr);
@@ -118,8 +114,9 @@ void QThreadPoolThread::run()
             // wait for work, exiting after the expiry timeout is reached
             runnableReady.wait(locker.mutex(), manager->expiryTimeout);
             ++manager->activeThreads;
-            if (manager->waitingThreads.removeOne(this))
+            if (manager->waitingThreads.removeOne(this)) {
                 expired = true;
+            }
         }
         if (expired) {
             manager->expiredThreads.enqueue(this);
@@ -131,8 +128,9 @@ void QThreadPoolThread::run()
 
 void QThreadPoolThread::registerThreadInactive()
 {
-    if (--manager->activeThreads == 0)
+    if (--manager->activeThreads == 0) {
         manager->noActiveThreads.wakeAll();
+    }
 }
 
 
@@ -141,11 +139,12 @@ void QThreadPoolThread::registerThreadInactive()
 */
 QThreadPoolPrivate:: QThreadPoolPrivate()
     : isExiting(false),
-      expiryTimeout(30000),
-      maxThreadCount(qAbs(QThread::idealThreadCount())),
-      reservedThreads(0),
-      activeThreads(0)
-{ }
+    expiryTimeout(30000),
+    maxThreadCount(qAbs(QThread::idealThreadCount())),
+    reservedThreads(0),
+    activeThreads(0)
+{
+}
 
 bool QThreadPoolPrivate::tryStart(QRunnable *task)
 {
@@ -156,8 +155,9 @@ bool QThreadPoolPrivate::tryStart(QRunnable *task)
     }
 
     // can't do anything if we're over the limit
-    if (activeThreadCount() >= maxThreadCount)
+    if (activeThreadCount() >= maxThreadCount) {
         return false;
+    }
 
     if (waitingThreads.count() > 0) {
         // recycle an available thread
@@ -187,28 +187,26 @@ bool QThreadPoolPrivate::tryStart(QRunnable *task)
 
 void QThreadPoolPrivate::enqueueTask(QRunnable *runnable, int priority)
 {
-    if (runnable->autoDelete())
+    if (runnable->autoDelete()) {
         ++runnable->ref;
+    }
 
     // put it on the queue
-    QList<QPair<QRunnable *, int> >::iterator at =
-        qUpperBound(queue.begin(), queue.end(), priority);
+    QList<QPair<QRunnable *, int> >::iterator at = qUpperBound(queue.begin(), queue.end(), priority);
     queue.insert(at, qMakePair(runnable, priority));
 }
 
 int QThreadPoolPrivate::activeThreadCount() const
 {
-    return (allThreads.count()
-            - expiredThreads.count()
-            - waitingThreads.count()
-            + reservedThreads);
+    return (allThreads.count() - expiredThreads.count() - waitingThreads.count() + reservedThreads);
 }
 
 void QThreadPoolPrivate::tryToStartMoreThreads()
 {
     // try to push tasks on the queue to any available threads
-    while (!queue.isEmpty() && tryStart(queue.first().first))
+    while (!queue.isEmpty() && tryStart(queue.first().first)) {
         queue.removeFirst();
+    }
 }
 
 bool QThreadPoolPrivate::tooManyThreadsActive() const
@@ -217,8 +215,8 @@ bool QThreadPoolPrivate::tooManyThreadsActive() const
     return activeThreadCount > maxThreadCount && (activeThreadCount - reservedThreads) > 1;
 }
 
-/*! \internal
-
+/*!
+    \internal
 */
 void QThreadPoolPrivate::startThread(QRunnable *runnable)
 {
@@ -227,8 +225,9 @@ void QThreadPoolPrivate::startThread(QRunnable *runnable)
     allThreads.insert(thread.data());
     ++activeThreads;
 
-    if (runnable->autoDelete())
+    if (runnable->autoDelete()) {
         ++runnable->ref;
+    }
     thread->runnable = runnable;
     thread.take()->start();
 }
@@ -268,13 +267,15 @@ bool QThreadPoolPrivate::waitForDone(int msecs)
 {
     QMutexLocker locker(&mutex);
     if (msecs < 0) {
-        if (!queue.isEmpty() || activeThreads != 0)
+        if (!queue.isEmpty() || activeThreads != 0) {
             noActiveThreads.wait(locker.mutex());
+        }
     } else {
-        if (!queue.isEmpty() || activeThreads != 0)
+        if (!queue.isEmpty() || activeThreads != 0) {
             noActiveThreads.wait(locker.mutex(), msecs);
+        }
     }
-    return queue.isEmpty() && activeThreads == 0;
+    return (queue.isEmpty() && activeThreads == 0);
 }
 
 /*!
@@ -336,7 +337,8 @@ bool QThreadPoolPrivate::waitForDone(int msecs)
 */
 QThreadPool::QThreadPool(QObject *parent)
     : QObject(*new QThreadPoolPrivate, parent)
-{ }
+{
+}
 
 /*!
     Destroys the QThreadPool.
@@ -372,8 +374,9 @@ QThreadPool *QThreadPool::globalInstance()
 */
 void QThreadPool::start(QRunnable *runnable, int priority)
 {
-    if (!runnable)
+    if (!runnable) {
         return;
+    }
 
     Q_D(QThreadPool);
     QMutexLocker locker(&d->mutex);
@@ -381,8 +384,9 @@ void QThreadPool::start(QRunnable *runnable, int priority)
     if (!d->tryStart(runnable)) {
         d->enqueueTask(runnable, priority);
 
-        if (!d->waitingThreads.isEmpty())
+        if (!d->waitingThreads.isEmpty()) {
             d->waitingThreads.takeFirst()->runnableReady.wakeOne();
+        }
     }
 }
 
@@ -404,19 +408,22 @@ void QThreadPool::start(QRunnable *runnable, int priority)
 */
 bool QThreadPool::tryStart(QRunnable *runnable)
 {
-    if (!runnable)
+    if (!runnable) {
         return false;
+    }
 
     Q_D(QThreadPool);
     QMutexLocker locker(&d->mutex);
 
-    if (d->allThreads.isEmpty() == false && d->activeThreadCount() >= d->maxThreadCount)
+    if (d->allThreads.isEmpty() == false && d->activeThreadCount() >= d->maxThreadCount) {
         return false;
+    }
 
     return d->tryStart(runnable);
 }
 
-/*! \property QThreadPool::expiryTimeout
+/*!
+    \property QThreadPool::expiryTimeout
 
     Threads that are unused for \a expiryTimeout milliseconds are considered
     to have expired and will exit. Such threads will be restarted as needed.
@@ -429,7 +436,6 @@ bool QThreadPool::tryStart(QRunnable *runnable)
     We recommend setting the \a expiryTimeout immediately after creating the
     thread pool, but before calling start().
 */
-
 int QThreadPool::expiryTimeout() const
 {
     Q_D(const QThreadPool);
@@ -441,12 +447,14 @@ void QThreadPool::setExpiryTimeout(int expiryTimeout)
     Q_D(QThreadPool);
     QMutexLocker locker(&d->mutex);
 
-    if (d->expiryTimeout == expiryTimeout)
+    if (d->expiryTimeout == expiryTimeout) {
         return;
+    }
     d->expiryTimeout = expiryTimeout;
 }
 
-/*! \property QThreadPool::maxThreadCount
+/*!
+    \property QThreadPool::maxThreadCount
 
     This property represents the maximum number of threads used by the thread
     pool.
@@ -456,7 +464,6 @@ void QThreadPool::setExpiryTimeout(int expiryTimeout)
 
     The default \a maxThreadCount is QThread::idealThreadCount().
 */
-
 int QThreadPool::maxThreadCount() const
 {
     Q_D(const QThreadPool);
@@ -475,7 +482,8 @@ void QThreadPool::setMaxThreadCount(int maxThreadCount)
     d->tryToStartMoreThreads();
 }
 
-/*! \property QThreadPool::activeThreadCount
+/*!
+    \property QThreadPool::activeThreadCount
 
     This property represents the number of active threads in the thread pool.
 
@@ -484,7 +492,6 @@ void QThreadPool::setMaxThreadCount(int maxThreadCount)
 
     \sa reserveThread(), releaseThread()
 */
-
 int QThreadPool::activeThreadCount() const
 {
     Q_D(const QThreadPool);
@@ -502,7 +509,7 @@ int QThreadPool::activeThreadCount() const
     activeThreadCount() to return a value greater than maxThreadCount() .
 
     \sa releaseThread()
- */
+*/
 void QThreadPool::reserveThread()
 {
     Q_D(QThreadPool);
@@ -552,8 +559,9 @@ bool QThreadPool::waitForDone(int msecs)
 {
     Q_D(QThreadPool);
     bool rc = d->waitForDone(msecs);
-    if (rc)
-      d->reset();
+    if (rc) {
+        d->reset();
+    }
     return rc;
 }
 
