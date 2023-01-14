@@ -278,45 +278,6 @@ bool QThreadPoolPrivate::waitForDone(int msecs)
 }
 
 /*!
-    \internal
-    Searches for \a runnable in the queue, removes it from the queue and
-    runs it if found. This function does not return until the runnable
-    has completed.
-*/
-void QThreadPoolPrivate::stealRunnable(QRunnable *runnable)
-{
-    if (runnable == nullptr || queue.isEmpty())
-        return;
-    bool found = false;
-    {
-        QMutexLocker locker(&mutex);
-        QList<QPair<QRunnable *, int> >::iterator it = queue.begin();
-        QList<QPair<QRunnable *, int> >::iterator end = queue.end();
-
-        while (it != end) {
-            if (it->first == runnable) {
-                found = true;
-                queue.erase(it);
-                break;
-            }
-            ++it;
-        }
-    }
-
-    if (!found)
-        return;
-
-    const bool autoDelete = runnable->autoDelete();
-    bool del = autoDelete && !--runnable->ref;
-
-    runnable->run();
-
-    if (del) {
-        delete runnable;
-    }
-}
-
-/*!
     \class QThreadPool
     \brief The QThreadPool class manages a collection of QThreads.
     \since 4.4

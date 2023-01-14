@@ -63,7 +63,6 @@ public:
     void startThread(QRunnable *runnable);
     void reset();
     bool waitForDone(int msecs = -1);
-    void stealRunnable(QRunnable *);
 
     QMutex mutex;
     QSet<QThreadPoolThread *> allThreads;
