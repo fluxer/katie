@@ -374,7 +374,7 @@ QThreadPool *QThreadPool::globalInstance()
 */
 void QThreadPool::start(QRunnable *runnable, int priority)
 {
-    if (!runnable) {
+    if (Q_UNLIKELY(!runnable)) {
         return;
     }
 
@@ -408,7 +408,7 @@ void QThreadPool::start(QRunnable *runnable, int priority)
 */
 bool QThreadPool::tryStart(QRunnable *runnable)
 {
-    if (!runnable) {
+    if (Q_UNLIKELY(!runnable)) {
         return false;
     }
 
@@ -475,8 +475,9 @@ void QThreadPool::setMaxThreadCount(int maxThreadCount)
     Q_D(QThreadPool);
     QMutexLocker locker(&d->mutex);
 
-    if (maxThreadCount == d->maxThreadCount)
+    if (maxThreadCount == d->maxThreadCount) {
         return;
+    }
 
     d->maxThreadCount = maxThreadCount;
     d->tryToStartMoreThreads();
@@ -558,7 +559,7 @@ void QThreadPool::waitForDone()
 bool QThreadPool::waitForDone(int msecs)
 {
     Q_D(QThreadPool);
-    bool rc = d->waitForDone(msecs);
+    const bool rc = d->waitForDone(msecs);
     if (rc) {
         d->reset();
     }
