@@ -47,7 +47,7 @@ class QThreadPoolThread : public QThread
 {
 public:
     QThreadPoolThread(QThreadPoolPrivate *manager);
-    void run();
+    void run() final;
     void registerThreadInactive();
 
     QWaitCondition runnableReady;
