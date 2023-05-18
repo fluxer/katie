@@ -247,15 +247,14 @@ public:
         : type(QEasingCurve::Linear),
           per(s_defaultperiod), amp(s_defaultamplitude), over(s_defaultovershoot)
     { }
-    QEasingCurvePrivate(const QEasingCurvePrivate &other)
-        : type(other.type),
-          per(other.per), amp(other.amp), over(other.over)
-    { }
 
     QEasingCurve::Type type;
     qreal per;
     qreal amp;
     qreal over;
+
+private:
+    Q_DISABLE_COPY(QEasingCurvePrivate);
 };
 
 /*!
@@ -271,8 +270,12 @@ QEasingCurve::QEasingCurve(Type type)
     Construct a copy of \a other.
 */
 QEasingCurve::QEasingCurve(const QEasingCurve &other)
-    : d_ptr(new QEasingCurvePrivate(*other.d_ptr))
+    : d_ptr(new QEasingCurvePrivate())
 {
+    d_ptr->type = other.d_ptr->type;
+    d_ptr->per = other.d_ptr->per;
+    d_ptr->amp = other.d_ptr->amp;
+    d_ptr->over = other.d_ptr->over;
 }
 
 /*!
@@ -401,7 +404,7 @@ QEasingCurve::Type QEasingCurve::type() const
 */
 void QEasingCurve::setType(Type type)
 {
-    if (Q_UNLIKELY(type < Linear || type >= QEasingCurve::NCurveTypes)) {
+    if (Q_UNLIKELY(type < QEasingCurve::Linear || type >= QEasingCurve::NCurveTypes)) {
         qWarning("QEasingCurve: Invalid curve type %d", type);
         return;
     }
