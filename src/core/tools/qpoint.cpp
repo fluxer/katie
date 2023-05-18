@@ -692,7 +692,7 @@ qreal QPointF::manhattanLength() const
 
 QDataStream &operator<<(QDataStream &s, const QPointF &p)
 {
-    s << double(p.x()) << double(p.y());
+    s << (qreal)p.x() << (qreal)p.y();
     return s;
 }
 
@@ -708,11 +708,12 @@ QDataStream &operator<<(QDataStream &s, const QPointF &p)
 
 QDataStream &operator>>(QDataStream &s, QPointF &p)
 {
-    double x, y;
+    qreal x = 0.0;
+    qreal y = 0.0;
     s >> x;
     s >> y;
-    p.setX(qreal(x));
-    p.setY(qreal(y));
+    p.setX(x);
+    p.setY(y);
     return s;
 }
 #endif // QT_NO_DATASTREAM

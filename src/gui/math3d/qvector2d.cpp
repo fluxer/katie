@@ -424,7 +424,7 @@ QDebug operator<<(QDebug dbg, const QVector2D &vector)
 
 QDataStream &operator<<(QDataStream &stream, const QVector2D &vector)
 {
-    stream << double(vector.x()) << double(vector.y());
+    stream << (qreal)vector.x() << (qreal)vector.y();
     return stream;
 }
 
@@ -440,11 +440,12 @@ QDataStream &operator<<(QDataStream &stream, const QVector2D &vector)
 
 QDataStream &operator>>(QDataStream &stream, QVector2D &vector)
 {
-    double x, y;
+    qreal x = 0.0;
+    qreal y = 0.0;
     stream >> x;
     stream >> y;
-    vector.setX(qreal(x));
-    vector.setY(qreal(y));
+    vector.setX(x);
+    vector.setY(y);
     return stream;
 }
 

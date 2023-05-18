@@ -807,22 +807,11 @@ QDataStream &operator<<(QDataStream &s, const QPen &p)
     s << (quint8)p.joinStyle();
     s << (bool)(p.d->cosmetic);
 
-    s << double(p.widthF());
+    s << (qreal)p.widthF();
     s << p.brush();
-    s << double(p.miterLimit());
-#ifdef QT_NO_FPU
-    // ensure that we write doubles here instead of streaming the pattern
-    // directly; otherwise, platforms that redefine qreal might generate
-    // data that cannot be read on other platforms.
-    QVector<qreal> pattern = p.dashPattern();
-    s << quint32(pattern.size());
-    for (int i = 0; i < pattern.size(); ++i) {
-        s << double(pattern.at(i));
-    }
-#else
+    s << (qreal)p.miterLimit();
     s << p.dashPattern();
-#endif
-    s << double(p.dashOffset());
+    s << (qreal)p.dashOffset();
     return s;
 }
 
@@ -839,12 +828,12 @@ QDataStream &operator<<(QDataStream &s, const QPen &p)
 QDataStream &operator>>(QDataStream &s, QPen &p)
 {
     quint8 style, capStyle, joinStyle;
-    double width = 0;
+    qreal width = 0.0;
     QColor color;
     QBrush brush;
-    double miterLimit = 2;
+    qreal miterLimit = 2.0;
     QVector<qreal> dashPattern;
-    double dashOffset = 0;
+    qreal dashOffset = 0.0;
     bool cosmetic = false;
     s >> style;
     s >> capStyle;
@@ -853,17 +842,7 @@ QDataStream &operator>>(QDataStream &s, QPen &p)
     s >> width;
     s >> brush;
     s >> miterLimit;
-#ifdef QT_NO_FPU
-    quint32 numDashes;
-    s >> numDashes;
-    double dash;
-    for (quint32 i = 0; i < numDashes; ++i) {
-        s >> dash;
-        dashPattern << dash;
-    }
-#else
     s >> dashPattern;
-#endif
     s >> dashOffset;
 
     qAtomicDetach(p.d);

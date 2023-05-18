@@ -915,22 +915,8 @@ QDataStream &operator<<(QDataStream &s, const QBrush &b)
         s << qint8(gradient->type());
         s << qint8(gradient->spread());
         s << qint8(gradient->coordinateMode());
-
         s << qint8(gradient->interpolationMode());
-
-#ifdef QT_NO_FPU
-        // ensure that we write doubles here instead of streaming the stops
-        // directly; otherwise, platforms that redefine qreal might generate
-        // data that cannot be read on other platforms.
-        QVector<QGradientStop> stops = gradient->stops();
-        s << quint32(stops.size());
-        for (int i = 0; i < stops.size(); ++i) {
-            const QGradientStop &stop = stops.at(i);
-            s << QPair<double, QColor>(double(stop.first), stop.second);
-        }
-#else
         s << gradient->stops();
-#endif
 
         switch (gradient->type()) {
             case QGradient::LinearGradient: {
@@ -941,7 +927,7 @@ QDataStream &operator<<(QDataStream &s, const QBrush &b)
             case QGradient::RadialGradient: {
                 s << static_cast<const QRadialGradient *>(gradient)->center();
                 s << static_cast<const QRadialGradient *>(gradient)->focalPoint();
-                s << (double) static_cast<const QRadialGradient *>(gradient)->radius();
+                s << (qreal) static_cast<const QRadialGradient *>(gradient)->radius();
                 break;
             }
         }
@@ -970,39 +956,22 @@ QDataStream &operator>>(QDataStream &s, QBrush &b)
         QPixmap pm;
         s >> pm;
         b = QBrush(color, pm);
-    } else if (style == Qt::LinearGradientPattern
-               || style == Qt::RadialGradientPattern) {
-
+    } else if (style == Qt::LinearGradientPattern || style == Qt::RadialGradientPattern) {
         qint8 type_as_int;
         QGradient::Type type;
         QGradientStops stops;
         QGradient::CoordinateMode cmode = QGradient::LogicalMode;
         QGradient::Spread spread = QGradient::PadSpread;
         QGradient::InterpolationMode imode = QGradient::ColorInterpolation;
-
         s >> type_as_int;
         type = QGradient::Type(type_as_int);
         s >> type_as_int;
         spread = QGradient::Spread(type_as_int);
         s >> type_as_int;
         cmode = QGradient::CoordinateMode(type_as_int);
-
         s >> type_as_int;
         imode = QGradient::InterpolationMode(type_as_int);
-
-#ifdef QT_NO_FPU
-        quint32 numStops;
-        double n;
-        QColor c;
-
-        s >> numStops;
-        for (quint32 i = 0; i < numStops; ++i) {
-            s >> n >> c;
-            stops << QPair<qreal, QColor>(n, c);
-        }
-#else
         s >> stops;
-#endif
 
         if (type == QGradient::LinearGradient) {
             QPointF p1, p2;
@@ -1016,7 +985,7 @@ QDataStream &operator>>(QDataStream &s, QBrush &b)
             b = QBrush(lg);
         } else if (type == QGradient::RadialGradient) {
             QPointF center, focal;
-            double radius;
+            qreal radius;
             s >> center;
             s >> focal;
             s >> radius;

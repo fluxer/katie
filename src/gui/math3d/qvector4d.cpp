@@ -528,8 +528,8 @@ QDebug operator<<(QDebug dbg, const QVector4D &vector)
 
 QDataStream &operator<<(QDataStream &stream, const QVector4D &vector)
 {
-    stream << double(vector.x()) << double(vector.y())
-           << double(vector.z()) << double(vector.w());
+    stream << (qreal)vector.x() << (qreal)vector.y()
+           << (qreal)vector.z() << (qreal)vector.w();
     return stream;
 }
 
@@ -545,15 +545,18 @@ QDataStream &operator<<(QDataStream &stream, const QVector4D &vector)
 
 QDataStream &operator>>(QDataStream &stream, QVector4D &vector)
 {
-    double x, y, z, w;
+    qreal x = 0.0;
+    qreal y = 0.0;
+    qreal z = 0.0;
+    qreal w = 0.0;
     stream >> x;
     stream >> y;
     stream >> z;
     stream >> w;
-    vector.setX(qreal(x));
-    vector.setY(qreal(y));
-    vector.setZ(qreal(z));
-    vector.setW(qreal(w));
+    vector.setX(x);
+    vector.setY(y);
+    vector.setZ(z);
+    vector.setW(w);
     return stream;
 }
 
@@ -562,7 +565,3 @@ QDataStream &operator>>(QDataStream &stream, QVector4D &vector)
 #endif // QT_NO_VECTOR4D
 
 QT_END_NAMESPACE
-
-
-
-

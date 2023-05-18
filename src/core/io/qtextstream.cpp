@@ -2379,6 +2379,7 @@ QTextStream &QTextStream::operator<<(qulonglong i)
 */
 QTextStream &QTextStream::operator<<(float f)
 {
+    // TODO: implement and use QLocale::floatToString()
     return *this << double(f);
 }
 

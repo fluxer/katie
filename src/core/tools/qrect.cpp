@@ -2392,7 +2392,7 @@ QRect QRectF::toAlignedRect() const
 
 QDataStream &operator<<(QDataStream &s, const QRectF &r)
 {
-    s << double(r.x()) << double(r.y()) << double(r.width()) << double(r.height());
+    s << (qreal)r.x() << (qreal)r.y() << (qreal)r.width() << (qreal)r.height();
     return s;
 }
 
@@ -2409,17 +2409,19 @@ QDataStream &operator<<(QDataStream &s, const QRectF &r)
 
 QDataStream &operator>>(QDataStream &s, QRectF &r)
 {
-    double x, y, w, h;
+    qreal x = 0.0;
+    qreal y = 0.0;
+    qreal w = 0.0;
+    qreal h = 0.0;
     s >> x;
     s >> y;
     s >> w;
     s >> h;
-    r.setRect(qreal(x), qreal(y), qreal(w), qreal(h));
+    r.setRect(x, y, w, h);
     return s;
 }
 
 #endif // QT_NO_DATASTREAM
-
 
 #ifndef QT_NO_DEBUG_STREAM
 QDebug operator<<(QDebug dbg, const QRectF &r) {

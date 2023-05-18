@@ -1820,7 +1820,7 @@ QDataStream &operator<<(QDataStream &stream, const QMatrix4x4 &matrix)
 {
     for (int row = 0; row < 4; ++row)
         for (int col = 0; col < 4; ++col)
-            stream << double(matrix(row, col));
+            stream << qreal(matrix(row, col));
     return stream;
 }
 
@@ -1836,11 +1836,11 @@ QDataStream &operator<<(QDataStream &stream, const QMatrix4x4 &matrix)
 
 QDataStream &operator>>(QDataStream &stream, QMatrix4x4 &matrix)
 {
-    double x;
+    qreal x = 0.0;
     for (int row = 0; row < 4; ++row) {
         for (int col = 0; col < 4; ++col) {
             stream >> x;
-            matrix(row, col) = qreal(x);
+            matrix(row, col) = x;
         }
     }
     matrix.optimize();

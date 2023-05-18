@@ -575,8 +575,8 @@ QDebug operator<<(QDebug dbg, const QVector3D &vector)
 
 QDataStream &operator<<(QDataStream &stream, const QVector3D &vector)
 {
-    stream << double(vector.x()) << double(vector.y())
-           << double(vector.z());
+    stream << (qreal)vector.x() << (qreal)vector.y()
+           << (qreal)vector.z();
     return stream;
 }
 
@@ -592,13 +592,15 @@ QDataStream &operator<<(QDataStream &stream, const QVector3D &vector)
 
 QDataStream &operator>>(QDataStream &stream, QVector3D &vector)
 {
-    double x, y, z;
+    qreal x = 0.0;
+    qreal y = 0.0;
+    qreal z = 0.0;
     stream >> x;
     stream >> y;
     stream >> z;
-    vector.setX(qreal(x));
-    vector.setY(qreal(y));
-    vector.setZ(qreal(z));
+    vector.setX(x);
+    vector.setY(y);
+    vector.setZ(z);
     return stream;
 }
 

@@ -170,10 +170,6 @@ private slots:
 
     void streamRealDataTypes();
 
-    void floatingPointPrecision();
-
-    void floatingPointNaN();
-
 private:
     void writebool(QDataStream *s);
     void writeQBitArray(QDataStream *s);
@@ -2181,12 +2177,10 @@ void tst_QDataStream::skipRawData()
         QFETCH(int, expectedStatus); \
         QFETCH(double, expectedValue); \
         \
-        QDataStream::FloatingPointPrecision prec = sizeof(T) == sizeof(double) ? QDataStream::DoublePrecision : QDataStream::SinglePrecision; \
     \
         { \
             QDataStream stream(&bigEndianData, QIODevice::ReadOnly); \
             stream.setByteOrder(QDataStream::BigEndian); \
-            stream.setFloatingPointPrecision(prec); \
             T i; \
             stream >> i; \
             QCOMPARE((int) stream.status(), expectedStatus); \
@@ -2195,7 +2189,6 @@ void tst_QDataStream::skipRawData()
         { \
             QDataStream stream(&littleEndianData, QIODevice::ReadOnly); \
             stream.setByteOrder(QDataStream::LittleEndian); \
-            stream.setFloatingPointPrecision(prec); \
             T i; \
             stream >> i; \
             QCOMPARE((int) stream.status(), expectedStatus); \
@@ -2799,95 +2792,6 @@ void tst_QDataStream::streamRealDataTypes()
     QCOMPARE(pen.widthF(), qreal(1.5));
 
     QCOMPARE(stream.status(), QDataStream::Ok);
-}
-
-void tst_QDataStream::floatingPointNaN()
-{
-#if Q_BYTE_ORDER == Q_BIG_ENDIAN
-    QDataStream::ByteOrder bo = QDataStream::LittleEndian;
-#else
-    QDataStream::ByteOrder bo = QDataStream::BigEndian;
-#endif
-
-    // Test and verify that values that become (s)nan's after swapping endianness
-    // don't change in the process.
-    QByteArray ba;
-
-    union {
-       float f;
-       quint32 i;
-    } xs[2];
-
-    xs[0].i = qbswap<quint32>(0xff800001);
-    xs[1].i = qbswap<quint32>(0x7f800001);
-
-    {
-        QDataStream stream(&ba, QIODevice::WriteOnly);
-        stream.setByteOrder(bo);
-        stream.setFloatingPointPrecision(QDataStream::SinglePrecision);
-        stream << xs[0].f;
-        stream << xs[1].f;
-    }
-
-    {
-        QDataStream stream(ba);
-        stream.setByteOrder(bo);
-        stream.setFloatingPointPrecision(QDataStream::SinglePrecision);
-        float fr = 0.0f;
-        stream >> fr;
-        QCOMPARE(fr, xs[0].f);
-        stream >> fr;
-        QCOMPARE(fr, xs[1].f);
-    }
-}
-
-void tst_QDataStream::floatingPointPrecision()
-{
-    QByteArray ba;
-    {
-        QDataStream stream(&ba, QIODevice::WriteOnly);
-        QCOMPARE(QDataStream::DoublePrecision, stream.floatingPointPrecision());
-
-        float f = 123.0f;
-        stream << f;
-        QCOMPARE(ba.size(), int(sizeof(double)));
-
-        double d = 234.0;
-        stream << d;
-        QCOMPARE(ba.size(), int(sizeof(double)*2));
-
-        stream.setFloatingPointPrecision(QDataStream::SinglePrecision);
-
-        f = 123.0f;
-        stream << f;
-        QCOMPARE(ba.size(), int(sizeof(double)*2 + sizeof(float)));
-
-        d = 234.0;
-        stream << d;
-        QCOMPARE(ba.size(), int(sizeof(double)*2 + sizeof(float)*2));
-    }
-
-    {
-        QDataStream stream(ba);
-
-        float f = 0.0f;
-        stream >> f;
-        QCOMPARE(123.0f, f);
-
-        double d = 0.0;
-        stream >> d;
-        QCOMPARE(234.0, d);
-
-        f = 0.0f;
-        stream.setFloatingPointPrecision(QDataStream::SinglePrecision);
-        stream >> f;
-        QCOMPARE(123.0f, f);
-
-        d = 0.0;
-        stream >> d;
-        QCOMPARE(234.0, d);
-    }
-
 }
 
 QTEST_MAIN(tst_QDataStream)

@@ -1007,15 +1007,15 @@ void QTransform::reset()
 */
 QDataStream & operator<<(QDataStream &s, const QTransform &m)
 {
-    s << double(m.m11())
-      << double(m.m12())
-      << double(m.m13())
-      << double(m.m21())
-      << double(m.m22())
-      << double(m.m23())
-      << double(m.m31())
-      << double(m.m32())
-      << double(m.m33());
+    s << (qreal)m.m11()
+      << (qreal)m.m12()
+      << (qreal)m.m13()
+      << (qreal)m.m21()
+      << (qreal)m.m22()
+      << (qreal)m.m23()
+      << (qreal)m.m31()
+      << (qreal)m.m32()
+      << (qreal)m.m33();
     return s;
 }
 
@@ -1031,7 +1031,7 @@ QDataStream & operator<<(QDataStream &s, const QTransform &m)
 */
 QDataStream & operator>>(QDataStream &s, QTransform &t)
 {
-     double m11, m12, m13,
+     qreal m11, m12, m13,
          m21, m22, m23,
          m31, m32, m33;
 

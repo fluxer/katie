@@ -763,7 +763,7 @@ void QSizeF::scale(const QSizeF &s, Qt::AspectRatioMode mode)
 
 QDataStream &operator<<(QDataStream &s, const QSizeF &sz)
 {
-    s << double(sz.width()) << double(sz.height());
+    s << (qreal)sz.width() << (qreal)sz.height();
     return s;
 }
 
@@ -779,11 +779,12 @@ QDataStream &operator<<(QDataStream &s, const QSizeF &sz)
 
 QDataStream &operator>>(QDataStream &s, QSizeF &sz)
 {
-    double w, h;
+    qreal w = 0.0;
+    qreal h = 0.0;
     s >> w;
     s >> h;
-    sz.setWidth(qreal(w));
-    sz.setHeight(qreal(h));
+    sz.setWidth(w);
+    sz.setHeight(h);
     return s;
 }
 #endif // QT_NO_DATASTREAM

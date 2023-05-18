@@ -1079,12 +1079,12 @@ Q_GUI_EXPORT QPainterPath operator *(const QPainterPath &p, const QMatrix &m)
 
 QDataStream &operator<<(QDataStream &s, const QMatrix &m)
 {
-    s << double(m.m11())
-        << double(m.m12())
-        << double(m.m21())
-        << double(m.m22())
-        << double(m.dx())
-        << double(m.dy());
+    s << (qreal)m.m11()
+        << (qreal)m.m12()
+        << (qreal)m.m21()
+        << (qreal)m.m22()
+        << (qreal)m.dx()
+        << (qreal)m.dy();
     return s;
 }
 
@@ -1100,7 +1100,12 @@ QDataStream &operator<<(QDataStream &s, const QMatrix &m)
 
 QDataStream &operator>>(QDataStream &s, QMatrix &m)
 {
-    double m11, m12, m21, m22, dx, dy;
+    qreal m11 = 0.0;
+    qreal m12 = 0.0;
+    qreal m21 = 0.0;
+    qreal m22 = 0.0;
+    qreal dx = 0.0;
+    qreal dy = 0.0;
     s >> m11;
     s >> m12;
     s >> m21;

@@ -347,18 +347,18 @@ QDataStream &operator<<(QDataStream &stream, const QGenericMatrix<N, M> &matrix)
 {
     for (int row = 0; row < M; ++row)
         for (int col = 0; col < N; ++col)
-            stream << double(matrix(row, col));
+            stream << qreal(matrix(row, col));
     return stream;
 }
 
 template <int N, int M>
 QDataStream &operator>>(QDataStream &stream, QGenericMatrix<N, M> &matrix)
 {
-    double x;
+    qreal x = 0.0;
     for (int row = 0; row < M; ++row) {
         for (int col = 0; col < N; ++col) {
             stream >> x;
-            matrix(row, col) = qreal(x);
+            matrix(row, col) = x;
         }
     }
     return stream;

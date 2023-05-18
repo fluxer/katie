@@ -1282,6 +1282,7 @@ QDBusArgument &operator<<(QDBusArgument &a, const QPoint &pt)
 
 const QDBusArgument &operator>>(const QDBusArgument &a, QPointF &pt)
 {
+    // NOTE: D-Bus does not support float numbers
     double x = 0.0;
     double y = 0.0;
     a.beginStructure();

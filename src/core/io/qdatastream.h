@@ -51,11 +51,6 @@ public:
         WriteFailed
     };
 
-    enum FloatingPointPrecision {
-        SinglePrecision,
-        DoublePrecision
-    };
-
     QDataStream();
     explicit QDataStream(QIODevice *);
     QDataStream(QByteArray *, QIODevice::OpenMode flags);
@@ -70,9 +65,6 @@ public:
     DataStatus status() const;
     void setStatus(DataStatus status);
     void resetStatus();
-
-    FloatingPointPrecision floatingPointPrecision() const;
-    void setFloatingPointPrecision(FloatingPointPrecision precision);
 
     ByteOrder byteOrder() const;
     void setByteOrder(ByteOrder);
@@ -116,7 +108,6 @@ private:
     bool owndev;
     ByteOrder byteorder;
     DataStatus q_status;
-    FloatingPointPrecision floatingPrecision;
 };
 
 
