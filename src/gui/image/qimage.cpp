@@ -108,7 +108,7 @@ static QImage rotated270(const QImage &image) {
                        out.bytesPerLine());
         break;
     case QImage::Format_RGB16:
-       qt_memrotate90(reinterpret_cast<const quint16*>(image.constBits()),
+        qt_memrotate90(reinterpret_cast<const quint16*>(image.constBits()),
                        w, h, image.bytesPerLine(),
                        reinterpret_cast<quint16*>(out.bits()),
                        out.bytesPerLine());
