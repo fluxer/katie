@@ -242,8 +242,7 @@ quint32 qChecksum(const char *data, uint len)
 /*!
     \relates QByteArray
 
-    Returns pseudo-randomly generated UUID in DCE variant as
-    described in \l{https://www.ietf.org/rfc/rfc4122.txt}.
+    Returns pseudo-randomly generated UUID.
 */
 QByteArray qRandomUuid()
 {
@@ -255,8 +254,6 @@ QByteArray qRandomUuid()
         *randombufiter = qrand();
         randombufiter += randiterratio;
     }
-    randombuf[6] = (randombuf[6] & 0x0FFF) | 0x4000; // random version
-    randombuf[8] = (randombuf[8] & 0x3F) | 0x80; // DCE variant
 
 #define UUID_TOHEX(bufi, randi) \
     uuidbuf[bufi] = tohex[(randombuf[randi] >> 4) & 0xf]; \
