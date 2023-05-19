@@ -35,14 +35,6 @@
 
 QT_BEGIN_NAMESPACE
 
-struct QSettingsFormat
-{
-    QSettings::Format format;
-    QString extension;
-    QSettingsReadFunc readFunc;
-    QSettingsWriteFunc writeFunc;
-};
-
 // ************************************************************************
 // Native format
 static bool json_settings_read(QIODevice &device, QSettings::SettingsMap &map)
@@ -162,28 +154,6 @@ static bool ini_settings_write(QIODevice &device, const QSettings::SettingsMap &
 
 // ************************************************************************
 // QSettingsPrivate
-static QSettingsFormat getSettingsFormat(QSettings::Format format)
-{
-    QSettingsFormat result;
-
-    if (format == QSettings::NativeFormat) {
-        result.extension = QLatin1String(".json");
-        result.readFunc = json_settings_read;
-        result.writeFunc = json_settings_write;
-        return result;
-    } else if (format == QSettings::IniFormat) {
-        result.extension = QLatin1String(".ini");
-        result.readFunc = ini_settings_read;
-        result.writeFunc = ini_settings_write;
-        return result;
-    }
-
-    qWarning("QSettingsPrivate::getSettingsFormat: format not found %d", format);
-    result.extension = QLatin1String(".json");
-    result.readFunc = json_settings_read;
-    result.writeFunc = json_settings_write;
-    return result;
-}
 
 static inline QString createLeadingDir(const QString &filename)
 {
@@ -192,7 +162,7 @@ static inline QString createLeadingDir(const QString &filename)
     return filename;
 }
 
-static QString getSettingsPath(const QString &filename, const QString &extension)
+static QString getSettingsPath(const QString &filename, const QLatin1String &extension)
 {
     QFileInfo info(filename);
     if (info.isAbsolute()) {
@@ -215,22 +185,31 @@ static QString getSettingsPath(const QString &filename, const QString &extension
     return createLeadingDir(locations.first() + QDir::separator() + nameandext);
 }
 
+static void setupSettingsFormat(QSettingsPrivate* settings, const QString &filename)
+{
+    if (settings->format == QSettings::NativeFormat) {
+        settings->readFunc = json_settings_read;
+        settings->writeFunc = json_settings_write;
+        settings->filename = getSettingsPath(filename, QLatin1String(".json"));
+        return;
+    }
+
+    Q_ASSERT(settings->format == QSettings::IniFormat);
+    settings->readFunc = ini_settings_read;
+    settings->writeFunc = ini_settings_write;
+    settings->filename = getSettingsPath(filename, QLatin1String(".ini"));
+}
+
 QSettingsPrivate::QSettingsPrivate(QSettings::Format format)
     : format(format), status(QSettings::NoError), shouldwrite(false)
 {
-    QSettingsFormat handler = getSettingsFormat(format);
-    filename = getSettingsPath(QCoreApplication::applicationName(), handler.extension);
-    readFunc = handler.readFunc;
-    writeFunc = handler.writeFunc;
+    setupSettingsFormat(this, QCoreApplication::applicationName());
 }
 
 QSettingsPrivate::QSettingsPrivate(const QString &fileName, QSettings::Format format)
     : format(format), status(QSettings::NoError), shouldwrite(false)
 {
-    QSettingsFormat handler = getSettingsFormat(format);
-    filename = getSettingsPath(fileName, handler.extension);
-    readFunc = handler.readFunc;
-    writeFunc = handler.writeFunc;
+    setupSettingsFormat(this, fileName);
 }
 
 QSettingsPrivate::~QSettingsPrivate()
