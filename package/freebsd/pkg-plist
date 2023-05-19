@@ -1078,9 +1078,6 @@ lib/libKtNetwork.so.4.13.0
 lib/libKtScript.so
 lib/libKtScript.so.4.13
 lib/libKtScript.so.4.13.0
-lib/libKtScriptTools.so
-lib/libKtScriptTools.so.4.13
-lib/libKtScriptTools.so.4.13.0
 lib/libKtSvg.so
 lib/libKtSvg.so.4.13
 lib/libKtSvg.so.4.13.0
@@ -1099,7 +1096,6 @@ libdata/pkgconfig/KtDeclarative.pc
 libdata/pkgconfig/KtGui.pc
 libdata/pkgconfig/KtNetwork.pc
 libdata/pkgconfig/KtScript.pc
-libdata/pkgconfig/KtScriptTools.pc
 libdata/pkgconfig/KtSvg.pc
 libdata/pkgconfig/KtTest.pc
 libdata/pkgconfig/KtUiTools.pc
