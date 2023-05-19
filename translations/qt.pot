@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-24 20:25+0200\n"
+"POT-Creation-Date: 2023-05-19 04:23+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,36 +17,37 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/core/plugin/qlibrary.cpp:154
+#: src/core/plugin/qlibrary.cpp:155
 msgid "'%1' is not ELF file"
 msgstr ""
 
-#: src/core/plugin/qlibrary.cpp:157
+#: src/core/plugin/qlibrary.cpp:158
 msgid "ELF class mismatch in '%1'"
 msgstr ""
 
-#: src/core/plugin/qlibrary.cpp:335 src/core/plugin/qlibrary.cpp:345
+#: src/core/plugin/qlibrary.cpp:336 src/core/plugin/qlibrary.cpp:346
 msgid "The shared library was not found."
 msgstr ""
 
-#: src/core/plugin/qlibrary.cpp:347
+#: src/core/plugin/qlibrary.cpp:348
 msgid "The file '%1' is not a valid Katie plugin."
 msgstr ""
 
-#: src/core/plugin/qlibrary.cpp:533 src/core/io/qiodevice.cpp:1500
-#: src/network/socket/qabstractsocketengine.cpp:439
+#: src/core/plugin/qlibrary.cpp:534 src/core/io/qiodevice.cpp:1500
+#: src/network/socket/qtcpserver.cpp:519
+#: src/network/socket/qabstractsocketengine.cpp:408
 msgid "Unknown error"
 msgstr ""
 
-#: src/core/plugin/qlibrary_unix.cpp:52
+#: src/core/plugin/qlibrary_unix.cpp:53
 msgid "Cannot load library %1: %2"
 msgstr ""
 
-#: src/core/plugin/qlibrary_unix.cpp:62
+#: src/core/plugin/qlibrary_unix.cpp:63
 msgid "Cannot unload library %1: %2"
 msgstr ""
 
-#: src/core/plugin/qlibrary_unix.cpp:73
+#: src/core/plugin/qlibrary_unix.cpp:74
 msgid "Cannot resolve symbol \"%1\" in %2: %3"
 msgstr ""
 
@@ -120,7 +121,7 @@ msgctxt "QStandardPaths"
 msgid "Executable"
 msgstr ""
 
-#: src/core/io/qfile.cpp:578
+#: src/core/io/qfile.cpp:572
 msgid "Destination file exists"
 msgstr ""
 
@@ -148,12 +149,12 @@ msgstr ""
 msgid "Could not open output redirection for writing"
 msgstr ""
 
-#: src/core/io/qprocess_unix.cpp:548
+#: src/core/io/qprocess_unix.cpp:533
 msgid "Resource error (fork failure): %1"
 msgstr ""
 
-#: src/core/io/qprocess_unix.cpp:786 src/core/io/qprocess_unix.cpp:834
-#: src/core/io/qprocess_unix.cpp:904 src/core/io/qprocess_unix.cpp:966
+#: src/core/io/qprocess_unix.cpp:759 src/core/io/qprocess_unix.cpp:807
+#: src/core/io/qprocess_unix.cpp:877 src/core/io/qprocess_unix.cpp:939
 msgid "Process operation timed out"
 msgstr ""
 
@@ -1101,7 +1102,6 @@ msgid "< &Back"
 msgstr ""
 
 #: src/gui/dialogs/qwizard.cpp:581
-#: src/scripttools/debugging/qscriptdebugger.cpp:1650
 msgid "Continue"
 msgstr ""
 
@@ -1670,17 +1670,17 @@ msgstr ""
 msgid "Date Modified"
 msgstr ""
 
-#: src/gui/image/qimagewriter.cpp:458
+#: src/gui/image/qimagewriter.cpp:428
 msgctxt "QImageWriter"
 msgid "Unknown error"
 msgstr ""
 
-#: src/gui/image/qimagewriter.cpp:461
+#: src/gui/image/qimagewriter.cpp:431
 msgctxt "QImageWriter"
 msgid "Device not writable"
 msgstr ""
 
-#: src/gui/image/qimagewriter.cpp:464
+#: src/gui/image/qimagewriter.cpp:434
 msgctxt "QImageWriter"
 msgid "Unsupported image format"
 msgstr ""
@@ -1714,32 +1714,31 @@ msgstr ""
 msgid "Close Tab"
 msgstr ""
 
-#: src/gui/widgets/qlineedit.cpp:1710 src/gui/text/qtextcontrol.cpp:1841
+#: src/gui/widgets/qlineedit.cpp:1710 src/gui/text/qtextcontrol.cpp:1836
 msgid "&Undo"
 msgstr ""
 
-#: src/gui/widgets/qlineedit.cpp:1714 src/gui/text/qtextcontrol.cpp:1843
+#: src/gui/widgets/qlineedit.cpp:1714 src/gui/text/qtextcontrol.cpp:1838
 msgid "&Redo"
 msgstr ""
 
-#: src/gui/widgets/qlineedit.cpp:1723 src/gui/text/qtextcontrol.cpp:1847
+#: src/gui/widgets/qlineedit.cpp:1723 src/gui/text/qtextcontrol.cpp:1842
 msgid "Cu&t"
 msgstr ""
 
-#: src/gui/widgets/qlineedit.cpp:1729 src/gui/text/qtextcontrol.cpp:1852
+#: src/gui/widgets/qlineedit.cpp:1729 src/gui/text/qtextcontrol.cpp:1847
 msgid "&Copy"
 msgstr ""
 
-#: src/gui/widgets/qlineedit.cpp:1735 src/gui/text/qtextcontrol.cpp:1865
+#: src/gui/widgets/qlineedit.cpp:1735 src/gui/text/qtextcontrol.cpp:1860
 msgid "&Paste"
 msgstr ""
 
-#: src/gui/widgets/qlineedit.cpp:1742 src/gui/text/qtextcontrol.cpp:1868
-#: src/scripttools/debugging/qscriptbreakpointswidget.cpp:275
+#: src/gui/widgets/qlineedit.cpp:1742 src/gui/text/qtextcontrol.cpp:1863
 msgid "Delete"
 msgstr ""
 
-#: src/gui/widgets/qlineedit.cpp:1750 src/gui/text/qtextcontrol.cpp:1875
+#: src/gui/widgets/qlineedit.cpp:1750 src/gui/text/qtextcontrol.cpp:1870
 msgid "Select All"
 msgstr ""
 
@@ -1934,8 +1933,6 @@ msgid "Restore"
 msgstr ""
 
 #: src/gui/widgets/qmdisubwindow.cpp:309
-#: src/scripttools/debugging/qscriptbreakpointswidget.cpp:62
-#: src/scripttools/debugging/qscriptdebuggercodefinderwidget.cpp:122
 msgid "Close"
 msgstr ""
 
@@ -1988,7 +1985,7 @@ msgstr ""
 msgid "Step &down"
 msgstr ""
 
-#: src/gui/kernel/qwidget.cpp:4790
+#: src/gui/kernel/qwidget.cpp:4780
 msgid "*"
 msgstr ""
 
@@ -3439,91 +3436,91 @@ msgstr ""
 msgid "<empty>"
 msgstr ""
 
-#: src/gui/text/qfontdatabase.cpp:524
+#: src/gui/text/qfontdatabase.cpp:532
 msgctxt "QFontDatabase"
 msgid "Black"
 msgstr ""
 
-#: src/gui/text/qfontdatabase.cpp:526
+#: src/gui/text/qfontdatabase.cpp:534
 msgctxt "QFontDatabase"
 msgid "Bold"
 msgstr ""
 
-#: src/gui/text/qfontdatabase.cpp:528
+#: src/gui/text/qfontdatabase.cpp:536
 msgctxt "QFontDatabase"
 msgid "Demi Bold"
 msgstr ""
 
-#: src/gui/text/qfontdatabase.cpp:530
+#: src/gui/text/qfontdatabase.cpp:538
 msgctxt "QFontDatabase"
 msgid "Light"
 msgstr ""
 
-#: src/gui/text/qfontdatabase.cpp:534
+#: src/gui/text/qfontdatabase.cpp:542
 msgctxt "QFontDatabase"
 msgid "Italic"
 msgstr ""
 
-#: src/gui/text/qfontdatabase.cpp:536
+#: src/gui/text/qfontdatabase.cpp:544
 msgctxt "QFontDatabase"
 msgid "Oblique"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:1859
+#: src/gui/text/qtextcontrol.cpp:1854
 msgid "Copy &Link Location"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2772
+#: src/gui/text/qtextcontrol.cpp:2767
 msgctxt "QUnicodeControlCharacterMenu"
 msgid "LRM Left-to-right mark"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2773
+#: src/gui/text/qtextcontrol.cpp:2768
 msgctxt "QUnicodeControlCharacterMenu"
 msgid "RLM Right-to-left mark"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2774
+#: src/gui/text/qtextcontrol.cpp:2769
 msgctxt "QUnicodeControlCharacterMenu"
 msgid "ZWJ Zero width joiner"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2775
+#: src/gui/text/qtextcontrol.cpp:2770
 msgctxt "QUnicodeControlCharacterMenu"
 msgid "ZWNJ Zero width non-joiner"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2776
+#: src/gui/text/qtextcontrol.cpp:2771
 msgctxt "QUnicodeControlCharacterMenu"
 msgid "ZWSP Zero width space"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2777
+#: src/gui/text/qtextcontrol.cpp:2772
 msgctxt "QUnicodeControlCharacterMenu"
 msgid "LRE Start of left-to-right embedding"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2778
+#: src/gui/text/qtextcontrol.cpp:2773
 msgctxt "QUnicodeControlCharacterMenu"
 msgid "RLE Start of right-to-left embedding"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2779
+#: src/gui/text/qtextcontrol.cpp:2774
 msgctxt "QUnicodeControlCharacterMenu"
 msgid "LRO Start of left-to-right override"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2780
+#: src/gui/text/qtextcontrol.cpp:2775
 msgctxt "QUnicodeControlCharacterMenu"
 msgid "RLO Start of right-to-left override"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2781
+#: src/gui/text/qtextcontrol.cpp:2776
 msgctxt "QUnicodeControlCharacterMenu"
 msgid "PDF Pop directional formatting"
 msgstr ""
 
-#: src/gui/text/qtextcontrol.cpp:2787
+#: src/gui/text/qtextcontrol.cpp:2782
 msgid "Insert Unicode control character"
 msgstr ""
 
@@ -3554,27 +3551,26 @@ msgctxt "QHostInfo"
 msgid "Unknown address type"
 msgstr ""
 
-#: src/network/socket/qtcpserver.cpp:216
-#: src/network/socket/qabstractsocket.cpp:427
-msgid "Operation on socket is not supported"
-msgstr ""
-
-#: src/network/socket/qlocalserver_unix.cpp:186
+#: src/network/socket/qlocalserver_unix.cpp:190
 msgid "%1: Permission denied"
 msgstr ""
 
-#: src/network/socket/qlocalserver_unix.cpp:194
-#: src/network/socket/qlocalserver.cpp:199
+#: src/network/socket/qlocalserver_unix.cpp:198
+#: src/network/socket/qlocalserver.cpp:201
 msgid "%1: Name error"
 msgstr ""
 
-#: src/network/socket/qlocalserver_unix.cpp:198
+#: src/network/socket/qlocalserver_unix.cpp:202
 msgid "%1: Address in use"
 msgstr ""
 
-#: src/network/socket/qlocalserver_unix.cpp:203
+#: src/network/socket/qlocalserver_unix.cpp:207
 #: src/network/socket/qlocalsocket_unix.cpp:139
 msgid "%1: Unknown error %2"
+msgstr ""
+
+#: src/network/socket/qabstractsocket.cpp:427
+msgid "Operation on socket is not supported"
 msgstr ""
 
 #: src/network/socket/qabstractsocket.cpp:685
@@ -3582,12 +3578,12 @@ msgid "Host not found"
 msgstr ""
 
 #: src/network/socket/qabstractsocket.cpp:727
-#: src/network/socket/qabstractsocketengine.cpp:406
+#: src/network/socket/qabstractsocketengine.cpp:375
 msgid "Connection refused"
 msgstr ""
 
 #: src/network/socket/qabstractsocket.cpp:865
-#: src/network/socket/qabstractsocketengine.cpp:403
+#: src/network/socket/qabstractsocketengine.cpp:372
 msgid "Connection timed out"
 msgstr ""
 
@@ -3599,91 +3595,91 @@ msgstr ""
 msgid "Socket is not connected"
 msgstr ""
 
-#: src/network/socket/qabstractsocketengine.cpp:367
+#: src/network/socket/qabstractsocketengine.cpp:336
 msgid "Unable to initialize non-blocking socket"
 msgstr ""
 
-#: src/network/socket/qabstractsocketengine.cpp:370
+#: src/network/socket/qabstractsocketengine.cpp:339
 msgid "Unable to initialize broadcast socket"
 msgstr ""
 
-#: src/network/socket/qabstractsocketengine.cpp:373
+#: src/network/socket/qabstractsocketengine.cpp:342
 msgid "Attempt to use IPv6 socket on a platform with no IPv6 support"
 msgstr ""
 
-#: src/network/socket/qabstractsocketengine.cpp:376
+#: src/network/socket/qabstractsocketengine.cpp:345
 msgid "The remote host closed the connection"
 msgstr ""
 
-#: src/network/socket/qabstractsocketengine.cpp:379
+#: src/network/socket/qabstractsocketengine.cpp:348
 msgid "Network operation timed out"
 msgstr ""
 
-#: src/network/socket/qabstractsocketengine.cpp:382
+#: src/network/socket/qabstractsocketengine.cpp:351
 msgid "Out of resources"
 msgstr ""
 
-#: src/network/socket/qabstractsocketengine.cpp:385
+#: src/network/socket/qabstractsocketengine.cpp:354
 msgid "Unsupported socket operation"
 msgstr ""
 
-#: src/network/socket/qabstractsocketengine.cpp:388
+#: src/network/socket/qabstractsocketengine.cpp:357
 msgid "Protocol type not supported"
 msgstr ""
 
-#: src/network/socket/qabstractsocketengine.cpp:391
+#: src/network/socket/qabstractsocketengine.cpp:360
 msgid "Invalid socket descriptor"
 msgstr ""
 
-#: src/network/socket/qabstractsocketengine.cpp:394
+#: src/network/socket/qabstractsocketengine.cpp:363
 msgid "Host unreachable"
 msgstr ""
 
-#: src/network/socket/qabstractsocketengine.cpp:397
+#: src/network/socket/qabstractsocketengine.cpp:366
 msgid "Network unreachable"
 msgstr ""
 
-#: src/network/socket/qabstractsocketengine.cpp:400
+#: src/network/socket/qabstractsocketengine.cpp:369
 msgid "Permission denied"
 msgstr ""
 
-#: src/network/socket/qabstractsocketengine.cpp:409
+#: src/network/socket/qabstractsocketengine.cpp:378
 msgid "The bound address is already in use"
 msgstr ""
 
-#: src/network/socket/qabstractsocketengine.cpp:412
+#: src/network/socket/qabstractsocketengine.cpp:381
 msgid "The address is not available"
 msgstr ""
 
-#: src/network/socket/qabstractsocketengine.cpp:415
+#: src/network/socket/qabstractsocketengine.cpp:384
 msgid "The address is protected"
 msgstr ""
 
-#: src/network/socket/qabstractsocketengine.cpp:418
+#: src/network/socket/qabstractsocketengine.cpp:387
 msgid "Datagram was too large to send"
 msgstr ""
 
-#: src/network/socket/qabstractsocketengine.cpp:421
+#: src/network/socket/qabstractsocketengine.cpp:390
 msgid "Unable to send a message"
 msgstr ""
 
-#: src/network/socket/qabstractsocketengine.cpp:424
+#: src/network/socket/qabstractsocketengine.cpp:393
 msgid "Unable to receive a message"
 msgstr ""
 
-#: src/network/socket/qabstractsocketengine.cpp:427
+#: src/network/socket/qabstractsocketengine.cpp:396
 msgid "Unable to write"
 msgstr ""
 
-#: src/network/socket/qabstractsocketengine.cpp:430
+#: src/network/socket/qabstractsocketengine.cpp:399
 msgid "Network error"
 msgstr ""
 
-#: src/network/socket/qabstractsocketengine.cpp:433
+#: src/network/socket/qabstractsocketengine.cpp:402
 msgid "Another socket is already listening on the same port"
 msgstr ""
 
-#: src/network/socket/qabstractsocketengine.cpp:436
+#: src/network/socket/qabstractsocketengine.cpp:405
 msgid "Operation on non-socket"
 msgstr ""
 
@@ -3725,247 +3721,6 @@ msgstr ""
 
 #: src/network/socket/qudpsocket.cpp:174
 msgid "This platform does not support IPv6"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptedit.cpp:398
-#: src/scripttools/debugging/qscriptdebugger.cpp:1771
-msgid "Toggle Breakpoint"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptedit.cpp:400
-msgid "Disable Breakpoint"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptedit.cpp:401
-msgid "Enable Breakpoint"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptedit.cpp:405
-msgid "Breakpoint Condition:"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptbreakpointswidget.cpp:271
-msgid "New"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptdebuggerstackmodel.cpp:141
-msgctxt "QScriptDebuggerStackModel"
-msgid "Level"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptdebuggerstackmodel.cpp:143
-msgctxt "QScriptDebuggerStackModel"
-msgid "Name"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptdebuggerstackmodel.cpp:145
-msgctxt "QScriptDebuggerStackModel"
-msgid "Location"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptdebuggerlocalsmodel.cpp:876
-msgctxt "QScriptDebuggerLocalsModel"
-msgid "Name"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptdebuggerlocalsmodel.cpp:878
-msgctxt "QScriptDebuggerLocalsModel"
-msgid "Value"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptbreakpointsmodel.cpp:434
-msgctxt "QScriptBreakpointsModel"
-msgid "ID"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptbreakpointsmodel.cpp:436
-msgctxt "QScriptBreakpointsModel"
-msgid "Location"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptbreakpointsmodel.cpp:438
-msgctxt "QScriptBreakpointsModel"
-msgid "Condition"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptbreakpointsmodel.cpp:440
-msgctxt "QScriptBreakpointsModel"
-msgid "Ignore-count"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptbreakpointsmodel.cpp:442
-msgctxt "QScriptBreakpointsModel"
-msgid "Single-shot"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptbreakpointsmodel.cpp:444
-msgctxt "QScriptBreakpointsModel"
-msgid "Hit-count"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptdebugger.cpp:849
-#: src/scripttools/debugging/qscriptdebugger.cpp:1870
-msgid "Go to Line"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptdebugger.cpp:850
-msgid "Line:"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptdebugger.cpp:1636
-msgid "Interrupt"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptdebugger.cpp:1638
-msgid "Shift+F5"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptdebugger.cpp:1652
-msgid "F5"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptdebugger.cpp:1671
-msgid "Step Into"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptdebugger.cpp:1673
-msgid "F11"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptdebugger.cpp:1692
-msgid "Step Over"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptdebugger.cpp:1694
-msgid "F10"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptdebugger.cpp:1713
-msgid "Step Out"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptdebugger.cpp:1715
-msgid "Shift+F11"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptdebugger.cpp:1734
-msgid "Run to Cursor"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptdebugger.cpp:1736
-msgid "Ctrl+F10"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptdebugger.cpp:1756
-msgid "Run to New Script"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptdebugger.cpp:1772
-msgid "F9"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptdebugger.cpp:1786
-msgid "Clear Debug Output"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptdebugger.cpp:1799
-msgid "Clear Error Log"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptdebugger.cpp:1812
-msgid "Clear Console"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptdebugger.cpp:1824
-msgid "&Find in Script..."
-msgstr ""
-
-#: src/scripttools/debugging/qscriptdebugger.cpp:1825
-msgid "Ctrl+F"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptdebugger.cpp:1841
-msgid "Find &Next"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptdebugger.cpp:1843
-msgid "F3"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptdebugger.cpp:1855
-msgid "Find &Previous"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptdebugger.cpp:1857
-msgid "Shift+F3"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptdebugger.cpp:1871
-msgid "Ctrl+G"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptdebugger.cpp:1882
-msgid "Debug"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptenginedebugger.cpp:485
-msgid "Loaded Scripts"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptenginedebugger.cpp:491
-msgid "Breakpoints"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptenginedebugger.cpp:497
-msgid "Stack"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptenginedebugger.cpp:503
-msgid "Locals"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptenginedebugger.cpp:509
-msgid "Console"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptenginedebugger.cpp:515
-msgid "Debug Output"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptenginedebugger.cpp:521
-msgid "Error Log"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptenginedebugger.cpp:533
-msgid "Search"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptenginedebugger.cpp:540
-msgid "View"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptenginedebugger.cpp:558
-msgid "Katie Script Debugger"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptdebuggercodefinderwidget.cpp:135
-msgid "Previous"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptdebuggercodefinderwidget.cpp:142
-msgid "Next"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptdebuggercodefinderwidget.cpp:147
-msgid "Case Sensitive"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptdebuggercodefinderwidget.cpp:150
-msgid "Whole words"
-msgstr ""
-
-#: src/scripttools/debugging/qscriptdebuggercodefinderwidget.cpp:159
-msgid "Search wrapped"
 msgstr ""
 
 #: src/uitools/formbuilderextra.cpp:321

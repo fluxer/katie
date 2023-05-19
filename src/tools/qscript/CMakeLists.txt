@@ -1,6 +1,6 @@
 # add_definitions()
 set(EXTRA_QTSCRIPT_LIBS
-    KtCore KtScript KtGui KtScriptTools
+    KtCore KtScript KtGui
 )
 
 include_directories(
@@ -9,7 +9,6 @@ include_directories(
     ${CMAKE_BINARY_DIR}/include/QtCore
     ${CMAKE_BINARY_DIR}/include/QtScript
     ${CMAKE_BINARY_DIR}/include/QtGui
-    ${CMAKE_BINARY_DIR}/include/QtScriptTools
 )
 
 add_executable(qscript ${CMAKE_CURRENT_SOURCE_DIR}/qscript.cpp)

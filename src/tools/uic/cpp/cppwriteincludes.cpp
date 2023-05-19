@@ -379,7 +379,6 @@ static const struct ClassTblData {
     { QLatin1String("QScriptContextInfo"), QLatin1String("QtScript/qscriptcontextinfo.h") },
     { QLatin1String("QScriptEngine"), QLatin1String("QtScript/qscriptengine.h") },
     { QLatin1String("QScriptEngineAgent"), QLatin1String("QtScript/qscriptengineagent.h") },
-    { QLatin1String("QScriptEngineDebugger"), QLatin1String("QtScriptTools/qscriptenginedebugger.h") },
     { QLatin1String("QScriptExtensionInterface"), QLatin1String("QtScript/qscriptextensioninterface.h") },
     { QLatin1String("QScriptExtensionPlugin"), QLatin1String("QtScript/qscriptextensionplugin.h") },
     { QLatin1String("QScriptProgram"), QLatin1String("QtScript/qscriptprogram.h") },

@@ -97,7 +97,7 @@ endif()
 set(KATIE_TYPE SHARED CACHE STRING "Build type")
 
 # components and tools that will be build, changed depending on the requirements availability
-set(KATIE_COMPONENTS "Core Gui Declarative Network Svg Xml Script ScriptTools Test UiTools")
+set(KATIE_COMPONENTS "Core Gui Declarative Network Svg Xml Script Test UiTools")
 set(KATIE_TOOLS "moc uic qscript qtconfig")
 
 set(KATIE_HEADERS_PATH "${CMAKE_INSTALL_FULL_INCLUDEDIR}/katie" CACHE PATH "Headers installation path")
@@ -445,7 +445,6 @@ add_subdirectory(src/imports)
 add_subdirectory(src/network)
 add_subdirectory(src/plugins)
 add_subdirectory(src/script)
-add_subdirectory(src/scripttools)
 add_subdirectory(src/svg)
 add_subdirectory(src/test)
 add_subdirectory(src/uitools)

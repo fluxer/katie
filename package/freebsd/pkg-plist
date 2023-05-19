@@ -943,9 +943,6 @@ include/katie/QtScript/qscriptprogram.h
 include/katie/QtScript/qscriptstring.h
 include/katie/QtScript/qscriptvalue.h
 include/katie/QtScript/qscriptvalueiterator.h
-include/katie/QtScriptTools/QScriptEngineDebugger
-include/katie/QtScriptTools/QtScriptTools
-include/katie/QtScriptTools/qscriptenginedebugger.h
 include/katie/QtSvg/QSvgRenderer
 include/katie/QtSvg/QtSvg
 include/katie/QtSvg/qsvgrenderer.h

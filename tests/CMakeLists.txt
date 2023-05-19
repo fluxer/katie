@@ -13,7 +13,6 @@ include_directories(
     ${CMAKE_BINARY_DIR}/include/QtSvg
     ${CMAKE_BINARY_DIR}/include/QtXml
     ${CMAKE_BINARY_DIR}/include/QtScript
-    ${CMAKE_BINARY_DIR}/include/QtScriptTools
     ${CMAKE_BINARY_DIR}/include/QtTest
     ${CMAKE_BINARY_DIR}/include/QtUiTools
 )

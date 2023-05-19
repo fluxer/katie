@@ -1106,8 +1106,6 @@ Q_DECLARE_OPERATORS_FOR_FLAGS(Qt::ItemFlags)
 Q_DECLARE_OPERATORS_FOR_FLAGS(Qt::MatchFlags)
 Q_DECLARE_OPERATORS_FOR_FLAGS(Qt::TextInteractionFlags)
 
-typedef bool (*qInternalCallback)(void **);
-
 class Q_CORE_EXPORT QInternal {
 public:
     enum PaintDeviceFlags {
@@ -1125,11 +1123,6 @@ public:
         BottomDock,
         DockCount
     };
-
-    static void registerCallback(qInternalCallback);
-    static void unregisterCallback(qInternalCallback);
-
-    static bool activateCallbacks(void **);
 };
 
 QT_END_NAMESPACE
