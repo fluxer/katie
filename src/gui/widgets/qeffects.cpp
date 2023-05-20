@@ -44,9 +44,11 @@ public:
     QOpacityEffect(QWidget* w);
     ~QOpacityEffect();
 
+public slots:
+    void cancel();
+
 private slots:
     void fade();
-    void cancel();
 
 private:
     QPointer<QWidget> m_widget;
@@ -54,7 +56,7 @@ private:
     QElapsedTimer m_elapsedtimer;
 };
 
-static QOpacityEffect* q_opacity = nullptr;
+static QOpacityEffect* s_opacity = nullptr;
 
 QOpacityEffect::QOpacityEffect(QWidget* w)
     : QObject(w),
@@ -89,7 +91,7 @@ void QOpacityEffect::fade()
         if (m_widget) {
             m_widget->setWindowOpacity(1.0);
         }
-        q_opacity = nullptr;
+        s_opacity = nullptr;
         deleteLater();
     } else {
         m_widget->setWindowOpacity(alpha);
@@ -99,7 +101,7 @@ void QOpacityEffect::fade()
 void QOpacityEffect::cancel()
 {
     m_fadetimer.stop();
-    q_opacity = nullptr;
+    s_opacity = nullptr;
     deleteLater();
 }
 
@@ -108,16 +110,15 @@ void QOpacityEffect::cancel()
 */
 void qFadeEffect(QWidget* widget)
 {
-    if (q_opacity) {
-        q_opacity = nullptr;
-        q_opacity->deleteLater();
+    if (s_opacity) {
+        s_opacity->cancel();
     }
 
     if (!widget) {
         return;
     }
 
-    q_opacity = new QOpacityEffect(widget);
+    s_opacity = new QOpacityEffect(widget);
 }
 
 QT_END_NAMESPACE
