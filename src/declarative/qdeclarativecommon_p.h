@@ -39,7 +39,7 @@ inline static int qRoundDouble(const double d)
     return d >= double(0.0) ? int(d + double(0.5)) : int(d - int(d-1) + double(0.5)) + int(d-1);
 }
 
-DEFINE_BOOL_CONFIG_OPTION(stateChangeDebug, STATECHANGE_DEBUG)
+DEFINE_BOOL_CONFIG_OPTION(stateChangeDebug, QML_STATECHANGE_DEBUG)
 DEFINE_BOOL_CONFIG_OPTION(bindingsDump, QML_BINDINGS_DUMP)
 
 QT_END_NAMESPACE
