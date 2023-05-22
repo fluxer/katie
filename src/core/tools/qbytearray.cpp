@@ -246,13 +246,13 @@ quint32 qChecksum(const char *data, uint len)
 */
 QByteArray qRandomUuid()
 {
-    static const ushort randiterratio = (sizeof(int) / sizeof(uchar));
+    static const ushort randiterratio = (sizeof(int) / sizeof(char));
     Q_ASSERT(randiterratio > 1);
-    QSTACKARRAY(uchar, randombuf, 16);
-    uchar *randombufiter = randombuf;
+    QSTACKARRAY(char, randombuf, 16);
+    int *randombufiter = reinterpret_cast<int*>(randombuf);
     for (ushort i = 0; i < (16 / randiterratio); i++) {
         *randombufiter = qrand();
-        randombufiter += randiterratio;
+        randombufiter++;
     }
 
 #define UUID_TOHEX(bufi, randi) \
