@@ -1,7 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016 Ivailo Monev
+** Copyright (C) 2023 Ivailo Monev
 **
 ** This file is part of the QtGui module of the Katie Toolkit.
 **
@@ -23,65 +22,42 @@
 #include "qiodevice.h"
 #include "qvariant.h"
 #include "qimage.h"
-#include "qimage_p.h"
-#include "qdrawhelper_p.h"
 #include "qcorecommon_p.h"
-#include "qguicommon_p.h"
+#include "qdebug.h"
 
-#include <png.h>
-#include <pngconf.h>
+#include "spng/spng.h"
+
+// for reference:
+// https://www.w3.org/TR/PNG-Chunks.html
 
 QT_BEGIN_NAMESPACE
 
-#if Q_BYTE_ORDER == Q_BIG_ENDIAN
-#  define QFILLER_ORDER PNG_FILLER_BEFORE
-#else
-#  define QFILLER_ORDER PNG_FILLER_AFTER
-#endif
-
-/*
-  All PNG files load to the minimal QImage equivalent.
-
-  All QImage formats output to reasonably efficient PNG equivalents.
-  Never to grayscale.
-*/
-
-#if defined(Q_C_CALLBACKS)
-extern "C" {
-#endif
-
-static void qt_png_warning(png_structp /*png_ptr*/, png_const_charp message)
+int spng_read_proc(spng_ctx *ctx, void *user, void *dst_src, size_t length)
 {
-    qWarning("libpng warning: %s", message);
-}
-
-static void qt_png_read(png_structp png_ptr, png_bytep data, png_size_t length)
-{
-    QPngHandler *handler = (QPngHandler *)png_get_io_ptr(png_ptr);
-
-    png_size_t nr = handler->device()->read((char*)data, length);
-    if (nr != length) {
-        png_error(png_ptr, "Read error");
+    // qDebug() << Q_FUNC_INFO << length;
+    Q_UNUSED(ctx);
+    QIODevice* iodevice = static_cast<QIODevice*>(user);
+    char* dst = static_cast<char*>(dst_src);
+    const qint64 result = iodevice->read(dst, length);
+    if (result <= 0) {
+        return SPNG_IO_ERROR;
     }
+    return SPNG_OK;
 }
 
-static void qt_png_write(png_structp png_ptr, png_bytep data, png_size_t length)
+int spng_write_proc(spng_ctx *ctx, void *user, void *dst_src, size_t length)
 {
-    QPngHandler *handler = (QPngHandler *)png_get_io_ptr(png_ptr);
-
-    png_size_t nr = handler->device()->write((char*)data, length);
-    if (nr != length) {
-        png_error(png_ptr, "Write error");
+    // qDebug() << Q_FUNC_INFO << length;
+    Q_UNUSED(ctx);
+    QIODevice* iodevice = static_cast<QIODevice*>(user);
+    char* src = static_cast<char*>(dst_src);
+    const qint64 result = iodevice->write(src, length);
+    if (result <= 0) {
+        return SPNG_IO_ERROR;
     }
+    return SPNG_OK;
 }
 
-static void qt_png_flush(png_structp /* png_ptr */)
-{
-}
-
-#if defined(Q_C_CALLBACKS)
-}
-#endif
 
 QPngHandler::QPngHandler()
     : m_compression(1)
@@ -108,169 +84,111 @@ bool QPngHandler::read(QImage *image)
         return false;
     }
 
-    png_struct *png_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING, 0, 0, 0);
-    if (!png_ptr) {
+    spng_ctx *spngctx = spng_ctx_new(static_cast<spng_ctx_flags>(0));
+    if (Q_UNLIKELY(!spngctx)) {
+        qWarning("QPngHandler::read() Could not create context");
         return false;
     }
 
-    png_set_error_fn(png_ptr, 0, 0, qt_png_warning);
-
-    png_info *info_ptr = png_create_info_struct(png_ptr);
-    if (!info_ptr) {
-        png_destroy_read_struct(&png_ptr, 0, 0);
+    int spngresult = spng_set_png_stream(spngctx, spng_read_proc, device());
+    if (Q_UNLIKELY(spngresult != SPNG_OK)) {
+        qWarning("QPngHandler::read() Could not set stream: %s", spng_strerror(spngresult));
+        spng_ctx_free(spngctx);
         return false;
     }
 
-    png_info *end_info = png_create_info_struct(png_ptr);
-    if (!end_info) {
-        png_destroy_read_struct(&png_ptr, &info_ptr, 0);
+    struct spng_ihdr spngihdr;
+    ::memset(&spngihdr, 0, sizeof(struct spng_ihdr));
+    spngresult = spng_get_ihdr(spngctx, &spngihdr);
+    if (Q_UNLIKELY(spngresult != SPNG_OK)) {
+        qWarning("QPngHandler::read() Could not get IHDR: %s", spng_strerror(spngresult));
+        spng_ctx_free(spngctx);
         return false;
     }
 
-    if (setjmp(png_jmpbuf(png_ptr))) {
-        png_destroy_read_struct(&png_ptr, &info_ptr, &end_info);
-        return false;
-    }
-
-    png_set_read_fn(png_ptr, this, qt_png_read);
-    png_read_info(png_ptr, info_ptr);
-
-    png_uint_32 width = 0;
-    png_uint_32 height = 0;
-    int bit_depth;
-    int color_type;
-    png_get_IHDR(png_ptr, info_ptr, &width, &height, &bit_depth, &color_type, 0, 0, 0);
-    const int passes = png_set_interlace_handling(png_ptr);
-
-    if (bit_depth == 16) {
-        png_set_strip_16(png_ptr);
-    }
-
-    png_set_expand(png_ptr);
-
-    if (color_type == PNG_COLOR_TYPE_GRAY || color_type == PNG_COLOR_TYPE_GRAY_ALPHA) {
-        png_set_gray_to_rgb(png_ptr);
-    } else if (color_type == PNG_COLOR_TYPE_PALETTE) {
-        png_set_palette_to_rgb(png_ptr);
-    }
-
-    QImage::Format format = QImage::Format_ARGB32;
-    // Only add filler if no alpha, or we can get 5 channel data.
-    if (!(color_type & PNG_COLOR_MASK_ALPHA)
-        && !png_get_valid(png_ptr, info_ptr, PNG_INFO_tRNS)) {
-        png_set_filler(png_ptr, 0xff, QFILLER_ORDER);
-        // We want 4 bytes, but it isn't an alpha channel
-        format = QImage::Format_RGB32;
-    }
-    *image = QImage(width, height, format);
+    *image = QImage(spngihdr.width, spngihdr.height, QImage::Format_ARGB32);
     if (image->isNull()) {
-        png_destroy_read_struct(&png_ptr, &info_ptr, &end_info);
         return false;
     }
 
-#if Q_BYTE_ORDER == Q_BIG_ENDIAN
-    png_set_swap_alpha(png_ptr);
-#endif
-
-    png_read_update_info(png_ptr, info_ptr);
-
-    // Qt==ARGB==Big(ARGB)==Little(BGRA)
-#if Q_BYTE_ORDER == Q_LITTLE_ENDIAN
-    png_set_bgr(png_ptr);
-#endif
-
-    uchar *data = image->d->data;
-    const int bpl = image->bytesPerLine();
-    for (int p = 0; p < passes; p++) {
-        for (uint y = 0; y < height; y++) {
-            png_read_row(png_ptr, QFAST_SCAN_LINE(data, bpl, y), NULL);
-        }
+    spngresult = spng_decode_image(
+        spngctx,
+        image->bits(), image->byteCount(),
+        SPNG_FMT_RGBA8,
+        SPNG_DECODE_TRNS
+    );
+    if (Q_UNLIKELY(spngresult != SPNG_OK)) {
+        qWarning("QPngHandler::read() Could not decode image: %s", spng_strerror(spngresult));
+        spng_ctx_free(spngctx);
+        return false;
     }
 
-    image->d->dpmx = png_get_x_pixels_per_meter(png_ptr, info_ptr);
-    image->d->dpmy = png_get_y_pixels_per_meter(png_ptr, info_ptr);
-
-    png_read_end(png_ptr, end_info);
-
-    png_destroy_read_struct(&png_ptr, &info_ptr, &end_info);
-
+    *image = image->rgbSwapped();
+    spng_ctx_free(spngctx);
     return true;
 }
 
 bool QPngHandler::write(const QImage &image)
 {
-    QImage copy = image.convertToFormat(image.hasAlphaChannel() ? QImage::Format_ARGB32 : QImage::Format_RGB32);
-    const int height = copy.height();
+    QImage copy = image.convertToFormat(QImage::Format_ARGB32);
+    copy = copy.rgbSwapped();
 
-    png_structp png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING, 0, 0, 0);
-    if (!png_ptr) {
+    spng_ctx *spngctx = spng_ctx_new(SPNG_CTX_ENCODER);
+    if (Q_UNLIKELY(!spngctx)) {
+        qWarning("QPngHandler::write() Could not create context");
         return false;
     }
 
-    png_set_error_fn(png_ptr, 0, 0, qt_png_warning);
-
-    png_infop info_ptr = png_create_info_struct(png_ptr);
-    if (!info_ptr) {
-        png_destroy_write_struct(&png_ptr, 0);
+    int spngresult = spng_set_png_stream(spngctx, spng_write_proc, device());
+    if (Q_UNLIKELY(spngresult != SPNG_OK)) {
+        qWarning("QPngHandler::write() Could not set stream: %s", spng_strerror(spngresult));
+        spng_ctx_free(spngctx);
         return false;
     }
 
-    if (setjmp(png_jmpbuf(png_ptr))) {
-        png_destroy_write_struct(&png_ptr, &info_ptr);
+    struct spng_ihdr spngihdr; 
+    ::memset(&spngihdr, 0, sizeof(struct spng_ihdr));
+    spngihdr.width = copy.width();
+    spngihdr.height = copy.height();
+    spngihdr.bit_depth = 8;
+    spngihdr.color_type = SPNG_COLOR_TYPE_TRUECOLOR_ALPHA;
+    spngihdr.compression_method = 0; // no enum for it
+    spngihdr.filter_method = SPNG_FILTER_NONE;
+    spngihdr.interlace_method = SPNG_INTERLACE_NONE;
+    spngresult = spng_set_ihdr(spngctx, &spngihdr);
+    if (Q_UNLIKELY(spngresult != SPNG_OK)) {
+        qWarning("QPngHandler::write() Could not set IHDR: %s", spng_strerror(spngresult));
+        spng_ctx_free(spngctx);
         return false;
     }
 
-    png_set_write_fn(png_ptr, (void*)this, qt_png_write, qt_png_flush);
-
-    int color_type = 0;
-    if (copy.hasAlphaChannel()) {
-        color_type = PNG_COLOR_TYPE_RGB_ALPHA;
-    } else {
-        color_type = PNG_COLOR_TYPE_RGB;
+    spngresult = spng_set_option(spngctx, SPNG_IMG_COMPRESSION_LEVEL, m_compression);
+    if (Q_UNLIKELY(spngresult != SPNG_OK)) {
+        qWarning("QPngHandler::write() Could not set image compression level: %s", spng_strerror(spngresult));
+        spng_ctx_free(spngctx);
+        return false;
+    }
+    
+    spngresult = spng_set_option(spngctx, SPNG_TEXT_COMPRESSION_LEVEL, m_compression);
+    if (Q_UNLIKELY(spngresult != SPNG_OK)) {
+        qWarning("QPngHandler::write() Could not set text compression level: %s", spng_strerror(spngresult));
+        spng_ctx_free(spngctx);
+        return false;
     }
 
-    png_set_IHDR(png_ptr, info_ptr, copy.width(), height,
-                 8, // per channel
-                 color_type, 0, 0, 0);       // sets #channels
-
-    png_color_8 sig_bit;
-    sig_bit.red = 8;
-    sig_bit.green = 8;
-    sig_bit.blue = 8;
-    sig_bit.alpha = copy.hasAlphaChannel() ? 8 : 0;
-    png_set_sBIT(png_ptr, info_ptr, &sig_bit);
-    png_set_compression_level(png_ptr, m_compression);
-
-#if Q_BYTE_ORDER == Q_BIG_ENDIAN
-    // Swap ARGB to RGBA (normal PNG format) before saving on
-    // BigEndian machines
-    png_set_swap_alpha(png_ptr);
-#elif Q_BYTE_ORDER == Q_LITTLE_ENDIAN
-    // Qt==ARGB==Big(ARGB)==Little(BGRA). But RGB888 is RGB regardless
-    png_set_bgr(png_ptr);
-#endif
-
-    if (copy.dotsPerMeterX() > 0 || copy.dotsPerMeterY() > 0) {
-        png_set_pHYs(png_ptr, info_ptr,
-                copy.dotsPerMeterX(), copy.dotsPerMeterY(),
-                PNG_RESOLUTION_METER);
+    spngresult = spng_encode_image(
+        spngctx,
+        copy.constBits(), copy.byteCount(),
+        SPNG_FMT_PNG,
+        SPNG_ENCODE_FINALIZE
+    );
+    if (Q_UNLIKELY(spngresult != SPNG_OK)) {
+        qWarning("QPngHandler::write() Could not encode image: %s", spng_strerror(spngresult));
+        spng_ctx_free(spngctx);
+        return false;
     }
 
-    png_write_info(png_ptr, info_ptr);
-
-    png_set_packing(png_ptr);
-
-    if (color_type == PNG_COLOR_TYPE_RGB) {
-        png_set_filler(png_ptr, 0, QFILLER_ORDER);
-    }
-
-    for (int y = 0; y < height; y++) {
-        png_write_row(png_ptr, (png_const_bytep)copy.constScanLine(y));
-    }
-    png_write_end(png_ptr, info_ptr);
-
-    png_destroy_write_struct(&png_ptr, &info_ptr);
-
+    spng_ctx_free(spngctx);
     return true;
 }
 
@@ -305,8 +223,9 @@ bool QPngHandler::canRead(QIODevice *device)
     }
 
     QSTACKARRAY(char, head, 8);
-    if (device->peek(head, sizeof(head)) != sizeof(head))
+    if (device->peek(head, sizeof(head)) != sizeof(head)) {
         return false;
+    }
 
     static const uchar pngheader[]
         = { 0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a };

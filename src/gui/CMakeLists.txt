@@ -1,9 +1,9 @@
-add_definitions(${PNG_DEFINITIONS})
+# add_definitions()
 set(EXTRA_GUI_LIBS
     KtCore KtXml
     ${FREETYPE_LIBRARIES}
     ${X11_X11_LIB}
-    ${PNG_LIBRARIES}
+    ${ZLIB_LIBRARIES}
 )
 
 set(GUI_PUBLIC_HEADERS
@@ -203,9 +203,10 @@ include_directories(
     ${CMAKE_BINARY_DIR}/include/QtCore
     ${CMAKE_BINARY_DIR}/include/QtXml
     ${CMAKE_BINARY_DIR}/include/QtGui
+    ${ZLIB_INCLUDE_DIRS}
     ${FREETYPE_INCLUDE_DIRS}
     ${X11_INCLUDE_DIR}
-    ${PNG_INCLUDE_DIRS}
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/libspng
 )
 
 set(GUI_HEADERS
@@ -850,6 +851,7 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qtoolbararealayout.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qplaintextedit.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qprintpreviewwidget.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/libspng/spng/spng.c
 )
 
 # keep in sync with the top-level CMake file, only libraries setup is needed here

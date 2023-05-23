@@ -191,11 +191,11 @@ set_package_properties(Threads PROPERTIES
     TYPE REQUIRED
 )
 
-find_package(PNG)
-set_package_properties(PNG PROPERTIES
+find_package(ZLIB)
+set_package_properties(ZLIB PROPERTIES
     PURPOSE "PNG format handler"
-    DESCRIPTION "A collection of routines used to create PNG format graphics files"
-    URL "http://www.libpng.org/pub/png/libpng.html"
+    DESCRIPTION "A Massively Spiffy Yet Delicately Unobtrusive Compression Library"
+    URL "https://zlib.net"
     TYPE REQUIRED
 )
 
