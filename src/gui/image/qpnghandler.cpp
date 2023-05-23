@@ -106,6 +106,15 @@ bool QPngHandler::read(QImage *image)
         return false;
     }
 
+    struct spng_phys spngphys;
+    ::memset(&spngphys, 0, sizeof(struct spng_phys));
+    spngresult = spng_get_phys(spngctx, &spngphys);
+    if (Q_UNLIKELY(spngresult != SPNG_OK)) {
+        qWarning("QPngHandler::read() Could not get pHYs: %s", spng_strerror(spngresult));
+        spng_ctx_free(spngctx);
+        return false;
+    }
+
     *image = QImage(spngihdr.width, spngihdr.height, QImage::Format_ARGB32);
     if (image->isNull()) {
         return false;
@@ -123,6 +132,8 @@ bool QPngHandler::read(QImage *image)
         return false;
     }
 
+    image->setDotsPerMeterX(spngphys.ppu_x);
+    image->setDotsPerMeterY(spngphys.ppu_y);
     *image = image->rgbSwapped();
     spng_ctx_free(spngctx);
     return true;
@@ -162,16 +173,21 @@ bool QPngHandler::write(const QImage &image)
         return false;
     }
 
-    spngresult = spng_set_option(spngctx, SPNG_IMG_COMPRESSION_LEVEL, m_compression);
+    struct spng_phys spngphys;
+    ::memset(&spngphys, 0, sizeof(struct spng_phys));
+    spngphys.ppu_x = copy.dotsPerMeterX();
+    spngphys.ppu_y = copy.dotsPerMeterY();
+    spngphys.unit_specifier = 0; // no enum for it
+    spngresult = spng_set_phys(spngctx, &spngphys);
     if (Q_UNLIKELY(spngresult != SPNG_OK)) {
-        qWarning("QPngHandler::write() Could not set image compression level: %s", spng_strerror(spngresult));
+        qWarning("QPngHandler::write() Could not set pHYs: %s", spng_strerror(spngresult));
         spng_ctx_free(spngctx);
         return false;
     }
-    
-    spngresult = spng_set_option(spngctx, SPNG_TEXT_COMPRESSION_LEVEL, m_compression);
+
+    spngresult = spng_set_option(spngctx, SPNG_IMG_COMPRESSION_LEVEL, m_compression);
     if (Q_UNLIKELY(spngresult != SPNG_OK)) {
-        qWarning("QPngHandler::write() Could not set text compression level: %s", spng_strerror(spngresult));
+        qWarning("QPngHandler::write() Could not set image compression level: %s", spng_strerror(spngresult));
         spng_ctx_free(spngctx);
         return false;
     }
