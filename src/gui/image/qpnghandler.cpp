@@ -50,7 +50,7 @@ int spng_write_proc(spng_ctx *ctx, void *user, void *dst_src, size_t length)
     // qDebug() << Q_FUNC_INFO << length;
     Q_UNUSED(ctx);
     QIODevice* iodevice = static_cast<QIODevice*>(user);
-    char* src = static_cast<char*>(dst_src);
+    const char* src = static_cast<char*>(dst_src);
     const qint64 result = iodevice->write(src, length);
     if (result <= 0) {
         return SPNG_IO_ERROR;
@@ -109,7 +109,7 @@ bool QPngHandler::read(QImage *image)
     struct spng_phys spngphys;
     ::memset(&spngphys, 0, sizeof(struct spng_phys));
     spngresult = spng_get_phys(spngctx, &spngphys);
-    if (Q_UNLIKELY(spngresult != SPNG_OK)) {
+    if (Q_UNLIKELY(spngresult != SPNG_OK && spngresult != SPNG_ECHUNKAVAIL)) {
         qWarning("QPngHandler::read() Could not get pHYs: %s", spng_strerror(spngresult));
         spng_ctx_free(spngctx);
         return false;
