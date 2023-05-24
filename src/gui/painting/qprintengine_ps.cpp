@@ -142,8 +142,8 @@ static QByteArray wrapDSC(const QByteArray &str)
 
 // ----------------------------- Internal class declarations -----------------------------
 
-QPSPrintEnginePrivate::QPSPrintEnginePrivate(QPrinter::PrinterMode m)
-    : QPdfBaseEnginePrivate(m),
+QPSPrintEnginePrivate::QPSPrintEnginePrivate()
+    : QPdfBaseEnginePrivate(),
       printerState(QPrinter::Idle), hugeDocument(false), headerDone(false)
 {
     useAlphaEngine = false;
@@ -562,8 +562,8 @@ void QPSPrintEnginePrivate::flushPage(bool last)
 
 // ================ PSPrinter class ========================
 
-QPSPrintEngine::QPSPrintEngine(QPrinter::PrinterMode m)
-    : QPdfBaseEngine(*(new QPSPrintEnginePrivate(m)),
+QPSPrintEngine::QPSPrintEngine()
+    : QPdfBaseEngine(*(new QPSPrintEnginePrivate()),
                      PatternTransform
                      | PixmapTransform
                      | PainterPaths

@@ -40,9 +40,7 @@ public:
         PdmNumColors,
         PdmDepth,
         PdmDpiX,
-        PdmDpiY,
-        PdmPhysicalDpiX,
-        PdmPhysicalDpiY
+        PdmDpiY
     };
 
     virtual ~QPaintDevice();
@@ -59,8 +57,6 @@ public:
     int heightMM() const { return metric(PdmHeightMM); }
     int logicalDpiX() const { return metric(PdmDpiX); }
     int logicalDpiY() const { return metric(PdmDpiY); }
-    int physicalDpiX() const { return metric(PdmPhysicalDpiX); }
-    int physicalDpiY() const { return metric(PdmPhysicalDpiY); }
     int colorCount() const { return metric(PdmNumColors); }
     int depth() const { return metric(PdmDepth); }
 

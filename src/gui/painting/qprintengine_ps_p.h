@@ -55,7 +55,7 @@ class QPSPrintEngine : public QPdfBaseEngine
     Q_DECLARE_PRIVATE(QPSPrintEngine)
 public:
     // QPrinter uses these
-    explicit QPSPrintEngine(QPrinter::PrinterMode m);
+    QPSPrintEngine();
     ~QPSPrintEngine();
 
 
@@ -85,7 +85,7 @@ private:
 
 class QPSPrintEnginePrivate : public QPdfBaseEnginePrivate {
 public:
-    QPSPrintEnginePrivate(QPrinter::PrinterMode m);
+    QPSPrintEnginePrivate();
     ~QPSPrintEnginePrivate();
 
     void emitHeader(bool finished);

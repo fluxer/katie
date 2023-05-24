@@ -3201,12 +3201,10 @@ int QImage::metric(PaintDeviceMetric metric) const
         case QPaintDevice::PdmDepth: {
             return d->depth;
         }
-        case QPaintDevice::PdmDpiX:
-        case QPaintDevice::PdmPhysicalDpiX: {
+        case QPaintDevice::PdmDpiX: {
             return QX11Info::appDpiX();
         }
-        case QPaintDevice::PdmDpiY:
-        case QPaintDevice::PdmPhysicalDpiY: {
+        case QPaintDevice::PdmDpiY: {
             return QX11Info::appDpiY();
         }
     }

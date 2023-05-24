@@ -239,11 +239,9 @@ int QPixmapData::metric(QPaintDevice::PaintDeviceMetric metric) const
         return 0;
     case QPaintDevice::PdmDepth:
         return depth();
-    case QPaintDevice::PdmDpiX: // fall-through
-    case QPaintDevice::PdmPhysicalDpiX:
+    case QPaintDevice::PdmDpiX:
         return QX11Info::appDpiX();
-    case QPaintDevice::PdmDpiY: // fall-through
-    case QPaintDevice::PdmPhysicalDpiY:
+    case QPaintDevice::PdmDpiY:
         return QX11Info::appDpiY();
     }
 

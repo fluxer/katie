@@ -2624,14 +2624,12 @@ int QWidget::metric(PaintDeviceMetric m) const
         int scr = d->xinfo.screen();
         switch (m) {
             case PdmDpiX:
-            case PdmPhysicalDpiX:
                 if (d->parent)
                     val = static_cast<QWidget *>(d->parent)->metric(m);
                 else
                     val = QX11Info::appDpiX(scr);
                 break;
             case PdmDpiY:
-            case PdmPhysicalDpiY:
                 if (d->parent)
                     val = static_cast<QWidget *>(d->parent)->metric(m);
                 else

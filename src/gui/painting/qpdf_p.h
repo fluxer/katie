@@ -154,7 +154,6 @@ class QPdfBaseEngine : public QAlphaPaintEngine, public QPrintEngine
     Q_DECLARE_PRIVATE(QPdfBaseEngine)
 public:
     QPdfBaseEngine(QPdfBaseEnginePrivate &d, PaintEngineFeatures f);
-    ~QPdfBaseEngine() {}
 
     // reimplementations QPaintEngine
     bool begin(QPaintDevice *pdev);
@@ -190,7 +189,7 @@ class QPdfBaseEnginePrivate : public QAlphaPaintEnginePrivate
 {
     Q_DECLARE_PUBLIC(QPdfBaseEngine)
 public:
-    QPdfBaseEnginePrivate(QPrinter::PrinterMode m);
+    QPdfBaseEnginePrivate();
     ~QPdfBaseEnginePrivate();
 
     bool openPrintDevice();

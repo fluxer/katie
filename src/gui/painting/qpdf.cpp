@@ -1160,10 +1160,6 @@ int QPdfBaseEngine::metric(QPaintDevice::PaintDeviceMetric metricType) const
     case QPaintDevice::PdmDpiY:
         val = d->resolution;
         break;
-    case QPaintDevice::PdmPhysicalDpiX:
-    case QPaintDevice::PdmPhysicalDpiY:
-        val = 1200;
-        break;
     case QPaintDevice::PdmWidthMM:
         val = qRound(r.width()*25.4/d->resolution);
         break;
@@ -1376,7 +1372,7 @@ QVariant QPdfBaseEngine::property(PrintEnginePropertyKey key) const
     return ret;
 }
 
-QPdfBaseEnginePrivate::QPdfBaseEnginePrivate(QPrinter::PrinterMode m)
+QPdfBaseEnginePrivate::QPdfBaseEnginePrivate()
     : clipEnabled(false), allClipped(false), hasPen(true), hasBrush(false), simplePen(false),
       useAlphaEngine(false),
       outDevice(0), fd(-1),
@@ -1386,12 +1382,7 @@ QPdfBaseEnginePrivate::QPdfBaseEnginePrivate(QPrinter::PrinterMode m)
       hasCustomPageMargins(false),
       leftMargin(0), topMargin(0), rightMargin(0), bottomMargin(0)
 {
-    resolution = 72;
-    if (m == QPrinter::HighResolution)
-        resolution = 1200;
-    else if (m == QPrinter::ScreenResolution)
-        resolution = QX11Info::appDpiY();
-
+    resolution = QX11Info::appDpiY();
     postscript = false;
     currentObject = 1;
     currentPage = 0;

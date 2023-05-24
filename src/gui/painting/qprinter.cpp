@@ -125,7 +125,7 @@ QSizeF qt_printerPaperSize(QPrinter::Orientation orientation,
 
 void QPrinterPrivate::createDefaultEngines()
 {
-    QPSPrintEngine *psEngine = new QPSPrintEngine(printerMode);
+    QPSPrintEngine *psEngine = new QPSPrintEngine();
     paintEngine = psEngine;
     printEngine = psEngine;
     use_default_engine = true;
@@ -247,39 +247,6 @@ void QPrinterPrivate::addToManualSetList(QPrintEngine::PrintEnginePropertyKey ke
     \value Active
     \value Aborted
     \value Error
-*/
-
-/*!
-    \enum QPrinter::PrinterMode
-
-    This enum describes the mode the printer should work in. It
-    basically presets a certain resolution and working mode.
-
-    \value ScreenResolution Sets the resolution of the print device to
-    the screen resolution. This has the big advantage that the results
-    obtained when painting on the printer will match more or less
-    exactly the visible output on the screen. It is the easiest to
-    use, as font metrics on the screen and on the printer are the
-    same. This is the default value. ScreenResolution will produce a
-    lower quality output than HighResolution and should only be used
-    for drafts.
-
-    \value PrinterResolution This value is deprecated. Is is
-    equivalent to ScreenResolution on Unix and HighResolution on
-    Windows and Mac. Due do the difference between ScreenResolution
-    and HighResolution, use of this value may lead to non-portable
-    printer code.
-
-    \value HighResolution On Windows, sets the printer resolution to that
-    defined for the printer in use. For PostScript printing, sets the
-    resolution of the PostScript driver to 1200 dpi.
-
-    \note When rendering text on a QPrinter device, it is important
-    to realize that the size of text, when specified in points, is
-    independent of the resolution specified for the device itself.
-    Therefore, it may be useful to specify the font size in pixels
-    when combining text with graphics to ensure that their relative
-    sizes are what you expect.
 */
 
 /*!
@@ -491,13 +458,13 @@ void QPrinterPrivate::addToManualSetList(QPrintEngine::PrintEnginePropertyKey ke
 */
 
 /*!
-    Creates a new printer object with the given \a mode.
+    Creates a new printer object.
 */
-QPrinter::QPrinter(PrinterMode mode)
+QPrinter::QPrinter()
     : QPaintDevice(),
       d_ptr(new QPrinterPrivate(this))
 {
-    init(mode);
+    init();
     QPrinterInfo defPrn(QPrinterInfo::defaultPrinter());
     if (!defPrn.isNull()) {
         setPrinterName(defPrn.printerName());
@@ -507,17 +474,17 @@ QPrinter::QPrinter(PrinterMode mode)
 /*!
     \since 4.4
 
-    Creates a new printer object with the given \a printer and \a mode.
+    Creates a new printer object with the given \a printer.
 */
-QPrinter::QPrinter(const QPrinterInfo& printer, PrinterMode mode)
+QPrinter::QPrinter(const QPrinterInfo& printer)
     : QPaintDevice(),
       d_ptr(new QPrinterPrivate(this))
 {
-    init(mode);
+    init();
     setPrinterName(printer.printerName());
 }
 
-void QPrinter::init(PrinterMode mode)
+void QPrinter::init()
 {
     if (Q_UNLIKELY(!qApp || QApplication::type() != QApplication::Gui)) {
         qFatal("QPrinter: Must construct a QApplication before a QPaintDevice");
@@ -525,7 +492,6 @@ void QPrinter::init(PrinterMode mode)
     }
     Q_D(QPrinter);
 
-    d->printerMode = mode;
     d->createDefaultEngines();
 
 #ifndef QT_NO_PRINTPREVIEWWIDGET
@@ -1428,7 +1394,7 @@ QPrintEngine *QPrinter::printEngine() const
 
     For X11 where all printing is directly to postscript, this
     function will always return a one item list containing only the
-    postscript resolution, i.e., 72 (72 dpi -- but see PrinterMode).
+    postscript resolution, i.e., 72 (72 dpi).
 */
 QList<int> QPrinter::supportedResolutions() const
 {

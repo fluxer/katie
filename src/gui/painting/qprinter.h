@@ -46,10 +46,8 @@ class Q_GUI_EXPORT QPrinter : public QPaintDevice
 {
     Q_DECLARE_PRIVATE(QPrinter)
 public:
-    enum PrinterMode { ScreenResolution, PrinterResolution, HighResolution };
-
-    explicit QPrinter(PrinterMode mode = ScreenResolution);
-    explicit QPrinter(const QPrinterInfo& printer, PrinterMode mode = ScreenResolution);
+    QPrinter();
+    explicit QPrinter(const QPrinterInfo& printer);
     ~QPrinter();
 
     int devType() const;
@@ -202,7 +200,7 @@ protected:
     void setEngines(QPrintEngine *printEngine, QPaintEngine *paintEngine);
 
 private:
-    void init(PrinterMode mode);
+    void init();
 
     Q_DISABLE_COPY(QPrinter)
 

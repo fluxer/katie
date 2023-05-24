@@ -85,7 +85,6 @@ public:
 
     void addToManualSetList(QPrintEngine::PrintEnginePropertyKey key);
 
-    QPrinter::PrinterMode printerMode;
     QPrintEngine *printEngine;
     QPaintEngine *paintEngine;
 

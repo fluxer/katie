@@ -58,12 +58,8 @@
 
     The logicalDpiX() and logicalDpiY() functions return the
     horizontal and vertical resolution of the device in dots per
-    inch. The physicalDpiX() and physicalDpiY() functions also return
-    the resolution of the device in dots per inch, but note that if
-    the logical and physical resolution differ, the corresponding
-    QPaintEngine must handle the mapping. Finally, the colorCount()
-    function returns the number of different colors available for the
-    paint device.
+    inch. Finally, the colorCount() function returns the number of
+    different colors available for the paint device.
 
     \sa QPaintEngine, QPainter, {Coordinate System}, {Paint System}
 */
@@ -98,12 +94,6 @@
 
     \value PdmDpiY  The vertical resolution of the device in dots per inch. See
     also logicalDpiY().
-
-    \value PdmPhysicalDpiX The horizontal resolution of the device in
-    dots per inch. See also physicalDpiX().
-
-    \value PdmPhysicalDpiY The vertical resolution of the device in
-    dots per inch. See also physicalDpiY().
 
     \sa metric()
 */
@@ -217,10 +207,7 @@
     which is used when computing font sizes. For X11, this is usually
     the same as could be computed from widthMM().
 
-    Note that if the logicalDpiX() doesn't equal the physicalDpiX(),
-    the corresponding QPaintEngine must handle the resolution mapping.
-
-    \sa logicalDpiY(), physicalDpiX()
+    \sa logicalDpiY()
 */
 
 /*!
@@ -230,36 +217,5 @@
     which is used when computing font sizes. For X11, this is usually
     the same as could be computed from heightMM().
 
-    Note that if the logicalDpiY() doesn't equal the physicalDpiY(),
-    the corresponding QPaintEngine must handle the resolution mapping.
-
-    \sa  logicalDpiX(), physicalDpiY()
-*/
-
-/*!
-    \fn int QPaintDevice::physicalDpiX() const
-
-    Returns the horizontal resolution of the device in dots per inch.
-    For example, when printing, this resolution refers to the physical
-    printer's resolution. The logical DPI on the other hand, refers to
-    the resolution used by the actual paint engine.
-
-    Note that if the physicalDpiX() doesn't equal the logicalDpiX(),
-    the corresponding QPaintEngine must handle the resolution mapping.
-
-    \sa  physicalDpiY(),  logicalDpiX()
-*/
-
-/*!
-    \fn int QPaintDevice::physicalDpiY() const
-
-    Returns the horizontal resolution of the device in dots per inch.
-    For example, when printing, this resolution refers to the physical
-    printer's resolution. The logical DPI on the other hand, refers to
-    the resolution used by the actual paint engine.
-
-    Note that if the physicalDpiY() doesn't equal the logicalDpiY(),
-    the corresponding QPaintEngine must handle the resolution mapping.
-
-    \sa  physicalDpiX(),  logicalDpiY()
+    \sa  logicalDpiX()
 */
