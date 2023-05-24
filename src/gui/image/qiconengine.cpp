@@ -25,40 +25,40 @@
 QT_BEGIN_NAMESPACE
 
 /*!
-  \class QIconEngine
+    \class QIconEngine
 
-  \brief The QIconEngine class provides an abstract base class for QIcon renderers.
+    \brief The QIconEngine class provides an abstract base class for QIcon renderers.
 
-  \ingroup painting
+    \ingroup painting
 
-  An icon engine provides the rendering functions for a QIcon. Each icon has a
-  corresponding icon engine that is responsible for drawing the icon with a
-  requested size, mode and state.
+    An icon engine provides the rendering functions for a QIcon. Each icon has a
+    corresponding icon engine that is responsible for drawing the icon with a
+    requested size, mode and state.
 
-  The icon is rendered by the paint() function, and the icon can additionally be
-  obtained as a pixmap with the pixmap() function (the default implementation
-  simply uses paint() to achieve this). The addPixmap() function can be used to
-  add new pixmaps to the icon engine, and is used by QIcon to add specialized
-  custom pixmaps.
+    The icon is rendered by the paint() function, and the icon can additionally be
+    obtained as a pixmap with the pixmap() function (the default implementation
+    simply uses paint() to achieve this). The addPixmap() function can be used to
+    add new pixmaps to the icon engine, and is used by QIcon to add specialized
+    custom pixmaps.
 
-  The paint(), pixmap(), and addPixmap() functions are all virtual, and can
-  therefore be reimplemented in subclasses of QIconEngine.
+    The paint(), pixmap(), and addPixmap() functions are all virtual, and can
+    therefore be reimplemented in subclasses of QIconEngine.
 
-  \sa QIconEnginePlugin
-
+    \sa QIconEnginePlugin
 */
 
 /*!
-  \fn virtual void QIconEngine::paint(QPainter *painter, const QRect &rect, QIcon::Mode mode, QIcon::State state) = 0;
+    \fn virtual void QIconEngine::paint(QPainter *painter, const QRect &rect, QIcon::Mode mode, QIcon::State state) = 0;
 
-  Uses the given \a painter to paint the icon with the required \a mode and
-  \a state into the rectangle \a rect.
+    Uses the given \a painter to paint the icon with the required \a mode and
+    \a state into the rectangle \a rect.
 */
 
-/*!  Returns the actual size of the icon the engine provides for the
-  requested \a size, \a mode and \a state. The default implementation
-  returns the given \a size.
- */
+/*!
+    Returns the actual size of the icon the engine provides for the
+    requested \a size, \a mode and \a state. The default implementation
+    returns the given \a size.
+*/
 QSize QIconEngine::actualSize(const QSize &size, QIcon::Mode /*mode*/, QIcon::State /*state*/)
 {
     return size;
@@ -66,17 +66,16 @@ QSize QIconEngine::actualSize(const QSize &size, QIcon::Mode /*mode*/, QIcon::St
 
 
 /*!
-  Destroys the icon engine.
- */
+    Destroys the icon engine.
+*/
 QIconEngine::~QIconEngine()
 {
 }
 
-
 /*!
-  Returns the icon as a pixmap with the required \a size, \a mode,
-  and \a state. The default implementation creates a new pixmap and
-  calls paint() to fill it.
+    Returns the icon as a pixmap with the required \a size, \a mode,
+    and \a state. The default implementation creates a new pixmap and
+    calls paint() to fill it.
 */
 QPixmap QIconEngine::pixmap(const QSize &size, QIcon::Mode mode, QIcon::State state)
 {
@@ -89,32 +88,33 @@ QPixmap QIconEngine::pixmap(const QSize &size, QIcon::Mode mode, QIcon::State st
 }
 
 /*!
-  Called by QIcon::addPixmap(). Adds a specialized \a pixmap for the given
-  \a mode and \a state. The default pixmap-based engine stores any supplied
-  pixmaps, and it uses them instead of scaled pixmaps if the size of a pixmap
-  matches the size of icon requested. Custom icon engines that implement
-  scalable vector formats are free to ignores any extra pixmaps.
- */
+    Called by QIcon::addPixmap(). Adds a specialized \a pixmap for the given
+    \a mode and \a state. The default pixmap-based engine stores any supplied
+    pixmaps, and it uses them instead of scaled pixmaps if the size of a pixmap
+    matches the size of icon requested. Custom icon engines that implement
+    scalable vector formats are free to ignores any extra pixmaps.
+*/
 void QIconEngine::addPixmap(const QPixmap &/*pixmap*/, QIcon::Mode /*mode*/, QIcon::State /*state*/)
 {
 }
 
 
-/*!  Called by QIcon::addFile(). Adds a specialized pixmap from the
-  file with the given \a fileName, \a size, \a mode and \a state. The
-  default pixmap-based engine stores any supplied file names, and it
-  loads the pixmaps on demand instead of using scaled pixmaps if the
-  size of a pixmap matches the size of icon requested. Custom icon
-  engines that implement scalable vector formats are free to ignores
-  any extra files.
- */
+/*!
+    Called by QIcon::addFile(). Adds a specialized pixmap from the
+    file with the given \a fileName, \a size, \a mode and \a state. The
+    default pixmap-based engine stores any supplied file names, and it
+    loads the pixmaps on demand instead of using scaled pixmaps if the
+    size of a pixmap matches the size of icon requested. Custom icon
+    engines that implement scalable vector formats are free to ignores
+    any extra files.
+*/
 void QIconEngine::addFile(const QString &/*fileName*/, const QSize &/*size*/, QIcon::Mode /*mode*/, QIcon::State /*state*/)
 {
 }
 
 /*!
     Returns a key that identifies this icon engine.
- */
+*/
 QString QIconEngine::key() const
 {
     return QString();
@@ -122,7 +122,7 @@ QString QIconEngine::key() const
 
 /*!
     Returns a clone of this icon engine.
- */
+*/
 QIconEngine *QIconEngine::clone() const
 {
     return 0;
@@ -133,7 +133,7 @@ QIconEngine *QIconEngine::clone() const
     true if the contents were read; otherwise returns false.
 
     QIconEngine's default implementation always return false.
- */
+*/
 bool QIconEngine::read(QDataStream &)
 {
     return false;
@@ -144,7 +144,7 @@ bool QIconEngine::read(QDataStream &)
     Returns true if the contents were written; otherwise returns false.
 
     QIconEngine's default implementation always return false.
- */
+*/
 bool QIconEngine::write(QDataStream &) const
 {
     return false;
@@ -158,7 +158,7 @@ bool QIconEngine::write(QDataStream &) const
 
     \note This is a helper method and depends on icon engine support, it
     may not work with all icon engines.
- */
+*/
 QList<QSize> QIconEngine::availableSizes(QIcon::Mode mode, QIcon::State state) const
 {
     return QList<QSize>();
@@ -171,7 +171,7 @@ QList<QSize> QIconEngine::availableSizes(QIcon::Mode mode, QIcon::State state) c
 
     \note This is a helper method and depends on icon engine support, it
     may not work with all icon engines.
- */
+*/
 QString QIconEngine::iconName() const
 {
     return QString();

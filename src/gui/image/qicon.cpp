@@ -64,13 +64,13 @@ QT_BEGIN_NAMESPACE
 */
 
 /*!
-  \enum QIcon::State
+    \enum QIcon::State
 
-  This enum describes the state for which a pixmap is intended to be
-  used. The \e state can be:
+    This enum describes the state for which a pixmap is intended to be
+    used. The \e state can be:
 
-  \value Off  Display the pixmap when the widget is in an "off" state
-  \value On  Display the pixmap when the widget is in an "on" state
+    \value Off  Display the pixmap when the widget is in an "off" state
+    \value On  Display the pixmap when the widget is in an "on" state
 */
 
 static QAtomicInt serialNumCounter(1);
@@ -388,73 +388,73 @@ bool QPixmapIconEngine::write(QDataStream &out) const
 }
 
 /*!
-  \class QIcon
+    \class QIcon
 
-  \brief The QIcon class provides scalable icons in different modes
-  and states.
+    \brief The QIcon class provides scalable icons in different modes
+    and states.
 
-  \ingroup painting
-  \ingroup shared
+    \ingroup painting
+    \ingroup shared
 
 
-  A QIcon can generate smaller, larger, active, and disabled pixmaps
-  from the set of pixmaps it is given. Such pixmaps are used by Qt
-  widgets to show an icon representing a particular action.
+    A QIcon can generate smaller, larger, active, and disabled pixmaps
+    from the set of pixmaps it is given. Such pixmaps are used by Qt
+    widgets to show an icon representing a particular action.
 
-  The simplest use of QIcon is to create one from a QPixmap file or
-  resource, and then use it, allowing Qt to work out all the required
-  icon styles and sizes. For example:
+    The simplest use of QIcon is to create one from a QPixmap file or
+    resource, and then use it, allowing Qt to work out all the required
+    icon styles and sizes. For example:
 
-  \snippet doc/src/snippets/code/src_gui_image_qicon.cpp 0
+    \snippet doc/src/snippets/code/src_gui_image_qicon.cpp 0
 
-  To undo a QIcon, simply set a null icon in its place:
+    To undo a QIcon, simply set a null icon in its place:
 
-  \snippet doc/src/snippets/code/src_gui_image_qicon.cpp 1
+    \snippet doc/src/snippets/code/src_gui_image_qicon.cpp 1
 
-  Use the QImageReader::supportedImageFormats() and
-  QImageWriter::supportedImageFormats() functions to retrieve a
-  complete list of the supported file formats.
+    Use the QImageReader::supportedImageFormats() and
+    QImageWriter::supportedImageFormats() functions to retrieve a
+    complete list of the supported file formats.
 
-  When you retrieve a pixmap using pixmap(QSize, Mode, State), and no
-  pixmap for this given size, mode and state has been added with
-  addFile() or addPixmap(), then QIcon will generate one on the
-  fly. This pixmap generation happens in a QIconEngine. The default
-  engine scales pixmaps down if required, but never up, and it uses
-  the current style to calculate a disabled appearance. By using
-  custom icon engines, you can customize every aspect of generated
-  icons. With QIconEnginePluginV2 it is possible to register different
-  icon engines for different file suffixes, making it possible for
-  third parties to provide additional icon engines to those included
-  with Qt.
+    When you retrieve a pixmap using pixmap(QSize, Mode, State), and no
+    pixmap for this given size, mode and state has been added with
+    addFile() or addPixmap(), then QIcon will generate one on the
+    fly. This pixmap generation happens in a QIconEngine. The default
+    engine scales pixmaps down if required, but never up, and it uses
+    the current style to calculate a disabled appearance. By using
+    custom icon engines, you can customize every aspect of generated
+    icons. With QIconEnginePluginV2 it is possible to register different
+    icon engines for different file suffixes, making it possible for
+    third parties to provide additional icon engines to those included
+    with Qt.
 
-  \note Since Qt 4.2, an icon engine that supports SVG is included.
+    \note Since Qt 4.2, an icon engine that supports SVG is included.
 
-  \section1 Making Classes that Use QIcon
+    \section1 Making Classes that Use QIcon
 
-  If you write your own widgets that have an option to set a small
-  pixmap, consider allowing a QIcon to be set for that pixmap.  The
-  Qt class QToolButton is an example of such a widget.
+    If you write your own widgets that have an option to set a small
+    pixmap, consider allowing a QIcon to be set for that pixmap.  The
+    Qt class QToolButton is an example of such a widget.
 
-  Provide a method to set a QIcon, and when you draw the icon, choose
-  whichever pixmap is appropriate for the current state of your widget.
-  For example:
-  \snippet doc/src/snippets/code/src_gui_image_qicon.cpp 2
+    Provide a method to set a QIcon, and when you draw the icon, choose
+    whichever pixmap is appropriate for the current state of your widget.
+    For example:
+    \snippet doc/src/snippets/code/src_gui_image_qicon.cpp 2
 
-  You might also make use of the \c Active mode, perhaps making your
-  widget \c Active when the mouse is over the widget (see \l
-  QWidget::enterEvent()), while the mouse is pressed pending the
-  release that will activate the function, or when it is the currently
-  selected item. If the widget can be toggled, the "On" mode might be
-  used to draw a different icon.
+    You might also make use of the \c Active mode, perhaps making your
+    widget \c Active when the mouse is over the widget (see \l
+    QWidget::enterEvent()), while the mouse is pressed pending the
+    release that will activate the function, or when it is the currently
+    selected item. If the widget can be toggled, the "On" mode might be
+    used to draw a different icon.
 
-  \img icon.png QIcon
+    \img icon.png QIcon
 
-  \sa {fowler}{GUI Design Handbook: Iconic Label}, {Icons Example}
+    \sa {fowler}{GUI Design Handbook: Iconic Label}, {Icons Example}
 */
 
 
 /*!
-  Constructs a null icon.
+    Constructs a null icon.
 */
 QIcon::QIcon()
     : d(nullptr)
@@ -462,8 +462,8 @@ QIcon::QIcon()
 }
 
 /*!
-  Constructs an icon from a \a pixmap.
- */
+    Constructs an icon from a \a pixmap.
+*/
 QIcon::QIcon(const QPixmap &pixmap)
     : d(nullptr)
 {
@@ -471,7 +471,7 @@ QIcon::QIcon(const QPixmap &pixmap)
 }
 
 /*!
-  Constructs a copy of \a other. This is very fast.
+    Constructs a copy of \a other. This is very fast.
 */
 QIcon::QIcon(const QIcon &other)
     : d(other.d)
@@ -543,7 +543,7 @@ QIcon &QIcon::operator=(const QIcon &other)
 */
 
 /*!
-   Returns the icon as a QVariant.
+    Returns the icon as a QVariant.
 */
 QIcon::operator QVariant() const
 {
@@ -571,11 +571,11 @@ qint64 QIcon::cacheKey() const
 }
 
 /*!
-  Returns a pixmap with the requested \a size, \a mode, and \a
-  state, generating one if necessary. The pixmap might be smaller than
-  requested, but never larger.
+    Returns a pixmap with the requested \a size, \a mode, and \a
+    state, generating one if necessary. The pixmap might be smaller than
+    requested, but never larger.
 
-  \sa actualSize(), paint()
+    \sa actualSize(), paint()
 */
 QPixmap QIcon::pixmap(const QSize &size, Mode mode, State state) const
 {
@@ -602,11 +602,12 @@ QPixmap QIcon::pixmap(const QSize &size, Mode mode, State state) const
     than requested, but never larger.
 */
 
-/*!  Returns the actual size of the icon for the requested \a size, \a
-  mode, and \a state. The result might be smaller than requested, but
-  never larger.
+/*!
+    Returns the actual size of the icon for the requested \a size, \a
+    mode, and \a state. The result might be smaller than requested, but
+    never larger.
 
-  \sa pixmap(), paint()
+    \sa pixmap(), paint()
 */
 QSize QIcon::actualSize(const QSize &size, Mode mode, State state) const
 {
@@ -652,7 +653,8 @@ bool QIcon::isNull() const
     return !d;
 }
 
-/*! \internal
+/*!
+    \internal
  */
 void QIcon::detach()
 {
@@ -691,14 +693,15 @@ void QIcon::addPixmap(const QPixmap &pixmap, Mode mode, State state)
 }
 
 
-/*!  Adds an image from the file with the given \a fileName to the
-     icon, as a specialization for \a size, \a mode and \a state. The
-     file will be loaded on demand. Note: custom icon engines are free
-     to ignore additionally added pixmaps.
+/*!
+    Adds an image from the file with the given \a fileName to the
+    icon, as a specialization for \a size, \a mode and \a state. The
+    file will be loaded on demand. Note: custom icon engines are free
+    to ignore additionally added pixmaps.
 
-     If \a fileName contains a relative path (e.g. the filename only)
-     the relevant file must be found relative to the runtime working
-     directory.
+    If \a fileName contains a relative path (e.g. the filename only)
+    the relevant file must be found relative to the runtime working
+    directory.
 
     The file name can be either refer to an actual file on disk or to
     one of the application's embedded resources. See the
@@ -791,20 +794,16 @@ void QIcon::setThemeSearchPaths(const QStringList &paths)
 }
 
 /*!
-  \since 4.6
+    \since 4.6
 
-  Returns the search paths for icon themes.
+    Returns the search paths for icon themes.
 
-  The default value will depend on the platform:
+    The default value will depend on the platform:
 
-  On X11, the search path will use the XDG_DATA_DIRS environment
-  variable if available.
+    On X11, the search path will use the XDG_DATA_DIRS environment
+    variable if available.
 
-  By default all platforms will have the resource directory
-  \c{:\icons} as a fallback. You can use "rcc -project" to generate a
-  resource file from your icon theme.
-
-  \sa setThemeSearchPaths(), fromTheme(), setThemeName()
+    \sa setThemeSearchPaths(), fromTheme(), setThemeName()
 */
 QStringList QIcon::themeSearchPaths()
 {
