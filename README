@@ -6,9 +6,9 @@ There are several things you should be aware before considering Katie:
 
  - some components and tools have been removed:
   - QMake, Linguist, Assistant, checksdk, macdeployqt, pixeltool, qconfig,
-    qdoc, qev, qvfb, runonphone and other non-essential
+    qdoc, qev, qvfb, runonphone, designer and other non-essential
   - Qt3Support, QtWebKit, QtHelp, QtXmlPatterns, QtOpenGL, ActiveQt, Phonon,
-    QtMultimedia and QtSql
+    QtMultimedia, QtSql, QtDesigner, QtDesignerComponents and QtScriptTtools
 
  - some things have changed:
   - QMake build system replaced with CMake
