@@ -704,7 +704,7 @@ static bool resolveColor(const QStringRef &colorStr, QColor &color, QSvgHandler 
         return false;
     }
 
-    color = QColor(colorStrTr.toString());
+    color.setNamedColor(colorStrTr.toString());
     return color.isValid();
 }
 

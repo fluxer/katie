@@ -7102,7 +7102,8 @@ ownership of it, no memory is freed when instances are destroyed.
     \sa string()
 */
 
-QString QStringRef::toString() const {
+QString QStringRef::toString() const
+{
     if (!m_string)
         return QString();
     if (m_size && m_position == 0 && m_size == m_string->size())
