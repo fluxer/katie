@@ -187,9 +187,6 @@ bool QPngHandler::read(QImage *image)
         }
     }
 
-    image->d->dpmx = png_get_x_pixels_per_meter(png_ptr, info_ptr);
-    image->d->dpmy = png_get_y_pixels_per_meter(png_ptr, info_ptr);
-
     png_read_end(png_ptr, end_info);
 
     png_destroy_read_struct(&png_ptr, &info_ptr, &end_info);
@@ -249,12 +246,6 @@ bool QPngHandler::write(const QImage &image)
     // Qt==ARGB==Big(ARGB)==Little(BGRA). But RGB888 is RGB regardless
     png_set_bgr(png_ptr);
 #endif
-
-    if (copy.dotsPerMeterX() > 0 || copy.dotsPerMeterY() > 0) {
-        png_set_pHYs(png_ptr, info_ptr,
-                copy.dotsPerMeterX(), copy.dotsPerMeterY(),
-                PNG_RESOLUTION_METER);
-    }
 
     png_write_info(png_ptr, info_ptr);
 
