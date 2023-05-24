@@ -68,31 +68,32 @@ struct QPixmapIconEngineEntry
     QSize size;
     QIcon::Mode mode;
     QIcon::State state;
-    bool isNull() const {return (fileName.isEmpty() && pixmap.isNull()); }
+    bool isNull() const { return (fileName.isEmpty() && pixmap.isNull()); }
 };
 
 
-
-class QPixmapIconEngine : public QIconEngine {
+class QPixmapIconEngine : public QIconEngine
+{
 public:
     QPixmapIconEngine();
     QPixmapIconEngine(const QPixmapIconEngine &);
     ~QPixmapIconEngine();
-    void paint(QPainter *painter, const QRect &rect, QIcon::Mode mode, QIcon::State state);
-    QPixmap pixmap(const QSize &size, QIcon::Mode mode, QIcon::State state);
-    QPixmapIconEngineEntry *bestMatch(const QSize &size, QIcon::Mode mode, QIcon::State state, bool sizeOnly);
-    QSize actualSize(const QSize &size, QIcon::Mode mode, QIcon::State state);
-    QList<QSize> availableSizes(QIcon::Mode mode = QIcon::Normal, QIcon::State state = QIcon::Off) const;
-    void addPixmap(const QPixmap &pixmap, QIcon::Mode mode, QIcon::State state);
-    void addFile(const QString &fileName, const QSize &size, QIcon::Mode mode, QIcon::State state);
 
-    QString key() const;
-    QIconEngine *clone() const;
-    bool read(QDataStream &in);
-    bool write(QDataStream &out) const;
+    void paint(QPainter *painter, const QRect &rect, QIcon::Mode mode, QIcon::State state) final;
+    QPixmap pixmap(const QSize &size, QIcon::Mode mode, QIcon::State state) final;
+    QSize actualSize(const QSize &size, QIcon::Mode mode, QIcon::State state) final;
+    QList<QSize> availableSizes(QIcon::Mode mode = QIcon::Normal, QIcon::State state = QIcon::Off) const final;
+    void addPixmap(const QPixmap &pixmap, QIcon::Mode mode, QIcon::State state) final;
+    void addFile(const QString &fileName, const QSize &size, QIcon::Mode mode, QIcon::State state) final;
+
+    QString key() const final;
+    QIconEngine *clone() const final;
+    bool read(QDataStream &in) final;
+    bool write(QDataStream &out) const final;
 
 private:
     QPixmapIconEngineEntry *tryMatch(const QSize &size, QIcon::Mode mode, QIcon::State state);
+    QPixmapIconEngineEntry *bestMatch(const QSize &size, QIcon::Mode mode, QIcon::State state, bool sizeOnly);
     QVector<QPixmapIconEngineEntry> pixmaps;
 
     friend QDataStream &operator<<(QDataStream &s, const QIcon &icon);
@@ -100,5 +101,7 @@ private:
 };
 
 QT_END_NAMESPACE
+
 #endif //QT_NO_ICON
+
 #endif // QICON_P_H
