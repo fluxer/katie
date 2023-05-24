@@ -117,6 +117,7 @@ bool QPngHandler::read(QImage *image)
 
     *image = QImage(spngihdr.width, spngihdr.height, QImage::Format_ARGB32);
     if (image->isNull()) {
+        qWarning("QPngHandler::read() Could not create image");
         return false;
     }
 
