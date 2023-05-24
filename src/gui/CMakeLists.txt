@@ -81,7 +81,6 @@ set(GUI_PUBLIC_HEADERS
     QHeaderView
     QIcon
     QIconEngine
-    QIconEnginePlugin
     QIdentityProxyModel
     QImage
     QImageIOHandler
@@ -283,7 +282,6 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qicon_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qiconloader_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qiconengine.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/image/qiconengineplugin.h
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qimage.h
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qimage_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qimageiohandler.h
@@ -637,7 +635,6 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmapcache.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmapdata.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qiconengine.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/image/qiconengineplugin.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qmovie.cpp
     # Built-in image format support
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qppmhandler.cpp

@@ -43,8 +43,6 @@ QT_BEGIN_NAMESPACE
 
     The paint(), pixmap(), and addPixmap() functions are all virtual, and can
     therefore be reimplemented in subclasses of QIconEngine.
-
-    \sa QIconEnginePlugin
 */
 
 /*!

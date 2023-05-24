@@ -22,7 +22,6 @@
 #include "qicon.h"
 #include "qicon_p.h"
 #include "qiconengine.h"
-#include "qiconengineplugin.h"
 #include "qiconloader_p.h"
 #include "qapplication.h"
 #include "qstyleoption.h"
@@ -422,10 +421,7 @@ bool QPixmapIconEngine::write(QDataStream &out) const
     engine scales pixmaps down if required, but never up, and it uses
     the current style to calculate a disabled appearance. By using
     custom icon engines, you can customize every aspect of generated
-    icons. With QIconEnginePluginV2 it is possible to register different
-    icon engines for different file suffixes, making it possible for
-    third parties to provide additional icon engines to those included
-    with Qt.
+    icons.
 
     \note Since Qt 4.2, an icon engine that supports SVG is included.
 
@@ -723,29 +719,8 @@ void QIcon::addFile(const QString &fileName, const QSize &size, Mode mode, State
     if (fileName.isEmpty())
         return;
     if (!d) {
-        const QFileInfo info(fileName);
-        const QString suffix = info.suffix().toLower();
-
-        if (suffix == QLatin1String("png")) {
-            d = new QIconPrivate();
-            d->engine = new QPixmapIconEngine();
-        }
-
-#if !defined (QT_NO_LIBRARY)
-        if (!d && !suffix.isEmpty()) {
-            if (QIconEnginePlugin *plugin = qobject_cast<QIconEnginePlugin*>(iconloader()->instance(suffix))) {
-                if (QIconEngine *engine = plugin->create(fileName)) {
-                    d = new QIconPrivate();
-                    d->engine = engine;
-                }
-            }
-        }
-#endif
-        // ...then fall back to the default engine
-        if (!d) {
-            d = new QIconPrivate();
-            d->engine = new QPixmapIconEngine();
-        }
+        d = new QIconPrivate();
+        d->engine = new QPixmapIconEngine();
     } else {
         detach();
     }
@@ -957,14 +932,6 @@ QDataStream &operator>>(QDataStream &s, QIcon &icon)
         QIconEngine *engine = new QIconLoaderEngine();
         icon.d->engine = engine;
         engine->read(s);
-#if !defined (QT_NO_LIBRARY)
-    } else if (QIconEnginePlugin *plugin = qobject_cast<QIconEnginePlugin*>(iconloader()->instance(key))) {
-        if (QIconEngine *engine= plugin->create()) {
-            icon.d = new QIconPrivate();
-            icon.d->engine = engine;
-            engine->read(s);
-        }
-#endif
     }
     return s;
 }

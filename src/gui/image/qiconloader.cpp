@@ -28,15 +28,15 @@
 #include "qguicommon_p.h"
 #include "qcore_unix_p.h"
 
-#include <QtGui/QIconEnginePlugin>
-#include <QtGui/QPixmapCache>
-#include <QtGui/QIconEngine>
-#include <QtGui/QStyleOption>
 #include <QtCore/QList>
 #include <QtCore/QHash>
 #include <QtCore/QDir>
 #include <QtCore/QSettings>
 #include <QtGui/QPainter>
+#include <QtGui/QImageReader>
+#include <QtGui/QPixmapCache>
+#include <QtGui/QIconEngine>
+#include <QtGui/QStyleOption>
 
 #include <limits.h>
 
@@ -47,8 +47,8 @@ Q_GLOBAL_STATIC(QIconLoader, iconLoaderInstance)
 /* Theme to use in last resort, if the theme does not have the icon, neither the parents  */
 static const QString fallbackTheme = QLatin1String("hicolor");
 
-QIconLoader::QIconLoader() :
-        m_themeKey(1), m_supportsSvg(false)
+QIconLoader::QIconLoader()
+    : m_themeKey(1), m_supportsSvg(false)
 {
     Q_ASSERT(qApp);
 
@@ -56,8 +56,7 @@ QIconLoader::QIconLoader() :
     if (m_systemTheme.isEmpty())
         m_systemTheme = fallbackTheme;
 #ifndef QT_NO_LIBRARY
-    if (iconloader()->keys().contains(QLatin1String("svg")))
-        m_supportsSvg = true;
+    m_supportsSvg = QImageReader::supportedImageFormats().contains("svg");
 #endif //QT_NO_LIBRARY
 }
 
@@ -188,7 +187,7 @@ QThemeIconEntries QIconLoader::findIconHelper(const QString &themeName,
         const QString pngPath = subDir + iconName + QLatin1String(".png");
         const QStatInfo pnginfo(pngPath);
         if (pnginfo.isFile()) {
-            PixmapEntry *iconEntry = new PixmapEntry;
+            QIconLoaderEngineEntry *iconEntry = new QIconLoaderEngineEntry();
             iconEntry->dir = dirInfo;
             iconEntry->filename = pngPath;
             // Notice we ensure that pixmap entries always come before
@@ -198,7 +197,7 @@ QThemeIconEntries QIconLoader::findIconHelper(const QString &themeName,
             const QString svgPath = subDir + iconName + QLatin1String(".svg");
             const QStatInfo svginfo(svgPath);
             if (svginfo.isFile()) {
-                ScalableEntry *iconEntry = new ScalableEntry;
+                QIconLoaderEngineEntry *iconEntry = new QIconLoaderEngineEntry();
                 iconEntry->dir = dirInfo;
                 iconEntry->filename = svgPath;
                 entries.append(iconEntry);
@@ -407,17 +406,21 @@ QString QIconLoaderEngine::iconName() const
     return m_iconName;
 }
 
-QPixmap PixmapEntry::pixmap(const QSize &size, QIcon::Mode mode, QIcon::State state)
+QPixmap QIconLoaderEngineEntry::pixmap(const QSize &size, QIcon::Mode mode, QIcon::State state)
 {
     Q_UNUSED(state);
 
     // Ensure that basePixmap is lazily initialized before generating the
     // key, otherwise the cache key is not unique
-    if (basePixmap.isNull())
-        basePixmap.load(filename);
+    if (basePixmap.isNull()) {
+        QImageReader baseReader(filename);
+        QSize baseSize(size);
+        baseSize.scale(size, Qt::KeepAspectRatio);
+        baseReader.setScaledSize(baseSize);
+        basePixmap = QPixmap::fromImage(baseReader.read());
+    }
 
     int actualSize = qMin(size.width(), size.height());
-
     QString key = QLatin1String("$qt_theme_")
                   + HexString<qint64>(basePixmap.cacheKey())
                   + HexString<int>(mode)
@@ -434,15 +437,6 @@ QPixmap PixmapEntry::pixmap(const QSize &size, QIcon::Mode mode, QIcon::State st
         QPixmapCache::insert(key, cachedPixmap);
     }
     return cachedPixmap;
-}
-
-QPixmap ScalableEntry::pixmap(const QSize &size, QIcon::Mode mode, QIcon::State state)
-{
-    if (svgIcon.isNull())
-        svgIcon = QIcon(filename);
-
-    // Simply reuse svg icon engine
-    return svgIcon.pixmap(size, mode, state);
 }
 
 QPixmap QIconLoaderEngine::pixmap(const QSize &size, QIcon::Mode mode,
@@ -463,7 +457,3 @@ QString QIconLoaderEngine::key() const
 QT_END_NAMESPACE
 
 #endif //QT_NO_ICON
-
-
-
-

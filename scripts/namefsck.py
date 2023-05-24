@@ -231,8 +231,6 @@ classlist = [
     "QIPv6Address",
     "QIcon",
     "QIconEngine",
-    "QIconEnginePlugin",
-    "QIconEnginePluginV2",
     "QIconEngineV2",
     "QIdentityProxyModel",
     "QImage",

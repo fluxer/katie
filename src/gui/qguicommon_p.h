@@ -81,7 +81,6 @@ inline static QImage replaceColors(const QImage &source, const QMap<QRgb, QRgb> 
 Q_GLOBAL_STATIC(QWidget, globalStyleInfoWidget)
 
 #if !defined(QT_NO_LIBRARY)
-Q_GLOBAL_STATIC_WITH_ARGS(QFactoryLoader, iconloader, (QString::fromLatin1("/iconengines")))
 Q_GLOBAL_STATIC_WITH_ARGS(QFactoryLoader, imageloader, (QString::fromLatin1("/imageformats")))
 #endif
 

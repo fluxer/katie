@@ -257,7 +257,6 @@ static const struct ClassTblData {
     { QLatin1String("QIPv6Address"), QLatin1String("QtNetwork/qhostaddress.h") },
     { QLatin1String("QIcon"), QLatin1String("QtGui/qicon.h") },
     { QLatin1String("QIconEngine"), QLatin1String("QtGui/qiconengine.h") },
-    { QLatin1String("QIconEnginePlugin"), QLatin1String("QtGui/qiconengineplugin.h") },
     { QLatin1String("QIdentityProxyModel"), QLatin1String("QtGui/qidentityproxymodel.h") },
     { QLatin1String("QImage"), QLatin1String("QtGui/qimage.h") },
     { QLatin1String("QImageIOHandler"), QLatin1String("QtGui/qimageiohandler.h") },

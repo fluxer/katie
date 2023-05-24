@@ -65,24 +65,11 @@ struct QIconDirInfo
 class QIconLoaderEngineEntry
  {
 public:
-    virtual ~QIconLoaderEngineEntry() {}
-    virtual QPixmap pixmap(const QSize &size,
-                           QIcon::Mode mode,
-                           QIcon::State state) = 0;
+    QPixmap pixmap(const QSize &size, QIcon::Mode mode, QIcon::State state);
+
+    QPixmap basePixmap;
     QString filename;
     QIconDirInfo dir;
-};
-
-struct ScalableEntry : public QIconLoaderEngineEntry
-{
-    QPixmap pixmap(const QSize &size, QIcon::Mode mode, QIcon::State state);
-    QIcon svgIcon;
-};
-
-struct PixmapEntry : public QIconLoaderEngineEntry
-{
-    QPixmap pixmap(const QSize &size, QIcon::Mode mode, QIcon::State state);
-    QPixmap basePixmap;
 };
 
 typedef QList<QIconLoaderEngineEntry*> QThemeIconEntries;

@@ -458,8 +458,6 @@ include/katie/QtGui/QHideEvent
 include/katie/QtGui/QHoverEvent
 include/katie/QtGui/QIcon
 include/katie/QtGui/QIconEngine
-include/katie/QtGui/QIconEnginePlugin
-include/katie/QtGui/QIconEnginePluginV2
 include/katie/QtGui/QIconEngineV2
 include/katie/QtGui/QIdentityProxyModel
 include/katie/QtGui/QImage
@@ -768,7 +766,6 @@ include/katie/QtGui/qguiplatformplugin.h
 include/katie/QtGui/qheaderview.h
 include/katie/QtGui/qicon.h
 include/katie/QtGui/qiconengine.h
-include/katie/QtGui/qiconengineplugin.h
 include/katie/QtGui/qidentityproxymodel.h
 include/katie/QtGui/qimage.h
 include/katie/QtGui/qimageiohandler.h
