@@ -177,12 +177,6 @@ public:
 
     QPaintEngine *paintEngine() const;
 
-    // Auxiliary data
-    int dotsPerMeterX() const;
-    int dotsPerMeterY() const;
-    void setDotsPerMeterX(int);
-    void setDotsPerMeterY(int);
-
 protected:
     virtual int metric(PaintDeviceMetric metric) const;
 

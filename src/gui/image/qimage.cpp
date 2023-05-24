@@ -131,8 +131,6 @@ QImageData::QImageData()
     format(QImage::Format_ARGB32), bytes_per_line(0),
     ser_no(qimage_serial_number.fetchAndAddRelaxed(1)),
     detach_no(0),
-    dpmx(QX11Info::appDpiX() * 100 / qreal(2.54)),
-    dpmy(QX11Info::appDpiY() * 100 / qreal(2.54)),
     own_data(true), ro_data(false), has_alpha_clut(false),
     paintEngine(nullptr)
 {
@@ -328,9 +326,8 @@ bool QImageData::checkForAlphaPixels() const
     \o Geometry
     \o
 
-    The size(), width(), height(), dotsPerMeterX(), and
-    dotsPerMeterY() functions provide information about the image size
-    and aspect ratio.
+    The size(), width(), height() functions provide information
+    about the image size.
 
     The rect() function returns the image's enclosing rectangle. The
     valid() function tells if a given pair of coordinates is within
@@ -482,14 +479,6 @@ bool QImageData::checkForAlphaPixels() const
 
     \table
     \header \o Function \o Description
-    \row
-    \o setDotsPerMeterX()
-    \o Defines the aspect ratio by setting the number of pixels that fit
-    horizontally in a physical meter.
-    \row
-    \o setDotsPerMeterY()
-    \o Defines the aspect ratio by setting the number of pixels that fit
-    vertically in a physical meter.
     \row
     \o fill()
     \o Fills the entire image with the given pixel value.
@@ -994,8 +983,6 @@ QImage QImage::copy(const QRect& r) const
         }
         image.d->mono0 = d->mono0;
         image.d->mono1 = d->mono1;
-        image.d->dpmx = d->dpmx;
-        image.d->dpmy = d->dpmy;
         image.d->has_alpha_clut = d->has_alpha_clut;
         return image;
     }
@@ -1082,8 +1069,6 @@ QImage QImage::copy(const QRect& r) const
 
     image.d->mono0 = d->mono0;
     image.d->mono1 = d->mono1;
-    image.d->dpmx = d->dpmx;
-    image.d->dpmy = d->dpmy;
     image.d->has_alpha_clut = d->has_alpha_clut;
     return image;
 }
@@ -2153,9 +2138,6 @@ QImage QImage::convertToFormat(Format format, Qt::ImageConversionFlags flags) co
     QImage image(d->width, d->height, format);
     QIMAGE_SANITYCHECK_MEMORY(image);
 
-    image.d->dpmx = dotsPerMeterX();
-    image.d->dpmy = dotsPerMeterY();
-
     converter(image.d, d, flags);
     return image;
 }
@@ -3038,8 +3020,6 @@ QDataStream &operator<<(QDataStream &s, const QImage &image)
     s << (qint8) image.format();
     s << (qint16) image.width();
     s << (qint16) image.height();
-    s << (qint32) image.dotsPerMeterX();
-    s << (qint32) image.dotsPerMeterY();
     s << (qint32) image.byteCount();
     if (monoimage) {
         s << (qint64)image.d->mono0;
@@ -3067,8 +3047,6 @@ QDataStream &operator>>(QDataStream &s, QImage &image)
     qint8 format;
     qint16 width;
     qint16 height;
-    qint32 dotsperx;
-    qint32 dotspery;
     qint32 bytecount;
     qint64 mono0;
     qint64 mono1;
@@ -3076,8 +3054,6 @@ QDataStream &operator>>(QDataStream &s, QImage &image)
     s >> format;
     s >> width;
     s >> height;
-    s >> dotsperx;
-    s >> dotspery;
     s >> bytecount;
     s >> mono0;
     s >> mono1;
@@ -3099,8 +3075,6 @@ QDataStream &operator>>(QDataStream &s, QImage &image)
     image.d->has_alpha_clut = alphaclut;
     image.d->mono0 = mono0;
     image.d->mono1 = mono1;
-    image.d->dpmx = dotsperx;
-    image.d->dpmy = dotspery;
 
     return s;
 }
@@ -3133,7 +3107,7 @@ bool QImage::operator==(const QImage & i) const
 
     if (i.d->format == d->format && i.d->nbytes == d->nbytes
         && d->format >= QImage::Format_RGB32 && d->format <= QImage::Format_RGB16) {
-        return (memcmp(constBits(), i.constBits(), d->nbytes) == 0);
+        return (::memcmp(constBits(), i.constBits(), d->nbytes) == 0);
     }
 
     for (int h = 0; h < d->height; h++) {
@@ -3161,74 +3135,6 @@ bool QImage::operator==(const QImage & i) const
 bool QImage::operator!=(const QImage & i) const
 {
     return !(*this == i);
-}
-
-/*!
-    Returns the number of pixels that fit horizontally in a physical
-    meter. Together with dotsPerMeterY(), this number defines the
-    intended scale and aspect ratio of the image.
-
-    \sa setDotsPerMeterX(), {QImage#Image Information}{Image
-    Information}
-*/
-int QImage::dotsPerMeterX() const
-{
-    return d ? qRound(d->dpmx) : 0;
-}
-
-/*!
-    Returns the number of pixels that fit vertically in a physical
-    meter. Together with dotsPerMeterX(), this number defines the
-    intended scale and aspect ratio of the image.
-
-    \sa setDotsPerMeterY(), {QImage#Image Information}{Image
-    Information}
-*/
-int QImage::dotsPerMeterY() const
-{
-    return d ? qRound(d->dpmy) : 0;
-}
-
-/*!
-    Sets the number of pixels that fit horizontally in a physical
-    meter, to \a x.
-
-    Together with dotsPerMeterY(), this number defines the intended
-    scale and aspect ratio of the image, and determines the scale
-    at which QPainter will draw graphics on the image. It does not
-    change the scale or aspect ratio of the image when it is rendered
-    on other paint devices.
-
-    \sa dotsPerMeterX(), {QImage#Image Information}{Image Information}
-*/
-void QImage::setDotsPerMeterX(int x)
-{
-    if (!d || !x)
-        return;
-    detach();
-
-    d->dpmx = x;
-}
-
-/*!
-    Sets the number of pixels that fit vertically in a physical meter,
-    to \a y.
-
-    Together with dotsPerMeterX(), this number defines the intended
-    scale and aspect ratio of the image, and determines the scale
-    at which QPainter will draw graphics on the image. It does not
-    change the scale or aspect ratio of the image when it is rendered
-    on other paint devices.
-
-    \sa dotsPerMeterY(), {QImage#Image Information}{Image Information}
-*/
-void QImage::setDotsPerMeterY(int y)
-{
-    if (!d || !y)
-        return;
-    detach();
-
-    d->dpmy = y;
 }
 
 /*
@@ -3267,45 +3173,45 @@ QPaintEngine *QImage::paintEngine() const
 */
 int QImage::metric(PaintDeviceMetric metric) const
 {
-    if (!d)
+    if (!d) {
         return 0;
+    }
 
     switch (metric) {
-    case PdmWidth:
-        return d->width;
-
-    case PdmHeight:
-        return d->height;
-
-    case PdmWidthMM:
-        return qRound(d->width * 1000 / d->dpmx);
-
-    case PdmHeightMM:
-        return qRound(d->height * 1000 / d->dpmy);
-
-    case PdmNumColors:
-        if (d->depth == 1)
-            return 2;
-        return 0;
-
-    case PdmDepth:
-        return d->depth;
-
-    case PdmDpiX:
-        return qRound(d->dpmx * 0.0254);
-
-    case PdmDpiY:
-        return qRound(d->dpmy * 0.0254);
-
-    case PdmPhysicalDpiX:
-        return qRound(d->dpmx * 0.0254);
-
-    case PdmPhysicalDpiY:
-        return qRound(d->dpmy * 0.0254);
-
-    default:
-        qWarning("QImage::metric(): Unhandled metric type %d", metric);
+        case QPaintDevice::PdmWidth: {
+            return d->width;
+        }
+        case QPaintDevice::PdmHeight: {
+            return d->height;
+        }
+        case QPaintDevice::PdmWidthMM: {
+            const qreal dpmx = (QX11Info::appDpiX() * 100 / qreal(2.54));
+            return qRound(d->width * 1000 / dpmx);
+        }
+        case QPaintDevice::PdmHeightMM: {
+            const qreal dpmy = (QX11Info::appDpiY() * 100 / qreal(2.54));
+            return qRound(d->height * 1000 / dpmy);
+        }
+        case QPaintDevice::PdmNumColors: {
+            if (d->depth == 1) {
+                return 2;
+            }
+            return 0;
+        }
+        case QPaintDevice::PdmDepth: {
+            return d->depth;
+        }
+        case QPaintDevice::PdmDpiX:
+        case QPaintDevice::PdmPhysicalDpiX: {
+            return QX11Info::appDpiX();
+        }
+        case QPaintDevice::PdmDpiY:
+        case QPaintDevice::PdmPhysicalDpiY: {
+            return QX11Info::appDpiY();
+        }
     }
+
+    qWarning("QImage::metric(): Unhandled metric type %d", metric);
     return 0;
 }
 
@@ -3627,11 +3533,8 @@ QImage QImage::transformed(const QTransform &matrix, Qt::TransformationMode mode
         dImage.d->has_alpha_clut = d->has_alpha_clut | complex_xform;
     }
 
-    dImage.d->dpmx = dotsPerMeterX();
-    dImage.d->dpmy = dotsPerMeterY();
-
     // initizialize the data
-    memset(dImage.d->data, 0x00, dImage.byteCount());
+    ::memset(dImage.d->data, 0x00, dImage.byteCount());
 
     QPainter p(&dImage);
     if (mode == Qt::SmoothTransformation) {

@@ -59,9 +59,6 @@ struct Q_GUI_EXPORT QImageData {        // internal image data
     int ser_no;               // serial number
     int detach_no;
 
-    qreal  dpmx;                // dots per meter X (or 0)
-    qreal  dpmy;                // dots per meter Y (or 0)
-
     bool own_data;
     bool ro_data;
     bool has_alpha_clut;
