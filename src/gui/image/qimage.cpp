@@ -984,7 +984,7 @@ QImage QImage::copy(const QRect& r) const
         // Qt for Embedded Linux can create images with non-default bpl
         // make sure we don't crash.
         if (image.d->nbytes != d->nbytes) {
-            int bpl = qMin(bytesPerLine(), image.bytesPerLine());
+            const int bpl = qMin(bytesPerLine(), image.bytesPerLine());
             uchar* bits = image.bits();
             for (int i = 0; i < height(); i++)
                 ::memcpy(QFAST_SCAN_LINE(bits, bpl, i), constScanLine(i), bpl);
@@ -2821,8 +2821,10 @@ QImage QImage::rgbSwapped() const
         case QImage::Format_ARGB32_Premultiplied: {
             res = QImage(d->width, d->height, d->format);
             QIMAGE_SANITYCHECK_MEMORY(res);
+            uchar* resbits = res.bits();
+            const int bpl = res.bytesPerLine();
             for (int i = 0; i < d->height; i++) {
-                uint *q = (uint*)res.scanLine(i);
+                uint *q = (uint*)QFAST_SCAN_LINE(resbits, bpl, i);
                 const uint *p = (const uint*)constScanLine(i);
                 const uint *end = p + d->width;
                 while (p < end) {
@@ -2836,8 +2838,10 @@ QImage QImage::rgbSwapped() const
         case QImage::Format_RGB16: {
             res = QImage(d->width, d->height, d->format);
             QIMAGE_SANITYCHECK_MEMORY(res);
+            uchar* resbits = res.bits();
+            const int bpl = res.bytesPerLine();
             for (int i = 0; i < d->height; i++) {
-                ushort *q = (ushort*)res.scanLine(i);
+                ushort *q = (ushort*)QFAST_SCAN_LINE(resbits, bpl, i);
                 const ushort *p = (const ushort*)constScanLine(i);
                 const ushort *end = p + d->width;
                 while (p < end) {
