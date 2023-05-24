@@ -178,8 +178,6 @@ struct QWExtra {
     qint32 minh; // minimum size
     qint32 maxw;
     qint32 maxh; // maximum size
-    quint16 customDpiX;
-    quint16 customDpiY;
 
     // *************************** Cross-platform bit fields ****************************
     Qt::Orientations explicitMinSize;

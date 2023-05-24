@@ -2625,18 +2625,14 @@ int QWidget::metric(PaintDeviceMetric m) const
         switch (m) {
             case PdmDpiX:
             case PdmPhysicalDpiX:
-                if (d->extra && d->extra->customDpiX)
-                    val = d->extra->customDpiX;
-                else if (d->parent)
+                if (d->parent)
                     val = static_cast<QWidget *>(d->parent)->metric(m);
                 else
                     val = QX11Info::appDpiX(scr);
                 break;
             case PdmDpiY:
             case PdmPhysicalDpiY:
-                if (d->extra && d->extra->customDpiY)
-                    val = d->extra->customDpiY;
-                else if (d->parent)
+                if (d->parent)
                     val = static_cast<QWidget *>(d->parent)->metric(m);
                 else
                     val = QX11Info::appDpiY(scr);

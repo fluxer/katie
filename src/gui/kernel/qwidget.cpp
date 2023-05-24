@@ -1243,8 +1243,6 @@ void QWidgetPrivate::createExtra()
         extra->minh = 0;
         extra->maxw = QWIDGETSIZE_MAX;
         extra->maxh = QWIDGETSIZE_MAX;
-        extra->customDpiX = 0;
-        extra->customDpiY = 0;
         extra->explicitMinSize = 0;
         extra->explicitMaxSize = 0;
         extra->autoFillBackground = false;
