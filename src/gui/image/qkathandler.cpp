@@ -57,8 +57,9 @@ bool QKatHandler::canRead(QIODevice *device)
     }
 
     QSTACKARRAY(char, head, 5);
-    if (device->peek(head, sizeof(head)) != sizeof(head))
+    if (device->peek(head, sizeof(head)) != sizeof(head)) {
         return false;
+    }
 
     return (::memcmp(head, "KATIE", 5) == 0);
 }

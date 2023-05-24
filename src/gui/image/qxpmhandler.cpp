@@ -280,8 +280,9 @@ bool QXpmHandler::canRead(QIODevice *device)
     }
 
     QSTACKARRAY(char, head, 6);
-    if (device->peek(head, sizeof(head)) != sizeof(head))
+    if (device->peek(head, sizeof(head)) != sizeof(head)) {
         return false;
+    }
 
     return (::memcmp(head, "/* XPM", 6) == 0);
 }

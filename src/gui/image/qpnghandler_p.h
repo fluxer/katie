@@ -1,7 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016 Ivailo Monev
+** Copyright (C) 2023 Ivailo Monev
 **
 ** This file is part of the QtGui module of the Katie Toolkit.
 **
@@ -47,15 +46,16 @@ public:
     bool read(QImage *image) final;
     bool write(const QImage &image) final;
 
-    bool supportsOption(QImageIOHandler::ImageOption option) const final;
+    QVariant option(QImageIOHandler::ImageOption option) const final;
     void setOption(QImageIOHandler::ImageOption option, const QVariant &value) final;
+    bool supportsOption(QImageIOHandler::ImageOption option) const final;
 
     QByteArray name() const final;
 
     static bool canRead(QIODevice *device);
 
 private:
-    int m_compression;
+    int m_complevel;
 };
 
 QT_END_NAMESPACE

@@ -60,7 +60,7 @@ int spng_write_proc(spng_ctx *ctx, void *user, void *dst_src, size_t length)
 
 
 QPngHandler::QPngHandler()
-    : m_compression(1)
+    : m_complevel(1)
 {
 }
 
@@ -164,7 +164,7 @@ bool QPngHandler::write(const QImage &image)
         return false;
     }
 
-    spngresult = spng_set_option(spngctx, SPNG_IMG_COMPRESSION_LEVEL, m_compression);
+    spngresult = spng_set_option(spngctx, SPNG_IMG_COMPRESSION_LEVEL, m_complevel);
     if (Q_UNLIKELY(spngresult != SPNG_OK)) {
         qWarning("QPngHandler::write() Could not set image compression level: %s", spng_strerror(spngresult));
         spng_ctx_free(spngctx);
@@ -187,22 +187,69 @@ bool QPngHandler::write(const QImage &image)
     return true;
 }
 
-bool QPngHandler::supportsOption(QImageIOHandler::ImageOption option) const
+QVariant QPngHandler::option(QImageIOHandler::ImageOption option) const
 {
-    return (option == QImageIOHandler::CompressionLevel);
+    if (option == QImageIOHandler::Size) {
+        const qint64 devicepos = device()->pos();
+
+        spng_ctx *spngctx = spng_ctx_new(static_cast<spng_ctx_flags>(0));
+        if (Q_UNLIKELY(!spngctx)) {
+            qWarning("QPngHandler::option() Could not create context");
+            return false;
+        }
+
+        int spngresult = spng_set_png_stream(spngctx, spng_read_proc, device());
+        if (Q_UNLIKELY(spngresult != SPNG_OK)) {
+            qWarning("QPngHandler::option() Could not set stream: %s", spng_strerror(spngresult));
+            spng_ctx_free(spngctx);
+            return false;
+        }
+
+        struct spng_ihdr spngihdr;
+        ::memset(&spngihdr, 0, sizeof(struct spng_ihdr));
+        spngresult = spng_get_ihdr(spngctx, &spngihdr);
+        if (Q_UNLIKELY(spngresult != SPNG_OK)) {
+            qWarning("QPngHandler::option() Could not get IHDR: %s", spng_strerror(spngresult));
+            spng_ctx_free(spngctx);
+            device()->seek(devicepos);
+            return false;
+        }
+
+        spng_ctx_free(spngctx);
+        device()->seek(devicepos);
+        return QSize(spngihdr.width, spngihdr.height);
+    } else if (option == QImageIOHandler::CompressionLevel) {
+        return QVariant(m_complevel);
+    }
+    return QVariant();
 }
 
 void QPngHandler::setOption(QImageIOHandler::ImageOption option, const QVariant &value)
 {
     if (option == QImageIOHandler::CompressionLevel) {
-        const int newlevel = value.toInt();
-        if (Q_UNLIKELY(newlevel < 0 || newlevel > 9)) {
-            qWarning("QPngHandler::setOption() invalid compression level value");
-            m_compression = 1;
+        const int newcomplevel = value.toInt();
+        if (Q_UNLIKELY(newcomplevel < 0 || newcomplevel > 9)) {
+            qWarning("QPngHandler::setOption() Invalid compression level (%d)", newcomplevel);
+            m_complevel = 1;
         } else {
-            m_compression = newlevel;
+            m_complevel = newcomplevel;
         }
     }
+}
+
+bool QPngHandler::supportsOption(QImageIOHandler::ImageOption option) const
+{
+    switch (option) {
+        case QImageIOHandler::Size:
+        case QImageIOHandler::CompressionLevel: {
+            return true;
+        }
+        default: {
+            return false;
+        }
+    }
+    Q_UNREACHABLE();
+    return false;
 }
 
 QByteArray QPngHandler::name() const
@@ -213,7 +260,7 @@ QByteArray QPngHandler::name() const
 bool QPngHandler::canRead(QIODevice *device)
 {
     if (Q_UNLIKELY(!device)) {
-        qWarning("QPngHandler::canRead() called with no device");
+        qWarning("QPngHandler::canRead() Called with no device");
         return false;
     }
 
@@ -222,8 +269,7 @@ bool QPngHandler::canRead(QIODevice *device)
         return false;
     }
 
-    static const uchar pngheader[]
-        = { 0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a };
+    static const uchar pngheader[] = { 0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a };
     return (::memcmp(head, pngheader, 8) == 0);
 }
 
