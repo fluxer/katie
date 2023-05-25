@@ -133,7 +133,6 @@ public:
     QIconTheme theme() const { return themeList.value(themeName()); }
     void setThemeSearchPath(const QStringList &searchPaths);
     QStringList themeSearchPaths() const;
-    QIconDirInfo dirInfo(int dirindex);
     static QIconLoader *instance();
     void updateSystemTheme();
     void invalidateKey() { m_themeKey++; }
