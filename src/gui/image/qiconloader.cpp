@@ -161,8 +161,8 @@ QIconTheme::QIconTheme(const QString &themeName)
 }
 
 QThemeIconEntries QIconLoader::findIconHelper(const QString &themeName,
-                                 const QString &iconName,
-                                 QStringList &visited) const
+                                              const QString &iconName,
+                                              QStringList &visited) const
 {
     QThemeIconEntries entries;
     Q_ASSERT(!themeName.isEmpty());
@@ -208,11 +208,14 @@ QThemeIconEntries QIconLoader::findIconHelper(const QString &themeName,
     if (entries.isEmpty()) {
         // Search recursively through inherited themes
         foreach (const QString &parentTheme, theme.parents()) {
-            if (!visited.contains(parentTheme)) // guard against recursion
+            if (!visited.contains(parentTheme)) { // guard against recursion
                 entries = findIconHelper(parentTheme, iconName, visited);
+            }
 
-            if (!entries.isEmpty()) // success
+            if (!entries.isEmpty()) {
+                // success
                 break;
+            }
         }
     }
     return entries;
@@ -230,10 +233,8 @@ QThemeIconEntries QIconLoader::loadIcon(const QString &name) const
 
 
 // -------- Icon Loader Engine -------- //
-
-
-QIconLoaderEngine::QIconLoaderEngine(const QString& iconName)
-        : m_iconName(iconName), m_key(0)
+QIconLoaderEngine::QIconLoaderEngine(const QString &iconName)
+    : m_iconName(iconName), m_key(0)
 {
     ensureLoaded();
 }

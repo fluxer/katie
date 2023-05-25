@@ -46,14 +46,19 @@ class QIconLoader;
 
 struct QIconDirInfo
 {
-    enum Type { Fixed, Scalable, Threshold };
-    QIconDirInfo(const QString &_path = QString()) :
-            path(_path),
-            size(0),
-            maxSize(0),
-            minSize(0),
-            threshold(0),
-            type(Threshold) {}
+    enum Type {
+        Fixed,
+        Scalable,
+        Threshold
+    };
+
+    QIconDirInfo(const QString &_path = QString())
+        : path(_path),
+        size(0),
+        maxSize(0),
+        minSize(0),
+        threshold(0),
+        type(Threshold) { }
     QString path;
     short size;
     short maxSize;
@@ -63,7 +68,7 @@ struct QIconDirInfo
 };
 
 class QIconLoaderEngineEntry
- {
+{
 public:
     QPixmap pixmap(const QSize &size, QIcon::Mode mode, QIcon::State state);
 
@@ -97,8 +102,6 @@ private:
     QThemeIconEntries m_entries;
     QString m_iconName;
     uint m_key;
-
-    friend class QIconLoader;
 };
 
 class QIconTheme
