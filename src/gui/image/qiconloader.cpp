@@ -412,19 +412,19 @@ QPixmap QIconLoaderEngineEntry::pixmap(const QSize &size, QIcon::Mode mode, QIco
 {
     Q_UNUSED(state);
 
-    // Ensure that basePixmap is lazily initialized before generating the
+    // Ensure that the base pixmap is lazily initialized before generating the
     // key, otherwise the cache key is not unique
-    if (basePixmap.isNull()) {
+    if (m_basePixmap.isNull()) {
         QImageReader baseReader(filename);
         QSize baseSize(size);
         baseSize.scale(size, Qt::KeepAspectRatio);
         baseReader.setScaledSize(baseSize);
-        basePixmap = QPixmap::fromImage(baseReader.read());
+        m_basePixmap = QPixmap::fromImage(baseReader.read());
     }
 
     int actualSize = qMin(size.width(), size.height());
     QString key = QLatin1String("$qt_theme_")
-                  + HexString<qint64>(basePixmap.cacheKey())
+                  + HexString<qint64>(m_basePixmap.cacheKey())
                   + HexString<int>(mode)
                   + HexString<qint64>(qApp->palette().cacheKey())
                   + HexString<int>(actualSize);
@@ -435,7 +435,7 @@ QPixmap QIconLoaderEngineEntry::pixmap(const QSize &size, QIcon::Mode mode, QIco
     } else {
         QStyleOption opt(0);
         opt.palette = qApp->palette();
-        cachedPixmap = qApp->style()->generatedIconPixmap(mode, basePixmap, &opt);
+        cachedPixmap = qApp->style()->generatedIconPixmap(mode, m_basePixmap, &opt);
         QPixmapCache::insert(key, cachedPixmap);
     }
     return cachedPixmap;

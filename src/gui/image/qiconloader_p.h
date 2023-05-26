@@ -72,9 +72,11 @@ class QIconLoaderEngineEntry
 public:
     QPixmap pixmap(const QSize &size, QIcon::Mode mode, QIcon::State state);
 
-    QPixmap basePixmap;
     QString filename;
     QIconDirInfo dir;
+
+private:
+    QPixmap m_basePixmap;
 };
 
 typedef QList<QIconLoaderEngineEntry*> QThemeIconEntries;
