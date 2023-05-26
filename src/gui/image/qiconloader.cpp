@@ -234,22 +234,24 @@ QThemeIconEntries QIconLoader::loadIcon(const QString &name) const
 
 // -------- Icon Loader Engine -------- //
 QIconLoaderEngine::QIconLoaderEngine(const QString &iconName)
-    : m_iconName(iconName), m_key(0)
+    : m_iconName(iconName),
+    m_key(0)
 {
     ensureLoaded();
 }
 
 QIconLoaderEngine::~QIconLoaderEngine()
 {
-    while (!m_entries.isEmpty())
+    while (!m_entries.isEmpty()) {
         delete m_entries.takeLast();
+    }
     Q_ASSERT(m_entries.size() == 0);
 }
 
 QIconLoaderEngine::QIconLoaderEngine(const QIconLoaderEngine &other)
-        : QIconEngine(other),
-        m_iconName(other.m_iconName),
-        m_key(0)
+    : QIconEngine(other),
+    m_iconName(other.m_iconName),
+    m_key(0)
 {
     ensureLoaded();
 }
@@ -259,7 +261,8 @@ QIconEngine *QIconLoaderEngine::clone() const
     return new QIconLoaderEngine(*this);
 }
 
-bool QIconLoaderEngine::read(QDataStream &in) {
+bool QIconLoaderEngine::read(QDataStream &in)
+{
     in >> m_iconName;
     return true;
 }
@@ -272,10 +275,10 @@ bool QIconLoaderEngine::write(QDataStream &out) const
 
 void QIconLoaderEngine::ensureLoaded()
 {
-    if (!(iconLoaderInstance()->themeKey() == m_key)) {
-
-        while (!m_entries.isEmpty())
+    if (iconLoaderInstance()->themeKey() != m_key) {
+        while (!m_entries.isEmpty()) {
             delete m_entries.takeLast();
+        }
 
         Q_ASSERT(m_entries.size() == 0);
         m_entries = iconLoaderInstance()->loadIcon(m_iconName);
@@ -284,7 +287,7 @@ void QIconLoaderEngine::ensureLoaded()
 }
 
 void QIconLoaderEngine::paint(QPainter *painter, const QRect &rect,
-                             QIcon::Mode mode, QIcon::State state)
+                              QIcon::Mode mode, QIcon::State state)
 {
     painter->drawPixmap(rect, pixmap(rect.size(), mode, state));
 }
@@ -296,15 +299,11 @@ void QIconLoaderEngine::paint(QPainter *painter, const QRect &rect,
 static bool directoryMatchesSize(const QIconDirInfo &dir, int iconsize)
 {
     if (dir.type == QIconDirInfo::Fixed) {
-        return dir.size == iconsize;
-
+        return (dir.size == iconsize);
     } else if (dir.type == QIconDirInfo::Scalable) {
-        return iconsize <= dir.maxSize &&
-                iconsize >= dir.minSize;
-
+        return (iconsize <= dir.maxSize && iconsize >= dir.minSize);
     } else if (dir.type == QIconDirInfo::Threshold) {
-        return iconsize >= dir.size - dir.threshold &&
-                iconsize <= dir.size + dir.threshold;
+        return (iconsize >= dir.size - dir.threshold && iconsize <= dir.size + dir.threshold);
     }
 
     Q_ASSERT(1); // Not a valid value
@@ -321,19 +320,21 @@ static int directorySizeDistance(const QIconDirInfo &dir, int iconsize)
         return qAbs(dir.size - iconsize);
 
     } else if (dir.type == QIconDirInfo::Scalable) {
-        if (iconsize < dir.minSize)
+        if (iconsize < dir.minSize) {
             return dir.minSize - iconsize;
-        else if (iconsize > dir.maxSize)
+        } else if (iconsize > dir.maxSize) {
             return iconsize - dir.maxSize;
-        else
+        } else {
             return 0;
-
+        }
     } else if (dir.type == QIconDirInfo::Threshold) {
-        if (iconsize < dir.size - dir.threshold)
+        if (iconsize < dir.size - dir.threshold) {
             return dir.minSize - iconsize;
-        else if (iconsize > dir.size + dir.threshold)
+        } else if (iconsize > dir.size + dir.threshold) {
             return iconsize - dir.maxSize;
-        else return 0;
+        } else {
+            return 0;
+        }
     }
 
     Q_ASSERT(1); // Not a valid value
@@ -376,7 +377,7 @@ QIconLoaderEngineEntry *QIconLoaderEngine::entryForSize(const QSize &size)
  *
  */
 QSize QIconLoaderEngine::actualSize(const QSize &size, QIcon::Mode mode,
-                                   QIcon::State state)
+                                    QIcon::State state)
 {
     QIconLoaderEngineEntry *entry = entryForSize(size);
     if (entry) {
@@ -441,12 +442,12 @@ QPixmap QIconLoaderEngineEntry::pixmap(const QSize &size, QIcon::Mode mode, QIco
 }
 
 QPixmap QIconLoaderEngine::pixmap(const QSize &size, QIcon::Mode mode,
-                                 QIcon::State state)
+                                  QIcon::State state)
 {
     QIconLoaderEngineEntry *entry = entryForSize(size);
-    if (entry)
+    if (entry) {
         return entry->pixmap(size, mode, state);
-
+    }
     return QPixmap();
 }
 
