@@ -42,7 +42,7 @@ public:
     QIcon();
     QIcon(const QPixmap &pixmap);
     QIcon(const QIcon &other);
-    explicit QIcon(const QString &fileName); // file or resource name
+    explicit QIcon(const QString &fileName);
     explicit QIcon(QIconEngine *engine);
     ~QIcon();
     QIcon &operator=(const QIcon &other);

@@ -27,6 +27,7 @@
 #include "qstylehelper_p.h"
 #include "qguicommon_p.h"
 #include "qcore_unix_p.h"
+#include "qdebug.h"
 
 #include <QtCore/QList>
 #include <QtCore/QHash>
@@ -41,6 +42,9 @@
 #include <limits.h>
 
 QT_BEGIN_NAMESPACE
+
+// for reference:
+// https://specifications.freedesktop.org/icon-theme-spec/icon-theme-spec-latest.html
 
 Q_GLOBAL_STATIC(QIconLoader, iconLoaderInstance)
 
@@ -116,38 +120,29 @@ QIconTheme::QIconTheme(const QString &themeName)
     }
     if (m_valid) {
         const QSettings indexReader(m_contentDir + QLatin1String("/index.theme"), QSettings::IniFormat);
-        foreach (const QString &key, indexReader.keys()) {
-            if (key.endsWith(QLatin1String("/Size"))) {
-                // Note the QSettings ini-format does not accept
-                // slashes in key names, hence we have to cheat
-                if (int size = indexReader.value(key).toInt()) {
-                    QString directoryKey = key.left(key.size() - 5);
-                    QIconDirInfo dirInfo(directoryKey);
-                    dirInfo.size = size;
-                    QString type = indexReader.value(directoryKey +
-                                                     QLatin1String("/Type")
-                                                     ).toString();
+        QStringList indexDirectories = indexReader.value(QLatin1String("Icon Theme/Directories")).toStringList();
+        // TODO: conditional
+        indexDirectories << indexReader.value(QLatin1String("Icon Theme/ScaledDirectories")).toStringList();
+        // qDebug() << Q_FUNC_INFO << themeName << m_contentDir << indexDirectories;
+        foreach (const QString &directoryKey, indexDirectories) {
+            const QString sizeKey = directoryKey + QLatin1String("/Size");
+            const int size = indexReader.value(sizeKey).toInt();
+            if (Q_LIKELY(size > 0)) {
+                QIconDirInfo dirInfo(directoryKey);
+                dirInfo.size = size;
+                const QString type = indexReader.value(directoryKey + QLatin1String("/Type")).toString();
 
-                    if (type == QLatin1String("Fixed"))
-                        dirInfo.type = QIconDirInfo::Fixed;
-                    else if (type == QLatin1String("Scalable"))
-                        dirInfo.type = QIconDirInfo::Scalable;
-                    else
-                        dirInfo.type = QIconDirInfo::Threshold;
-
-                    dirInfo.threshold = indexReader.value(directoryKey +
-                                                        QLatin1String("/Threshold"),
-                                                        2).toInt();
-
-                    dirInfo.minSize = indexReader.value(directoryKey +
-                                                         QLatin1String("/MinSize"),
-                                                         size).toInt();
-
-                    dirInfo.maxSize = indexReader.value(directoryKey +
-                                                        QLatin1String("/MaxSize"),
-                                                        size).toInt();
-                    m_keyList.append(dirInfo);
+                if (type == QLatin1String("Fixed")) {
+                    dirInfo.type = QIconDirInfo::Fixed;
+                } else if (type == QLatin1String("Scalable")) {
+                    dirInfo.type = QIconDirInfo::Scalable;
+                } else {
+                    dirInfo.type = QIconDirInfo::Threshold;
                 }
+                dirInfo.threshold = indexReader.value(directoryKey + QLatin1String("/Threshold"), 2).toInt();
+                dirInfo.minSize = indexReader.value(directoryKey + QLatin1String("/MinSize"), size).toInt();
+                dirInfo.maxSize = indexReader.value(directoryKey + QLatin1String("/MaxSize"), size).toInt();
+                m_keyList.append(dirInfo);
             }
         }
 
@@ -155,8 +150,9 @@ QIconTheme::QIconTheme(const QString &themeName)
         m_parents = indexReader.value(QLatin1String("Icon Theme/Inherits")).toStringList();
 
         // Ensure that all themes fall back to hicolor
-        if (!m_parents.contains(fallbackTheme))
+        if (!m_parents.contains(fallbackTheme)) {
             m_parents.append(fallbackTheme);
+        }
     }
 }
 
@@ -179,7 +175,7 @@ QThemeIconEntries QIconLoader::findIconHelper(const QString &themeName,
         m_themeList.insert(themeName, theme);
     }
 
-    QString contentDir = theme.contentDir() + QLatin1Char('/');
+    const QString contentDir = theme.contentDir() + QLatin1Char('/');
 
     // Add all relevant files
     foreach (const QIconDirInfo &dirInfo, theme.keyList()) {
