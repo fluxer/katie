@@ -52,7 +52,8 @@ Q_GLOBAL_STATIC(QIconLoader, iconLoaderInstance)
 static const QString fallbackTheme = QLatin1String("hicolor");
 
 QIconLoader::QIconLoader()
-    : m_themeKey(1), m_supportsSvg(false)
+    : m_themeKey(1),
+    m_supportsSvg(false)
 {
     Q_ASSERT(qApp);
 
@@ -76,8 +77,9 @@ void QIconLoader::updateSystemTheme()
     // Only change if this is not explicitly set by the user
     if (m_userTheme.isEmpty()) {
         QString theme = qt_guiPlatformPlugin()->systemIconThemeName();
-        if (theme.isEmpty())
+        if (theme.isEmpty()) {
             theme = fallbackTheme;
+        }
         if (theme != m_systemTheme) {
             m_systemTheme = theme;
             invalidateKey();
@@ -106,8 +108,15 @@ QStringList QIconLoader::themeSearchPaths() const
     return m_iconDirs;
 }
 
-QIconTheme::QIconTheme(const QString &themeName)
-    : m_valid(false)
+QIconTheme::QIconTheme()
+    : m_valid(false),
+    m_supportsSvg(false)
+{
+}
+
+QIconTheme::QIconTheme(const QString &themeName, const bool supportsSvg)
+    : m_valid(false),
+    m_supportsSvg(supportsSvg)
 {
     foreach (const QString &it, QIcon::themeSearchPaths()) {
         QString themeDir = it + QLatin1Char('/') + themeName;
@@ -121,8 +130,9 @@ QIconTheme::QIconTheme(const QString &themeName)
     if (m_valid) {
         const QSettings indexReader(m_contentDir + QLatin1String("/index.theme"), QSettings::IniFormat);
         QStringList indexDirectories = indexReader.value(QLatin1String("Icon Theme/Directories")).toStringList();
-        // TODO: conditional
-        indexDirectories << indexReader.value(QLatin1String("Icon Theme/ScaledDirectories")).toStringList();
+        if (m_supportsSvg) {
+            indexDirectories << indexReader.value(QLatin1String("Icon Theme/ScaledDirectories")).toStringList();
+        }
         // qDebug() << Q_FUNC_INFO << themeName << m_contentDir << indexDirectories;
         foreach (const QString &directoryKey, indexDirectories) {
             const QString sizeKey = directoryKey + QLatin1String("/Size");
@@ -168,9 +178,9 @@ QThemeIconEntries QIconLoader::findIconHelper(const QString &themeName,
 
     QIconTheme theme = m_themeList.value(themeName);
     if (!theme.isValid()) {
-        theme = QIconTheme(themeName);
+        theme = QIconTheme(themeName, m_supportsSvg);
         if (!theme.isValid())
-            theme = QIconTheme(fallbackTheme);
+            theme = QIconTheme(fallbackTheme, m_supportsSvg);
 
         m_themeList.insert(themeName, theme);
     }

@@ -110,8 +110,8 @@ private:
 class QIconTheme
 {
 public:
-    QIconTheme(const QString &name);
-    QIconTheme() : m_valid(false) {}
+    QIconTheme();
+    QIconTheme(const QString &name, const bool supportsSvg);
     QStringList parents() { return m_parents; }
     QList <QIconDirInfo> keyList() { return m_keyList; }
     QString contentDir() { return m_contentDir; }
@@ -122,6 +122,7 @@ private:
     QList <QIconDirInfo> m_keyList;
     QStringList m_parents;
     bool m_valid;
+    bool m_supportsSvg;
 };
 
 class QIconLoader
