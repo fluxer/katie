@@ -484,11 +484,7 @@ QIcon::QIcon(const QIcon &other)
     the relevant file must be found relative to the runtime working
     directory.
 
-    The file name can be either refer to an actual file on disk or to
-    one of the application's embedded resources.  See the
-    \l{resources.html}{Resource System} overview for details on how to
-    embed images and other resource files in the application's
-    executable.
+    The file name refers to an actual file on disk.
 
     Use the QImageReader::supportedImageFormats() and
     QImageWriter::supportedImageFormats() functions to retrieve a
