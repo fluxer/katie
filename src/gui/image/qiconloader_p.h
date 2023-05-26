@@ -128,12 +128,12 @@ class QIconLoader
 {
 public:
     QIconLoader();
-    QThemeIconEntries loadIcon(const QString &iconName) const;
+    QThemeIconEntries loadIcon(const QString &iconName);
     uint themeKey() const { return m_themeKey; }
 
     QString themeName() const { return m_userTheme.isEmpty() ? m_systemTheme : m_userTheme; }
     void setThemeName(const QString &themeName);
-    QIconTheme theme() const { return themeList.value(themeName()); }
+    QIconTheme theme() const { return m_themeList.value(themeName()); }
     void setThemeSearchPath(const QStringList &searchPaths);
     QStringList themeSearchPaths() const;
     static QIconLoader *instance();
@@ -143,14 +143,14 @@ public:
 private:
     QThemeIconEntries findIconHelper(const QString &themeName,
                                      const QString &iconName,
-                                     QStringList &visited) const;
+                                     QStringList &visited);
     uint m_themeKey;
     bool m_supportsSvg;
 
     QString m_userTheme;
     QString m_systemTheme;
     mutable QStringList m_iconDirs;
-    mutable QHash <QString, QIconTheme> themeList;
+    QHash <QString, QIconTheme> m_themeList;
 };
 
 QT_END_NAMESPACE

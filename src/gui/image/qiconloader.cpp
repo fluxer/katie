@@ -90,7 +90,7 @@ void QIconLoader::setThemeName(const QString &themeName)
 void QIconLoader::setThemeSearchPath(const QStringList &searchPaths)
 {
     m_iconDirs = searchPaths;
-    themeList.clear();
+    m_themeList.clear();
     invalidateKey();
 }
 
@@ -162,7 +162,7 @@ QIconTheme::QIconTheme(const QString &themeName)
 
 QThemeIconEntries QIconLoader::findIconHelper(const QString &themeName,
                                               const QString &iconName,
-                                              QStringList &visited) const
+                                              QStringList &visited)
 {
     QThemeIconEntries entries;
     Q_ASSERT(!themeName.isEmpty());
@@ -170,13 +170,13 @@ QThemeIconEntries QIconLoader::findIconHelper(const QString &themeName,
     // Used to protect against potential recursions
     visited << themeName;
 
-    QIconTheme theme = themeList.value(themeName);
+    QIconTheme theme = m_themeList.value(themeName);
     if (!theme.isValid()) {
         theme = QIconTheme(themeName);
         if (!theme.isValid())
             theme = QIconTheme(fallbackTheme);
 
-        themeList.insert(themeName, theme);
+        m_themeList.insert(themeName, theme);
     }
 
     QString contentDir = theme.contentDir() + QLatin1Char('/');
@@ -221,7 +221,7 @@ QThemeIconEntries QIconLoader::findIconHelper(const QString &themeName,
     return entries;
 }
 
-QThemeIconEntries QIconLoader::loadIcon(const QString &name) const
+QThemeIconEntries QIconLoader::loadIcon(const QString &name)
 {
     if (!themeName().isEmpty()) {
         QStringList visited;
