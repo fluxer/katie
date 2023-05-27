@@ -107,8 +107,7 @@ QString QStandardPaths::writableLocation(StandardLocation type)
             return location;
         } else {
             if (QDir().mkpath(location)) {
-                QFile locationfile(location);
-                if (locationfile.setPermissions(QFile::ReadUser | QFile::WriteUser | QFile::ExeUser)) {
+                if (QFile::setPermissions(location, QFile::ReadUser | QFile::WriteUser | QFile::ExeUser)) {
                     return location;
                 }
             }
