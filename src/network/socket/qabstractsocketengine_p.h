@@ -72,9 +72,8 @@ public:
         MulticastLoopbackOption
     };
 
-    bool initialize(QAbstractSocket::SocketType type, QAbstractSocket::NetworkLayerProtocol protocol = QAbstractSocket::IPv4Protocol);
-
-    bool initialize(int socketDescriptor, QAbstractSocket::SocketState socketState = QAbstractSocket::ConnectedState);
+    bool initialize(QAbstractSocket::SocketType type, QAbstractSocket::NetworkLayerProtocol protocol);
+    bool initialize(int socketDescriptor, QAbstractSocket::SocketState socketState);
 
     int socketDescriptor() const;
 
