@@ -43,7 +43,7 @@ QT_BEGIN_NAMESPACE
 const uint QFileSystemMetaData::nobodyID = (uint) -2;
 
 //static
-QFileSystemEntry QFileSystemEngine::getLinkTarget(const QFileSystemEntry &link, QFileSystemMetaData &data)
+QString QFileSystemEngine::linkTarget(const QFileSystemEntry &link, QFileSystemMetaData &data)
 {
     QByteArray lpath = link.nativeFilePath();
     QSTACKARRAY(char, readlinkbuf, PATH_MAX);
@@ -72,9 +72,9 @@ QFileSystemEntry QFileSystemEngine::getLinkTarget(const QFileSystemEntry &link, 
         ret = QDir::cleanPath(ret);
         if (ret.size() > 1 && ret.endsWith(QLatin1Char('/')))
             ret.chop(1);
-        return QFileSystemEntry(ret);
+        return ret;
     }
-    return QFileSystemEntry();
+    return QString();
 }
 
 //static
@@ -88,7 +88,7 @@ QFileSystemEntry QFileSystemEngine::canonicalName(const QFileSystemEntry &entry,
     char *ret = ::realpath(path.constData(), realpathbuf);
     if (ret) {
         data.entryFlags |= QFileSystemMetaData::ExistsAttribute;
-        QString canonicalPath = QDir::cleanPath(QString::fromLocal8Bit(ret));
+        QString canonicalPath = QDir::cleanPath(QFile::decodeName(ret));
         return QFileSystemEntry(canonicalPath);
     } else if (errno == ENOENT) { // file doesn't exist
         data.entryFlags &= ~(QFileSystemMetaData::ExistsAttribute);

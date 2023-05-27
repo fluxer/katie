@@ -47,7 +47,7 @@ QString QFileInfoPrivate::getFileName(const QFileInfoPrivate::FileName name) con
             break;
         }
         case FileName::LinkName:
-            ret = QFileSystemEngine::getLinkTarget(fileEntry, metaData).filePath();
+            ret = QFileSystemEngine::linkTarget(fileEntry, metaData);
             break;
         case FileName::AbsoluteName:
         case FileName::AbsolutePathName: {

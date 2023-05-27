@@ -477,8 +477,7 @@ QString QFile::readLink() const
     if (!d->metaData.hasFlags(QFileSystemMetaData::LinkType))
         QFileSystemEngine::fillMetaData(d->fileEntry, d->metaData, QFileSystemMetaData::LinkType);
     if (d->metaData.isLink()) {
-        QFileSystemEntry entry = QFileSystemEngine::getLinkTarget(d->fileEntry, d->metaData);
-        return entry.filePath();
+        return QFileSystemEngine::linkTarget(d->fileEntry, d->metaData);
     }
     return QString();
 }
@@ -499,8 +498,7 @@ QString QFile::readLink(const QString &fileName)
     QFileSystemEntry fileEntry(fileName);
     QFileSystemEngine::fillMetaData(fileEntry, metaData, QFileSystemMetaData::LinkType);
     if (metaData.isLink()) {
-        QFileSystemEntry entry = QFileSystemEngine::getLinkTarget(fileEntry, metaData);
-        return entry.filePath();
+        return QFileSystemEngine::linkTarget(fileEntry, metaData);;
     }
     return QString();
 }
