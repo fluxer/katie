@@ -344,7 +344,7 @@ def printlocaledata(frommap, key):
     # HACK: skip table entries the language of which is unknown
     if key == 'apc_SY':
         return
-    # HACK: skip table entries with and with and without specifiec script
+    # HACK: skip table entries with and without specifiec script
     if key == 'ha_Arab_NG':
         return
     print('''    {
