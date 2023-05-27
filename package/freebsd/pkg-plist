@@ -1054,7 +1054,6 @@ lib/katie/imports/Qt/labs/folderlistmodel/qmldir
 lib/katie/imports/Qt/labs/particles/libqmlparticlesplugin.so
 lib/katie/imports/Qt/labs/particles/qmldir
 lib/katie/plugins/designer/qdeclarativeview.so
-lib/katie/plugins/iconengines/svg.so
 lib/katie/plugins/imageformats/svg.so
 lib/katie/plugins/script/qtscriptdbus.so
 lib/libKtCore.so
