@@ -319,14 +319,14 @@ void QAbstractSocketEnginePrivate::setError(QAbstractSocket::SocketError error, 
     if (hasSetSocketError) {
         // Only set socket errors once for one engine; expect the
         // socket to recreate its engine after an error. Note: There's
-        // one exception: SocketError(11) bypasses this as it's purely
-        // a temporary internal error condition.
+        // one exception: UnfinishedSocketOperationError bypasses this
+        // as it's purely a temporary internal error condition.
         // Another exception is the way the waitFor*() functions set
         // an error when a timeout occurs. After the call to setError()
         // they reset the hasSetSocketError to false
         return;
     }
-    if (error != QAbstractSocket::SocketError(11))
+    if (error != QAbstractSocket::UnfinishedSocketOperationError)
         hasSetSocketError = true;
 
     socketError = error;

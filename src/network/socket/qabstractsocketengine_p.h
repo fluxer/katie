@@ -108,7 +108,7 @@ public:
     qint64 pendingDatagramSize() const;
 #endif // QT_NO_UDPSOCKET
 
-    qint64 bytesToWrite() const ;
+    qint64 bytesToWrite() const;
 
     int option(SocketOption option) const;
     bool setOption(SocketOption option, int value);
