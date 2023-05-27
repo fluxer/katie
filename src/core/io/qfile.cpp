@@ -463,9 +463,8 @@ bool QFile::exists(const QString &fileName)
     \since 4.2
     \overload
 
-    Returns the absolute path of the file or directory a symlink (or shortcut
-    on Windows) points to, or a an empty string if the object isn't a symbolic
-    link.
+    Returns the absolute path of the file or directory a symlink points to,
+    or a an empty string if the object isn't a symbolic link.
 
     This name may not represent an existing file; it is only a string.
     QFile::exists() returns true if the symlink points to an existing file.
@@ -496,8 +495,14 @@ QString QFile::readLink() const
 */
 QString QFile::readLink(const QString &fileName)
 {
-    // ###: static QFileSystemEngine method for this
-    return QFileInfo(fileName).readLink();
+    QFileSystemMetaData metaData;
+    QFileSystemEntry fileEntry(fileName);
+    QFileSystemEngine::fillMetaData(fileEntry, metaData, QFileSystemMetaData::LinkType);
+    if (metaData.isLink()) {
+        QFileSystemEntry entry = QFileSystemEngine::getLinkTarget(fileEntry, metaData);
+        return entry.filePath();
+    }
+    return QString();
 }
 
 /*!
@@ -992,7 +997,6 @@ int QFile::handle() const
     if (!isOpen()) {
         return -1;
     }
-
     return d->fd;
 }
 
@@ -1050,8 +1054,10 @@ bool QFile::resize(qint64 sz)
 */
 bool QFile::resize(const QString &fileName, qint64 sz)
 {
-    // ###: static QFileSystemEngine method for this
-    return QFile(fileName).resize(sz);
+    const QByteArray native = QFileSystemEntry(fileName).nativeFilePath();
+    int ret = 0;
+    Q_EINTR_LOOP(ret, QT_TRUNCATE(native.constData(), sz));
+    return (ret != -1);
 }
 
 /*!
@@ -1077,8 +1083,10 @@ QFile::Permissions QFile::permissions() const
 */
 QFile::Permissions QFile::permissions(const QString &fileName)
 {
-    // ###: static QFileSystemEngine method for this
-    return QFile(fileName).permissions();
+    QFileSystemMetaData metaData;
+    QFileSystemEntry fileEntry(fileName);
+    QFileSystemEngine::fillMetaData(fileEntry, metaData, QFileSystemMetaData::Permissions | QFileSystemMetaData::LinkType);
+    return metaData.permissions();
 }
 
 /*!
