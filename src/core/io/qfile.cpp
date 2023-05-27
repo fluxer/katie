@@ -520,7 +520,7 @@ bool QFile::remove()
         qWarning("QFile::remove: Empty or null file name");
         return false;
     }
-    unsetError();
+    d->setError(QFile::NoError, QString());
     close();
     if(error() == QFile::NoError) {
         int error = 0;
@@ -530,7 +530,7 @@ bool QFile::remove()
             d->setError(QFile::RemoveError, qt_error_string(error));
             return false;
         }
-        unsetError();
+        d->setError(QFile::NoError, QString());
         return true;
     }
     return false;
@@ -578,7 +578,7 @@ bool QFile::rename(const QString &newName)
         return false;
     }
 #endif
-    unsetError();
+    d->setError(QFile::NoError, QString());
     close();
     if(error() == QFile::NoError) {
         int error = 0;
@@ -589,7 +589,7 @@ bool QFile::rename(const QString &newName)
             return false;
         }
 
-        unsetError();
+        d->setError(QFile::NoError, QString());
         // just reset it
         d->metaData.clear();
         d->fd = -1;
@@ -651,7 +651,7 @@ bool QFile::link(const QString &linkName)
         d->setError(QFile::RenameError, qt_error_string(error));
         return false;
     }
-    unsetError();
+    d->setError(QFile::NoError, QString());
     return true;
 }
 
@@ -690,12 +690,12 @@ bool QFile::copy(const QString &newName)
         return false;
     }
 
-    unsetError();
+    d->setError(QFile::NoError, QString());
     close();
     if(error() == QFile::NoError) {
         int error = 0;
         if(QFileSystemEngine::copyFile(d->fileEntry, QFileSystemEntry(newName), &error)) {
-            unsetError();
+            d->setError(QFile::NoError, QString());
             return true;
         }
         d->setError(QFile::CopyError, qt_error_string(error));
@@ -757,10 +757,10 @@ bool QFile::open(OpenMode mode)
         qWarning("QFile::open: File (%s) already open", qPrintable(fileName()));
         return false;
     }
-    if (mode & Append)
+    d->setError(QFile::NoError, QString());
+    if (mode & Append) {
         mode |= WriteOnly;
-
-    unsetError();
+    }
     if (Q_UNLIKELY((mode & (ReadOnly | WriteOnly)) == 0)) {
         qWarning("QFile::open: File access not specified");
         return false;
@@ -884,18 +884,19 @@ bool QFile::open(OpenMode mode)
 */
 bool QFile::open(FILE *fh, OpenMode mode, FileHandleFlags handleFlags)
 {
+    Q_D(QFile);
     if (Q_UNLIKELY(isOpen())) {
         qWarning("QFile::open: File (%s) already open", qPrintable(fileName()));
         return false;
     }
-    if (mode & Append)
+    d->setError(QFile::NoError, QString());
+    if (mode & Append) {
         mode |= WriteOnly;
-    unsetError();
+    }
     if (Q_UNLIKELY((mode & (ReadOnly | WriteOnly)) == 0)) {
         qWarning("QFile::open: File access not specified");
         return false;
     }
-    Q_D(QFile);
     if (d->openExternalFile(mode, QT_FILENO(fh), handleFlags)) {
         QIODevice::open(mode);
         if (mode & Append) {
@@ -948,18 +949,19 @@ bool QFile::open(FILE *fh, OpenMode mode, FileHandleFlags handleFlags)
 */
 bool QFile::open(int fd, OpenMode mode, FileHandleFlags handleFlags)
 {
+    Q_D(QFile);
     if (Q_UNLIKELY(isOpen())) {
         qWarning("QFile::open: File (%s) already open", qPrintable(fileName()));
         return false;
     }
-    if (mode & Append)
+    d->setError(QFile::NoError, QString());
+    if (mode & Append) {
         mode |= WriteOnly;
-    unsetError();
+    }
     if (Q_UNLIKELY((mode & (ReadOnly | WriteOnly)) == 0)) {
         qWarning("QFile::open: File access not specified");
         return false;
     }
-    Q_D(QFile);
     if (d->openExternalFile(mode, fd, handleFlags)) {
         QIODevice::open(mode);
         if (mode & Append) {
@@ -1038,7 +1040,7 @@ bool QFile::resize(qint64 sz)
         d->setError(QFile::ResizeError, qt_error_string(errno));
         return false;
     }
-    unsetError();
+    d->setError(QFile::NoError, QString());
     return true;
 }
 
@@ -1104,7 +1106,7 @@ bool QFile::setPermissions(Permissions permissions)
         d->setError(QFile::PermissionsError, qt_error_string(error));
         return false;
     }
-    unsetError();
+    d->setError(QFile::NoError, QString());
     return true;
 }
 
@@ -1169,7 +1171,7 @@ void QFile::close()
     }
 
     if (flushed) {
-        unsetError();
+        d->setError(QFile::NoError, QString());
     }
 }
 
@@ -1247,7 +1249,7 @@ bool QFile::seek(qint64 off)
         d->setError(QFile::PositionError, QString());
         return false;
     }
-    unsetError();
+    d->setError(QFile::NoError, QString());
     return true;
 }
 
@@ -1282,7 +1284,7 @@ qint64 QFile::readLineData(char *data, qint64 maxlen)
 qint64 QFile::readData(char *data, qint64 len)
 {
     Q_D(QFile);
-    unsetError();
+    d->setError(QFile::NoError, QString());
 
     if (len < 0) {
         d->setError(QFile::ReadError, qt_error_string(EINVAL));
@@ -1316,7 +1318,7 @@ qint64 QFile::readData(char *data, qint64 len)
 qint64 QFile::writeData(const char *data, qint64 len)
 {
     Q_D(QFile);
-    unsetError();
+    d->setError(QFile::NoError, QString());
 
     if (len < 0 || len != qint64(size_t(len))) {
         d->setError(QFile::WriteError, qt_error_string(EINVAL));
@@ -1350,37 +1352,12 @@ qint64 QFile::writeData(const char *data, qint64 len)
     returns false, or a read/write operation returns -1, this function can
     be called to find out the reason why the operation failed.
 
-    \sa errorString(), unsetError()
+    \sa QIODevice::errorString()
 */
 QFile::FileError QFile::error() const
 {
     Q_D(const QFile);
     return d->error;
-}
-
-/*!
-    \since 4.9.1
-
-    Returns the file error string.
-
-    \sa error(), unsetError()
-*/
-QString QFile::errorString() const
-{
-    Q_D(const QFile);
-    return d->errorString;
-}
-
-/*!
-    Sets the file's error to QFile::NoError.
-
-    \sa error()
-*/
-void QFile::unsetError()
-{
-    Q_D(QFile);
-    d->error = QFile::NoError;
-    d->errorString.clear();
 }
 
 #ifndef QT_NO_QOBJECT

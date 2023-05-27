@@ -51,7 +51,6 @@ protected:
     bool doStat(QFileSystemMetaData::MetaDataFlags flags) const;
 
     QFile::FileError error;
-    QString errorString;
     QFileSystemEntry fileEntry;
     mutable QFileSystemMetaData metaData;
     int fd;

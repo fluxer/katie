@@ -85,8 +85,6 @@ public:
     ~QFile();
 
     FileError error() const;
-    QString errorString() const;
-    void unsetError();
 
     QString fileName() const;
     void setFileName(const QString &name);
