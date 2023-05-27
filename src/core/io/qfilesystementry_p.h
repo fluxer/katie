@@ -66,14 +66,7 @@ public:
     void clear();
 
 private:
-    // creates the QString version out of the bytearray version
-    void resolveFilePath();
-    // creates the bytearray version out of the QString version
-    void resolveNativeFilePath();
-    // resolves the separator
-    void findLastSeparator();
-    // resolves the dots and the separator
-    void findFileNameSeparators();
+    void resolveEntry();
 
     QString m_filePath; // always has slashes as separator
     NativePath m_nativeFilePath; // native encoding and separators
