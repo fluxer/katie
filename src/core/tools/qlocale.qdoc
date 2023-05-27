@@ -83,7 +83,7 @@
     \note For the current keyboard input locale take a look at
     QApplication::keyboardInputLocale().
 
-    QLocale's data is based on Common Locale Data Repository v42.
+    QLocale's data is based on Common Locale Data Repository v43.
 
     The double-to-string and string-to-double conversion functions are
     covered by the following licenses:
@@ -336,6 +336,7 @@
     \value Herero
     \value Hiligaynon
     \value Hindi
+    \value HindiLatin
     \value Hinglish
     \value HiriMotu
     \value Hittite
@@ -1044,6 +1045,7 @@
     \value Samoa
     \value SanMarino
     \value SaoTomeAndPrincipe
+    \value Sark
     \value SaudiArabia
     \value Senegal
     \value Serbia

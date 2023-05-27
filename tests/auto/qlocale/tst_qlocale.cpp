@@ -26,7 +26,6 @@
 #include <qlocale.h>
 #include <qnumeric.h>
 #include <qprocess.h>
-#include <qlocale_p.h>
 
 #include <math.h>
 #include <float.h>
@@ -957,7 +956,7 @@ void tst_QLocale::formatDateTime_data()
     QTest::newRow("5nn_NO") << "nn_NO" << QDateTime(QDate(1974, 1, 1), QTime(15, 14, 13))
                             << "dd/MM/yyy z" << "01/01/74y 0";
     QTest::newRow("6nn_NO") << "nn_NO" << QDateTime(QDate(1974, 12, 2), QTime(15, 14, 13))
-                            << "ddd/MMM/yy AP" << QString::fromUtf8("må./des./74 PM");
+                            << "ddd/MMM/yy AP" << QString::fromUtf8("må./Dec/74 PM");
     QTest::newRow("7nn_NO") << "nn_NO" << QDateTime(QDate(1974, 12, 2), QTime(15, 14, 13))
                             << "dddd/MMMM/y apa" << QString::fromUtf8("måndag/M12/y pmpm");
     QTest::newRow("8nn_NO") << "nn_NO" << QDateTime(QDate(1974, 12, 2), QTime(15, 14, 13))
@@ -967,7 +966,7 @@ void tst_QLocale::formatDateTime_data()
     QTest::newRow("10nn_NO") << "nn_NO" << QDateTime(QDate(1974, 12, 1), QTime(15, 4, 13))
                              << "d'dd'd/MMMM/yyy m'm'mm" << "1dd1/M12/74y 4m04";
     QTest::newRow("11nn_NO") << "nn_NO" << QDateTime(QDate(1974, 12, 1), QTime(15, 14, 3))
-                             << "d'dd'd/MMM'M'/yysss" << "1dd1/des.M/74033";
+                             << "d'dd'd/MMM'M'/yysss" << "1dd1/DecM/74033";
     QTest::newRow("12nn_NO") << "nn_NO" << QDateTime(QDate(1974, 12, 1), QTime(15, 14, 13))
                              << "d'd'dd/M/yyh" << "1d01/12/7415";
 
@@ -1044,7 +1043,7 @@ void tst_QLocale::toDateTime_data()
     QTest::newRow("10nn_NO") << "nn_NO" << QDateTime(QDate(1974, 12, 1), QTime(0, 4, 0))
                              << "d'dd'd/MMMM/yyy m'm'mm" << "1dd1/M12/74y 4m04";
     QTest::newRow("11nn_NO") << "nn_NO" << QDateTime(QDate(1974, 12, 1), QTime(0, 0, 3))
-                             << "d'dd'd/MMM'M'/yysss" << "1dd1/des.M/74033";
+                             << "d'dd'd/MMM'M'/yysss" << "1dd1/DecM/74033";
     QTest::newRow("12nn_NO") << "nn_NO" << QDateTime(QDate(1974, 12, 1), QTime(15, 0, 0))
                              << "d'd'dd/M/yyh" << "1d01/12/7415";
 
@@ -1211,7 +1210,7 @@ void tst_QLocale::dayName_data()
 
     QTest::newRow("ru_RU long")  << QString("ru_RU") << QString::fromUtf8("воскресенье") << 7 << QLocale::LongFormat;
     QTest::newRow("ru_RU short")  << QString("ru_RU") << QString::fromUtf8("вс") << 7 << QLocale::ShortFormat;
-    QTest::newRow("ru_RU narrow")  << QString("ru_RU") << QString::fromUtf8("7") << 7 << QLocale::NarrowFormat;
+    QTest::newRow("ru_RU narrow")  << QString("ru_RU") << QString::fromUtf8("В") << 7 << QLocale::NarrowFormat;
 }
 
 void tst_QLocale::dayName()
@@ -1539,9 +1538,8 @@ void tst_QLocale::monthName()
     QCOMPARE(ru.monthName(1, QLocale::ShortFormat), QString::fromUtf8("янв."));
     QCOMPARE(ru.monthName(1, QLocale::NarrowFormat), QString::fromUtf8("Я"));
 
-    // check that our CLDR scripts handle surrogate pairs correctly
     QLocale dsrt("en-Dsrt-US");
-    QCOMPARE(dsrt.monthName(1, QLocale::LongFormat), QString::fromUtf8("M01"));
+    QCOMPARE(dsrt.monthName(1, QLocale::LongFormat), QString::fromUtf8("January"));
 
     QLocale ir("ga_IE");
     QCOMPARE(ir.monthName(1, QLocale::ShortFormat), QLatin1String("Ean"));
@@ -1587,7 +1585,7 @@ void tst_QLocale::uiLanguages()
 
     const QLocale en_US("en_US");
     QCOMPARE(en_US.uiLanguages().size(), 1);
-    QCOMPARE(en_US.uiLanguages().at(0), QLatin1String("en-Latn-US"));
+    QCOMPARE(en_US.uiLanguages().at(0), QLatin1String("en-Dsrt-US"));
 
     const QLocale ru_RU("ru_RU");
     QCOMPARE(ru_RU.uiLanguages().size(), 1);

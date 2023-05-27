@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 #-*- coding: UTF-8 -*-
 
-# Data is from https://unicode.org/Public/cldr/42/core.zip
+# Data is from https://unicode.org/Public/cldr/43/core.zip
 
 import os, sys, glob, re
 import xml.etree.ElementTree as ET
@@ -341,6 +341,12 @@ def printlocaledata(frommap, key):
     # and also shrinks the table
     if value['country'] == 'QLocale::Country::AnyCountry' and not key == 'C':
         return
+    # HACK: skip table entries the language of which is unknown
+    if key == 'apc_SY':
+        return
+    # HACK: skip table entries with and with and without specifiec script
+    if key == 'ha_Arab_NG':
+        return
     print('''    {
         %s, %s, %s,
         %s, %s, %s,
@@ -661,6 +667,9 @@ def readlocale(fromxml, tomap, isparent):
     if country is not None:
         for parent in localeparentmap.keys():
             if locale in localeparentmap[parent]:
+                if not parent in localeparentvaluesmap.keys():
+                    # reference to locale without data
+                    continue
                 mapcopy(localeparentvaluesmap[parent], tomap[locale])
     # then from main locale (non-territory) filling the blanks that even parent locales do not fill
     if not isparent:
