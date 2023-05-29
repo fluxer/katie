@@ -2,6 +2,7 @@
 set(EXTRA_CORE_LIBS
     ${ICU_LIBRARIES}
     ${JANSSON_LIBRARIES}
+    ${DEFLATE_LIBRARIES}
     ${CMAKE_THREAD_LIBS_INIT}
     # libm should be present by default becaue this is C++
     m
@@ -92,6 +93,7 @@ include_directories(
     ${CMAKE_BINARY_DIR}/include/QtCore
     ${ICU_INCLUDES}
     ${JANSSON_INCLUDES}
+    ${DEFLATE_INCLUDES}
 )
 
 set(CORE_HEADERS
@@ -323,33 +325,6 @@ if(WITH_EXECINFO AND EXECINFO_FOUND)
         ${EXECINFO_LIBRARIES}
     )
     include_directories(${EXECINFO_INCLUDES})
-endif()
-
-if(WITH_DEFLATE AND DEFLATE_FOUND)
-    set(EXTRA_CORE_LIBS
-        ${EXTRA_CORE_LIBS}
-        ${DEFLATE_LIBRARIES}
-    )
-    include_directories(${DEFLATE_INCLUDES})
-else()
-    set(CORE_SOURCES
-        ${CORE_SOURCES}
-        # common files
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/libdeflate/lib/deflate_decompress.c
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/libdeflate/lib/deflate_compress.c
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/libdeflate/lib/utils.c
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/libdeflate/lib/arm/cpu_features.c
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/libdeflate/lib/x86/cpu_features.c
-        # zlib wrapper files
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/libdeflate/lib/adler32.c
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/libdeflate/lib/zlib_decompress.c
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/libdeflate/lib/zlib_compress.c
-        # gzip wrapper files
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/libdeflate/lib/crc32.c
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/libdeflate/lib/gzip_decompress.c
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/libdeflate/lib/gzip_compress.c
-    )
-    include_directories(${CMAKE_SOURCE_DIR}/src/3rdparty/libdeflate)
 endif()
 
 katie_unity_exclude(
