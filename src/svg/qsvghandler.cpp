@@ -1134,30 +1134,28 @@ static void parseFont(QSvgNode *node,
         // TODO: Support relative sizes 'larger' and 'smaller'.
         QSvgHandler::LengthType dummy; // should always be pixel size
         qreal size = 0;
-        static const qreal sizeTable[] = { qreal(6.9), qreal(8.3), qreal(10.0), qreal(12.0), qreal(14.4), qreal(17.3), qreal(20.7) };
-        enum AbsFontSize { XXSmall, XSmall, Small, Medium, Large, XLarge, XXLarge };
         switch (attributes.fontSize.at(0).unicode()) {
         case 'x':
             if (attributes.fontSize == QLatin1String("xx-small"))
-                size = sizeTable[XXSmall];
+                size = qreal(6.9);
             else if (attributes.fontSize == QLatin1String("x-small"))
-                size = sizeTable[XSmall];
+                size = qreal(8.3);
             else if (attributes.fontSize == QLatin1String("x-large"))
-                size = sizeTable[XLarge];
+                size = qreal(17.3);
             else if (attributes.fontSize == QLatin1String("xx-large"))
-                size = sizeTable[XXLarge];
+                size = qreal(20.7);
             break;
         case 's':
             if (attributes.fontSize == QLatin1String("small"))
-                size = sizeTable[Small];
+                size = qreal(10.0);
             break;
         case 'm':
             if (attributes.fontSize == QLatin1String("medium"))
-                size = sizeTable[Medium];
+                size = qreal(12.0);
             break;
         case 'l':
             if (attributes.fontSize == QLatin1String("large"))
-                size = sizeTable[Large];
+                size = qreal(14.4);
             break;
         default:
             size = parseLength(attributes.fontSize.toString(), dummy, handler);
