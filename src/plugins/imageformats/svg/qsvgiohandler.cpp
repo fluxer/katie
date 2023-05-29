@@ -79,33 +79,41 @@ bool QSvgIOHandler::read(QImage *image)
 
 QVariant QSvgIOHandler::option(QImageIOHandler::ImageOption option) const
 {
-    switch(option) {
-        case QImageIOHandler::Size:
+    switch (option) {
+        case QImageIOHandler::Size: {
             if (!loadDevice()) {
                 return QVariant();
             }
             return m_defaultSize;
-        case QImageIOHandler::ScaledSize:
+        }
+        case QImageIOHandler::ScaledSize: {
             return m_scaledSize;
-        case QImageIOHandler::BackgroundColor:
+        }
+        case QImageIOHandler::BackgroundColor: {
             return m_backColor;
-        default:
-            break;
+        }
+        default: {
+            return QVariant();
+        }
     }
+    Q_UNREACHABLE();
     return QVariant();
 }
 
 void QSvgIOHandler::setOption(QImageIOHandler::ImageOption option, const QVariant & value)
 {
-    switch(option) {
-        case QImageIOHandler::ScaledSize:
+    switch (option) {
+        case QImageIOHandler::ScaledSize: {
             m_scaledSize = value.toSize();
             break;
-        case QImageIOHandler::BackgroundColor:
+        }
+        case QImageIOHandler::BackgroundColor: {
             m_backColor = value.value<QColor>();
             break;
-        default:
+        }
+        default: {
             break;
+        }
     }
 }
 
@@ -114,11 +122,14 @@ bool QSvgIOHandler::supportsOption(QImageIOHandler::ImageOption option) const
     switch(option) {
         case QImageIOHandler::Size:
         case QImageIOHandler::ScaledSize:
-        case QImageIOHandler::BackgroundColor:
+        case QImageIOHandler::BackgroundColor: {
             return true;
-        default:
-            break;
+        }
+        default: {
+            return false;
+        }
     }
+    Q_UNREACHABLE();
     return false;
 }
 
