@@ -1666,14 +1666,14 @@ QString &QString::replace(const QLatin1String &before,
                           Qt::CaseSensitivity cs)
 {
     int alen = qstrlen(after.latin1());
-    QSTACKARRAY(ushort, a, alen);
+    QVarLengthArray<ushort> a(alen);
     for (int i = 0; i < alen; ++i)
         a[i] = (uchar)after.latin1()[i];
     int blen = qstrlen(before.latin1());
-    QSTACKARRAY(ushort, b, blen);
+    QVarLengthArray<ushort> b(blen);
     for (int i = 0; i < blen; ++i)
         b[i] = (uchar)before.latin1()[i];
-    return replace(reinterpret_cast<const QChar*>(b), blen, reinterpret_cast<const QChar*>(a), alen, cs);
+    return replace(reinterpret_cast<const QChar*>(b.constData()), blen, reinterpret_cast<const QChar*>(a.constData()), alen, cs);
 }
 
 /*!
@@ -3144,12 +3144,12 @@ static QByteArray toLatin1_helper(const QChar *data, int length)
     if (!length) {
         return QByteArray();
     }
-    QSTACKARRAY(char, result, length);
+    QVarLengthArray<char> result(length);
     for (int i = 0; i < length; i++) {
         const ushort ucs = data[i].unicode();
         result[i] = (ucs > 0xff) ? '?' : char(ucs);
     }
-    return QByteArray(result, length);
+    return QByteArray(result.constData(), length);
 }
 
 /*!
@@ -3501,7 +3501,7 @@ QString QString::simplified() const
     if (d->size == 0)
         return *this;
 
-    QSTACKARRAY(QChar, result, d->size);
+    QVarLengthArray<QChar> result(d->size);
     const QChar *from = reinterpret_cast<const QChar*>(d->data);
     const QChar *fromend = from + d->size;
     int outc = 0;
@@ -3517,7 +3517,7 @@ QString QString::simplified() const
     }
     if (outc > 0 && result[outc-1] == QLatin1Char(' '))
         outc--;
-    return QString(result, outc);
+    return QString(result.constData(), outc);
 }
 
 /*!
@@ -4295,13 +4295,13 @@ QString QString::toLower() const
 
     UErrorCode error = U_ZERO_ERROR;
     const int maxchars = d->size + 1; // ICU will write zero-terminator
-    QSTACKARRAY(UChar, result, maxchars);
-    const int lowerresult = u_strToLower(result, maxchars,
+    QVarLengthArray<UChar> result(maxchars);
+    const int lowerresult = u_strToLower(result.data(), maxchars,
         reinterpret_cast<const UChar*>(d->data), d->size, "C", &error);
     if (Q_UNLIKELY(lowerresult > maxchars || U_FAILURE(error))) {
         return QString();
     }
-    return QString(reinterpret_cast<QChar*>(result), lowerresult);
+    return QString(reinterpret_cast<const QChar*>(result.constData()), lowerresult);
 }
 
 /*!
@@ -4310,18 +4310,18 @@ QString QString::toLower() const
 */
 QString QString::toCaseFolded() const
 {
-    if (!d->data || !d->size)
+    if (!d->data || !d->size) {
         return *this;
-
+    }
     UErrorCode error = U_ZERO_ERROR;
     const int maxchars = d->size + 1; // ICU will write zero-terminator
-    QSTACKARRAY(UChar, result, maxchars);
-    const int foldresult = u_strFoldCase(result, maxchars,
+    QVarLengthArray<UChar> result(maxchars);
+    const int foldresult = u_strFoldCase(result.data(), maxchars,
         reinterpret_cast<const UChar*>(d->data), d->size, U_FOLD_CASE_DEFAULT, &error);
     if (Q_UNLIKELY(foldresult > maxchars || U_FAILURE(error))) {
         return QString();
     }
-    return QString(reinterpret_cast<QChar*>(result), foldresult);
+    return QString(reinterpret_cast<const QChar*>(result.constData()), foldresult);
 }
 
 /*!
@@ -4337,18 +4337,18 @@ QString QString::toCaseFolded() const
 
 QString QString::toUpper() const
 {
-    if (!d->data || !d->size)
+    if (!d->data || !d->size) {
         return *this;
-
+    }
     UErrorCode error = U_ZERO_ERROR;
     const int maxchars = d->size + 1; // ICU will write zero-terminator
-    QSTACKARRAY(UChar, result, maxchars);
-    const int upperresult = u_strToUpper(result, maxchars,
+    QVarLengthArray<UChar> result(maxchars);
+    const int upperresult = u_strToUpper(result.data(), maxchars,
         reinterpret_cast<const UChar*>(d->data), d->size, "C", &error);
     if (Q_UNLIKELY(upperresult > maxchars || U_FAILURE(error))) {
         return QString();
     }
-    return QString(reinterpret_cast<QChar*>(result), upperresult);
+    return QString(reinterpret_cast<const QChar*>(result.constData()), upperresult);
 }
 
 // ### Qt 5: Consider whether this function shouldn't be removed See task 202871.

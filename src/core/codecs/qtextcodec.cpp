@@ -1091,13 +1091,13 @@ QString QTextCodecPrivate::convertTo(const char *data, int length, const char* c
     ucnv_setSubstString(conv, questionmarkchar, 1, &error);
 
     const int maxbytes = UCNV_GET_MAX_BYTES_FOR_STRING(length, ucnv_getMaxCharSize(conv));
-    QSTACKARRAY(UChar, result, maxbytes);
+    QVarLengthArray<UChar> result(maxbytes);
     error = U_ZERO_ERROR;
-    const int convresult = ucnv_toUChars(conv, result, maxbytes, data, length, &error);
+    const int convresult = ucnv_toUChars(conv, result.data(), maxbytes, data, length, &error);
     ucnv_close(conv);
 
     if (Q_LIKELY(U_SUCCESS(error))) {
-        return QString(reinterpret_cast<QChar*>(result), convresult);
+        return QString(reinterpret_cast<const QChar*>(result.constData()), convresult);
     }
 
     return QString();
@@ -1115,14 +1115,14 @@ QByteArray QTextCodecPrivate::convertFrom(const QChar *unicode, int length, cons
     ucnv_setSubstString(conv, questionmarkchar, 1, &error);
 
     const int maxbytes = UCNV_GET_MAX_BYTES_FOR_STRING(length, ucnv_getMaxCharSize(conv));
-    QSTACKARRAY(char, result, maxbytes);
+    QVarLengthArray<char> result(maxbytes);
     error = U_ZERO_ERROR;
-    const int convresult = ucnv_fromUChars(conv, result, maxbytes,
+    const int convresult = ucnv_fromUChars(conv, result.data(), maxbytes,
         reinterpret_cast<const UChar *>(unicode), length, &error);
     ucnv_close(conv);
 
     if (Q_LIKELY(U_SUCCESS(error))) {
-        return QByteArray(result, convresult);
+        return QByteArray(result.constData(), convresult);
     }
 
     return QByteArray();
@@ -1954,11 +1954,11 @@ QByteArray QTextConverter::fromUnicode(const QChar *data, int length) const
     }
 
     const int maxbytes = UCNV_GET_MAX_BYTES_FOR_STRING(length, ucnv_getMaxCharSize(conv));
-    QSTACKARRAY(char, result, maxbytes);
+    QVarLengthArray<char> result(maxbytes);
     UErrorCode error = U_ZERO_ERROR;
-    const int convresult = ucnv_fromUChars(conv, result, maxbytes,
+    const int convresult = ucnv_fromUChars(conv, result.data(), maxbytes,
         reinterpret_cast<const UChar *>(data), length, &error);
-    return QByteArray(result, convresult);
+    return QByteArray(result.constData(), convresult);
 }
 
 /*!
@@ -1974,28 +1974,28 @@ QString QTextConverter::toUnicode(const char *data, int length) const
     }
 
     const int maxbytes = UCNV_GET_MAX_BYTES_FOR_STRING(length, ucnv_getMaxCharSize(conv));
-    QSTACKARRAY(UChar, result, maxbytes);
+    QVarLengthArray<UChar> result(maxbytes);
     UErrorCode error = U_ZERO_ERROR;
-    const int convresult = ucnv_toUChars(conv, result, maxbytes, data, length, &error);
+    const int convresult = ucnv_toUChars(conv, result.data(), maxbytes, data, length, &error);
     // regardless if the data has BOM or not, BOMs shall be generated explicitly only by QTextStream
     if (convresult >= 4 && qstrnicmp("UTF-32", d_ptr->name.constData(), 6) == 0) {
-        const uchar* resultuchar = reinterpret_cast<uchar*>(result);
+        const uchar* resultuchar = reinterpret_cast<const uchar*>(result.constData());
         Q_ASSERT(sizeof(qt_utf32le_bom) == sizeof(qt_utf32be_bom));
         if (::memcmp(resultuchar, qt_utf32le_bom, sizeof(qt_utf32le_bom)) == 0
             || ::memcmp(resultuchar, qt_utf32be_bom, sizeof(qt_utf32be_bom)) == 0) {
             const int bomoffset = (sizeof(qt_utf32le_bom) / sizeof(QChar));
-            return QString(reinterpret_cast<QChar*>(result) + bomoffset, convresult - bomoffset);
+            return QString(reinterpret_cast<const QChar*>(result.constData()) + bomoffset, convresult - bomoffset);
         }
     } else if (convresult >= 2 && qstrnicmp("UTF-16", d_ptr->name.constData(), 6) == 0) {
-        const uchar* resultuchar = reinterpret_cast<uchar*>(result);
+        const uchar* resultuchar = reinterpret_cast<const uchar*>(result.constData());
         Q_ASSERT(sizeof(qt_utf16le_bom) == sizeof(qt_utf16be_bom));
         if (::memcmp(resultuchar, qt_utf16le_bom, sizeof(qt_utf16le_bom)) == 0
             || ::memcmp(resultuchar, qt_utf16be_bom, sizeof(qt_utf16be_bom)) == 0) {
             const int bomoffset = (sizeof(qt_utf16le_bom) / sizeof(QChar));
-            return QString(reinterpret_cast<QChar*>(result) + bomoffset, convresult - bomoffset);
+            return QString(reinterpret_cast<const QChar*>(result.constData()) + bomoffset, convresult - bomoffset);
         }
     }
-    return QString(reinterpret_cast<QChar*>(result), convresult);
+    return QString(reinterpret_cast<const QChar*>(result.constData()), convresult);
 }
 
 #endif // QT_NO_TEXTCODEC

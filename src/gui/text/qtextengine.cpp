@@ -291,8 +291,8 @@ void QTextEngine::itemize() const
     if (!length)
         return;
 
-    QSTACKARRAY(QScriptAnalysis, scriptAnalysis, length);
-    QScriptAnalysis *analysis = scriptAnalysis;
+    QVarLengthArray<QScriptAnalysis> scriptAnalysis(length);
+    QScriptAnalysis *analysis = scriptAnalysis.data();
 
     const ushort *uc = reinterpret_cast<const ushort *>(layoutData->string.unicode());
     const ushort *e = uc + length;
@@ -334,10 +334,10 @@ void QTextEngine::itemize() const
             const QTextFragmentData * const frag = it.value();
             if (it == end || format != frag->format) {
                 Q_ASSERT(position <= length);
-                generateItem(scriptAnalysis, layoutData->items, prevPosition, position - prevPosition);
+                generateItem(scriptAnalysis.constData(), layoutData->items, prevPosition, position - prevPosition);
                 if (it == end) {
                     if (position < length)
-                        generateItem(scriptAnalysis, layoutData->items, position, length - position);
+                        generateItem(scriptAnalysis.constData(), layoutData->items, position, length - position);
                     break;
                 }
                 format = frag->format;
@@ -347,7 +347,7 @@ void QTextEngine::itemize() const
             ++it;
         }
     } else {
-        generateItem(scriptAnalysis, layoutData->items, 0, length);
+        generateItem(scriptAnalysis.constData(), layoutData->items, 0, length);
     }
 
     addRequiredBoundaries();
