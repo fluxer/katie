@@ -152,7 +152,7 @@ bool QSvgIOHandler::loadDevice() const
     if (!loaded) {
         return false;
     }
-    m_defaultSize = QSize(m_renderer.viewBox().width(), m_renderer.viewBox().height());
+    m_defaultSize = m_renderer.viewBox().size();
     return true;
 }
 

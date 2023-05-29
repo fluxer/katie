@@ -22,8 +22,7 @@
 #ifndef QSVGIOHANDLER_H
 #define QSVGIOHANDLER_H
 
-#include <QtGui/qimageiohandler.h>
-
+#include <QImageIOHandler>
 #include <QImage>
 #include <QIODevice>
 #include <QVariant>
