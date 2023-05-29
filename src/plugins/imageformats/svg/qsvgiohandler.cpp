@@ -20,74 +20,28 @@
 ****************************************************************************/
 
 #include "qsvgiohandler.h"
-#include "qsvgrenderer.h"
-#include "qimage.h"
-#include "qpixmap.h"
 #include "qpainter.h"
-#include "qvariant.h"
 #include "qdebug.h"
 
 QT_BEGIN_NAMESPACE
 
-class QSvgIOHandlerPrivate
-{
-public:
-    QSvgIOHandlerPrivate(QSvgIOHandler *qq)
-        : q(qq), loaded(false), readDone(false), backColor(Qt::transparent)
-    {}
-
-    bool load(QIODevice *device);
-
-    QSvgIOHandler   *q;
-    QSvgRenderer     r;
-    QSize            defaultSize;
-    QSize            scaledSize;
-    bool             loaded;
-    bool             readDone;
-    QColor           backColor;
-};
-
-bool QSvgIOHandlerPrivate::load(QIODevice *device)
-{
-    if (loaded)
-        return true;
-    if (q->format().isEmpty())
-        q->canRead();
-
-    // # The SVG renderer doesn't handle trailing, unrelated data, so we must
-    // assume that all available data in the device is to be read.
-    bool res = r.load(device->readAll());
-    if (res) {
-        defaultSize = QSize(r.viewBox().width(), r.viewBox().height());
-        loaded = true;
-    }
-
-    return loaded;
-}
-
 QSvgIOHandler::QSvgIOHandler()
-    : d(new QSvgIOHandlerPrivate(this))
+    : m_backColor(Qt::transparent)
 {
-
-}
-
-QSvgIOHandler::~QSvgIOHandler()
-{
-    delete d;
 }
 
 bool QSvgIOHandler::canRead() const
 {
-    if (!device())
+    QIODevice* iodevice = device();
+    if (Q_UNLIKELY(!iodevice)) {
+        qWarning("QSvgIOHandler::canRead() called with no device");
         return false;
-    if (d->loaded && !d->readDone)
-        return true;        // Will happen if we have been asked for the size
-
-    const QByteArray buf = device()->peek(8);
-    if (buf.startsWith("\x1f\x8b")) {
+    }
+    const QByteArray head = iodevice->peek(8);
+    if (head.startsWith("\x1f\x8b")) {
         setFormat("svgz");
         return true;
-    } else if (buf.contains("<?xml") || buf.contains("<svg")) {
+    } else if (head.contains("<?xml") || head.contains("<svg")) {
         setFormat("svg");
         return true;
     }
@@ -96,45 +50,45 @@ bool QSvgIOHandler::canRead() const
 
 bool QSvgIOHandler::read(QImage *image)
 {
-    if (!d->readDone && d->load(device())) {
-        QSize finalSize = d->defaultSize;
-        QRectF bounds;
-        if (d->scaledSize.isValid() && !d->defaultSize.isEmpty()) {
-            bounds = QRectF(QPointF(0,0), QSizeF(d->defaultSize));
-            QSizeF sc(1, 1);
-            if (d->scaledSize.isValid()) {
-                sc = QSizeF(qreal(d->scaledSize.width()) / finalSize.width(),
-                            qreal(d->scaledSize.height()) / finalSize.height());
-                finalSize = d->scaledSize;
-            }
-            QTransform t;
-            t.scale(sc.width(), sc.height());
-            bounds = t.mapRect(bounds);
-        }
-        *image = QImage(finalSize, QImage::Format_ARGB32_Premultiplied);
-        if (!finalSize.isEmpty()) {
-            image->fill(d->backColor.rgba());
-            QPainter p(image);
-            d->r.render(&p, bounds);
-            p.end();
-        }
-        d->readDone = true;
-        return true;
+    if (!loadDevice()) {
+        return false;
     }
-
-    return false;
+    QSize finalSize = m_defaultSize;
+    QRectF bounds;
+    if (m_scaledSize.isValid() && !m_defaultSize.isEmpty()) {
+        bounds = QRectF(QPointF(0,0), QSizeF(m_defaultSize));
+        QSizeF sc(1, 1);
+        if (m_scaledSize.isValid()) {
+            sc = QSizeF(qreal(m_scaledSize.width()) / finalSize.width(),
+                        qreal(m_scaledSize.height()) / finalSize.height());
+            finalSize = m_scaledSize;
+        }
+        QTransform t;
+        t.scale(sc.width(), sc.height());
+        bounds = t.mapRect(bounds);
+    }
+    *image = QImage(finalSize, QImage::Format_ARGB32_Premultiplied);
+    if (!finalSize.isEmpty()) {
+        image->fill(m_backColor.rgba());
+        QPainter p(image);
+        m_renderer.render(&p, bounds);
+        p.end();
+    }
+    return true;
 }
 
 QVariant QSvgIOHandler::option(QImageIOHandler::ImageOption option) const
 {
     switch(option) {
         case QImageIOHandler::Size:
-            d->load(device());
-            return d->defaultSize;
+            if (!loadDevice()) {
+                return QVariant();
+            }
+            return m_defaultSize;
         case QImageIOHandler::ScaledSize:
-            return d->scaledSize;
+            return m_scaledSize;
         case QImageIOHandler::BackgroundColor:
-            return d->backColor;
+            return m_backColor;
         default:
             break;
     }
@@ -145,10 +99,10 @@ void QSvgIOHandler::setOption(QImageIOHandler::ImageOption option, const QVarian
 {
     switch(option) {
         case QImageIOHandler::ScaledSize:
-            d->scaledSize = value.toSize();
+            m_scaledSize = value.toSize();
             break;
         case QImageIOHandler::BackgroundColor:
-            d->backColor = value.value<QColor>();
+            m_backColor = value.value<QColor>();
             break;
         default:
             break;
@@ -179,9 +133,27 @@ bool QSvgIOHandler::canRead(QIODevice *device)
         qWarning("QSvgIOHandler::canRead() called with no device");
         return false;
     }
+    const QByteArray head = device->peek(8);
+    return head.startsWith("\x1f\x8b") || head.contains("<?xml") || head.contains("<svg");
+}
 
-    const QByteArray buf = device->peek(8);
-    return buf.startsWith("\x1f\x8b") || buf.contains("<?xml") || buf.contains("<svg");
+bool QSvgIOHandler::loadDevice() const
+{
+    QIODevice* iodevice = device();
+    if (Q_UNLIKELY(!iodevice)) {
+        return false;
+    }
+    if (m_renderer.isValid()) {
+        return true;
+    }
+    // # The SVG renderer doesn't handle trailing, unrelated data, so we must
+    // assume that all available data in the device is to be read.
+    const bool loaded = m_renderer.load(iodevice->readAll());
+    if (!loaded) {
+        return false;
+    }
+    m_defaultSize = QSize(m_renderer.viewBox().width(), m_renderer.viewBox().height());
+    return true;
 }
 
 QT_END_NAMESPACE

@@ -24,19 +24,19 @@
 
 #include <QtGui/qimageiohandler.h>
 
-QT_BEGIN_NAMESPACE
+#include <QImage>
+#include <QIODevice>
+#include <QVariant>
+#include <QSvgRenderer>
+#include <QColor>
+#include <QSize>
 
-class QImage;
-class QByteArray;
-class QIODevice;
-class QVariant;
-class QSvgIOHandlerPrivate;
+QT_BEGIN_NAMESPACE
 
 class QSvgIOHandler : public QImageIOHandler
 {
 public:
     QSvgIOHandler();
-    ~QSvgIOHandler();
 
     bool canRead() const final;
     bool read(QImage *image) final;
@@ -50,7 +50,12 @@ public:
     static bool canRead(QIODevice *device);
 
 private:
-    QSvgIOHandlerPrivate *d;
+    bool loadDevice() const;
+
+    mutable QSvgRenderer m_renderer;
+    mutable QSize        m_defaultSize;
+    QSize                m_scaledSize;
+    QColor               m_backColor;
 };
 
 QT_END_NAMESPACE

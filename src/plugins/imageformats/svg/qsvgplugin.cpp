@@ -32,7 +32,7 @@ class QSvgPlugin : public QImageIOPlugin
 {
 public:
     QList<QByteArray> mimeTypes() const final;
-    Capabilities capabilities(QIODevice *device, const QByteArray &format) const final;
+    QImageIOPlugin::Capabilities capabilities(QIODevice *device, const QByteArray &format) const final;
     QImageIOHandler *create(QIODevice *device, const QByteArray &format = QByteArray()) const final;
 };
 
@@ -46,14 +46,16 @@ QList<QByteArray> QSvgPlugin::mimeTypes() const
 
 QImageIOPlugin::Capabilities QSvgPlugin::capabilities(QIODevice *device, const QByteArray &format) const
 {
-    if (format == "svg" || format == "svgz")
-        return Capabilities(CanRead);
-    if (!format.isEmpty())
+    if (format == "svg" || format == "svgz") {
+        return QImageIOPlugin::Capabilities(QImageIOPlugin::CanRead);
+    }
+    if (!format.isEmpty()) {
         return 0;
-
-    Capabilities cap;
-    if (device->isReadable() && QSvgIOHandler::canRead(device))
-        cap |= CanRead;
+    }
+    QImageIOPlugin::Capabilities cap;
+    if (device->isReadable() && QSvgIOHandler::canRead(device)) {
+        cap |= QImageIOPlugin::CanRead;
+    }
     return cap;
 }
 
