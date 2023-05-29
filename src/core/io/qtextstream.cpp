@@ -114,35 +114,8 @@
 
     \table
     \header \o Manipulator        \o Description
-    \row    \o \c bin             \o Same as setIntegerBase(2).
-    \row    \o \c oct             \o Same as setIntegerBase(8).
-    \row    \o \c dec             \o Same as setIntegerBase(10).
-    \row    \o \c hex             \o Same as setIntegerBase(16).
-    \row    \o \c showbase        \o Same as setNumberFlags(numberFlags() | ShowBase).
-    \row    \o \c forcesign       \o Same as setNumberFlags(numberFlags() | ForceSign).
-    \row    \o \c forcepoint      \o Same as setNumberFlags(numberFlags() | ForcePoint).
-    \row    \o \c noshowbase      \o Same as setNumberFlags(numberFlags() & ~ShowBase).
-    \row    \o \c noforcesign     \o Same as setNumberFlags(numberFlags() & ~ForceSign).
-    \row    \o \c noforcepoint    \o Same as setNumberFlags(numberFlags() & ~ForcePoint).
-    \row    \o \c uppercasebase   \o Same as setNumberFlags(numberFlags() | UppercaseBase).
-    \row    \o \c uppercasedigits \o Same as setNumberFlags(numberFlags() | UppercaseDigits).
-    \row    \o \c lowercasebase   \o Same as setNumberFlags(numberFlags() & ~UppercaseBase).
-    \row    \o \c lowercasedigits \o Same as setNumberFlags(numberFlags() & ~UppercaseDigits).
-    \row    \o \c fixed           \o Same as setRealNumberNotation(FixedNotation).
-    \row    \o \c scientific      \o Same as setRealNumberNotation(ScientificNotation).
-    \row    \o \c left            \o Same as setFieldAlignment(AlignLeft).
-    \row    \o \c right           \o Same as setFieldAlignment(AlignRight).
-    \row    \o \c center          \o Same as setFieldAlignment(AlignCenter).
     \row    \o \c endl            \o Same as operator<<('\n') and flush().
-    \row    \o \c flush           \o Same as flush().
-    \row    \o \c reset           \o Same as reset().
-    \row    \o \c ws              \o Same as skipWhiteSpace().
-    \row    \o \c bom             \o Same as setGenerateByteOrderMark(true).
     \endtable
-
-    In addition, Qt provides three global manipulators that take a
-    parameter: qSetFieldWidth(), qSetPadChar(), and
-    qSetRealNumberPrecision().
 
     \sa QDataStream, QIODevice, QFile, QBuffer, QTcpSocket, {Codecs Example}
 */
