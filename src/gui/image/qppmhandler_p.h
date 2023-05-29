@@ -54,7 +54,7 @@ public:
 
     QByteArray name() const final;
 
-    static bool canRead(QIODevice *device, QByteArray *subType = 0);
+    static bool canRead(QIODevice *device, QByteArray *subType);
 
 private:
     bool readHeader();
