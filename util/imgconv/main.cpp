@@ -55,10 +55,32 @@ int main(int argc, char *argv[])
         qWarning() << "Could not determine format for" << outputpath;
         return 3;
     }
+    const bool outputraw32 = (outputformat == "raw32");
+    const bool outputraw16 = (outputformat == "raw16");
+    if (outputraw32 || outputraw16) {
+        qWarning() << "Use" << outputpath << "with caution, you have been warned!";
+        if (outputraw32) {
+            inputimage = inputimage.convertToFormat(QImage::Format_ARGB32);
+        } else {
+            inputimage = inputimage.convertToFormat(QImage::Format_RGB16);
+        }
+        QFile outputfile(outputpath);
+        if (!outputfile.open(QFile::WriteOnly)) {
+            qWarning() << "Could not open" << outputpath << outputfile.errorString();
+            return 4;
+        }
+        QDataStream outputstream(&outputfile);
+        outputstream << inputimage;
+        if (outputstream.status() != QDataStream::Ok) {
+            qWarning() << "Could not stream" << outputpath;
+            return 5;
+        }
+        return 0;
+    }
 
     if (inputimage.save(outputpath, outputformat, 100) == false) {
         qWarning() << "Could not save" << outputpath;
-        return 4;
+        return 6;
     }
 
     return 0;
