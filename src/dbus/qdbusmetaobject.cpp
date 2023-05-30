@@ -344,16 +344,27 @@ void QDBusMetaObjectGenerator::write(QDBusMetaObject *obj)
         className = QLatin1String("QDBusInterface");
 
     static const int QDBusMetaObjectPrivateSize = (sizeof(QDBusMetaObjectPrivate) / sizeof(int));
-    QVarLengthArray<int> idata(QDBusMetaObjectPrivateSize);
+
+    const int methodCount = (signals_.count() + methods.count());
+    const int propertyCount = properties.count();
+    int data_size = QDBusMetaObjectPrivateSize +
+                    (methodCount * (5+intsPerMethod)) +
+                    (propertyCount * (3+intsPerProperty));
+    foreach (const Method &mm, signals_)
+        data_size += 2 + mm.inputTypes.count() + mm.outputTypes.count();
+    foreach (const Method &mm, methods)
+        data_size += 2 + mm.inputTypes.count() + mm.outputTypes.count();
+
+    QVarLengthArray<int> idata(data_size + 1);
 
     QDBusMetaObjectPrivate *header = reinterpret_cast<QDBusMetaObjectPrivate *>(idata.data());
     header->revision = qmetaobjectrevision;
     header->className = 0;
     header->classInfoCount = 0;
     header->classInfoData = 0;
-    header->methodCount = signals_.count() + methods.count();
-    header->methodData = idata.size();
-    header->propertyCount = properties.count();
+    header->methodCount = methodCount;
+    header->methodData = QDBusMetaObjectPrivateSize;
+    header->propertyCount = propertyCount;
     header->propertyData = header->methodData + header->methodCount * 5;
     header->enumeratorCount = 0;
     header->enumeratorData = 0;
@@ -364,15 +375,6 @@ void QDBusMetaObjectGenerator::write(QDBusMetaObject *obj)
     // These are specific to QDBusMetaObject:
     header->propertyDBusData = header->propertyData + header->propertyCount * 3;
     header->methodDBusData = header->propertyDBusData + header->propertyCount * intsPerProperty;
-
-    int data_size = idata.size() +
-                    (header->methodCount * (5+intsPerMethod)) +
-                    (header->propertyCount * (3+intsPerProperty));
-    foreach (const Method &mm, signals_)
-        data_size += 2 + mm.inputTypes.count() + mm.outputTypes.count();
-    foreach (const Method &mm, methods)
-        data_size += 2 + mm.inputTypes.count() + mm.outputTypes.count();
-    idata.resize(data_size + 1);
 
     char null('\0');
     QByteArray stringdata = className.toLatin1();
