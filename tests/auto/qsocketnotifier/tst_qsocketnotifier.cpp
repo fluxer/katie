@@ -113,7 +113,7 @@ void tst_QSocketNotifier::unexpectedDisconnection()
     QVERIFY(server.listen(QHostAddress::LocalHost, 0));
 
     QAbstractSocketEngine readEnd1;
-    readEnd1.initialize(QAbstractSocket::TcpSocket);
+    readEnd1.initialize(QAbstractSocket::TcpSocket, QAbstractSocket::IPv4Protocol);
     bool b = readEnd1.connectToHost(server.serverAddress(), server.serverPort());
     QVERIFY(readEnd1.waitForWrite());
 //    while (!b && readEnd1.state() != QAbstractSocket::ConnectedState)
@@ -124,7 +124,7 @@ void tst_QSocketNotifier::unexpectedDisconnection()
     QVERIFY(writeEnd1 != 0);
 
     QAbstractSocketEngine readEnd2;
-    readEnd2.initialize(QAbstractSocket::TcpSocket);
+    readEnd2.initialize(QAbstractSocket::TcpSocket, QAbstractSocket::IPv4Protocol);
     b = readEnd2.connectToHost(server.serverAddress(), server.serverPort());
     QVERIFY(readEnd2.waitForWrite());
 //    while (!b)
