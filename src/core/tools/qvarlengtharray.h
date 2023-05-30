@@ -47,11 +47,13 @@ public:
     inline ~QVarLengthArray() {
         if (QTypeInfo<T>::isComplex) {
             T *i = ptr + s;
-            while (i-- != ptr)
+            while (i-- != ptr) {
                 i->~T();
+            }
         }
-        if (ptr != reinterpret_cast<T *>(array))
-            free(ptr);
+        if (ptr != reinterpret_cast<T *>(array)) {
+            ::free(ptr);
+        }
     }
     inline QVarLengthArray<T, Prealloc> &operator=(const QVarLengthArray<T, Prealloc> &other)
     {
@@ -111,7 +113,6 @@ public:
     void remove(int i);
     void remove(int i, int n);
 
-
     inline T *data() { return ptr; }
     inline const T *data() const { return ptr; }
     inline const T * constData() const { return ptr; }
@@ -122,7 +123,6 @@ public:
     typedef value_type &reference;
     typedef const value_type &const_reference;
     typedef qptrdiff difference_type;
-
 
     typedef T* iterator;
     typedef const T* const_iterator;
@@ -151,7 +151,7 @@ template <class T, int Prealloc>
 Q_INLINE_TEMPLATE QVarLengthArray<T, Prealloc>::QVarLengthArray(int asize)
     : s(asize) {
     if (s > Prealloc) {
-        ptr = static_cast<T *>(malloc(s * sizeof(T)));
+        ptr = static_cast<T *>(::malloc(s * sizeof(T)));
         Q_CHECK_PTR(ptr);
         a = s;
     } else {
@@ -160,37 +160,47 @@ Q_INLINE_TEMPLATE QVarLengthArray<T, Prealloc>::QVarLengthArray(int asize)
     }
     if (QTypeInfo<T>::isComplex) {
         T *i = ptr + s;
-        while (i != ptr)
+        while (i != ptr) {
             new (--i) T();
+        }
     }
 }
 
 template <class T, int Prealloc>
 Q_INLINE_TEMPLATE void QVarLengthArray<T, Prealloc>::resize(int asize)
-{ reallocData(asize, qMax(asize, a)); }
+{
+    reallocData(asize, qMax(asize, a));
+}
 
 template <class T, int Prealloc>
 Q_INLINE_TEMPLATE void QVarLengthArray<T, Prealloc>::reserve(int asize)
-{ if (asize > a) reallocData(s, asize); }
+{
+    if (asize > a) {
+        reallocData(s, asize);
+    }
+}
 
 template <class T, int Prealloc>
 Q_OUTOFLINE_TEMPLATE void QVarLengthArray<T, Prealloc>::append(const T *abuf, int increment)
 {
     Q_ASSERT(abuf);
-    if (increment <= 0)
+    if (increment <= 0) {
         return;
+    }
 
     const int asize = s + increment;
 
-    if (asize >= a)
+    if (asize >= a) {
         reallocData(s, qMax(s*2, asize));
+    }
 
     if (QTypeInfo<T>::isComplex) {
         // call constructor for new objects (which can throw)
-        while (s < asize)
+        while (s < asize) {
             new (ptr+(s++)) T(*abuf++);
+        }
     } else {
-        memcpy(&ptr[s], abuf, increment * sizeof(T));
+        ::memcpy(&ptr[s], abuf, increment * sizeof(T));
         s = asize;
     }
 }
@@ -204,7 +214,7 @@ Q_OUTOFLINE_TEMPLATE void QVarLengthArray<T, Prealloc>::reallocData(int asize, i
 
     const int copySize = qMin(asize, osize);
     if (aalloc != a) {
-        ptr = static_cast<T *>(malloc(aalloc * sizeof(T)));
+        ptr = static_cast<T *>(::malloc(aalloc * sizeof(T)));
         Q_CHECK_PTR(ptr);
         s = 0;
         a = aalloc;
@@ -217,24 +227,27 @@ Q_OUTOFLINE_TEMPLATE void QVarLengthArray<T, Prealloc>::reallocData(int asize, i
                 s++;
             }
         } else {
-            memcpy(ptr, oldPtr, copySize * sizeof(T));
+            ::memcpy(ptr, oldPtr, copySize * sizeof(T));
         }
     }
     s = copySize;
 
     if (QTypeInfo<T>::isComplex) {
         // destroy remaining old objects
-        while (osize > asize)
+        while (osize > asize) {
             (oldPtr+(--osize))->~T();
+        }
     }
 
-    if (oldPtr != reinterpret_cast<T *>(array) && oldPtr != ptr)
-        free(oldPtr);
+    if (oldPtr != reinterpret_cast<T *>(array) && oldPtr != ptr) {
+        ::free(oldPtr);
+    }
 
     if (QTypeInfo<T>::isComplex) {
         // call default constructor for new objects (which can throw)
-        while (s < asize)
+        while (s < asize) {
             new (ptr+(s++)) T;
+        }
     } else {
         s = asize;
     }
@@ -248,6 +261,7 @@ Q_OUTOFLINE_TEMPLATE T QVarLengthArray<T, Prealloc>::value(int i) const
     }
     return at(i);
 }
+
 template <class T, int Prealloc>
 Q_OUTOFLINE_TEMPLATE T QVarLengthArray<T, Prealloc>::value(int i, const T &defaultValue) const
 {
@@ -256,23 +270,37 @@ Q_OUTOFLINE_TEMPLATE T QVarLengthArray<T, Prealloc>::value(int i, const T &defau
 
 template <class T, int Prealloc>
 inline void QVarLengthArray<T, Prealloc>::insert(int i, const T &t)
-{ Q_ASSERT_X(i >= 0 && i <= s, "QVarLengthArray::insert", "index out of range");
-  insert(begin() + i, 1, t); }
+{
+    Q_ASSERT_X(i >= 0 && i <= s, "QVarLengthArray::insert", "index out of range");
+    insert(begin() + i, 1, t);
+}
+
 template <class T, int Prealloc>
 inline void QVarLengthArray<T, Prealloc>::insert(int i, int n, const T &t)
-{ Q_ASSERT_X(i >= 0 && i <= s, "QVarLengthArray::insert", "index out of range");
-  insert(begin() + i, n, t); }
+{
+    Q_ASSERT_X(i >= 0 && i <= s, "QVarLengthArray::insert", "index out of range");
+    insert(begin() + i, n, t);
+}
+
 template <class T, int Prealloc>
 inline void QVarLengthArray<T, Prealloc>::remove(int i, int n)
-{ Q_ASSERT_X(i >= 0 && n >= 0 && i + n <= s, "QVarLengthArray::remove", "index out of range");
-  erase(begin() + i, begin() + i + n); }
+{
+    Q_ASSERT_X(i >= 0 && n >= 0 && i + n <= s, "QVarLengthArray::remove", "index out of range");
+    erase(begin() + i, begin() + i + n);
+}
+
 template <class T, int Prealloc>
 inline void QVarLengthArray<T, Prealloc>::remove(int i)
-{ Q_ASSERT_X(i >= 0 && i < s, "QVarLengthArray::remove", "index out of range");
-  erase(begin() + i, begin() + i + 1); }
+{
+    Q_ASSERT_X(i >= 0 && i < s, "QVarLengthArray::remove", "index out of range");
+    erase(begin() + i, begin() + i + 1);
+}
+
 template <class T, int Prealloc>
 inline void QVarLengthArray<T, Prealloc>::prepend(const T &t)
-{ insert(begin(), 1, t); }
+{
+    insert(begin(), 1, t);
+}
 
 template <class T, int Prealloc>
 inline void QVarLengthArray<T, Prealloc>::replace(int i, const T &t)
@@ -280,7 +308,6 @@ inline void QVarLengthArray<T, Prealloc>::replace(int i, const T &t)
     Q_ASSERT_X(i >= 0 && i < s, "QVarLengthArray::replace", "index out of range");
     ptr[i] = t;
 }
-
 
 template <class T, int Prealloc>
 Q_OUTOFLINE_TEMPLATE typename QVarLengthArray<T, Prealloc>::iterator QVarLengthArray<T, Prealloc>::insert(iterator before, size_type n, const T &t)
@@ -292,17 +319,20 @@ Q_OUTOFLINE_TEMPLATE typename QVarLengthArray<T, Prealloc>::iterator QVarLengthA
             T *b = ptr + offset;
             T *j = ptr + s;
             T *i = j - n;
-            while (i != b)
+            while (i != b) {
                 *--j = *--i;
+            }
             i = b + n;
-            while (i != b)
+            while (i != b) {
                 *--i = t;
+            }
         } else {
             T *b = ptr + offset;
             T *i = b + n;
-            memmove(i, b, (s - offset - n) * sizeof(T));
-            while (i != b)
+            ::memmove(i, b, (s - offset - n) * sizeof(T));
+            while (i != b) {
                 new (--i) T(t);
+            }
         }
     }
     return ptr + offset;
@@ -323,7 +353,7 @@ Q_OUTOFLINE_TEMPLATE typename QVarLengthArray<T, Prealloc>::iterator QVarLengthA
             i->~T();
         }
     } else {
-        memmove(ptr + f, ptr + l, (s - l) * sizeof(T));
+        ::memmove(ptr + f, ptr + l, (s - l) * sizeof(T));
     }
     s -= n;
     return ptr + f;
@@ -332,11 +362,13 @@ Q_OUTOFLINE_TEMPLATE typename QVarLengthArray<T, Prealloc>::iterator QVarLengthA
 template <typename T, int Prealloc1, int Prealloc2>
 bool operator==(const QVarLengthArray<T, Prealloc1> &l, const QVarLengthArray<T, Prealloc2> &r)
 {
-    if (l.size() != r.size())
+    if (l.size() != r.size()) {
         return false;
+    }
     for (int i = 0; i < l.size(); i++) {
-        if (l.at(i) != r.at(i))
+        if (l.at(i) != r.at(i)) {
             return false;
+        }
     }
     return true;
 }
@@ -348,6 +380,5 @@ bool operator!=(const QVarLengthArray<T, Prealloc1> &l, const QVarLengthArray<T,
 }
 
 QT_END_NAMESPACE
-
 
 #endif // QVARLENGTHARRAY_H
