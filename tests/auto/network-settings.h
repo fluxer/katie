@@ -53,9 +53,9 @@ public:
     static QString serverIPs()
     {
         if (supportsIPv6()) {
-            return QLatin1String("128.30.52.100 2603:400A:FFFF:804:801E:34:0:64");
+            return QLatin1String("104.18.23.19 2606:4700::6812:1713");
         }
-        return QLatin1String("128.30.52.100");
+        return QLatin1String("104.18.23.19");
     }
 
     static bool compareReplyIMAP(QByteArray const& actual)
