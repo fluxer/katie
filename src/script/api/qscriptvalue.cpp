@@ -1532,7 +1532,7 @@ QScriptValue QScriptValue::call(const QScriptValue &thisObject,
     if (!jscThisObject || !jscThisObject.isObject())
         jscThisObject = d->engine->globalObject();
 
-    QVarLengthArray<JSC::JSValue, 8> argsVector(args.size());
+    QVarLengthArray<JSC::JSValue> argsVector(args.size());
     for (int i = 0; i < args.size(); ++i) {
         const QScriptValue &arg = args.at(i);
         if (!arg.isValid()) {
@@ -1673,7 +1673,7 @@ QScriptValue QScriptValue::construct(const QScriptValueList &args)
 
     JSC::ExecState *exec = d->engine->currentFrame;
 
-    QVarLengthArray<JSC::JSValue, 8> argsVector(args.size());
+    QVarLengthArray<JSC::JSValue> argsVector(args.size());
     for (int i = 0; i < args.size(); ++i) {
         QScriptValue arg = args.at(i);
         if (Q_UNLIKELY(QScriptValuePrivate::getEngine(arg) != d->engine && QScriptValuePrivate::getEngine(arg))) {

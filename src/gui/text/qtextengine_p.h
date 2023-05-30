@@ -258,7 +258,7 @@ struct Q_AUTOTEST_EXPORT QScriptItem
     QFixed height() const { return ascent + descent + 1; }
 };
 
-typedef QVarLengthArray<QScriptItem, 1> QScriptItemArray;
+typedef QVarLengthArray<QScriptItem> QScriptItemArray;
 
 struct Q_AUTOTEST_EXPORT QScriptLine
 {

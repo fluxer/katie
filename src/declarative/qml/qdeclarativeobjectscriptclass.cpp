@@ -898,7 +898,7 @@ QDeclarativeObjectMethodScriptClass::callPrecise(QObject *object, const QDeclara
 
         QMetaMethod m = object->metaObject()->method(data.coreIndex);
         QList<QByteArray> argTypeNames = m.parameterTypes();
-        QVarLengthArray<int, 9> argTypes(argTypeNames.count());
+        QVarLengthArray<int> argTypes(argTypeNames.count());
 
         // ### Cache
         for (int ii = 0; ii < argTypeNames.count(); ++ii) {
@@ -928,13 +928,13 @@ QDeclarativeObjectMethodScriptClass::callMethod(QObject *object, int index,
 {
     if (argCount > 0) {
 
-        QVarLengthArray<MetaCallArgument, 9> args(argCount + 1);
+        QVarLengthArray<MetaCallArgument> args(argCount + 1);
         args[0].initAsType(returnType, engine);
 
         for (int ii = 0; ii < argCount; ++ii)
             args[ii + 1].fromScriptValue(argTypes[ii], engine, ctxt->argument(ii));
 
-        QVarLengthArray<void *, 9> argData(args.count());
+        QVarLengthArray<void *> argData(args.count());
         for (int ii = 0; ii < args.count(); ++ii)
             argData[ii] = args[ii].dataPtr();
 
@@ -1003,7 +1003,7 @@ QDeclarativeObjectMethodScriptClass::callOverloaded(MethodData *method, QScriptC
             continue; // We already have a better option
 
         int methodMatchScore = 0;
-        QVarLengthArray<int, 9> methodArgTypes(methodArgumentCount);
+        QVarLengthArray<int> methodArgTypes(methodArgumentCount);
 
         bool unknownArgument = false;
         for (int ii = 0; ii < methodArgumentCount; ++ii) {

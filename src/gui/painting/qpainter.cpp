@@ -5901,7 +5901,7 @@ void qt_format_text(const QFont &fnt, const QRectF &_r,
 
     uint maxUnderlines = 0;
     int numUnderlines = 0;
-    QVarLengthArray<int, 32> underlinePositions(1);
+    QVarLengthArray<int> underlinePositions(1);
 
     QFontMetricsF fm(fnt);
     QString text = str;

@@ -113,7 +113,7 @@ Q_AUTOTEST_EXPORT qdbusThreadDebugFunc qdbusThreadDebug = 0;
 #endif
 
 typedef void (*QDBusSpyHook)(const QDBusMessage&);
-typedef QVarLengthArray<QDBusSpyHook, 4> QDBusSpyHookList;
+typedef QVarLengthArray<QDBusSpyHook> QDBusSpyHookList;
 Q_GLOBAL_STATIC(QDBusSpyHookList, qDBusSpyHookList)
 
 extern "C" {
@@ -851,7 +851,7 @@ void QDBusConnectionPrivate::deliverCall(QObject *object, const QDBusMessage &ms
                "QDBusConnection: internal threading error",
                "function called for an object that is in another thread!!");
 
-    QVarLengthArray<void *, 10> params;
+    QVarLengthArray<void *> params;
     params.reserve(metaTypes.count());
 
     QVariantList auxParameters;

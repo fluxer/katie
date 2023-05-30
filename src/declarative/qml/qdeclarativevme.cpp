@@ -56,10 +56,10 @@ QT_BEGIN_NAMESPACE
 
 // A simple stack wrapper around QVarLengthArray
 template<typename T>
-class QDeclarativeVMEStack : private QVarLengthArray<T, 128>
+class QDeclarativeVMEStack : private QVarLengthArray<T>
 {
 private:
-    typedef QVarLengthArray<T, 128> VLA; 
+    typedef QVarLengthArray<T> VLA;
     int _index;
 
 public:

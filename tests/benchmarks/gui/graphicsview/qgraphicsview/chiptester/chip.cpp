@@ -102,7 +102,7 @@ void Chip::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
     }
 
     // Draw lines
-    QVarLengthArray<QLineF, 36> lines;
+    QVarLengthArray<QLineF> lines;
     if (option->levelOfDetail >= 0.5) {
         for (int i = 0; i <= 10; i += (option->levelOfDetail > 0.5 ? 1 : 2)) {
             lines.append(QLineF(18 + 7 * i, 13, 18 + 7 * i, 5));

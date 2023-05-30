@@ -63,15 +63,21 @@ void tst_QVarLengthArray::append()
 {
     QVarLengthArray<QString> v;
     v.append(QString("hello"));
+    QCOMPARE(v.at(0), QString("hello"));
+    v.append(QString("hello2"));
+    QCOMPARE(v.at(1), QString("hello2"));
 
     QVarLengthArray<int> v2; // rocket!
     v2.append(5);
+    QCOMPARE(v2.at(0), 5);
+    v2.append(10);
+    QCOMPARE(v2.at(1), 10);
 }
 
 void tst_QVarLengthArray::removeLast()
 {
     {
-        QVarLengthArray<char, 2> v;
+        QVarLengthArray<char> v;
         v.append(0);
         v.append(1);
         QCOMPARE(v.size(), 2);
@@ -85,7 +91,7 @@ void tst_QVarLengthArray::removeLast()
     }
 
     {
-        QVarLengthArray<QString, 2> v;
+        QVarLengthArray<QString> v;
         v.append("0");
         v.append("1");
         QCOMPARE(v.size(), 2);
@@ -102,7 +108,7 @@ void tst_QVarLengthArray::removeLast()
 void tst_QVarLengthArray::oldTests()
 {
     {
-        QVarLengthArray<int, 256> sa(128);
+        QVarLengthArray<int> sa(128);
         QVERIFY(sa.data() == &sa[0]);
         sa[0] = 0xfee;
         sa[10] = 0xff;
@@ -237,7 +243,7 @@ void tst_QVarLengthArray::task214223()
     //creating a QVarLengthArray of the same size as the prealloc size
     // will make the next call to append(const T&) corrupt the memory
     // you should get a segfault pretty soon after that :-)
-    QVarLengthArray<float, 1> d(1);
+    QVarLengthArray<float> d(1);
     for (int i=0; i<30; i++)
         d.append(i);
 }
@@ -246,7 +252,7 @@ void tst_QVarLengthArray::QTBUG6718_resize()
 {
     //MOVABLE
     {
-        QVarLengthArray<QVariant,1> values(1);
+        QVarLengthArray<QVariant> values(1);
         QCOMPARE(values.size(), 1);
         values[0] = 1;
         values.resize(2);
@@ -259,7 +265,7 @@ void tst_QVarLengthArray::QTBUG6718_resize()
 
     //POD
     {
-        QVarLengthArray<int,1> values(1);
+        QVarLengthArray<int> values(1);
         QCOMPARE(values.size(), 1);
         values[0] = 1;
         values.resize(2);
@@ -271,7 +277,7 @@ void tst_QVarLengthArray::QTBUG6718_resize()
 
     //COMPLEX
     {
-        QVarLengthArray<QVarLengthArray<QString, 15>,1> values(1);
+        QVarLengthArray<QVarLengthArray<QString>> values(1);
         QCOMPARE(values.size(), 1);
         values[0].resize(10);
         values.resize(2);
@@ -386,8 +392,8 @@ QT_END_NAMESPACE
 
 bool QTBUG10978_proceed = true;
 
-template <class T, int PreAlloc>
-int countMoved(QVarLengthArray<T, PreAlloc> const &c)
+template <class T>
+int countMoved(QVarLengthArray<T> const &c)
 {
     int result = 0;
     for (int i = 0; i < c.size(); ++i)
@@ -402,7 +408,7 @@ void QTBUG10978_test()
 {
     QTBUG10978_proceed = false;
 
-    typedef QVarLengthArray<T, 16> Container;
+    typedef QVarLengthArray<T> Container;
     enum {
         isStatic = QTypeInfo<T>::isStatic,
         isComplex = QTypeInfo<T>::isComplex,

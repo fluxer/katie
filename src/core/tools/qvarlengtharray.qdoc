@@ -38,19 +38,9 @@
     application's inner loop, heap allocation can be a major source
     of slowdown.
 
-    QVarLengthArray is an attempt to work around this gap in the C++
-    language. It allocates a certain number of elements on the stack,
-    and if you resize the array to a larger size, it automatically
-    uses the heap instead. Stack allocation has the advantage that
-    it is much faster than heap allocation.
-
-    Example:
-    \snippet doc/src/snippets/code/doc_src_qvarlengtharray.cpp 2
-
-    In the example above, QVarLengthArray will preallocate 1024
-    elements on the stack and use them unless \c{n + 1} is greater
-    than 1024. If you omit the second template argument,
-    QVarLengthArray's default of 256 is used.
+    QVarLengthArray does not attempt to work around this gap in the
+    C++ language. It allocates elements on the heap, however the
+    option to reserve elements is there.
 
     QVarLengthArray's value type must be an \l{assignable data type}.
     This covers most data types that are commonly used, but the
@@ -242,11 +232,11 @@
     \sa data(), operator[]()
 */
 
-/*! \fn QVarLengthArray<T, Prealloc> &QVarLengthArray::operator=(const QVarLengthArray<T, Prealloc> &other)
+/*! \fn QVarLengthArray<T> &QVarLengthArray::operator=(const QVarLengthArray<T> &other)
     Assigns \a other to this array and returns a reference to this array.
  */
 
-/*! \fn QVarLengthArray::QVarLengthArray(const QVarLengthArray<T, Prealloc> &other)
+/*! \fn QVarLengthArray::QVarLengthArray(const QVarLengthArray<T> &other)
     Constructs a copy of \a other.
  */
 
@@ -500,7 +490,7 @@
 
 
 
-/*! \fn bool operator==(const QVarLengthArray<T, Prealloc1> &left, const QVarLengthArray<T, Prealloc2> &right)
+/*! \fn bool operator==(const QVarLengthArray<T> &left, const QVarLengthArray<T> &right)
 
     \relates QVarLengthArray
     \since 4.8
@@ -515,7 +505,7 @@
     \sa operator!=()
 */
 
-/*! \fn bool operator!=(const QVarLengthArray<T, Prealloc1> &left, const QVarLengthArray<T, Prealloc2> &right)
+/*! \fn bool operator!=(const QVarLengthArray<T> &left, const QVarLengthArray<T> &right)
 
     \relates QVarLengthArray
     \since 4.8

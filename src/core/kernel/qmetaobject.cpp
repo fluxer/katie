@@ -153,7 +153,7 @@ QObject *QMetaObject::newInstance(QGenericArgument val0,
         if (idx != -1)
             constructorName.remove(0, idx+1); // remove qualified part
     }
-    QVarLengthArray<char, 512> sig;
+    QVarLengthArray<char> sig;
     sig.append(constructorName.constData(), constructorName.length());
     sig.append('(');
 
@@ -1049,7 +1049,7 @@ bool QMetaObject::invokeMethod(QObject *obj,
     int len = qstrlen(member);
     if (len <= 0)
         return false;
-    QVarLengthArray<char, 512> sig;
+    QVarLengthArray<char> sig;
     sig.append(member, len);
     sig.append('(');
 

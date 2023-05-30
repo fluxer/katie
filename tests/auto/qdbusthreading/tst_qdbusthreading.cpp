@@ -176,7 +176,7 @@ Thread::Thread(bool automatic)
 
 void Thread::run()
 {
-    QVarLengthArray<char, 56> name;
+    QVarLengthArray<char> name;
     name.append(QTest::currentTestFunction(), qstrlen(QTest::currentTestFunction()));
     name.append("_thread", sizeof "_thread");
     QMetaObject::invokeMethod(tst_QDBusThreading::self(), name.constData(), Qt::DirectConnection);

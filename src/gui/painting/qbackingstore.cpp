@@ -653,7 +653,7 @@ void QWidgetBackingStore::sync()
     // painted (in case someone calls update() in paintEvent). If the widget is opaque
     // and does not have transparent overlapping siblings, append it to the
     // opaqueNonOverlappedWidgets list and paint it directly without composition.
-    QVarLengthArray<QWidget *, 32> opaqueNonOverlappedWidgets;
+    QVarLengthArray<QWidget *> opaqueNonOverlappedWidgets;
     for (int i = 0; i < dirtyWidgets.size(); ++i) {
         QWidget *w = dirtyWidgets.at(i);
         QWidgetPrivate *wd = w->d_func();

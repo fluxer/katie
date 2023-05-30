@@ -1304,8 +1304,8 @@ void QSplitter::moveSplitter(int pos, int index)
     qDebug() << "QSplitter::moveSplitter" << debugp << index << "adjusted" << pos << "oldP" << oldP;
 #endif
 
-    QVarLengthArray<int, 32> poss(d->list.count());
-    QVarLengthArray<int, 32> ws(d->list.count());
+    QVarLengthArray<int> poss(d->list.count());
+    QVarLengthArray<int> ws(d->list.count());
     bool upLeft;
 
     d->doMove(false, pos, index, +1, (d->collapsible(s) && (pos > max)), poss.data(), ws.data());

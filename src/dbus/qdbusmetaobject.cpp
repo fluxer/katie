@@ -56,8 +56,8 @@ private:
         QByteArray name;
         QByteArray inputSignature;
         QByteArray outputSignature;
-        QVarLengthArray<int, 4> inputTypes;
-        QVarLengthArray<int, 4> outputTypes;
+        QVarLengthArray<int> inputTypes;
+        QVarLengthArray<int> outputTypes;
         int flags;
     };
     

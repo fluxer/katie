@@ -98,7 +98,7 @@ public:
     QSockNotType();
     ~QSockNotType();
 
-    typedef QVarLengthArray<QSockNot*, 32> List;
+    typedef QVarLengthArray<QSockNot*> List;
 
     List list;
     fd_set select_fds;

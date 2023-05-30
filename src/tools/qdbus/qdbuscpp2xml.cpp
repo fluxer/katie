@@ -144,7 +144,7 @@ void MocParser::loadIntData(uint *&data)
 void MocParser::loadStringData(char *&stringdata)
 {
     stringdata = 0;
-    QVarLengthArray<char, 1024> array;
+    QVarLengthArray<char> array;
 
     while (!input->atEnd()) {
         QByteArray line = readLine();
