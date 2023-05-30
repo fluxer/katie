@@ -56,7 +56,7 @@ void tst_QJsonDocument::init()
     NestedObject.insert("MixedArray", QVariantList() << 2 << "b");
     testjsondata.insert("NestedObject", NestedObject);
 
-    testjsondata.insert("UTF8", QString("УТФ"));
+    testjsondata.insert("UTF8", QString::fromUtf8("УТФ"));
 }
 
 void tst_QJsonDocument::cleanup()
@@ -89,7 +89,7 @@ void tst_QJsonDocument::read()
     QCOMPARE(NestedObject, QVariantList() << 2 << "b");
 
     QString UTF8 = jsonmap.value("UTF8").toString();
-    QCOMPARE(UTF8, QString("УТФ"));
+    QCOMPARE(UTF8, QString::fromUtf8("УТФ"));
 
     QFile jsonfile(testjsonfile);
     QVERIFY(jsonfile.open(QIODevice::ReadOnly));
