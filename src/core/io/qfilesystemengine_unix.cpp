@@ -286,7 +286,7 @@ bool QFileSystemEngine::removeDirectory(const QFileSystemEntry &entry, bool remo
         }
         return true;
     }
-    const QByteArray path = QFile::encodeName(entry.filePath());
+    const QByteArray path = entry.nativeFilePath();
     return QT_RMDIR(path.constData()) == 0;
 }
 
