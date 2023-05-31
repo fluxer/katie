@@ -454,7 +454,11 @@ bool QFile::exists() const
 */
 bool QFile::exists(const QString &fileName)
 {
+#ifdef QT_BOOTSTRAPPED
     QFileInfo info(fileName);
+#else
+    QStatInfo info(fileName);
+#endif
     return (info.exists() && info.isFile());
 }
 
