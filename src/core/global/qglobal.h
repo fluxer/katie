@@ -241,12 +241,6 @@ typedef double qreal;
 #  define Q_SCRIPT_EXPORT Q_DECL_IMPORT
 #endif
 
-#ifdef KtScriptTools_EXPORTS
-#  define Q_SCRIPTTOOLS_EXPORT Q_DECL_EXPORT
-#else
-#  define Q_SCRIPTTOOLS_EXPORT Q_DECL_IMPORT
-#endif
-
 #ifdef KtDBus_EXPORTS
 #  define Q_DBUS_EXPORT Q_DECL_EXPORT
 #else

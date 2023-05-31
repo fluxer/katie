@@ -12,7 +12,6 @@ components = {
     'Svg': 'Q_SVG_EXPORT',
     'Xml': 'Q_XML_EXPORT',
     'Script': 'Q_SCRIPT_EXPORT',
-    'ScriptTools': 'Q_SCRIPTTOOLS_EXPORT',
     'Test': 'Q_TEST_EXPORT',
     'UiTools': 'Q_UITOOLS_EXPORT',
 }

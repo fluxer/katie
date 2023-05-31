@@ -39,7 +39,6 @@ set(unifdef_arguments
     -UKtDeclarative_EXPORTS
     -UKtXml_EXPORTS
     -UKtScript_EXPORTS
-    -UKtScriptTools_EXPORTS
     -UKtDBus_EXPORTS
     -UKtUiTools_EXPORTS
 )
