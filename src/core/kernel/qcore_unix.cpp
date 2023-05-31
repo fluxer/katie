@@ -46,7 +46,7 @@ QStatInfo::QStatInfo(const QString &path, const bool listdir)
     m_gid(QFileSystemMetaData::nobodyID),
     m_mtime(0),
     m_size(0),
-    m_path(path.toLocal8Bit())
+    m_path(QFile::encodeName(path))
 {
     QT_STATBUF statbuf;
     if (QT_STAT(m_path.constData(), &statbuf) == 0) {
@@ -115,7 +115,7 @@ bool QStatInfo::dirEquals(const QStatInfo &other) const
         return false;
     }
     if (isDir() && other.isDir()) {
-        const QString localpath = QString::fromLocal8Bit(other.m_path);
+        const QString localpath = QFile::decodeName(other.m_path);
         if (m_entries != dirInfos(other.m_path, localpath)) {
             return false;
         }
@@ -134,7 +134,7 @@ QList<QStatInfo> QStatInfo::dirInfos(const QByteArray &nativepath, const QString
                 dirent = QT_READDIR(dir);
                 continue;
             }
-            const QString dirlocal = QString::fromLocal8Bit(dirent->d_name);
+            const QString dirlocal = QFile::decodeName(dirent->d_name);
             const QString fulllocal = QString::fromLatin1("%1/%2").arg(localpath, dirlocal);
 #ifdef QT_HAVE_DIRENT_D_TYPE
             switch (dirent->d_type) {
