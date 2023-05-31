@@ -1,4 +1,4 @@
-add_definitions(-DQT_MOC)
+# add_definitions()
 set(EXTRA_MOC_LIBS
     KtCore
     # possible pthread reference from the global static mutex used in qmetaobject_p.h

@@ -9,7 +9,6 @@ file(GLOB_RECURSE headers "${headers_directory}/*.h")
 set(unifdef_arguments
     # bootstrap
     -UQT_BOOTSTRAPPED
-    -UQT_MOC
     # not supported
     -UQT_NO_QOBJECT
     -UQT_NO_COMPRESS
