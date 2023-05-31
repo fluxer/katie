@@ -225,7 +225,6 @@ QDataStream::QDataStream(QIODevice *device)
 {
 }
 
-
 /*!
     Constructs a data stream that operates on a byte array, \a a. The
     \a mode describes how the device is to be used.
@@ -283,8 +282,9 @@ QDataStream::QDataStream(const QByteArray &a)
 */
 QDataStream::~QDataStream()
 {
-    if (owndev)
+    if (owndev) {
         delete dev;
+    }
 }
 
 /*!
@@ -355,8 +355,9 @@ void QDataStream::resetStatus()
 */
 void QDataStream::setStatus(DataStatus status)
 {
-    if (q_status == Ok)
+    if (q_status == Ok) {
         q_status = status;
+    }
 }
 
 /*!
@@ -405,10 +406,11 @@ QDataStream &QDataStream::operator>>(qint8 &i)
     i = 0;
     CHECK_STREAM_PRECOND(*this)
     char c;
-    if (!dev->getChar(&c))
+    if (!dev->getChar(&c)) {
         setStatus(ReadPastEnd);
-    else
+    } else {
         i = qint8(c);
+    }
     return *this;
 }
 
@@ -592,8 +594,9 @@ QDataStream &QDataStream::operator<<(qint8 i)
 {
     Q_ASSERT(sizeof(char) == sizeof(qint8));
     CHECK_STREAM_WRITE_PRECOND(*this)
-    if (!dev->putChar(i))
+    if (!dev->putChar(i)) {
         q_status = WriteFailed;
+    }
     return *this;
 }
 
@@ -617,8 +620,9 @@ QDataStream &QDataStream::operator<<(qint16 i)
     if (byteorder != QDataStream::HostEndian) {
         i = qbswap(i);
     }
-    if (dev->write((char *)&i, sizeof(qint16)) != sizeof(qint16))
+    if (dev->write((char *)&i, sizeof(qint16)) != sizeof(qint16)) {
         q_status = WriteFailed;
+    }
     return *this;
 }
 
@@ -634,8 +638,9 @@ QDataStream &QDataStream::operator<<(qint32 i)
     if (byteorder != QDataStream::HostEndian) {
         i = qbswap(i);
     }
-    if (dev->write((char *)&i, sizeof(qint32)) != sizeof(qint32))
+    if (dev->write((char *)&i, sizeof(qint32)) != sizeof(qint32)) {
         q_status = WriteFailed;
+    }
     return *this;
 }
 
@@ -659,8 +664,9 @@ QDataStream &QDataStream::operator<<(qint64 i)
     if (byteorder != QDataStream::HostEndian) {
         i = qbswap(i);
     }
-    if (dev->write((char *)&i, sizeof(qint64)) != sizeof(qint64))
+    if (dev->write((char *)&i, sizeof(qint64)) != sizeof(qint64)) {
         q_status = WriteFailed;
+    }
     return *this;
 }
 
@@ -679,8 +685,9 @@ QDataStream &QDataStream::operator<<(qint64 i)
 QDataStream &QDataStream::operator<<(bool i)
 {
     CHECK_STREAM_WRITE_PRECOND(*this)
-    if (!dev->putChar(qint8(i)))
+    if (!dev->putChar(qint8(i))) {
         q_status = WriteFailed;
+    }
     return *this;
 }
 
@@ -693,22 +700,21 @@ QDataStream &QDataStream::operator<<(bool i)
 QDataStream &QDataStream::operator<<(float f)
 {
     CHECK_STREAM_WRITE_PRECOND(*this)
-    float g = f;                                // fixes float-on-stack problem
-    if (byteorder != QDataStream::HostEndian) {
-        union {
-            float val1;
-            quint32 val2;
-        } x;
-        x.val1 = g;
-        x.val2 = qbswap(x.val2);
-
-        if (dev->write((char *)&x.val2, sizeof(float)) != sizeof(float))
+    if (byteorder == QDataStream::HostEndian) {
+        if (dev->write((char *)&f, sizeof(float)) != sizeof(float)) {
             q_status = WriteFailed;
+        }
         return *this;
     }
-
-    if (dev->write((char *)&g, sizeof(float)) != sizeof(float))
+    union {
+        float val1;
+        quint32 val2;
+    } x;
+    x.val1 = f;
+    x.val2 = qbswap(x.val2);
+    if (dev->write((char *)&x.val2, sizeof(float)) != sizeof(float)) {
         q_status = WriteFailed;
+    }
     return *this;
 }
 
@@ -722,17 +728,19 @@ QDataStream &QDataStream::operator<<(double f)
 {
     CHECK_STREAM_WRITE_PRECOND(*this)
     if (byteorder == QDataStream::HostEndian) {
-        if (dev->write((char *)&f, sizeof(double)) != sizeof(double))
+        if (dev->write((char *)&f, sizeof(double)) != sizeof(double)) {
             q_status = WriteFailed;
-    } else {
-        union {
-            double val1;
-            quint64 val2;
-        } x;
-        x.val1 = f;
-        x.val2 = qbswap(x.val2);
-        if (dev->write((char *)&x.val2, sizeof(double)) != sizeof(double))
-            q_status = WriteFailed;
+        }
+        return *this;
+    }
+    union {
+        double val1;
+        quint64 val2;
+    } x;
+    x.val1 = f;
+    x.val2 = qbswap(x.val2);
+    if (dev->write((char *)&x.val2, sizeof(double)) != sizeof(double)) {
+        q_status = WriteFailed;
     }
     return *this;
 }
@@ -748,8 +756,9 @@ int QDataStream::writeRawData(const char *s, int len)
 {
     CHECK_STREAM_WRITE_PRECOND(-1)
     int ret = dev->write(s, len);
-    if (ret != len)
+    if (ret != len) {
         q_status = WriteFailed;
+    }
     return ret;
 }
 
@@ -775,11 +784,12 @@ int QDataStream::skipRawData(int len)
         while (len > 0) {
             int blockSize = qMin(len, (int)sizeof(buf));
             int n = dev->read(buf, blockSize);
-            if (n == -1)
+            if (n == -1) {
                 return -1;
-            if (n == 0)
+            }
+            if (n == 0) {
                 return sumRead;
-
+            }
             sumRead += n;
             len -= blockSize;
         }
@@ -787,10 +797,12 @@ int QDataStream::skipRawData(int len)
     } else {
         qint64 pos = dev->pos();
         qint64 size = dev->size();
-        if (pos + len > size)
+        if (pos + len > size) {
             len = size - pos;
-        if (!dev->seek(pos + len))
+        }
+        if (!dev->seek(pos + len)) {
             return -1;
+        }
         return len;
     }
 }
