@@ -350,7 +350,6 @@ Q_CORE_EXPORT QDataStream& operator>> (QDataStream& s, QVariant::Type& p);
 Q_CORE_EXPORT QDataStream& operator<< (QDataStream& s, const QVariant::Type p);
 #endif
 
-#ifndef QT_MOC
 template<typename T> inline T qvariant_cast(const QVariant &v)
 {
     const int vid = qMetaTypeId<T>();
@@ -370,7 +369,6 @@ template<> inline QVariant qvariant_cast<QVariant>(const QVariant &v)
         return *reinterpret_cast<const QVariant *>(v.constData());
     return v;
 }
-#endif // QT_MOC
 
 #ifndef QT_NO_DEBUG_STREAM
 Q_CORE_EXPORT QDebug operator<<(QDebug, const QVariant &);
