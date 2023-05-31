@@ -505,8 +505,8 @@ QSettings::QSettings(Format format)
     file called \a fileName. If the file doesn't already exist, it is created.
 
     The meaning of \a fileName depends on the format. If \a format is
-    QSettings::NativeFormat, the filename will end with end with .json
-    suffix, if it is QSettings::IniFormat it will be suffixed with .ini.
+    QSettings::NativeFormat, the filename will end with .json suffix, if it is
+    QSettings::IniFormat it will be suffixed with .ini.
 
     If \a format is QSettings::IniFormat, \a fileName is the name of an INI
     file.
