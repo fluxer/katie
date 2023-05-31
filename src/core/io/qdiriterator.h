@@ -27,8 +27,8 @@
 
 QT_BEGIN_NAMESPACE
 
-
 class QDirIteratorPrivate;
+
 class Q_CORE_EXPORT QDirIterator {
 public:
     enum IteratorFlag {
@@ -63,12 +63,10 @@ private:
     Q_DISABLE_COPY(QDirIterator)
 
     QDirIteratorPrivate* d;
-    friend class QDir;
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(QDirIterator::IteratorFlags)
 
 QT_END_NAMESPACE
-
 
 #endif
