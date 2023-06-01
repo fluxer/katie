@@ -54,7 +54,7 @@ QVariant QJsonDocumentPrivate::jsonToVariant(const QByteArray &jsondata)
     }
 
     json_error_t jerror;
-    json_t *jroot = json_loads(jsondata.constData(), JSON_ALLOW_NUL, &jerror);
+    json_t *jroot = json_loadb(jsondata.constData(), jsondata.size(), JSON_ALLOW_NUL, &jerror);
 
     if (!jroot) {
         error = jerror.text;
@@ -86,7 +86,7 @@ QVariant QJsonDocumentPrivate::jsonToVariant(const QByteArray &jsondata)
                                     break;
                                 }
                                 case JSON_STRING: {
-                                    listvalue.append(QVariant(QString::fromUtf8(json_string_value(jarray))));
+                                    listvalue.append(QVariant(QString::fromUtf8(json_string_value(jarray), json_string_length(jarray))));
                                     break;
                                 }
                                 case JSON_INTEGER: {
@@ -119,7 +119,7 @@ QVariant QJsonDocumentPrivate::jsonToVariant(const QByteArray &jsondata)
                         break;
                     }
                     case JSON_STRING: {
-                        mapresult.insert(jkey, QVariant(QString::fromUtf8(json_string_value(jobject))));
+                        mapresult.insert(jkey, QVariant(QString::fromUtf8(json_string_value(jobject), json_string_length(jobject))));
                         break;
                     }
                     case JSON_INTEGER: {
@@ -163,7 +163,7 @@ QVariant QJsonDocumentPrivate::jsonToVariant(const QByteArray &jsondata)
                         break;
                     }
                     case JSON_STRING: {
-                        listvalue.append(QVariant(QString::fromUtf8(json_string_value(jarray))));
+                        listvalue.append(QVariant(QString::fromUtf8(json_string_value(jarray), json_string_length(jarray))));
                         break;
                     }
                     case JSON_INTEGER: {
