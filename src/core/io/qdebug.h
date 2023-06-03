@@ -1,7 +1,6 @@
 /****************************************************************************
 **
-** Copyright (C) 2015 The Qt Company Ltd.
-** Copyright (C) 2016 Ivailo Monev
+** Copyright (C) 2022 Ivailo Monev
 **
 ** This file is part of the QtCore module of the Katie Toolkit.
 **
