@@ -76,8 +76,7 @@ Q_GUI_EXPORT _qt_filedialog_save_filename_hook qt_filedialog_save_filename_hook 
   order to select one or many files or a directory.
 
   The easiest way to create a QFileDialog is to use the static
-  functions. On Windows, Mac OS X, KDE and GNOME, these static functions will
-  call the native file dialog when possible.
+  functions.
 
   \snippet doc/src/snippets/code/src_gui_dialogs_qfiledialog.cpp 0
 
@@ -789,8 +788,7 @@ void QFileDialog::selectFile(const QString &filename)
         // save as dialog where we want to input a default value
         QString text = filename;
         if (QFileInfo(filename).isAbsolute()) {
-            QString current = d->rootPath();
-            text.remove(current);
+            text.remove(d->rootPath());
             if (text.at(0) == QDir::separator())
                 text = text.remove(0,1);
         }
@@ -922,7 +920,6 @@ QStringList QFileDialog::selectedFiles() const
 
 /*
     Makes a list of filters from ;;-separated text.
-    Used by the mac and windows implementations
 */
 QStringList qt_make_filter_list(const QString &filter)
 {
@@ -1251,11 +1248,13 @@ void QFileDialog::setAcceptMode(QFileDialog::AcceptMode mode)
     Returns the file system model index that is the root index in the
     views
 */
-QModelIndex QFileDialogPrivate::rootIndex() const {
+QModelIndex QFileDialogPrivate::rootIndex() const
+{
     return mapToSource(qFileDialogUi->listView->rootIndex());
 }
 
-QAbstractItemView *QFileDialogPrivate::currentView() const {
+QAbstractItemView *QFileDialogPrivate::currentView() const
+{
     if (!qFileDialogUi->stackedWidget)
         return 0;
     if (qFileDialogUi->stackedWidget->currentWidget() == qFileDialogUi->listView->parent())
@@ -1263,14 +1262,16 @@ QAbstractItemView *QFileDialogPrivate::currentView() const {
     return qFileDialogUi->treeView;
 }
 
-QLineEdit *QFileDialogPrivate::lineEdit() const {
+QLineEdit *QFileDialogPrivate::lineEdit() const
+{
     return qFileDialogUi->fileNameEdit;
 }
 
 /*
     Sets the view root index to be the file system model index
 */
-void QFileDialogPrivate::setRootIndex(const QModelIndex &index) const {
+void QFileDialogPrivate::setRootIndex(const QModelIndex &index) const
+{
     Q_ASSERT(index.isValid() ? index.model() == model : true);
     QModelIndex idx = mapFromSource(index);
     qFileDialogUi->treeView->setRootIndex(idx);
@@ -1280,7 +1281,8 @@ void QFileDialogPrivate::setRootIndex(const QModelIndex &index) const {
     Select a file system model index
     returns the index that was selected (or not depending upon sortfilterproxymodel)
 */
-QModelIndex QFileDialogPrivate::select(const QModelIndex &index) const {
+QModelIndex QFileDialogPrivate::select(const QModelIndex &index) const
+{
     Q_ASSERT(index.isValid() ? index.model() == model : true);
 
     QModelIndex idx = mapFromSource(index);
@@ -1534,20 +1536,9 @@ QString QFileDialog::labelText(DialogLabel label) const
     The dialog's caption is set to \a caption. If \a caption is not specified
     then a default caption will be used.
 
-    On Windows, Mac OS X and Symbian^3, this static function will use the
-    native file dialog and not a QFileDialog.
-
-    On Windows the dialog will spin a blocking modal event loop that will not
-    dispatch any QTimers, and if \a parent is not 0 then it will position the
-    dialog just below the parent's title bar.
-
     On Unix/X11, the normal behavior of the file dialog is to resolve and
     follow symlinks. For example, if \c{/usr/tmp} is a symlink to \c{/var/tmp},
     the file dialog will change to \c{/var/tmp} after entering \c{/usr/tmp}.
-
-    On Symbian^3 the parameter \a selectedFilter has no meaning and the
-    \a options parameter is only used to define if the native file dialog is
-    used.
 
     \warning Do not delete \a parent during the execution of the dialog. If you
     want to do this, you should create the dialog yourself using one of the
@@ -1608,13 +1599,6 @@ QString QFileDialog::getOpenFileName(QWidget *parent,
 
     The dialog's caption is set to \a caption. If \a caption is not specified
     then a default caption will be used.
-
-    On Windows, Mac OS X and Symbian^3, this static function will use the
-    native file dialog and not a QFileDialog.
-
-    On Windows the dialog will spin a blocking modal event loop that will not
-    dispatch any QTimers, and if \a parent is not 0 then it will position the
-    dialog just below the parent's title bar.
 
     On Unix/X11, the normal behavior of the file dialog is to resolve and
     follow symlinks. For example, if \c{/usr/tmp} is a symlink to \c{/var/tmp},
@@ -1697,14 +1681,6 @@ QStringList QFileDialog::getOpenFileNames(QWidget *parent,
 
     The dialog's caption is set to \a caption. If \a caption is not specified,
     a default caption will be used.
-
-    On Windows, Mac OS X and Symbian^3, this static function will use the
-    native file dialog and not a QFileDialog.
-
-    On Windows the dialog will spin a blocking modal event loop that will not
-    dispatch any QTimers, and if \a parent is not 0 then it will position the
-    dialog just below the parent's title bar. On Mac OS X, with its native file
-    dialog, the filter argument is ignored.
 
     On Unix/X11, the normal behavior of the file dialog is to resolve and
     follow symlinks. For example, if \c{/usr/tmp} is a symlink to \c{/var/tmp},
