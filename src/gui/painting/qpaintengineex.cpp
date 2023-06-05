@@ -631,20 +631,20 @@ void QPaintEngineEx::drawRoundedRect(const QRectF &rect, qreal xRadius, qreal yR
     qreal pts[] = {
         x1 + xRadius, y1,                   // MoveTo
         x2 - xRadius, y1,                   // LineTo
-        x2 - (1 - KAPPA) * xRadius, y1,     // CurveTo
-        x2, y1 + (1 - KAPPA) * yRadius,
+        x2 - (1 - QT_PATH_KAPPA) * xRadius, y1,     // CurveTo
+        x2, y1 + (1 - QT_PATH_KAPPA) * yRadius,
         x2, y1 + yRadius,
         x2, y2 - yRadius,                   // LineTo
-        x2, y2 - (1 - KAPPA) * yRadius,     // CurveTo
-        x2 - (1 - KAPPA) * xRadius, y2,
+        x2, y2 - (1 - QT_PATH_KAPPA) * yRadius,     // CurveTo
+        x2 - (1 - QT_PATH_KAPPA) * xRadius, y2,
         x2 - xRadius, y2,
         x1 + xRadius, y2,                   // LineTo
-        x1 + (1 - KAPPA) * xRadius, y2,           // CurveTo
-        x1, y2 - (1 - KAPPA) * yRadius,
+        x1 + (1 - QT_PATH_KAPPA) * xRadius, y2,           // CurveTo
+        x1, y2 - (1 - QT_PATH_KAPPA) * yRadius,
         x1, y2 - yRadius,
         x1, y1 + yRadius,                   // LineTo
-        x1, y1 + (1 - KAPPA) * yRadius,           // CurveTo
-        x1 + (1 - KAPPA) * xRadius, y1,
+        x1, y1 + (1 - QT_PATH_KAPPA) * yRadius,           // CurveTo
+        x1 + (1 - QT_PATH_KAPPA) * xRadius, y1,
         x1 + xRadius, y1
     };
 

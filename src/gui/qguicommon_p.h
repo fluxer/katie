@@ -9,6 +9,11 @@
 
 QT_BEGIN_NAMESPACE
 
+// This value is used to determine the length of control point vectors
+// when approximating arc segments as curves. The factor is multiplied
+// with the radius of the circle.
+#define QT_PATH_KAPPA qreal(0.5522847498)
+
 struct QRealRect {
     qreal x1, y1, x2, y2;
 };

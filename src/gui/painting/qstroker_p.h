@@ -47,8 +47,6 @@ struct qfixed2d
                                                        && qFuzzyCompare(y, other.y); }
 };
 
-#define QT_PATH_KAPPA 0.5522847498
-
 QPointF qt_curves_for_arc(const QRectF &rect, qreal startAngle, qreal sweepLength,
                           QPointF *controlPoints, int *point_count);
 

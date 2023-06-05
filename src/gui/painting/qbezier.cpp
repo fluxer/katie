@@ -318,7 +318,7 @@ static bool addCircle(const QBezier *b, qreal offset, QBezier *o)
     };
 
     for (int i = 0; i < 2; ++i) {
-        qreal kappa = qreal(2.0) * KAPPA * sign * offset * angles[i];
+        qreal kappa = qreal(2.0) * QT_PATH_KAPPA * sign * offset * angles[i];
 
         o->x1 = circle[i].x();
         o->y1 = circle[i].y();

@@ -246,11 +246,6 @@ inline void QPainterPathPrivate::maybeMoveTo()
     }
 }
 
-// This value is used to determine the length of control point vectors
-// when approximating arc segments as curves. The factor is multiplied
-// with the radius of the circle.
-#define KAPPA qreal(0.5522847498)
-
 QT_END_NAMESPACE
 
 #endif // QPAINTERPATH_P_H
