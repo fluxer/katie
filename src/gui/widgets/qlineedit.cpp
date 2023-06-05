@@ -249,16 +249,6 @@ QLineEdit::QLineEdit(const QString& contents, QWidget* parent)
 }
 
 
-
-/*!
-    Destroys the line edit.
-*/
-
-QLineEdit::~QLineEdit()
-{
-}
-
-
 /*!
     \property QLineEdit::text
     \brief the line edit's text

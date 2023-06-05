@@ -67,7 +67,6 @@ class Q_GUI_EXPORT QLineEdit : public QWidget
 public:
     explicit QLineEdit(QWidget* parent = nullptr);
     explicit QLineEdit(const QString &, QWidget* parent = nullptr);
-    ~QLineEdit();
 
     QString text() const;
 
