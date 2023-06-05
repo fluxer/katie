@@ -1670,7 +1670,6 @@ static QVector<QRgb> fix_color_table(const QVector<QRgb> &ctbl, QImage::Format f
 //
 // dither_to_1:  Uses selected dithering algorithm.
 //
-
 static void dither_to_Mono(QImageData *dst, const QImageData *src,
                            Qt::ImageConversionFlags flags, bool fromalpha)
 {
@@ -1885,13 +1884,7 @@ static void QT_FASTCALL convert_Mono_to_X32(QImageData *dest, const QImageData *
 
     const QVector<QRgb> srcColorTable = { src->mono0, src->mono1 };
     QVector<QRgb> colorTable = fix_color_table(srcColorTable, dest->format);
-
-    // Default to black / white colors
-    if (colorTable.size() < 2) {
-        if (colorTable.size() == 0)
-            colorTable << 0xff000000;
-        colorTable << 0xffffffff;
-    }
+    Q_ASSERT(colorTable.size() == 2);
 
     const uchar *src_data = src->data;
     uchar *dest_data = dest->data;
