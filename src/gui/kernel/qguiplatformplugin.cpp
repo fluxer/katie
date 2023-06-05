@@ -38,14 +38,15 @@ QT_BEGIN_NAMESPACE
 Q_GLOBAL_STATIC_WITH_ARGS(QFactoryLoader, platformLoader, (QString::fromLatin1("/gui_platform")))
 #endif
 
-/*! \internal
-    Return (an construct if necesseray) the Gui Platform plugin.
+/*!
+    \internal
+    Return (and constructs if necesseray) the Gui Platform plugin.
 
     If no plugin can be loaded, the default one is returned.
  */
 QGuiPlatformPlugin *qt_guiPlatformPlugin()
 {
-    static QGuiPlatformPlugin *plugin;
+    static QGuiPlatformPlugin *plugin = nullptr;
     if (!plugin)
     {
 #ifndef QT_NO_LIBRARY
