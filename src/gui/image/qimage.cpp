@@ -1190,8 +1190,10 @@ void QImage::setColorTable(const QVector<QRgb> &colors)
 QVector<QRgb> QImage::colorTable() const
 {
     QVector<QRgb> result;
-    if (!d || d->depth != 1)
+    if (!d || d->depth != 1) {
         return result;
+    }
+    result.reserve(2);
     result.append(d->mono0);
     result.append(d->mono1);
     return result;
