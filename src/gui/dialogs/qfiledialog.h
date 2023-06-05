@@ -190,7 +190,6 @@ public:
 
 
 protected:
-    QFileDialog(const QFileDialogArgs &args);
     void done(int result);
     void accept();
     void changeEvent(QEvent *e);

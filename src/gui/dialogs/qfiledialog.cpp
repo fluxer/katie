@@ -49,23 +49,6 @@ QT_BEGIN_NAMESPACE
 
 Q_GLOBAL_STATIC(QString, lastVisitedDir)
 
-/*
-    \internal
-
-    Exported hooks that can be used to customize the static functions.
- */
-typedef QString (*_qt_filedialog_existing_directory_hook)(QWidget *parent, const QString &caption, const QString &dir, QFileDialog::Options options);
-Q_GUI_EXPORT _qt_filedialog_existing_directory_hook qt_filedialog_existing_directory_hook = 0;
-
-typedef QString (*_qt_filedialog_open_filename_hook)(QWidget * parent, const QString &caption, const QString &dir, const QString &filter, QString *selectedFilter, QFileDialog::Options options);
-Q_GUI_EXPORT _qt_filedialog_open_filename_hook qt_filedialog_open_filename_hook = 0;
-
-typedef QStringList (*_qt_filedialog_open_filenames_hook)(QWidget * parent, const QString &caption, const QString &dir, const QString &filter, QString *selectedFilter, QFileDialog::Options options);
-Q_GUI_EXPORT _qt_filedialog_open_filenames_hook qt_filedialog_open_filenames_hook = 0;
-
-typedef QString (*_qt_filedialog_save_filename_hook)(QWidget * parent, const QString &caption, const QString &dir, const QString &filter, QString *selectedFilter, QFileDialog::Options options);
-Q_GUI_EXPORT _qt_filedialog_save_filename_hook qt_filedialog_save_filename_hook = 0;
-
 /*!
   \class QFileDialog
   \brief The QFileDialog class provides a dialog that allow users to select files or directories.
@@ -288,20 +271,6 @@ QFileDialog::QFileDialog(QWidget *parent,
 {
     Q_D(QFileDialog);
     d->init(directory, filter, caption);
-    d->lineEdit()->selectAll();
-}
-
-/*!
-    \internal
-*/
-QFileDialog::QFileDialog(const QFileDialogArgs &args)
-    : QDialog(*new QFileDialogPrivate, args.parent, 0)
-{
-    Q_D(QFileDialog);
-    d->init(args.directory, args.filter, args.caption);
-    setFileMode(args.mode);
-    setOptions(args.options);
-    selectFile(args.selection);
     d->lineEdit()->selectAll();
 }
 
@@ -1553,19 +1522,12 @@ QString QFileDialog::getOpenFileName(QWidget *parent,
                                QString *selectedFilter,
                                Options options)
 {
-    if (qt_filedialog_open_filename_hook)
-        return qt_filedialog_open_filename_hook(parent, caption, dir, filter, selectedFilter, options);
-    QFileDialogArgs args;
-    args.parent = parent;
-    args.caption = caption;
-    args.directory = QFileDialogPrivate::workingDirectory(dir);
-    args.selection = QFileDialogPrivate::initialSelection(dir);
-    args.filter = filter;
-    args.mode = ExistingFile;
-    args.options = options;
+    // create a Katie dialog
+    QFileDialog dialog(parent, caption, QFileDialogPrivate::workingDirectory(dir), filter);
+    dialog.setFileMode(QFileDialog::ExistingFile);
+    dialog.setOptions(options);
+    dialog.selectFile(QFileDialogPrivate::initialSelection(dir));
 
-    // create a qt dialog
-    QFileDialog dialog(args);
     if (selectedFilter && !selectedFilter->isEmpty())
         dialog.selectNameFilter(*selectedFilter);
     if (dialog.exec() == QDialog::Accepted) {
@@ -1612,10 +1574,6 @@ QString QFileDialog::getOpenFileName(QWidget *parent,
 
     \snippet doc/src/snippets/code/src_gui_dialogs_qfiledialog.cpp 10
 
-    On Symbian^3 the parameter \a selectedFilter has no meaning and the
-    \a options parameter is only used to define if the native file dialog is
-    used. On Symbian^3, this function can only return a single filename.
-
     \warning Do not delete \a parent during the execution of the dialog. If you
     want to do this, you should create the dialog yourself using one of the
     QFileDialog constructors.
@@ -1629,19 +1587,12 @@ QStringList QFileDialog::getOpenFileNames(QWidget *parent,
                                           QString *selectedFilter,
                                           Options options)
 {
-    if (qt_filedialog_open_filenames_hook)
-        return qt_filedialog_open_filenames_hook(parent, caption, dir, filter, selectedFilter, options);
-    QFileDialogArgs args;
-    args.parent = parent;
-    args.caption = caption;
-    args.directory = QFileDialogPrivate::workingDirectory(dir);
-    args.selection = QFileDialogPrivate::initialSelection(dir);
-    args.filter = filter;
-    args.mode = ExistingFiles;
-    args.options = options;
+    // create a Katie dialog
+    QFileDialog dialog(parent, caption, QFileDialogPrivate::workingDirectory(dir), filter);
+    dialog.setFileMode(QFileDialog::ExistingFiles);
+    dialog.setOptions(options);
+    dialog.selectFile(QFileDialogPrivate::initialSelection(dir));
 
-    // create a qt dialog
-    QFileDialog dialog(args);
     if (selectedFilter && !selectedFilter->isEmpty())
         dialog.selectNameFilter(*selectedFilter);
     if (dialog.exec() == QDialog::Accepted) {
@@ -1686,10 +1637,6 @@ QStringList QFileDialog::getOpenFileNames(QWidget *parent,
     follow symlinks. For example, if \c{/usr/tmp} is a symlink to \c{/var/tmp},
     the file dialog will change to \c{/var/tmp} after entering \c{/usr/tmp}.
 
-    On Symbian^3 the parameters \a filter and \a selectedFilter have no
-    meaning. The \a options parameter is only used to define if the native file
-    dialog is used.
-
     \warning Do not delete \a parent during the execution of the dialog. If you
     want to do this, you should create the dialog yourself using one of the
     QFileDialog constructors.
@@ -1703,20 +1650,13 @@ QString QFileDialog::getSaveFileName(QWidget *parent,
                                      QString *selectedFilter,
                                      Options options)
 {
-    if (qt_filedialog_save_filename_hook)
-        return qt_filedialog_save_filename_hook(parent, caption, dir, filter, selectedFilter, options);
-    QFileDialogArgs args;
-    args.parent = parent;
-    args.caption = caption;
-    args.directory = QFileDialogPrivate::workingDirectory(dir);
-    args.selection = QFileDialogPrivate::initialSelection(dir);
-    args.filter = filter;
-    args.mode = AnyFile;
-    args.options = options;
+    // create a Katie dialog
+    QFileDialog dialog(parent, caption, QFileDialogPrivate::workingDirectory(dir), filter);
+    dialog.setFileMode(QFileDialog::AnyFile);
+    dialog.setOptions(options);
+    dialog.selectFile(QFileDialogPrivate::initialSelection(dir));
+    dialog.setAcceptMode(QFileDialog::AcceptSave);
 
-    // create a qt dialog
-    QFileDialog dialog(args);
-    dialog.setAcceptMode(AcceptSave);
     if (selectedFilter && !selectedFilter->isEmpty())
         dialog.selectNameFilter(*selectedFilter);
     if (dialog.exec() == QDialog::Accepted) {
@@ -1751,10 +1691,6 @@ QString QFileDialog::getSaveFileName(QWidget *parent,
     follow symlinks. For example, if \c{/usr/tmp} is a symlink to \c{/var/tmp},
     the file dialog will change to \c{/var/tmp} after entering \c{/usr/tmp}.
 
-    On Windows the dialog will spin a blocking modal event loop that will not
-    dispatch any QTimers, and if \a parent is not 0 then it will position the
-    dialog just below the parent's title bar.
-
     \warning Do not delete \a parent during the execution of the dialog. If you
     want to do this, you should create the dialog yourself using one of the
     QFileDialog constructors.
@@ -1766,17 +1702,12 @@ QString QFileDialog::getExistingDirectory(QWidget *parent,
                                           const QString &dir,
                                           Options options)
 {
-    if (qt_filedialog_existing_directory_hook)
-        return qt_filedialog_existing_directory_hook(parent, caption, dir, options);
-    QFileDialogArgs args;
-    args.parent = parent;
-    args.caption = caption;
-    args.directory = QFileDialogPrivate::workingDirectory(dir);
-    args.mode = (options & ShowDirsOnly ? DirectoryOnly : Directory);
-    args.options = options;
+    // create a Katie dialog
+    QFileDialog dialog(parent, caption, QFileDialogPrivate::workingDirectory(dir));
+    dialog.setFileMode(options & QFileDialog::ShowDirsOnly ? QFileDialog::DirectoryOnly : QFileDialog::Directory);
+    dialog.setOptions(options);
+    dialog.selectFile(QFileDialogPrivate::initialSelection(dir));
 
-    // create a qt dialog
-    QFileDialog dialog(args);
     if (dialog.exec() == QDialog::Accepted) {
         return dialog.selectedFiles().value(0);
     }

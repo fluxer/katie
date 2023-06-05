@@ -100,7 +100,7 @@ QGuiPlatformPlugin::~QGuiPlatformPlugin()
 */
 QString QGuiPlatformPlugin::styleName()
 {
-    return QLatin1String("cleanlooks");
+    return QString::fromLatin1("cleanlooks");
 }
 
 /*
@@ -151,13 +151,15 @@ QStringList QGuiPlatformPlugin::iconThemeSearchPaths()
 
     // Add home directory first in search path
     QDir homeDir(QDir::homePath() + QLatin1String("/.icons"));
-    if (homeDir.exists())
+    if (homeDir.exists()) {
         paths.append(homeDir.path());
+    }
 
     foreach (const QString &it, QStandardPaths::standardLocations(QStandardPaths::DataLocation)) {
         QDir dir(it);
-        if (dir.exists())
+        if (dir.exists()) {
             paths.append(dir.path() + QLatin1String("/icons"));
+        }
     }
 
     return paths;
@@ -187,16 +189,18 @@ QIcon QGuiPlatformPlugin::fileSystemIcon(const QFileInfo &)
 int QGuiPlatformPlugin::platformHint(PlatformHint hint)
 {
     int ret = 0;
-    switch(hint)
-    {
-        case PH_ToolButtonStyle:
+    switch(hint) {
+        case PH_ToolButtonStyle: {
             ret = Qt::ToolButtonIconOnly;
             break;
-        case PH_ToolBarIconSize:
-            //by default keep ret = 0 so QCommonStyle will use the style default
+        }
+        case PH_ToolBarIconSize: {
+            // by default keep ret = 0 so QCommonStyle will use the style default
             break;
-        default:
+        }
+        default: {
             break;
+        }
     }
     return ret;
 }
