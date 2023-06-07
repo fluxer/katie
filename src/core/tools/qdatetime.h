@@ -146,10 +146,6 @@ public:
 #endif
     static bool isValid(int h, int m, int s, int ms = 0);
 
-    void start();
-    int restart();
-    int elapsed() const;
-
 private:
     enum TimeFlag { NullTime = -1 };
     inline int ds() const { return mds == NullTime ? 0 : mds; }
