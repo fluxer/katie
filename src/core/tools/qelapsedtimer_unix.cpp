@@ -27,20 +27,20 @@
 
 QT_BEGIN_NAMESPACE
 
-#if defined(_SC_MONOTONIC_CLOCK)
-static const bool monotonicClockAvailable = (sysconf(_SC_MONOTONIC_CLOCK) >= 200112L);
-#else
-static const bool monotonicClockAvailable = (_POSIX_MONOTONIC_CLOCK > 0);
-#endif
-
 bool QElapsedTimer::isMonotonic()
 {
+#if defined(_SC_MONOTONIC_CLOCK)
+    static const bool monotonicClockAvailable = (sysconf(_SC_MONOTONIC_CLOCK) >= 200112L);
+#else
+    static const bool monotonicClockAvailable = (_POSIX_MONOTONIC_CLOCK > 0);
+#endif
+
     return monotonicClockAvailable;
 }
 
 QElapsedTimer::ClockType QElapsedTimer::clockType()
 {
-    if (Q_LIKELY(monotonicClockAvailable)) {
+    if (Q_LIKELY(QElapsedTimer::isMonotonic())) {
         return QElapsedTimer::MonotonicClock;
     }
     return QElapsedTimer::SystemTime;
@@ -49,7 +49,7 @@ QElapsedTimer::ClockType QElapsedTimer::clockType()
 static inline void do_gettime(qint64 *sec, qint64 *frac)
 {
     struct timespec ts;
-    if (Q_LIKELY(monotonicClockAvailable)) {
+    if (Q_LIKELY(QElapsedTimer::isMonotonic())) {
         ::clock_gettime(CLOCK_MONOTONIC, &ts);
     } else {
         ::clock_gettime(CLOCK_REALTIME, &ts);
