@@ -75,7 +75,7 @@ private slots:
     void setRepeatAction();
 
 private:
-    void waitUntilTimeElapsed(const QTime& t, int ms);
+    void waitUntilTimeElapsed(const QElapsedTimer& t, int ms);
 
     QWidget *topLevel;
     Slider *slider;
@@ -1161,11 +1161,11 @@ void tst_QAbstractSlider::setValue()
         QVERIFY(sliderMovedTimeStamp < valueChangedTimeStamp);
 }
 
-void tst_QAbstractSlider::waitUntilTimeElapsed(const QTime& t, int ms)
+void tst_QAbstractSlider::waitUntilTimeElapsed(const QElapsedTimer& t, int ms)
 {
     const int eps = 80;
     while (t.elapsed() < ms + eps)
-        QTest::qWait(qMax(ms - t.elapsed() + eps, 25));
+        QTest::qWait(qMax(ms - t.elapsed() + eps, qint64(25)));
 }
 
 void tst_QAbstractSlider::setRepeatAction()
@@ -1181,7 +1181,7 @@ void tst_QAbstractSlider::setRepeatAction()
     QCOMPARE(spy.count(), 0);
     QCOMPARE(slider->value(), 55);
 
-    QTime t;
+    QElapsedTimer t;
     t.start();
     QTest::qWait(300);
     QCOMPARE(spy.count(), 0);

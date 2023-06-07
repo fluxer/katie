@@ -506,7 +506,7 @@ void tst_QCoreApplication::processEventsAlwaysSendsPostedEvents()
     QCoreApplication app(argc, argv);
 
     ProcessEventsAlwaysSendsPostedEventsObject object;
-    QTime t;
+    QElapsedTimer t;
     t.start();
     int i = 1;
     do {

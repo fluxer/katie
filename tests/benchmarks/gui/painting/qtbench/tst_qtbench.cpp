@@ -37,7 +37,7 @@ public:
     qreal result() const { return m_result; }
 
 public:
-    QTime timer;
+    QElapsedTimer timer;
 
     Benchmark *m_benchmark;
 
@@ -70,7 +70,7 @@ void BenchWidget::paintEvent(QPaintEvent *)
 
     ++m_iteration;
 
-    uint currentElapsed = timer.isNull() ? 0 : timer.elapsed();
+    uint currentElapsed = !timer.isValid() ? 0 : timer.elapsed();
     timer.restart();
 
     m_total += currentElapsed;

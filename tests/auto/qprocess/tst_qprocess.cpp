@@ -385,7 +385,7 @@ void tst_QProcess::echoTest()
              msgStartProcessFailed(binary, process->errorString()).constData());
     process->write(input);
 
-    QTime stopWatch;
+    QElapsedTimer stopWatch;
     stopWatch.start();
     do {
         QVERIFY(process->isOpen());
@@ -440,7 +440,7 @@ void tst_QProcess::echoTest2()
     QSignalSpy spy1(process, SIGNAL(readyReadStandardOutput()));
     QSignalSpy spy2(process, SIGNAL(readyReadStandardError()));
 
-    QTime stopWatch;
+    QElapsedTimer stopWatch;
     stopWatch.start();
     forever {
         QTestEventLoop::instance().enterLoop(1);
@@ -486,7 +486,7 @@ void tst_QProcess::echoTest_performance()
 
     QVERIFY(process.waitForStarted());
 
-    QTime stopWatch;
+    QElapsedTimer stopWatch;
     stopWatch.start();
 
     qint64 totalBytes = 0;
@@ -1785,7 +1785,7 @@ void tst_QProcess::fileWriterProcess()
     for (int i = 0; i < 5000; ++i)
         stdinStr += QString::fromLatin1("%1 -- testing testing 1 2 3\n").arg(i);
 
-    QTime stopWatch;
+    QElapsedTimer stopWatch;
     stopWatch.start();
     do {
         QFile::remove("fileWriterProcess.txt");

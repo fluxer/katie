@@ -29,6 +29,7 @@
 #include "qpaintengine.h"
 #include "qgraphicsproxywidget.h"
 #include "qthread.h"
+#include "qelapsedtimer.h"
 #include "qwidget_p.h"
 #include "qwindowsurface_p.h"
 #include "qapplication_p.h"
@@ -53,21 +54,26 @@ static inline void qt_flush(QWidget *widget, const QRegion &region, QWindowSurfa
     //using this FPS when you have > 1 windowsurface can give you inaccurate FPS
     static const bool fpsDebug = qgetenv("QT_DEBUG_FPS").toInt();
     if (fpsDebug) {
-        static QTime time = QTime::currentTime();
+        static QElapsedTimer time;
         static int frames = 0;
 
         frames++;
 
-        if(time.elapsed() > 5000) {
+        if (!time.isValid()) {
+            time.start();
+        }
+
+        if (time.elapsed() > 5000) {
             double fps = double(frames * 1000) /time.restart();
             fprintf(stderr,"FPS: %.1f\n",fps);
             frames = 0;
         }
     }
-    if (widget != tlw)
+    if (widget != tlw) {
         windowSurface->flush(widget, region, tlwOffset + widget->mapTo(tlw, QPoint()));
-    else
+    } else {
         windowSurface->flush(widget, region, tlwOffset);
+    }
 }
 
 #ifndef QT_NO_DEBUG

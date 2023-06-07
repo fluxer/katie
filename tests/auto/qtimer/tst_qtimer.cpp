@@ -390,7 +390,7 @@ public:
     QBasicTimer m_timer;
 
     int m_interval;
-    QTime m_startedTime;
+    QElapsedTimer m_startedTime;
     QEventLoop eventLoop;
 
     inline RestartedTimerFiresTooSoonObject()
@@ -416,7 +416,7 @@ public:
 
         m_timer.stop();
 
-        int elapsed = m_startedTime.elapsed();
+        qint64 elapsed = m_startedTime.elapsed();
 
         if (elapsed < m_interval / 2) {
             // severely too early!
@@ -455,7 +455,7 @@ public slots:
     void longLastingSlot()
     {
         // Don't use timers for this, because we are testing them.
-        QTime time;
+        QElapsedTimer time;
         time.start();
         while (time.elapsed() < 200) {
             for (int c = 0; c < 100000; c++) {} // Mindless looping.

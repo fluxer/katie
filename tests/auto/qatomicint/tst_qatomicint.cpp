@@ -498,7 +498,7 @@ void tst_QAtomicInt::fetchAndAdd()
 
 void tst_QAtomicInt::testAndSet_loop()
 {
-    QTime stopWatch;
+    QElapsedTimer stopWatch;
     stopWatch.start();
 
     int iterations = 10000000;

@@ -826,7 +826,7 @@ void tst_QThreadPool::tryStartCount()
 
 void tst_QThreadPool::waitForDone()
 {
-    QTime total, pass;
+    QElapsedTimer total, pass;
     total.start();
 
     QThreadPool threadPool;
@@ -881,7 +881,7 @@ void tst_QThreadPool::waitForDoneTimeout()
 
 void tst_QThreadPool::destroyingWaitsForTasksToFinish()
 {
-    QTime total, pass;
+    QElapsedTimer total, pass;
     total.start();
 
     while (total.elapsed() < 10000) {
@@ -935,7 +935,7 @@ void tst_QThreadPool::stressTest()
         }
     };
 
-    QTime total;
+    QElapsedTimer total;
     total.start();
     while (total.elapsed() < 30000) {
         Task t;
