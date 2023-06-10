@@ -30,7 +30,6 @@
 #include <QApplication>
 #include <QFontMetrics>
 #include <QPainter>
-#include <QTextBoundaryFinder>
 #include "qstyle.h"
 
 #ifndef QT_NO_LINEEDIT
@@ -1453,56 +1452,10 @@ void QDeclarativeTextInput::moveCursorSelection(int position)
 void QDeclarativeTextInput::moveCursorSelection(int pos, SelectionMode mode)
 {
     Q_D(QDeclarativeTextInput);
-
     if (mode == SelectCharacters) {
         d->control->moveCursor(pos, true);
     } else if (pos != d->control->cursor()){
-        const int cursor = d->control->cursor();
-        int anchor;
-        if (!d->control->hasSelectedText())
-            anchor = d->control->cursor();
-        else if (d->control->selectionStart() == d->control->cursor())
-            anchor = d->control->selectionEnd();
-        else
-            anchor = d->control->selectionStart();
-
-        if (anchor < pos || (anchor == pos && cursor < pos)) {
-            const QString text = d->control->text();
-            QTextBoundaryFinder finder(QTextBoundaryFinder::Word, text);
-            finder.setPosition(anchor);
-
-            const QTextBoundaryFinder::BoundaryReasons reasons = finder.boundaryReasons();
-            if (anchor < text.length() && (!(reasons & QTextBoundaryFinder::StartWord)
-                    || ((reasons & QTextBoundaryFinder::EndWord) && anchor > cursor))) {
-                finder.toPreviousBoundary();
-            }
-            anchor = finder.position() != -1 ? finder.position() : 0;
-
-            finder.setPosition(pos);
-            if (pos > 0 && !finder.boundaryReasons())
-                finder.toNextBoundary();
-            const int cursor = finder.position() != -1 ? finder.position() : text.length();
-
-            d->control->setSelection(anchor, cursor - anchor);
-        } else if (anchor > pos || (anchor == pos && cursor > pos)) {
-            const QString text = d->control->text();
-            QTextBoundaryFinder finder(QTextBoundaryFinder::Word, text);
-            finder.setPosition(anchor);
-
-            const QTextBoundaryFinder::BoundaryReasons reasons = finder.boundaryReasons();
-            if (anchor > 0 && (!(reasons & QTextBoundaryFinder::EndWord)
-                    || ((reasons & QTextBoundaryFinder::StartWord) && anchor < cursor))) {
-                finder.toNextBoundary();
-            }
-            anchor = finder.position() != -1 ? finder.position() : text.length();
-
-            finder.setPosition(pos);
-            if (pos < text.length() && !finder.boundaryReasons())
-                 finder.toPreviousBoundary();
-            const int cursor = finder.position() != -1 ? finder.position() : 0;
-
-            d->control->setSelection(anchor, cursor - anchor);
-        }
+        d->control->selectWordAtPos(pos);
     }
 }
 
