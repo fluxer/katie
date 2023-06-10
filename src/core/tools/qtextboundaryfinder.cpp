@@ -352,10 +352,6 @@ QTextBoundaryFinder::BoundaryReasons QTextBoundaryFinder::boundaryReasons() cons
 {
     if (!isAtBoundary()) {
         return QTextBoundaryFinder::NotAtBoundary;
-    } else if (d->pos == 0) {
-        return QTextBoundaryFinder::StartWord;
-    } else if (d->pos == d->string.size()) {
-        return QTextBoundaryFinder::EndWord;
     }
 
     QTextBoundaryFinder::BoundaryReasons reasons;
