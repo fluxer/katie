@@ -42,9 +42,9 @@ class Q_DECLARATIVE_EXPORT QDeclarativeView : public QGraphicsView
 {
     Q_OBJECT
     Q_PROPERTY(ResizeMode resizeMode READ resizeMode WRITE setResizeMode)
-    Q_PROPERTY(Status status READ status NOTIFY statusChanged)
+    Q_PROPERTY(ViewStatus status READ status NOTIFY statusChanged)
     Q_PROPERTY(QUrl source READ source WRITE setSource DESIGNABLE true)
-    Q_ENUMS(ResizeMode Status)
+    Q_ENUMS(ResizeMode ViewStatus)
 public:
     explicit QDeclarativeView(QWidget *parent = nullptr);
     QDeclarativeView(const QUrl &source, QWidget *parent = nullptr);
@@ -62,8 +62,8 @@ public:
     ResizeMode resizeMode() const;
     void setResizeMode(ResizeMode);
 
-    enum Status { Null, Ready, Loading, Error };
-    Status status() const;
+    enum ViewStatus { Null, Ready, Loading, Error };
+    ViewStatus status() const;
 
     QList<QDeclarativeError> errors() const;
 
@@ -72,7 +72,7 @@ public:
 
 Q_SIGNALS:
     void sceneResized(QSize size); // ???
-    void statusChanged(QDeclarativeView::Status);
+    void statusChanged(QDeclarativeView::ViewStatus);
 
 private Q_SLOTS:
     void continueExecute();

@@ -99,7 +99,7 @@ class QByteArray;
         // ...
         component = new QDeclarativeComponent(engine, QUrl("http://www.example.com/main.qml"));
         if (component->isLoading())
-            QObject::connect(component, SIGNAL(statusChanged(QDeclarativeComponent::Status)),
+            QObject::connect(component, SIGNAL(statusChanged(QDeclarativeComponent::ComponentStatus)),
                              this, SLOT(continueLoading()));
         else
             continueLoading();
@@ -206,7 +206,7 @@ class QByteArray;
 */
 
 /*!
-    \enum QDeclarativeComponent::Status
+    \enum QDeclarativeComponent::ComponentStatus
     
     Specifies the loading status of the QDeclarativeComponent.
 
@@ -308,9 +308,9 @@ QDeclarativeComponent::~QDeclarativeComponent()
 
 /*!
     \property QDeclarativeComponent::status
-    The component's current \l{QDeclarativeComponent::Status} {status}.
+    The component's current \l{QDeclarativeComponent::ComponentStatus} {status}.
  */
-QDeclarativeComponent::Status QDeclarativeComponent::status() const
+QDeclarativeComponent::ComponentStatus QDeclarativeComponent::status() const
 {
     Q_D(const QDeclarativeComponent);
 
@@ -349,7 +349,7 @@ qreal QDeclarativeComponent::progress() const
 */
 
 /*!
-    \fn void QDeclarativeComponent::statusChanged(QDeclarativeComponent::Status status)
+    \fn void QDeclarativeComponent::statusChanged(QDeclarativeComponent::ComponentStatus status)
 
     Emitted whenever the component's status changes.  \a status will be the
     new status.

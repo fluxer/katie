@@ -32,12 +32,12 @@ class QDeclarativeLoaderPrivate;
 class Q_AUTOTEST_EXPORT QDeclarativeLoader : public QDeclarativeImplicitSizeItem
 {
     Q_OBJECT
-    Q_ENUMS(Status)
+    Q_ENUMS(LoaderStatus)
 
     Q_PROPERTY(QUrl source READ source WRITE setSource NOTIFY sourceChanged)
     Q_PROPERTY(QDeclarativeComponent *sourceComponent READ sourceComponent WRITE setSourceComponent RESET resetSourceComponent NOTIFY sourceChanged)
     Q_PROPERTY(QGraphicsObject *item READ item NOTIFY itemChanged)
-    Q_PROPERTY(Status status READ status NOTIFY statusChanged)
+    Q_PROPERTY(LoaderStatus status READ status NOTIFY statusChanged)
     Q_PROPERTY(qreal progress READ progress NOTIFY progressChanged)
 
 public:
@@ -51,8 +51,8 @@ public:
     void setSourceComponent(QDeclarativeComponent *);
     void resetSourceComponent();
 
-    enum Status { Null, Ready, Loading, Error };
-    Status status() const;
+    enum LoaderStatus { Null, Ready, Loading, Error };
+    LoaderStatus status() const;
     qreal progress() const;
 
     QGraphicsObject *item() const;

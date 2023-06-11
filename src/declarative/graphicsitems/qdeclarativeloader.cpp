@@ -334,7 +334,7 @@ void QDeclarativeLoaderPrivate::load()
     if (!component->isLoading()) {
         _q_sourceLoaded();
     } else {
-        QObject::connect(component, SIGNAL(statusChanged(QDeclarativeComponent::Status)),
+        QObject::connect(component, SIGNAL(statusChanged(QDeclarativeComponent::ComponentStatus)),
                 q, SLOT(_q_sourceLoaded()));
         QObject::connect(component, SIGNAL(progressChanged(qreal)),
                 q, SIGNAL(progressChanged()));
@@ -444,12 +444,12 @@ void QDeclarativeLoaderPrivate::_q_sourceLoaded()
     \sa progress
 */
 
-QDeclarativeLoader::Status QDeclarativeLoader::status() const
+QDeclarativeLoader::LoaderStatus QDeclarativeLoader::status() const
 {
     Q_D(const QDeclarativeLoader);
 
     if (d->component)
-        return static_cast<QDeclarativeLoader::Status>(d->component->status());
+        return static_cast<QDeclarativeLoader::LoaderStatus>(d->component->status());
 
     if (d->item)
         return Ready;

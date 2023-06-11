@@ -98,7 +98,7 @@ void QDeclarativeViewPrivate::execute()
         if (!component->isLoading()) {
             q->continueExecute();
         } else {
-            QObject::connect(component, SIGNAL(statusChanged(QDeclarativeComponent::Status)), q, SLOT(continueExecute()));
+            QObject::connect(component, SIGNAL(statusChanged(QDeclarativeComponent::ComponentStatus)), q, SLOT(continueExecute()));
         }
     }
 }
@@ -168,7 +168,7 @@ void QDeclarativeViewPrivate::itemGeometryChanged(QDeclarativeItem *resizeItem, 
   This signal is emitted when the view is resized to \a size.
 */
 
-/*! \fn void QDeclarativeView::statusChanged(QDeclarativeView::Status status)
+/*! \fn void QDeclarativeView::statusChanged(QDeclarativeView::ViewStatus status)
     This signal is emitted when the component's current \a status changes.
 */
 
@@ -288,7 +288,7 @@ QDeclarativeContext* QDeclarativeView::rootContext() const
 }
 
 /*!
-    \enum QDeclarativeView::Status
+    \enum QDeclarativeView::ViewStatus
     Specifies the loading status of the QDeclarativeView.
 
     \value Null This QDeclarativeView has no source set.
@@ -308,16 +308,16 @@ QDeclarativeContext* QDeclarativeView::rootContext() const
 
 /*!
     \property QDeclarativeView::status
-    The component's current \l{QDeclarativeView::Status} {status}.
+    The component's current \l{QDeclarativeView::ViewStatus} {status}.
 */
 
-QDeclarativeView::Status QDeclarativeView::status() const
+QDeclarativeView::ViewStatus QDeclarativeView::status() const
 {
     Q_D(const QDeclarativeView);
     if (!d->component)
         return QDeclarativeView::Null;
 
-    return QDeclarativeView::Status(d->component->status());
+    return QDeclarativeView::ViewStatus(d->component->status());
 }
 
 /*!
@@ -452,7 +452,7 @@ QDeclarativeView::ResizeMode QDeclarativeView::resizeMode() const
 void QDeclarativeView::continueExecute()
 {
     Q_D(QDeclarativeView);
-    disconnect(d->component, SIGNAL(statusChanged(QDeclarativeComponent::Status)), this, SLOT(continueExecute()));
+    disconnect(d->component, SIGNAL(statusChanged(QDeclarativeComponent::ComponentStatus)), this, SLOT(continueExecute()));
 
     if (d->component->isError()) {
         QList<QDeclarativeError> errorList = d->component->errors();
