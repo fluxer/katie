@@ -132,10 +132,10 @@ QObject *QFactoryLoader::instance(const QString &key)
         d->pluginMap.insert(lowered, loader);
         return loader->instance();
     }
-    delete loader;
     if (qt_debug_component()) {
-        qDebug() << "QFactoryLoader: no plugin for" << lowered;
+        qDebug() << "QFactoryLoader: no plugin for" << lowered << loader->errorString();
     }
+    delete loader;
     return nullptr;
 }
 
