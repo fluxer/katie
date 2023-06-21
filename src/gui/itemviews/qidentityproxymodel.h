@@ -37,7 +37,6 @@ class Q_GUI_EXPORT QIdentityProxyModel : public QAbstractProxyModel
     Q_OBJECT
 public:
     explicit QIdentityProxyModel(QObject *parent = nullptr);
-    ~QIdentityProxyModel();
 
     int columnCount(const QModelIndex& parent = QModelIndex()) const;
     QModelIndex index(int row, int column, const QModelIndex& parent = QModelIndex()) const;

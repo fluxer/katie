@@ -218,15 +218,6 @@ QDirModel::QDirModel(QDirModelPrivate &dd, QObject *parent)
 }
 
 /*!
-  Destroys this directory model.
-*/
-
-QDirModel::~QDirModel()
-{
-
-}
-
-/*!
   Returns the model item index for the item in the \a parent with the
   given \a row and \a column.
 

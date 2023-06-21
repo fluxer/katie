@@ -57,7 +57,6 @@ public:
     };
 
     explicit QHeaderView(Qt::Orientation orientation, QWidget *parent = nullptr);
-    virtual ~QHeaderView();
 
     void setModel(QAbstractItemModel *model);
 

@@ -71,7 +71,6 @@ class Q_AUTOTEST_EXPORT QAbstractItemViewPrivate : public QAbstractScrollAreaPri
 
 public:
     QAbstractItemViewPrivate();
-    virtual ~QAbstractItemViewPrivate();
 
     void init();
 

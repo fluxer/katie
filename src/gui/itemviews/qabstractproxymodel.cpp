@@ -89,14 +89,6 @@ QAbstractProxyModel::QAbstractProxyModel(QAbstractProxyModelPrivate &dd, QObject
 }
 
 /*!
-    Destroys the proxy model.
-*/
-QAbstractProxyModel::~QAbstractProxyModel()
-{
-
-}
-
-/*!
     Sets the given \a sourceModel to be processed by the proxy model.
 */
 void QAbstractProxyModel::setSourceModel(QAbstractItemModel *sourceModel)

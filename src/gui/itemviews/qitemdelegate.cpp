@@ -284,14 +284,6 @@ QItemDelegate::QItemDelegate(QObject *parent)
 }
 
 /*!
-    Destroys the item delegate.
-*/
-
-QItemDelegate::~QItemDelegate()
-{
-}
-
-/*!
   \property QItemDelegate::clipping
   \brief if the delegate should clip the paint events
   \since 4.2

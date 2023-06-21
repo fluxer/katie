@@ -169,14 +169,6 @@ QAbstractItemDelegate::QAbstractItemDelegate(QObjectPrivate &dd, QObject *parent
 }
 
 /*!
-    Destroys the abstract item delegate.
-*/
-QAbstractItemDelegate::~QAbstractItemDelegate()
-{
-
-}
-
-/*!
     \fn void QAbstractItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const = 0;
 
     This pure abstract function must be reimplemented if you want to

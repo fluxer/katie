@@ -32,9 +32,9 @@ QT_BEGIN_NAMESPACE
 
 class QColumnViewPrivate;
 
-class Q_GUI_EXPORT QColumnView : public QAbstractItemView {
-
-Q_OBJECT
+class Q_GUI_EXPORT QColumnView : public QAbstractItemView
+{
+    Q_OBJECT
     Q_PROPERTY(bool resizeGripsVisible READ resizeGripsVisible WRITE setResizeGripsVisible)
 
 Q_SIGNALS:
@@ -42,7 +42,6 @@ Q_SIGNALS:
 
 public:
     explicit QColumnView(QWidget *parent = nullptr);
-    ~QColumnView();
 
     // QAbstractItemView overloads
     QModelIndex indexAt(const QPoint &point) const;

@@ -84,10 +84,6 @@ QAbstractItemViewPrivate::QAbstractItemViewPrivate()
     keyboardInputTime.invalidate();
 }
 
-QAbstractItemViewPrivate::~QAbstractItemViewPrivate()
-{
-}
-
 void QAbstractItemViewPrivate::init()
 {
     Q_Q(QAbstractItemView);

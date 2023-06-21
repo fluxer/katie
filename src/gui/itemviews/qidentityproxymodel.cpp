@@ -108,13 +108,6 @@ QIdentityProxyModel::QIdentityProxyModel(QIdentityProxyModelPrivate &dd, QObject
 }
 
 /*!
-    Destroys this identity model.
-*/
-QIdentityProxyModel::~QIdentityProxyModel()
-{
-}
-
-/*!
     \reimp
  */
 int QIdentityProxyModel::columnCount(const QModelIndex& parent) const

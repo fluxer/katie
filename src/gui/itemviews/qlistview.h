@@ -58,7 +58,6 @@ public:
     enum ViewMode { ListMode, IconMode };
 
     explicit QListView(QWidget *parent = nullptr);
-    ~QListView();
 
     void setMovement(Movement movement);
     Movement movement() const;

@@ -51,7 +51,6 @@ public:
     QDirModel(const QStringList &nameFilters, QDir::Filters filters,
               QDir::SortFlags sort, QObject *parent = nullptr);
     explicit QDirModel(QObject *parent = nullptr);
-    ~QDirModel();
 
     QModelIndex index(int row, int column, const QModelIndex &parent = QModelIndex()) const;
     QModelIndex parent(const QModelIndex &child) const;
