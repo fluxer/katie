@@ -171,8 +171,6 @@ public:
     static QByteArray toPercentEncoding(const QString &,
                                         const QByteArray &exclude = QByteArray(),
                                         const QByteArray &include = QByteArray());
-    static QString fromPunycode(const QByteArray &);
-    static QByteArray toPunycode(const QString &);
     static QString fromAce(const QByteArray &);
     static QByteArray toAce(const QString &);
 
