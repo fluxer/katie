@@ -1776,7 +1776,7 @@ QUrl::QUrl(const QString &url, ParsingMode parsingMode) : d(0)
     if (!url.isEmpty())
         setUrl(url, parsingMode);
     else {
-        d = new QUrlPrivate;
+        d = new QUrlPrivate();
         d->parsingMode = parsingMode;
     }
 }
@@ -1855,7 +1855,7 @@ void QUrl::clear()
 {
     if (d && !d->ref.deref())
         delete d;
-    d = 0;
+    d = nullptr;
 }
 
 /*!
@@ -1871,7 +1871,7 @@ void QUrl::clear()
 */
 void QUrl::setUrl(const QString &url, ParsingMode parsingMode)
 {
-    if (!d) d = new QUrlPrivate;
+    if (!d) d = new QUrlPrivate();
 
     QMutexLocker lock(&d->mutex);
     detach(lock);
@@ -1940,7 +1940,7 @@ static inline char toHex(quint8 c)
 */
 void QUrl::setEncodedUrl(const QByteArray &encodedUrl, ParsingMode parsingMode)
 {
-    if (!d) d = new QUrlPrivate;
+    if (!d) d = new QUrlPrivate();
 
     QMutexLocker lock(&d->mutex);
     detach(lock);
@@ -2022,7 +2022,7 @@ void QUrlPrivate::setEncodedUrl(const QByteArray &encodedUrl, QUrl::ParsingMode 
 */
 void QUrl::setScheme(const QString &scheme)
 {
-    if (!d) d = new QUrlPrivate;
+    if (!d) d = new QUrlPrivate();
 
     QMutexLocker lock(&d->mutex);
     if (!QURL_HASFLAG(d->stateFlags, QUrlPrivate::Parsed)) d->parse();
@@ -2066,7 +2066,7 @@ QString QUrl::scheme() const
 */
 void QUrl::setAuthority(const QString &authority)
 {
-    if (!d) d = new QUrlPrivate;
+    if (!d) d = new QUrlPrivate();
 
     QMutexLocker lock(&d->mutex);
     if (!QURL_HASFLAG(d->stateFlags, QUrlPrivate::Parsed)) d->parse();
@@ -2107,7 +2107,7 @@ QString QUrl::authority() const
 */
 void QUrl::setUserInfo(const QString &userInfo)
 {
-    if (!d) d = new QUrlPrivate;
+    if (!d) d = new QUrlPrivate();
 
     QMutexLocker lock(&d->mutex);
     if (!QURL_HASFLAG(d->stateFlags, QUrlPrivate::Parsed)) d->parse();
@@ -2140,7 +2140,7 @@ QString QUrl::userInfo() const
 */
 void QUrl::setUserName(const QString &userName)
 {
-    if (!d) d = new QUrlPrivate;
+    if (!d) d = new QUrlPrivate();
 
     QMutexLocker lock(&d->mutex);
     if (!QURL_HASFLAG(d->stateFlags, QUrlPrivate::Parsed)) d->parse();
@@ -2183,7 +2183,7 @@ QString QUrl::userName() const
 */
 void QUrl::setEncodedUserName(const QByteArray &userName)
 {
-    if (!d) d = new QUrlPrivate;
+    if (!d) d = new QUrlPrivate();
 
     QMutexLocker lock(&d->mutex);
     if (!QURL_HASFLAG(d->stateFlags, QUrlPrivate::Parsed)) d->parse();
@@ -2224,7 +2224,7 @@ QByteArray QUrl::encodedUserName() const
 */
 void QUrl::setPassword(const QString &password)
 {
-    if (!d) d = new QUrlPrivate;
+    if (!d) d = new QUrlPrivate();
     QMutexLocker lock(&d->mutex);
     if (!QURL_HASFLAG(d->stateFlags, QUrlPrivate::Parsed)) d->parse();
     detach(lock);
@@ -2266,7 +2266,7 @@ QString QUrl::password() const
 */
 void QUrl::setEncodedPassword(const QByteArray &password)
 {
-    if (!d) d = new QUrlPrivate;
+    if (!d) d = new QUrlPrivate();
 
     QMutexLocker lock(&d->mutex);
     if (!QURL_HASFLAG(d->stateFlags, QUrlPrivate::Parsed)) d->parse();
@@ -2306,7 +2306,7 @@ QByteArray QUrl::encodedPassword() const
 */
 void QUrl::setHost(const QString &host)
 {
-    if (!d) d = new QUrlPrivate;
+    if (!d) d = new QUrlPrivate();
 
     QMutexLocker lock(&d->mutex);
     if (!QURL_HASFLAG(d->stateFlags, QUrlPrivate::Parsed)) d->parse();
@@ -2378,7 +2378,7 @@ QByteArray QUrl::encodedHost() const
 */
 void QUrl::setPort(int port)
 {
-    if (!d) d = new QUrlPrivate;
+    if (!d) d = new QUrlPrivate();
 
     QMutexLocker lock(&d->mutex);
     if (!QURL_HASFLAG(d->stateFlags, QUrlPrivate::Parsed)) d->parse();
@@ -2426,7 +2426,7 @@ int QUrl::port(int defaultPort) const
 */
 void QUrl::setPath(const QString &path)
 {
-    if (!d) d = new QUrlPrivate;
+    if (!d) d = new QUrlPrivate();
 
     QMutexLocker lock(&d->mutex);
     if (!QURL_HASFLAG(d->stateFlags, QUrlPrivate::Parsed)) d->parse();
@@ -2478,7 +2478,7 @@ QString QUrl::path() const
 */
 void QUrl::setEncodedPath(const QByteArray &path)
 {
-    if (!d) d = new QUrlPrivate;
+    if (!d) d = new QUrlPrivate();
 
     QMutexLocker lock(&d->mutex);
     if (!QURL_HASFLAG(d->stateFlags, QUrlPrivate::Parsed)) d->parse();
@@ -2551,7 +2551,7 @@ bool QUrl::hasQuery() const
 */
 void QUrl::setQueryDelimiters(char valueDelimiter, char pairDelimiter)
 {
-    if (!d) d = new QUrlPrivate;
+    if (!d) d = new QUrlPrivate();
 
     QMutexLocker lock(&d->mutex);
     detach(lock);
@@ -2599,7 +2599,7 @@ char QUrl::queryValueDelimiter() const
 */
 void QUrl::setEncodedQuery(const QByteArray &query)
 {
-    if (!d) d = new QUrlPrivate;
+    if (!d) d = new QUrlPrivate();
 
     QMutexLocker lock(&d->mutex);
     if (!QURL_HASFLAG(d->stateFlags, QUrlPrivate::Parsed)) d->parse();
@@ -2625,7 +2625,7 @@ void QUrl::setEncodedQuery(const QByteArray &query)
 */
 void QUrl::setQueryItems(const QList<QPair<QString, QString> > &query)
 {
-    if (!d) d = new QUrlPrivate;
+    if (!d) d = new QUrlPrivate();
 
     QMutexLocker lock(&d->mutex);
     if (!QURL_HASFLAG(d->stateFlags, QUrlPrivate::Parsed)) d->parse();
@@ -2663,7 +2663,7 @@ void QUrl::setQueryItems(const QList<QPair<QString, QString> > &query)
 */
 void QUrl::setEncodedQueryItems(const QList<QPair<QByteArray, QByteArray> > &query)
 {
-    if (!d) d = new QUrlPrivate;
+    if (!d) d = new QUrlPrivate();
 
     QMutexLocker lock(&d->mutex);
     if (!QURL_HASFLAG(d->stateFlags, QUrlPrivate::Parsed)) d->parse();
@@ -2699,7 +2699,7 @@ void QUrl::setEncodedQueryItems(const QList<QPair<QByteArray, QByteArray> > &que
 */
 void QUrl::addQueryItem(const QString &key, const QString &value)
 {
-    if (!d) d = new QUrlPrivate;
+    if (!d) d = new QUrlPrivate();
 
     QMutexLocker lock(&d->mutex);
     if (!QURL_HASFLAG(d->stateFlags, QUrlPrivate::Parsed)) d->parse();
@@ -2733,7 +2733,7 @@ void QUrl::addQueryItem(const QString &key, const QString &value)
 */
 void QUrl::addEncodedQueryItem(const QByteArray &key, const QByteArray &value)
 {
-    if (!d) d = new QUrlPrivate;
+    if (!d) d = new QUrlPrivate();
 
     QMutexLocker lock(&d->mutex);
     if (!QURL_HASFLAG(d->stateFlags, QUrlPrivate::Parsed)) d->parse();
@@ -3112,7 +3112,7 @@ QByteArray QUrl::encodedQuery() const
 */
 void QUrl::setFragment(const QString &fragment)
 {
-    if (!d) d = new QUrlPrivate;
+    if (!d) d = new QUrlPrivate();
 
     QMutexLocker lock(&d->mutex);
     if (!QURL_HASFLAG(d->stateFlags, QUrlPrivate::Parsed)) d->parse();
@@ -3169,7 +3169,7 @@ QString QUrlPrivate::fragmentImpl() const
 */
 void QUrl::setEncodedFragment(const QByteArray &fragment)
 {
-    if (!d) d = new QUrlPrivate;
+    if (!d) d = new QUrlPrivate();
 
     QMutexLocker lock(&d->mutex);
     if (!QURL_HASFLAG(d->stateFlags, QUrlPrivate::Parsed)) d->parse();
@@ -3276,7 +3276,7 @@ QUrl QUrl::resolved(const QUrl &relative) const
             t = relative;
             qAtomicDetach(t.d);
         } else {
-            t.d = new QUrlPrivate;
+            t.d = new QUrlPrivate();
             if (relative.d->encodedPath.isEmpty()) {
                 t.d->encodedPath = d->encodedPath;
                 t.d->query = relative.d->hasQuery ? relative.d->query : d->query;
@@ -3615,7 +3615,7 @@ QUrl &QUrl::operator =(const QString &url)
         clear();
     } else {
         QUrl tmp(url);
-        if (!d) d = new QUrlPrivate;
+        if (!d) d = new QUrlPrivate();
         qAtomicAssign(d, tmp.d);
     }
     return *this;
