@@ -73,7 +73,6 @@ public:
     ~QUrl();
 
     void setUrl(const QString &url, ParsingMode mode = TolerantMode);
-    void setEncodedUrl(const QByteArray &url, ParsingMode mode = TolerantMode);
 
     bool isValid() const;
 
@@ -92,59 +91,40 @@ public:
 
     void setUserName(const QString &userName);
     QString userName() const;
-    void setEncodedUserName(const QByteArray &userName);
-    QByteArray encodedUserName() const;
 
     void setPassword(const QString &password);
     QString password() const;
-    void setEncodedPassword(const QByteArray &password);
-    QByteArray encodedPassword() const;
 
     void setHost(const QString &host);
     QString host() const;
-    void setEncodedHost(const QByteArray &host);
-    QByteArray encodedHost() const;
 
     void setPort(int port);
     int port(int defaultPort = -1) const;
 
     void setPath(const QString &path);
     QString path() const;
-    void setEncodedPath(const QByteArray &path);
-    QByteArray encodedPath() const;
 
+    void setQuery(const QString &query);
+    QString query() const;
     bool hasQuery() const;
-
-    void setEncodedQuery(const QByteArray &query);
-    QByteArray encodedQuery() const;
 
     void setQueryDelimiters(char valueDelimiter, char pairDelimiter);
     char queryValueDelimiter() const;
     char queryPairDelimiter() const;
 
-    void setQueryItems(const QList<QPair<QString, QString> > &query);
+    void setQueryItems(const QMap<QString, QString> &query);
     void addQueryItem(const QString &key, const QString &value);
-    QList<QPair<QString, QString> > queryItems() const;
+    QMap<QString, QString> queryItems() const;
     bool hasQueryItem(const QString &key) const;
     QString queryItemValue(const QString &key) const;
     QStringList allQueryItemValues(const QString &key) const;
     void removeQueryItem(const QString &key);
     void removeAllQueryItems(const QString &key);
 
-    void setEncodedQueryItems(const QList<QPair<QByteArray, QByteArray> > &query);
-    void addEncodedQueryItem(const QByteArray &key, const QByteArray &value);
-    QList<QPair<QByteArray, QByteArray> > encodedQueryItems() const;
-    bool hasEncodedQueryItem(const QByteArray &key) const;
-    QByteArray encodedQueryItemValue(const QByteArray &key) const;
-    QList<QByteArray> allEncodedQueryItemValues(const QByteArray &key) const;
-    void removeEncodedQueryItem(const QByteArray &key);
-    void removeAllEncodedQueryItems(const QByteArray &key);
-
     void setFragment(const QString &fragment);
     QString fragment() const;
-    void setEncodedFragment(const QByteArray &fragment);
-    QByteArray encodedFragment() const;
     bool hasFragment() const;
+
     QString topLevelDomain() const;
 
     QUrl resolved(const QUrl &relative) const;

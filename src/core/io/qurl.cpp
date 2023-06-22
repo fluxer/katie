@@ -36,8 +36,8 @@
     (IDNs).
 
     The most common way to use QUrl is to initialize it via the
-    constructor by passing a QString. Otherwise, setUrl() and
-    setEncodedUrl() can also be used.
+    constructor by passing a QString. Otherwise, setUrl() can also
+    be used.
 
     URLs can be represented in two forms: encoded or unencoded. The
     unencoded representation is suitable for showing to users, but
@@ -49,10 +49,9 @@
 
     A URL can also be constructed piece by piece by calling
     setScheme(), setUserName(), setPassword(), setHost(), setPort(),
-    setPath(), setEncodedQuery() and setFragment(). Some convenience
-    functions are also available: setAuthority() sets the user name,
-    password, host and port. setUserInfo() sets the user name and
-    password at once.
+    setPath() and setFragment(). Some convenience functions are also
+    available: setAuthority() sets the user name, password, host and
+    port. setUserInfo() sets the user name and password at once.
 
     Call isValid() to check if the URL is valid. This can be done at
     any point during the constructing of a URL.
@@ -1927,28 +1926,6 @@ static inline char toHex(quint8 c)
     return c > 9 ? c - 10 + 'A' : c + '0';
 }
 
-/*!
-    Constructs a URL by parsing the contents of \a encodedUrl using
-    the given \a parsingMode.
-
-    \a encodedUrl is assumed to be a URL string in percent encoded
-    form, containing only ASCII characters.
-
-    Use isValid() to determine if a valid URL was constructed.
-
-    \sa setUrl()
-*/
-void QUrl::setEncodedUrl(const QByteArray &encodedUrl, ParsingMode parsingMode)
-{
-    if (!d) d = new QUrlPrivate();
-
-    QMutexLocker lock(&d->mutex);
-    detach(lock);
-
-    d->clear();
-    d->setEncodedUrl(encodedUrl, parsingMode);
-}
-
 void QUrlPrivate::setEncodedUrl(const QByteArray &encodedUrl, QUrl::ParsingMode parsing)
 {
     // Caller must lock mutex first
@@ -2169,53 +2146,6 @@ QString QUrl::userName() const
 }
 
 /*!
-    \since 4.4
-
-    Sets the URL's user name to the percent-encoded \a userName. The \a
-    userName is part of the user info element in the authority of the
-    URL, as described in setUserInfo().
-
-    Note: this function does not verify that \a userName is properly
-    encoded. It is the caller's responsibility to ensure that the any
-    delimiters (such as colons or slashes) are properly encoded.
-
-    \sa setUserName(), encodedUserName(), setUserInfo()
-*/
-void QUrl::setEncodedUserName(const QByteArray &userName)
-{
-    if (!d) d = new QUrlPrivate();
-
-    QMutexLocker lock(&d->mutex);
-    if (!QURL_HASFLAG(d->stateFlags, QUrlPrivate::Parsed)) d->parse();
-    detach(lock);
-    QURL_UNSETFLAG(d->stateFlags, QUrlPrivate::Validated | QUrlPrivate::Normalized);
-
-    d->encodedUserName = userName;
-    d->userName.clear();
-}
-
-/*!
-    \since 4.4
-
-    Returns the user name of the URL if it is defined; otherwise
-    an empty string is returned. The returned value will have its
-    non-ASCII and other control characters percent-encoded, as in
-    toEncoded().
-
-    \sa setEncodedUserName()
-*/
-QByteArray QUrl::encodedUserName() const
-{
-    if (!d) return QByteArray();
-
-    QMutexLocker lock(&d->mutex);
-    if (!QURL_HASFLAG(d->stateFlags, QUrlPrivate::Parsed)) d->parse();
-
-    d->ensureEncodedParts();
-    return d->encodedUserName;
-}
-
-/*!
     Sets the URL's password to \a password. The \a password is part of
     the user info element in the authority of the URL, as described in
     setUserInfo().
@@ -2252,53 +2182,6 @@ QString QUrl::password() const
 }
 
 /*!
-    \since 4.4
-
-    Sets the URL's password to the percent-encoded \a password. The \a
-    password is part of the user info element in the authority of the
-    URL, as described in setUserInfo().
-
-    Note: this function does not verify that \a password is properly
-    encoded. It is the caller's responsibility to ensure that the any
-    delimiters (such as colons or slashes) are properly encoded.
-
-    \sa setPassword(), encodedPassword(), setUserInfo()
-*/
-void QUrl::setEncodedPassword(const QByteArray &password)
-{
-    if (!d) d = new QUrlPrivate();
-
-    QMutexLocker lock(&d->mutex);
-    if (!QURL_HASFLAG(d->stateFlags, QUrlPrivate::Parsed)) d->parse();
-    detach(lock);
-    QURL_UNSETFLAG(d->stateFlags, QUrlPrivate::Validated | QUrlPrivate::Normalized);
-
-    d->encodedPassword = password;
-    d->password.clear();
-}
-
-/*!
-    \since 4.4
-
-    Returns the password of the URL if it is defined; otherwise an
-    empty string is returned. The returned value will have its
-    non-ASCII and other control characters percent-encoded, as in
-    toEncoded().
-
-    \sa setEncodedPassword(), toEncoded()
-*/
-QByteArray QUrl::encodedPassword() const
-{
-    if (!d) return QByteArray();
-
-    QMutexLocker lock(&d->mutex);
-    if (!QURL_HASFLAG(d->stateFlags, QUrlPrivate::Parsed)) d->parse();
-
-    d->ensureEncodedParts();
-    return d->encodedPassword;
-}
-
-/*!
     Sets the host of the URL to \a host. The host is part of the
     authority.
 
@@ -2332,41 +2215,6 @@ QString QUrl::host() const
     if (result.startsWith(QLatin1Char('[')))
         return result.mid(1, result.length() - 2);
     return result;
-}
-
-/*!
-    \since 4.4
-
-    Sets the URL's host to the ACE- or percent-encoded \a host. The \a
-    host is part of the user info element in the authority of the
-    URL, as described in setAuthority().
-
-    \sa setHost(), encodedHost(), setAuthority(), fromAce()
-*/
-void QUrl::setEncodedHost(const QByteArray &host)
-{
-    setHost(fromPercentEncodingHelper(host));
-}
-
-/*!
-    \since 4.4
-
-    Returns the host part of the URL if it is defined; otherwise
-    an empty string is returned.
-
-    Note: encodedHost() does not return percent-encoded hostnames. Instead,
-    the ACE-encoded (bare ASCII in Punycode encoding) form will be
-    returned for any non-ASCII hostname.
-
-    This function is equivalent to calling QUrl::toAce() on the return
-    value of host().
-
-    \sa setEncodedHost()
-*/
-QByteArray QUrl::encodedHost() const
-{
-    // should we cache this in d->encodedHost?
-    return QUrl::toAce(host());
 }
 
 /*!
@@ -2457,26 +2305,17 @@ QString QUrl::path() const
 }
 
 /*!
-    \since 4.4
+    \since 4.13
 
-    Sets the URL's path to the percent-encoded \a path.  The path is
-    the part of the URL that comes after the authority but before the
-    query string.
+    Sets the query string of the URL to \a query. The string is
+    percentage encoded.
 
-    \img qurl-ftppath.png
+    This function is useful if you need to pass a query string that
+    does not fit into the key-value pattern.
 
-    For non-hierarchical schemes, the path will be everything
-    following the scheme declaration, as in the following example:
-
-    \img qurl-mailtopath.png
-
-    Note: this function does not verify that \a path is properly
-    encoded. It is the caller's responsibility to ensure that the any
-    delimiters (such as '?' and '#') are properly encoded.
-
-    \sa setPath(), encodedPath(), setUserInfo()
+    \sa query()
 */
-void QUrl::setEncodedPath(const QByteArray &path)
+void QUrl::setQuery(const QString &query)
 {
     if (!d) d = new QUrlPrivate();
 
@@ -2485,29 +2324,26 @@ void QUrl::setEncodedPath(const QByteArray &path)
     detach(lock);
     QURL_UNSETFLAG(d->stateFlags, QUrlPrivate::Validated | QUrlPrivate::Normalized);
 
-    d->encodedPath = path;
-    d->path.clear();
+    const char alsoEncode[3] = { d->valueDelimiter , d->pairDelimiter, 0 };
+    d->query = toPercentEncodingHelper(query, queryExcludeChars, alsoEncode);
+    d->hasQuery = !query.isEmpty();
 }
 
 /*!
-    \since 4.4
+    \since 4.13
 
-    Returns the path of the URL if it is defined; otherwise an
-    empty string is returned. The returned value will have its
-    non-ASCII and other control characters percent-encoded, as in
-    toEncoded().
+    Returns the query of the URL.
 
-    \sa setEncodedPath(), toEncoded()
+    \sa setQuery()
 */
-QByteArray QUrl::encodedPath() const
+QString QUrl::query() const
 {
-    if (!d) return QByteArray();
+    if (!d) return QString();
 
     QMutexLocker lock(&d->mutex);
     if (!QURL_HASFLAG(d->stateFlags, QUrlPrivate::Parsed)) d->parse();
 
-    d->ensureEncodedParts();
-    return d->encodedPath;
+    return fromPercentEncodingHelper(d->query);
 }
 
 /*!
@@ -2515,7 +2351,7 @@ QByteArray QUrl::encodedPath() const
 
     Returns true if this URL contains a Query (i.e., if ? was seen on it).
 
-    \sa hasQueryItem(), encodedQuery()
+    \sa hasQueryItem(), query()
 */
 bool QUrl::hasQuery() const
 {
@@ -2581,36 +2417,6 @@ char QUrl::queryValueDelimiter() const
 }
 
 /*!
-    Sets the query string of the URL to \a query. The string is
-    inserted as-is, and no further encoding is performed when calling
-    toEncoded().
-
-    This function is useful if you need to pass a query string that
-    does not fit into the key-value pattern, or that uses a different
-    scheme for encoding special characters than what is suggested by
-    QUrl.
-
-    Passing a value of QByteArray() to \a query (a null QByteArray) unsets
-    the query completely. However, passing a value of QByteArray("")
-    will set the query to an empty value, as if the original URL
-    had a lone "?".
-
-    \sa encodedQuery(), hasQuery()
-*/
-void QUrl::setEncodedQuery(const QByteArray &query)
-{
-    if (!d) d = new QUrlPrivate();
-
-    QMutexLocker lock(&d->mutex);
-    if (!QURL_HASFLAG(d->stateFlags, QUrlPrivate::Parsed)) d->parse();
-    detach(lock);
-    QURL_UNSETFLAG(d->stateFlags, QUrlPrivate::Validated | QUrlPrivate::Normalized);
-
-    d->query = query;
-    d->hasQuery = !query.isNull();
-}
-
-/*!
     Sets the query string of the URL to an encoded version of \a
     query. The contents of \a query are converted to a string
     internally, each pair delimited by the character returned by
@@ -2619,11 +2425,11 @@ void QUrl::setEncodedQuery(const QByteArray &query)
 
     \note This method does not encode spaces (ASCII 0x20) as plus (+) signs,
     like HTML forms do. If you need that kind of encoding, you must encode
-    the value yourself and use QUrl::setEncodedQueryItems.
+    the value yourself.
 
-    \sa setQueryDelimiters(), queryItems(), setEncodedQueryItems()
+    \sa setQueryDelimiters(), queryItems()
 */
-void QUrl::setQueryItems(const QList<QPair<QString, QString> > &query)
+void QUrl::setQueryItems(const QMap<QString, QString> &query)
 {
     if (!d) d = new QUrlPrivate();
 
@@ -2633,48 +2439,19 @@ void QUrl::setQueryItems(const QList<QPair<QString, QString> > &query)
 
     const char alsoEncode[3] = { d->valueDelimiter , d->pairDelimiter, 0 };
     QByteArray queryTmp;
-    for (int i = 0; i < query.size(); i++) {
-        if (i) queryTmp += d->pairDelimiter;
+    QMapIterator<QString, QString> queryit(query);
+    bool isfirst = true;
+    while (queryit.hasNext()) {
+        queryit.next();
+        if (isfirst) {
+            queryTmp += d->pairDelimiter;
+            isfirst = false;
+        }
         // query = *( pchar / "/" / "?" )
-        queryTmp += toPercentEncodingHelper(query.at(i).first, queryExcludeChars, alsoEncode);
+        queryTmp += toPercentEncodingHelper(queryit.key(), queryExcludeChars, alsoEncode);
         queryTmp += d->valueDelimiter;
         // query = *( pchar / "/" / "?" )
-        queryTmp += toPercentEncodingHelper(query.at(i).second, queryExcludeChars, alsoEncode);
-    }
-
-    d->query = queryTmp;
-    d->hasQuery = !query.isEmpty();
-}
-
-/*!
-    \since 4.4
-
-    Sets the query string of the URL to the encoded version of \a
-    query. The contents of \a query are converted to a string
-    internally, each pair delimited by the character returned by
-    pairDelimiter(), and the key and value are delimited by
-    valueDelimiter().
-
-    Note: this function does not verify that the key-value pairs
-    are properly encoded. It is the caller's responsibility to ensure
-    that the query delimiters are properly encoded, if any.
-
-    \sa setQueryDelimiters(), encodedQueryItems(), setQueryItems()
-*/
-void QUrl::setEncodedQueryItems(const QList<QPair<QByteArray, QByteArray> > &query)
-{
-    if (!d) d = new QUrlPrivate();
-
-    QMutexLocker lock(&d->mutex);
-    if (!QURL_HASFLAG(d->stateFlags, QUrlPrivate::Parsed)) d->parse();
-    detach(lock);
-
-    QByteArray queryTmp;
-    for (int i = 0; i < query.size(); i++) {
-        if (i) queryTmp += d->pairDelimiter;
-        queryTmp += query.at(i).first;
-        queryTmp += d->valueDelimiter;
-        queryTmp += query.at(i).second;
+        queryTmp += toPercentEncodingHelper(queryit.value(), queryExcludeChars, alsoEncode);
     }
 
     d->query = queryTmp;
@@ -2693,9 +2470,7 @@ void QUrl::setEncodedQueryItems(const QList<QPair<QByteArray, QByteArray> > &que
 
     \note This method does not encode spaces (ASCII 0x20) as plus (+) signs,
     like HTML forms do. If you need that kind of encoding, you must encode
-    the value yourself and use QUrl::addEncodedQueryItem.
-
-    \sa addEncodedQueryItem()
+    the value yourself.
 */
 void QUrl::addQueryItem(const QString &key, const QString &value)
 {
@@ -2720,52 +2495,22 @@ void QUrl::addQueryItem(const QString &key, const QString &value)
 }
 
 /*!
-    \since 4.4
-
-    Inserts the pair \a key = \a value into the query string of the
-    URL.
-
-    Note: this function does not verify that either \a key or \a value
-    are properly encoded. It is the caller's responsibility to ensure
-    that the query delimiters are properly encoded, if any.
-
-    \sa addQueryItem(), setQueryDelimiters()
-*/
-void QUrl::addEncodedQueryItem(const QByteArray &key, const QByteArray &value)
-{
-    if (!d) d = new QUrlPrivate();
-
-    QMutexLocker lock(&d->mutex);
-    if (!QURL_HASFLAG(d->stateFlags, QUrlPrivate::Parsed)) d->parse();
-    detach(lock);
-
-    if (!d->query.isEmpty())
-        d->query += d->pairDelimiter;
-
-    d->query += key;
-    d->query += d->valueDelimiter;
-    d->query += value;
-
-    d->hasQuery = !d->query.isEmpty();
-}
-
-/*!
     Returns the query string of the URL, as a map of keys and values.
 
     \note This method does not decode spaces plus (+) signs as spaces (ASCII
     0x20), like HTML forms do. If you need that kind of decoding, you must
-    use QUrl::encodedQueryItems and decode the data yourself.
+    encode and decode the data yourself.
 
-    \sa setQueryItems(), setEncodedQuery()
+    \sa setQueryItems()
 */
-QList<QPair<QString, QString> > QUrl::queryItems() const
+QMap<QString, QString> QUrl::queryItems() const
 {
-    if (!d) return QList<QPair<QString, QString> >();
+    if (!d) return QMap<QString, QString>();
 
     QMutexLocker lock(&d->mutex);
     if (!QURL_HASFLAG(d->stateFlags, QUrlPrivate::Parsed)) d->parse();
 
-    QList<QPair<QString, QString> > itemMap;
+    QMap<QString, QString> itemMap;
 
     int pos = 0;
     const char *query = d->query.constData();
@@ -2775,10 +2520,9 @@ QList<QPair<QString, QString> > QUrl::queryItems() const
         QByteArray q(query + pos, valuedelim - pos);
         if (valuedelim < end) {
             QByteArray v(query + valuedelim + 1, end - valuedelim - 1);
-            itemMap += qMakePair(fromPercentEncodingMutable(&q),
-                                 fromPercentEncodingMutable(&v));
+            itemMap.insert(fromPercentEncodingMutable(&q), fromPercentEncodingMutable(&v));
         } else {
-            itemMap += qMakePair(fromPercentEncodingMutable(&q), QString());
+            itemMap.insert(fromPercentEncodingMutable(&q), QString());
         }
         pos = end + 1;
     }
@@ -2787,62 +2531,10 @@ QList<QPair<QString, QString> > QUrl::queryItems() const
 }
 
 /*!
-    \since 4.4
-
-    Returns the query string of the URL, as a map of encoded keys and values.
-
-    \sa setEncodedQueryItems(), setQueryItems(), setEncodedQuery()
-*/
-QList<QPair<QByteArray, QByteArray> > QUrl::encodedQueryItems() const
-{
-    if (!d) return QList<QPair<QByteArray, QByteArray> >();
-
-    QMutexLocker lock(&d->mutex);
-    if (!QURL_HASFLAG(d->stateFlags, QUrlPrivate::Parsed)) d->parse();
-
-    QList<QPair<QByteArray, QByteArray> > itemMap;
-
-    int pos = 0;
-    const char *query = d->query.constData();
-    while (pos < d->query.size()) {
-        int valuedelim, end;
-        d->queryItem(pos, &valuedelim, &end);
-        if (valuedelim < end)
-            itemMap += qMakePair(QByteArray(query + pos, valuedelim - pos),
-                                 QByteArray(query + valuedelim + 1, end - valuedelim - 1));
-        else
-            itemMap += qMakePair(QByteArray(query + pos, valuedelim - pos), QByteArray());
-        pos = end + 1;
-    }
-
-    return itemMap;
-}
-
-/*!
     Returns true if there is a query string pair whose key is equal
     to \a key from the URL.
-
-    \sa hasEncodedQueryItem()
 */
 bool QUrl::hasQueryItem(const QString &key) const
-{
-    return hasEncodedQueryItem(toPercentEncoding(key, queryExcludeChars));
-}
-
-/*!
-    \since 4.4
-
-    Returns true if there is a query string pair whose key is equal
-    to \a key from the URL.
-
-    Note: if the encoded \a key does not match the encoded version of
-    the query, this function will return false. That is, if the
-    encoded query of this URL is "search=Qt%20Rules", calling this
-    function with \a key = "%73earch" will return false.
-
-    \sa hasQueryItem()
-*/
-bool QUrl::hasEncodedQueryItem(const QByteArray &key) const
 {
     if (!d) return false;
 
@@ -2851,10 +2543,11 @@ bool QUrl::hasEncodedQueryItem(const QByteArray &key) const
 
     int pos = 0;
     const char *query = d->query.constData();
+    QByteArray encodedKey = toPercentEncoding(key, queryExcludeChars);
     while (pos < d->query.size()) {
         int valuedelim, end;
         d->queryItem(pos, &valuedelim, &end);
-        if (key == QByteArray::fromRawData(query + pos, valuedelim - pos))
+        if (encodedKey == QByteArray::fromRawData(query + pos, valuedelim - pos))
             return true;
         pos = end + 1;
     }
@@ -2867,48 +2560,32 @@ bool QUrl::hasEncodedQueryItem(const QByteArray &key) const
 
     \note This method does not decode spaces plus (+) signs as spaces (ASCII
     0x20), like HTML forms do. If you need that kind of decoding, you must
-    use QUrl::encodedQueryItemValue and decode the data yourself.
+    encode and decode the data yourself.
 
     \sa allQueryItemValues()
 */
 QString QUrl::queryItemValue(const QString &key) const
 {
     if (!d) return QString();
-    QByteArray tmp = encodedQueryItemValue(toPercentEncoding(key, queryExcludeChars));
-    return fromPercentEncodingMutable(&tmp);
-}
-
-/*!
-    \since 4.4
-
-    Returns the first query string value whose key is equal to \a key
-    from the URL.
-
-    Note: if the encoded \a key does not match the encoded version of
-    the query, this function will not work. That is, if the
-    encoded query of this URL is "search=Qt%20Rules", calling this
-    function with \a key = "%73earch" will return an empty string.
-
-    \sa queryItemValue(), allQueryItemValues()
-*/
-QByteArray QUrl::encodedQueryItemValue(const QByteArray &key) const
-{
-    if (!d) return QByteArray();
 
     QMutexLocker lock(&d->mutex);
     if (!QURL_HASFLAG(d->stateFlags, QUrlPrivate::Parsed)) d->parse();
 
     int pos = 0;
     const char *query = d->query.constData();
+    QByteArray encodedKey = toPercentEncoding(key, queryExcludeChars);
     while (pos < d->query.size()) {
         int valuedelim, end;
         d->queryItem(pos, &valuedelim, &end);
-        if (key == QByteArray::fromRawData(query + pos, valuedelim - pos))
+        if (encodedKey == QByteArray::fromRawData(query + pos, valuedelim - pos)) {
+            QByteArray v(query + valuedelim + 1, end - valuedelim - 1);
             return valuedelim < end ?
-                QByteArray(query + valuedelim + 1, end - valuedelim - 1) : QByteArray();
+                      fromPercentEncodingMutable(&v)
+                      : QString();
+        }
         pos = end + 1;
     }
-    return QByteArray();
+    return QString();
 }
 
 /*!
@@ -2917,7 +2594,7 @@ QByteArray QUrl::encodedQueryItemValue(const QByteArray &key) const
 
     \note This method does not decode spaces plus (+) signs as spaces (ASCII
     0x20), like HTML forms do. If you need that kind of decoding, you must
-    use QUrl::allEncodedQueryItemValues and decode the data yourself.
+    encode and decode the data yourself.
 
     \sa queryItemValue()
 */
@@ -2928,11 +2605,10 @@ QStringList QUrl::allQueryItemValues(const QString &key) const
     QMutexLocker lock(&d->mutex);
     if (!QURL_HASFLAG(d->stateFlags, QUrlPrivate::Parsed)) d->parse();
 
-    QByteArray encodedKey = toPercentEncoding(key, queryExcludeChars);
-    QStringList values;
-
     int pos = 0;
     const char *query = d->query.constData();
+    QStringList values;
+    const QByteArray encodedKey = toPercentEncoding(key, queryExcludeChars);
     while (pos < d->query.size()) {
         int valuedelim, end;
         d->queryItem(pos, &valuedelim, &end);
@@ -2949,67 +2625,12 @@ QStringList QUrl::allQueryItemValues(const QString &key) const
 }
 
 /*!
-    \since 4.4
-
-    Returns the a list of query string values whose key is equal to
-    \a key from the URL.
-
-    Note: if the encoded \a key does not match the encoded version of
-    the query, this function will not work. That is, if the
-    encoded query of this URL is "search=Qt%20Rules", calling this
-    function with \a key = "%73earch" will return an empty list.
-
-    \sa allQueryItemValues(), queryItemValue(), encodedQueryItemValue()
-*/
-QList<QByteArray> QUrl::allEncodedQueryItemValues(const QByteArray &key) const
-{
-    if (!d) return QList<QByteArray>();
-
-    QMutexLocker lock(&d->mutex);
-    if (!QURL_HASFLAG(d->stateFlags, QUrlPrivate::Parsed)) d->parse();
-
-    QList<QByteArray> values;
-
-    int pos = 0;
-    const char *query = d->query.constData();
-    while (pos < d->query.size()) {
-        int valuedelim, end;
-        d->queryItem(pos, &valuedelim, &end);
-        if (key == QByteArray::fromRawData(query + pos, valuedelim - pos))
-            values += valuedelim < end ?
-                      QByteArray(query + valuedelim + 1, end - valuedelim - 1)
-                      : QByteArray();
-        pos = end + 1;
-    }
-
-    return values;
-}
-
-/*!
     Removes the first query string pair whose key is equal to \a key
     from the URL.
 
     \sa removeAllQueryItems()
 */
 void QUrl::removeQueryItem(const QString &key)
-{
-    removeEncodedQueryItem(toPercentEncoding(key, queryExcludeChars));
-}
-
-/*!
-    \since 4.4
-
-    Removes the first query string pair whose key is equal to \a key
-    from the URL.
-
-    Note: if the encoded \a key does not match the encoded version of
-    the query, this function will not work. That is, if the
-    encoded query of this URL is "search=Qt%20Rules", calling this
-    function with \a key = "%73earch" will do nothing.
-
-    \sa removeQueryItem(), removeAllQueryItems()
-*/
-void QUrl::removeEncodedQueryItem(const QByteArray &key)
 {
     if (!d) return;
 
@@ -3019,10 +2640,11 @@ void QUrl::removeEncodedQueryItem(const QByteArray &key)
 
     int pos = 0;
     const char *query = d->query.constData();
+    const QByteArray encodedKey = toPercentEncoding(key, queryExcludeChars);
     while (pos < d->query.size()) {
         int valuedelim, end;
         d->queryItem(pos, &valuedelim, &end);
-        if (key == QByteArray::fromRawData(query + pos, valuedelim - pos)) {
+        if (encodedKey == QByteArray::fromRawData(query + pos, valuedelim - pos)) {
             if (end < d->query.size())
                 ++end; // remove additional '%'
             d->query.remove(pos, end - pos);
@@ -3040,24 +2662,6 @@ void QUrl::removeEncodedQueryItem(const QByteArray &key)
 */
 void QUrl::removeAllQueryItems(const QString &key)
 {
-    removeAllEncodedQueryItems(toPercentEncoding(key, queryExcludeChars));
-}
-
-/*!
-    \since 4.4
-
-    Removes all the query string pairs whose key is equal to \a key
-    from the URL.
-
-    Note: if the encoded \a key does not match the encoded version of
-    the query, this function will not work. That is, if the
-    encoded query of this URL is "search=Qt%20Rules", calling this
-    function with \a key = "%73earch" will do nothing.
-
-   \sa removeQueryItem()
-*/
-void QUrl::removeAllEncodedQueryItems(const QByteArray &key)
-{
     if (!d) return;
 
     QMutexLocker lock(&d->mutex);
@@ -3066,10 +2670,11 @@ void QUrl::removeAllEncodedQueryItems(const QByteArray &key)
 
     int pos = 0;
     const char *query = d->query.constData();
+    const QByteArray encodedKey = toPercentEncoding(key, queryExcludeChars);
     while (pos < d->query.size()) {
         int valuedelim, end;
         d->queryItem(pos, &valuedelim, &end);
-        if (key == QByteArray::fromRawData(query + pos, valuedelim - pos)) {
+        if (encodedKey == QByteArray::fromRawData(query + pos, valuedelim - pos)) {
             if (end < d->query.size())
                 ++end; // remove additional '%'
             d->query.remove(pos, end - pos);
@@ -3078,19 +2683,6 @@ void QUrl::removeAllEncodedQueryItems(const QByteArray &key)
             pos = end + 1;
         }
     }
-}
-
-/*!
-    Returns the query string of the URL in percent encoded form.
-*/
-QByteArray QUrl::encodedQuery() const
-{
-    if (!d) return QByteArray();
-
-    QMutexLocker lock(&d->mutex);
-    if (!QURL_HASFLAG(d->stateFlags, QUrlPrivate::Parsed)) d->parse();
-
-    return d->query;
 }
 
 /*!
@@ -3146,60 +2738,6 @@ QString QUrlPrivate::fragmentImpl() const
         that->fragment = fromPercentEncodingHelper(encodedFragment);
     }
     return fragment;
-}
-
-/*!
-    \since 4.4
-
-    Sets the URL's fragment to the percent-encoded \a fragment. The fragment is the
-    last part of the URL, represented by a '#' followed by a string of
-    characters. It is typically used in HTTP for referring to a
-    certain link or point on a page:
-
-    \img qurl-fragment.png
-
-    The fragment is sometimes also referred to as the URL "reference".
-
-    Passing an argument of QByteArray() (a null QByteArray) will unset
-    the fragment.  Passing an argument of QByteArray("") (an empty but
-    not null QByteArray) will set the fragment to an empty string (as
-    if the original URL had a lone "#").
-
-    \sa setFragment(), encodedFragment()
-*/
-void QUrl::setEncodedFragment(const QByteArray &fragment)
-{
-    if (!d) d = new QUrlPrivate();
-
-    QMutexLocker lock(&d->mutex);
-    if (!QURL_HASFLAG(d->stateFlags, QUrlPrivate::Parsed)) d->parse();
-    detach(lock);
-    QURL_UNSETFLAG(d->stateFlags, QUrlPrivate::Validated | QUrlPrivate::Normalized);
-
-    d->encodedFragment = fragment;
-    d->hasFragment = !fragment.isNull();
-    d->fragment.clear();
-}
-
-/*!
-    \since 4.4
-
-    Returns the fragment of the URL if it is defined; otherwise an
-    empty string is returned. The returned value will have its
-    non-ASCII and other control characters percent-encoded, as in
-    toEncoded().
-
-    \sa setEncodedFragment(), toEncoded()
-*/
-QByteArray QUrl::encodedFragment() const
-{
-    if (!d) return QByteArray();
-
-    QMutexLocker lock(&d->mutex);
-    if (!QURL_HASFLAG(d->stateFlags, QUrlPrivate::Parsed)) d->parse();
-
-    d->ensureEncodedParts();
-    return d->encodedFragment;
 }
 
 /*!
@@ -3402,7 +2940,13 @@ QByteArray QUrl::toEncoded(FormattingOptions options) const
 QUrl QUrl::fromEncoded(const QByteArray &input, ParsingMode parsingMode)
 {
     QUrl tmp;
-    tmp.setEncodedUrl(input, parsingMode);
+    if (!tmp.d) tmp.d = new QUrlPrivate();
+
+    QMutexLocker lock(&tmp.d->mutex);
+    tmp.detach(lock);
+
+    tmp.d->clear();
+    tmp.d->setEncodedUrl(input, parsingMode);
     return tmp;
 }
 
@@ -3766,12 +3310,6 @@ bool QUrl::isParentOf(const QUrl &childUrl) const
 */
 
 /*!
-    \fn void QUrl::setQuery(const QString &txt)
-
-    Use setEncodedQuery() instead.
-*/
-
-/*!
     \fn void QUrl::setRef(const QString &txt)
 
     Use setFragment() instead.
@@ -3849,12 +3387,6 @@ bool QUrl::isParentOf(const QUrl &childUrl) const
     \fn QString QUrl::user() const
 
     Use userName() instead.
-*/
-
-/*!
-    \fn QString QUrl::query() const
-
-    Use encodedQuery() instead.
 */
 
 /*!
