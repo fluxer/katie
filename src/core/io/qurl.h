@@ -53,7 +53,8 @@ public:
         RemoveFragment = 0x80,
         // 0x100: private: normalized
 
-        StripTrailingSlash = 0x10000
+        StripTrailingSlash = 0x10000,
+        AddTrailingSlash = 0x20000
     };
     Q_DECLARE_FLAGS(FormattingOptions, FormattingOption)
 

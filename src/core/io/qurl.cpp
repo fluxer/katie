@@ -152,6 +152,7 @@
                         is removed.
     \value RemoveFragment
     \value StripTrailingSlash  The trailing slash is removed if one is present.
+    \value AddTrailingSlash  Add trailing slash is not present.
 
     Note that the case folding rules in \l{RFC 3491}{Nameprep}, which QUrl
     conforms to, require host names to always be converted to lower case,
@@ -1587,7 +1588,7 @@ QByteArray QUrlPrivate::toEncoded(QUrl::FormattingOptions options) const
         }
         if (!(options & QUrl::RemovePort) && port != -1) {
             url += ':';
-            url += QString::number(port).toAscii();
+            url += QByteArray::number(port);
         }
     }
 
@@ -1599,9 +1600,13 @@ QByteArray QUrlPrivate::toEncoded(QUrl::FormattingOptions options) const
         }
         url += encodedPath;
 
-        // check if we need to remove trailing slashes
-        while ((options & QUrl::StripTrailingSlash) && url.endsWith('/'))
-            url.chop(1);
+        // check if we need to remove trailing slashes or add one
+        if ((options & QUrl::StripTrailingSlash)) {
+            while (url.endsWith('/'))
+                url.chop(1);
+        } else if ((options & QUrl::AddTrailingSlash) && !url.endsWith('/')) {
+            url += '/';
+        }
     }
 
     if (!(options & QUrl::RemoveQuery) && hasQuery) {
@@ -2895,9 +2900,13 @@ QString QUrl::toString(FormattingOptions options) const
             && !d->authority(options).isEmpty() && !ourPath.isEmpty() && ourPath.at(0) != QLatin1Char('/'))
             url += QLatin1Char('/');
         url += ourPath;
-        // check if we need to remove trailing slashes
-        while ((options & StripTrailingSlash) && url.endsWith(QLatin1Char('/')))
-            url.chop(1);
+        // check if we need to remove trailing slashes or add one
+        if ((options & QUrl::StripTrailingSlash)) {
+            while (url.endsWith(QLatin1Char('/')))
+                url.chop(1);
+        } else if ((options & QUrl::AddTrailingSlash) && !url.endsWith(QLatin1Char('/'))) {
+            url += QLatin1Char('/');
+        }
     }
 
     if (!(options & QUrl::RemoveQuery) && d->hasQuery) {
