@@ -1550,7 +1550,7 @@ QByteArray QUrlPrivate::toEncoded(QUrl::FormattingOptions options) const
     }
     QString savedHost = host;  // pre-validation, may be invalid!
     QString auth = authority();
-    bool doFileScheme = scheme == QLatin1String("file") && encodedPath.startsWith('/');
+    bool doFileScheme = (scheme == QLatin1String("file"));
     if ((options & QUrl::RemoveAuthority) != QUrl::RemoveAuthority && (!auth.isNull() || doFileScheme || !savedHost.isEmpty())) {
         if (doFileScheme && !encodedPath.startsWith('/'))
             url += '/';
@@ -2885,7 +2885,7 @@ QString QUrl::toString(FormattingOptions options) const
     if (!(options & QUrl::RemoveScheme) && !d->scheme.isEmpty())
         url += d->scheme + QLatin1Char(':');
     if ((options & QUrl::RemoveAuthority) != QUrl::RemoveAuthority) {
-        bool doFileScheme = d->scheme == QLatin1String("file") && ourPath.startsWith(QLatin1Char('/'));
+        bool doFileScheme = (d->scheme == QLatin1String("file"));
         QString tmp = d->authority(options);
         if (!tmp.isNull() || doFileScheme) {
             if (doFileScheme && !ourPath.startsWith(QLatin1Char('/')))
@@ -3197,7 +3197,6 @@ QUrl QUrl::fromLocalFile(const QString &localFile)
     QUrl url;
     url.setScheme(QLatin1String("file"));
     url.setPath(localFile);
-
     return url;
 }
 
@@ -3242,9 +3241,7 @@ bool QUrl::isLocalFile() const
     QMutexLocker lock(&d->mutex);
     if (!QURL_HASFLAG(d->stateFlags, QUrlPrivate::Parsed)) d->parse();
 
-    if (d->scheme.compare(QLatin1String("file"), Qt::CaseInsensitive) != 0)
-        return false;   // not file
-    return true;
+    return (d->scheme.compare(QLatin1String("file"), Qt::CaseInsensitive) == 0);
 }
 
 /*!
