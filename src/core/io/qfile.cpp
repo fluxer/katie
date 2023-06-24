@@ -419,7 +419,7 @@ QByteArray QFile::encodeName(const QString &fileName)
 */
 QString QFile::decodeName(const QByteArray &localFileName)
 {
-    return QString::fromLocal8Bit(localFileName.constData());
+    return QString::fromLocal8Bit(localFileName.constData(), localFileName.size());
 }
 
 /*!
