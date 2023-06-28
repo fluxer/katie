@@ -189,10 +189,6 @@
     This signal is emitted after an error occurred. The \a socketError
     parameter describes the type of error that occurred.
 
-    QAbstractSocket::SocketError is not a registered metatype, so for queued
-    connections, you will have to register it with Q_DECLARE_METATYPE() and
-    qRegisterMetaType().
-
     \sa error(), errorString(), {Creating Custom Qt Types}
 */
 
@@ -201,10 +197,6 @@
 
     This signal is emitted whenever QAbstractSocket's state changes.
     The \a socketState parameter is the new state.
-
-    QAbstractSocket::SocketState is not a registered metatype, so for queued
-    connections, you will have to register it with Q_REGISTER_METATYPE() and
-    qRegisterMetaType().
 
     \sa state(), {Creating Custom Qt Types}
 */
@@ -365,6 +357,8 @@ QAbstractSocketPrivate::QAbstractSocketPrivate()
       state(QAbstractSocket::UnconnectedState),
       socketError(QAbstractSocket::UnknownSocketError)
 {
+    qRegisterMetaType<QAbstractSocket::SocketState>();
+    qRegisterMetaType<QAbstractSocket::SocketError>();
 }
 
 /*! \internal

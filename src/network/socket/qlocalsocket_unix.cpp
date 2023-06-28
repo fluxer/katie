@@ -49,6 +49,9 @@ QLocalSocketPrivate::QLocalSocketPrivate()
 
 void QLocalSocketPrivate::init()
 {
+    qRegisterMetaType<QLocalSocket::LocalSocketState>();
+    qRegisterMetaType<QLocalSocket::LocalSocketError>();
+
     Q_Q(QLocalSocket);
     // QIODevice signals
     q->connect(&unixSocket, SIGNAL(aboutToClose()), q, SIGNAL(aboutToClose()));

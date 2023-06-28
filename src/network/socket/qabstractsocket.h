@@ -24,13 +24,13 @@
 
 #include <QtCore/qiodevice.h>
 #include <QtCore/qobject.h>
+#include <QtCore/qmetatype.h>
+
 #ifndef QT_NO_DEBUG_STREAM
 #include <QtCore/qdebug.h>
 #endif
 
-
 QT_BEGIN_NAMESPACE
-
 
 class QHostAddress;
 class QAbstractSocketPrivate;
@@ -172,5 +172,7 @@ Q_NETWORK_EXPORT QDebug operator<<(QDebug, QAbstractSocket::SocketState);
 
 QT_END_NAMESPACE
 
+Q_DECLARE_METATYPE(QAbstractSocket::SocketError);
+Q_DECLARE_METATYPE(QAbstractSocket::SocketState);
 
 #endif // QABSTRACTSOCKET_H

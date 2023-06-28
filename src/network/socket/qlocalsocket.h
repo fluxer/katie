@@ -23,13 +23,12 @@
 #define QLOCALSOCKET_H
 
 #include <QtCore/qiodevice.h>
+#include <QtCore/qmetatype.h>
 #include <QtNetwork/qabstractsocket.h>
 
+#ifndef QT_NO_LOCALSOCKET
 
 QT_BEGIN_NAMESPACE
-
-
-#ifndef QT_NO_LOCALSOCKET
 
 class QLocalSocketPrivate;
 
@@ -118,9 +117,11 @@ Q_NETWORK_EXPORT QDebug operator<<(QDebug, QLocalSocket::LocalSocketError);
 Q_NETWORK_EXPORT QDebug operator<<(QDebug, QLocalSocket::LocalSocketState);
 #endif
 
-#endif // QT_NO_LOCALSOCKET
-
 QT_END_NAMESPACE
 
+Q_DECLARE_METATYPE(QLocalSocket::LocalSocketState);
+Q_DECLARE_METATYPE(QLocalSocket::LocalSocketError);
+
+#endif // QT_NO_LOCALSOCKET
 
 #endif // QLOCALSOCKET_H
