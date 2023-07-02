@@ -144,11 +144,11 @@ QList<QStatInfo> QStatInfo::dirInfos(const QByteArray &nativepath, const QString
                 case DT_FIFO:
                 case DT_SOCK:
                 case DT_LNK:
-                case DT_REG:
-                case DT_DIR: {
+                case DT_REG: {
                     result.append(QStatInfo(fulllocal, false));
                     break;
                 }
+                case DT_DIR:
                 case DT_UNKNOWN:
                 default: {
                     break;
