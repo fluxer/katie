@@ -40,10 +40,8 @@ QStringList QFileSystemWatcherPrivate::addPaths(const QStringList &paths)
 {
     QStringList p = paths;
     foreach (const QString &path, paths) {
-        QStatInfo fi(path, true);
+        const QStatInfo fi(path, true);
         if (fi.isDir() || path.endsWith(QLatin1Char('/'))) {
-            if (!path.endsWith(QLatin1Char('/')))
-                fi = QStatInfo(path + QLatin1Char('/'), true);
             directories.insert(path, fi);
         } else {
             files.insert(path, fi);
@@ -79,13 +77,13 @@ void QFileSystemWatcherPrivate::_q_timeout()
     QMutableHashIterator<QString, QStatInfo> fit(files);
     while (fit.hasNext()) {
         QHash<QString, QStatInfo>::iterator x = fit.next();
-        QString path = x.key();
-        QStatInfo fi(path);
+        const QString path = x.key();
+        const QStatInfo fi(path);
         if (x.value() != fi) {
             if (!fi.exists()) {
                 fit.remove();
             } else {
-                x.value() = fi;
+                files[path] = fi;
             }
             emit q->fileChanged(path);
         }
@@ -93,18 +91,13 @@ void QFileSystemWatcherPrivate::_q_timeout()
     QMutableHashIterator<QString, QStatInfo> dit(directories);
     while (dit.hasNext()) {
         QHash<QString, QStatInfo>::iterator x = dit.next();
-        QString path = x.key();
-        QStatInfo fi;
-        if (!path.endsWith(QLatin1Char('/'))) {
-            fi = QStatInfo(path + QLatin1Char('/'), true);
-        } else {
-            fi = QStatInfo(path, true);
-        }
+        const QString path = x.key();
+        const QStatInfo fi(path, true);
         if (!fi.dirEquals(x.value())) {
             if (!fi.exists()) {
                 dit.remove();
             } else {
-                x.value() = fi;
+                directories[path] = fi;
             }
             emit q->directoryChanged(path);
         }
