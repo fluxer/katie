@@ -154,7 +154,7 @@ QList<QStatInfo> QStatInfo::dirInfos(const QByteArray &nativepath, const QString
                 }
             }
 #else
-            const QByteArray fullnative = fulllocal.toLocal8Bit();
+            const QByteArray fullnative = QFile::encodeName(fulllocal);
             QT_STATBUF statbuf;
             if (QT_STAT(fullnative.constData(), &statbuf) == 0) {
                 result.append(QStatInfo(fulllocal, false));
