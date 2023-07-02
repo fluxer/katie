@@ -22,6 +22,7 @@
 #include "qcore_unix_p.h"
 #include "qelapsedtimer.h"
 #include "qbytearray.h"
+#include "qdir.h"
 #include "qfilesystemmetadata_p.h"
 #include "qdebug.h"
 
@@ -88,10 +89,10 @@ bool QStatInfo::operator==(const QStatInfo &other) const
 {
     if (m_mode != other.m_mode || m_uid != other.m_uid
         || m_gid != other.m_gid || m_mtime != other.m_mtime
-        || m_size != other.m_size) {
+        || m_size != other.m_size || m_entries != other.m_entries) {
         return false;
     }
-    return (m_entries == other.m_entries && m_path == other.m_path);
+    return (QDir::cleanPath(m_path) == QDir::cleanPath(other.m_path));
 }
 
 bool QStatInfo::isReadable() const
