@@ -34,6 +34,7 @@
 
 #include <QtCore/qiterator.h>
 #include <QtCore/qalgorithms.h>
+#include <QtCore/qhash.h>
 
 #include <vector>
 #include <unordered_map>
