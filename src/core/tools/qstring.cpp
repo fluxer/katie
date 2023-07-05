@@ -1591,7 +1591,7 @@ QString& QString::replace(QChar ch, const QString &after, Qt::CaseSensitivity cs
 
     int index = 0;
     while (1) {
-        uint indices[1024];
+        QSTACKARRAY(uint, indices, 1024);
         uint pos = 0;
         if (cs == Qt::CaseSensitive) {
             while (pos < 1023 && index < d->size) {
