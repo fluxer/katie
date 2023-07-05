@@ -33,7 +33,7 @@
 // We mean it.
 //
 
-#include "qvarlengtharray.h"
+#include "qstdcontainers_p.h"
 #include "qfont_p.h"
 #include "qpaintengine.h"
 #include "qtextdocument_p.h"
@@ -176,10 +176,10 @@ struct QGlyphLayout
     void grow(char *address, int totalGlyphs);
 };
 
-class QVarLengthGlyphLayoutArray : private QVarLengthArray<void *>, public QGlyphLayout
+class QVarLengthGlyphLayoutArray : private QStdVector<void *>, public QGlyphLayout
 {
 private:
-    typedef QVarLengthArray<void *> Array;
+    typedef QStdVector<void *> Array;
 public:
     QVarLengthGlyphLayoutArray(int totalGlyphs)
         : Array(QSPACEFORGLYPHS(totalGlyphs) / QT_POINTER_SIZE + 1)
@@ -258,7 +258,7 @@ struct Q_AUTOTEST_EXPORT QScriptItem
     QFixed height() const { return ascent + descent + 1; }
 };
 
-typedef QVarLengthArray<QScriptItem> QScriptItemArray;
+typedef QVector<QScriptItem> QScriptItemArray;
 
 struct Q_AUTOTEST_EXPORT QScriptLine
 {
@@ -299,7 +299,7 @@ inline void QScriptLine::operator+=(const QScriptLine &other)
     length += other.length;
 }
 
-typedef QVarLengthArray<QScriptLine> QScriptLineArray;
+typedef QStdVector<QScriptLine> QScriptLineArray;
 
 class QFontPrivate;
 class QTextFormatCollection;
@@ -441,8 +441,8 @@ public:
 
     struct SpecialData {
         QList<QTextLayout::FormatRange> addFormats;
-        QVarLengthArray<int> addFormatIndices;
-        QVarLengthArray<int> resolvedFormatIndices;
+        QStdVector<int> addFormatIndices;
+        QStdVector<int> resolvedFormatIndices;
     };
     SpecialData *specialData;
 

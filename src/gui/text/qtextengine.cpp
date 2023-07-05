@@ -1133,7 +1133,7 @@ void QTextEngine::resolveAdditionalFormats() const
     QTextFormatCollection *collection = this->formats();
 
     specialData->resolvedFormatIndices.clear();
-    QVarLengthArray<int> indices(layoutData->items.count());
+    QStdVector<int> indices(layoutData->items.count());
     for (int i = 0; i < layoutData->items.count(); ++i) {
         QTextCharFormat f = format(&layoutData->items.at(i));
         indices[i] = collection->indexForFormat(f);
