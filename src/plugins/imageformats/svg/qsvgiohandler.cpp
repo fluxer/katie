@@ -81,9 +81,12 @@ QVariant QSvgIOHandler::option(QImageIOHandler::ImageOption option) const
 {
     switch (option) {
         case QImageIOHandler::Size: {
+            const qint64 devicepos = device()->pos();
             if (!loadDevice()) {
+                device()->seek(devicepos);
                 return QVariant();
             }
+            device()->seek(devicepos);
             return m_defaultSize;
         }
         case QImageIOHandler::ScaledSize: {
