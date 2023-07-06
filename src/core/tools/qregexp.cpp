@@ -33,6 +33,7 @@
 #include "qstringmatcher.h"
 #include "qvector.h"
 #include "qscopedpointer.h"
+#include "qdebug.h"
 
 #include <limits.h>
 
@@ -4123,5 +4124,21 @@ QDataStream &operator>>(QDataStream &in, QRegExp &regExp)
     return in;
 }
 #endif // QT_NO_DATASTREAM
+
+#ifndef QT_NO_DEBUG_STREAM
+QDebug operator<<(QDebug dbg, const QRegExp &r)
+{
+    static const char *regExpSyntaxTbl[] = {
+        "RegExp",
+        "Wildcard",
+        "FixedString",
+        "RegExp2",
+        "WildcardUnix"
+    };
+
+    dbg.nospace() << "QRegExp(" << r.pattern() << ',' << r.caseSensitivity() << ',' << regExpSyntaxTbl[r.patternSyntax()] << ')';
+    return dbg.space();
+}
+#endif
 
 QT_END_NAMESPACE

@@ -32,6 +32,7 @@ QT_BEGIN_NAMESPACE
 
 struct QRegExpPrivate;
 class QStringList;
+class QDebug;
 
 class Q_CORE_EXPORT QRegExp
 {
@@ -101,8 +102,11 @@ Q_CORE_EXPORT QDataStream &operator<<(QDataStream &out, const QRegExp &regExp);
 Q_CORE_EXPORT QDataStream &operator>>(QDataStream &in, QRegExp &regExp);
 #endif
 
-QT_END_NAMESPACE
+#ifndef QT_NO_DEBUG_STREAM
+Q_CORE_EXPORT QDebug operator<<(QDebug, const QRegExp &);
+#endif
 
+QT_END_NAMESPACE
 
 #endif // QT_NO_REGEXP
 
