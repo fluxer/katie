@@ -21,8 +21,9 @@
 
 #include "qpalette.h"
 #include "qapplication.h"
-#include "qdatastream.h"
 #include "qvariant.h"
+#include "qdatastream.h"
+#include "qdebug.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -899,6 +900,48 @@ QDataStream &operator>>(QDataStream &s, QPalette &p)
     return s;
 }
 #endif //QT_NO_DATASTREAM
+
+#ifndef QT_NO_DEBUG_STREAM
+QDebug operator<<(QDebug dbg, const QPalette &p)
+{
+    static const char *paletteColorGroupTbl[] = {
+        "Active",
+        "Disabled",
+        "Inactive",
+    };
+    static const char *paletteColorRoleTbl[] = {
+        "WindowText",
+        "Button",
+        "Light",
+        "Midlight",
+        "Dark",
+        "Mid",
+        "Text",
+        "BrightText",
+        "ButtonText",
+        "Base",
+        "Window",
+        "Shadow",
+        "Highlight",
+        "HighlightedText",
+        "Link",
+        "LinkVisited",
+        "AlternateBase",
+        "NoRole",
+        "ToolTipBase",
+        "ToolTipText",
+    };
+
+    dbg.nospace() << "QPalette(\n";
+    for(int grp = 0; grp < QPalette::NColorGroups; ++grp) {
+        for(int role = 0; role < QPalette::NColorRoles; ++role) {
+            dbg.nospace() << " -> group=" << paletteColorGroupTbl[grp] << ", role=" << paletteColorRoleTbl[role] << ", brush=" << p.brush((QPalette::ColorGroup)grp, (QPalette::ColorRole)role) << ")\n";
+        }
+    }
+    dbg.nospace() << ')';
+    return dbg.space();
+}
+#endif
 
 /*!
     Returns true if this palette and \a p are copies of each other,

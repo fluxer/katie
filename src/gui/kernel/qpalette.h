@@ -26,12 +26,12 @@
 #include <QtGui/qcolor.h>
 #include <QtGui/qbrush.h>
 
-
 QT_BEGIN_NAMESPACE
 
 
 class QPalettePrivate;
 class QVariant;
+class QDebug;
 
 class Q_GUI_EXPORT QPalette
 {
@@ -190,6 +190,10 @@ inline void QPalette::setBrush(ColorRole acr, const QBrush &abrush)
 Q_GUI_EXPORT QDataStream &operator<<(QDataStream &ds, const QPalette &p);
 Q_GUI_EXPORT QDataStream &operator>>(QDataStream &ds, QPalette &p);
 #endif // QT_NO_DATASTREAM
+
+#ifndef QT_NO_DEBUG_STREAM
+Q_GUI_EXPORT QDebug operator<<(QDebug, const QPalette &);
+#endif
 
 QT_END_NAMESPACE
 
