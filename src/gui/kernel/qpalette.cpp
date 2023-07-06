@@ -871,9 +871,8 @@ QPalette QPalette::resolve(const QPalette &other) const
 
 QDataStream &operator<<(QDataStream &s, const QPalette &p)
 {
-    const int max = QPalette::ToolTipText + 1;
-    for (int grp = 0; grp < (int)QPalette::NColorGroups; grp++) {
-        for (int r = 0; r < max; r++)
+    for (int grp = 0; grp < QPalette::NColorGroups; grp++) {
+        for (int r = 0; r < QPalette::NColorRoles; r++)
             s << p.d->br[grp][r];
     }
     return s;
