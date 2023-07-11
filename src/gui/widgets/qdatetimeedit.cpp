@@ -2014,6 +2014,7 @@ QDateTimeEdit::Section QDateTimeEditPrivate::convertToPublic(QDateTimeParser::Se
     case YearSection: return QDateTimeEdit::YearSection;
     case Hour12Section:
     case Hour24Section: return QDateTimeEdit::HourSection;
+    case TimeZoneSection:
     case FirstSection:
     case NoSection:
     case LastSection: break;
@@ -2063,7 +2064,7 @@ void QDateTimeEdit::paintEvent(QPaintEvent *event)
 
     optCombo.init(this);
     optCombo.editable = true;
-	optCombo.frame = opt.frame;
+    optCombo.frame = opt.frame;
     optCombo.subControls = opt.subControls;
     optCombo.activeSubControls = opt.activeSubControls;
     optCombo.state = opt.state;
