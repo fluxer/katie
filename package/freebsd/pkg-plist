@@ -680,7 +680,6 @@ include/katie/QtGui/QWidget
 include/katie/QtGui/QWidgetAction
 include/katie/QtGui/QWidgetData
 include/katie/QtGui/QWidgetItem
-include/katie/QtGui/QWidgetItemV2
 include/katie/QtGui/QWidgetList
 include/katie/QtGui/QWidgetMapper
 include/katie/QtGui/QWidgetSet

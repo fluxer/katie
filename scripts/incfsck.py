@@ -260,7 +260,6 @@ incmap = {
         'QWheelEvent': 'qevent.h',
         'QWidgetData': 'qwidget.h',
         'QWidgetItem': 'qlayoutitem.h',
-        'QWidgetItemV2': 'qlayoutitem.h',
         'QWidgetList': 'qwindowdefs.h',
         'QWidgetMapper': 'qwindowdefs.h',
         'QWidgetSet': 'qwindowdefs.h',

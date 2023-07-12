@@ -164,7 +164,7 @@ QWidgetItem *QLayoutPrivate::createWidgetItem(const QLayout *layout, QWidget *wi
     if (widgetItemFactoryMethod)
         if (QWidgetItem *wi = (*widgetItemFactoryMethod)(layout, widget))
             return wi;
-    return new QWidgetItemV2(widget);
+    return new QWidgetItem(widget);
 }
 
 QSpacerItem *QLayoutPrivate::createSpacerItem(const QLayout *layout, int w, int h, QSizePolicy::Policy hPolicy, QSizePolicy::Policy vPolicy)

@@ -61,7 +61,6 @@ class QPaintEngine;
 class QPixmap;
 class QWidgetBackingStore;
 class QGraphicsProxyWidget;
-class QWidgetItemV2;
 class QStyle;
 
 class Q_AUTOTEST_EXPORT QWidgetBackingStoreTracker
@@ -499,7 +498,6 @@ public:
     QLayout *layout;
     QRegion *needsFlush;
     QPaintDevice *redirectDev;
-    QWidgetItemV2 *widgetItem;
     QPaintEngine *extraPaintEngine;
     mutable const QMetaObject *polished;
     // All widgets are added into the allWidgets set. Once

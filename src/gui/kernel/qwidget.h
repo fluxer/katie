@@ -579,7 +579,6 @@ private:
     friend class QETWidget;
     friend class QLayout;
     friend class QWidgetItem;
-    friend class QWidgetItemV2;
     friend class QX11PaintEngine;
     friend class QShortcutPrivate;
     friend class QShortcutMap;

@@ -170,7 +170,6 @@ QWidgetPrivate::QWidgetPrivate()
       , layout(0)
       , needsFlush(0)
       , redirectDev(0)
-      , widgetItem(0)
       , extraPaintEngine(0)
       , polished(0)
       , inheritedFontResolveMask(0)
@@ -213,9 +212,6 @@ QWidgetPrivate::QWidgetPrivate()
 
 QWidgetPrivate::~QWidgetPrivate()
 {
-
-    if (widgetItem)
-        widgetItem->wid = 0;
 
     if (extra)
         deleteExtra();
@@ -1286,8 +1282,7 @@ void QWidgetPrivate::deleteExtra()
             delete extra->topextra;
         }
         delete extra;
-        // extra->xic destroyed in QWidget::destroy()
-        extra = 0;
+        extra = nullptr;
     }
 }
 
@@ -8020,8 +8015,6 @@ QWidget *QWidgetPrivate::childAtRecursiveHelper(const QPoint &p, bool ignoreChil
 void QWidgetPrivate::updateGeometry_helper(bool forceUpdate)
 {
     Q_Q(QWidget);
-    if (widgetItem)
-        widgetItem->invalidateSizeCache();
     if (forceUpdate || !extra || extra->minw != extra->maxw || extra->minh != extra->maxh) {
         QWidget *parent;
         if (!q->isWindow() && !q->isHidden() && (parent = q->parentWidget())) {

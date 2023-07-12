@@ -607,7 +607,6 @@ classlist = [
     "QWidgetAction",
     "QWidgetData",
     "QWidgetItem",
-    "QWidgetItemV2",
     "QWidgetList",
     "QWidgetMapper",
     "QWidgetSet",

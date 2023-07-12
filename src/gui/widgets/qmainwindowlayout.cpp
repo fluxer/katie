@@ -337,7 +337,7 @@ void QMainWindowLayoutState::setCentralWidget(QWidget *widget)
     deleteCentralWidgetItem();
 
     if (widget != 0)
-        item = new QWidgetItemV2(widget);
+        item = new QWidgetItem(widget);
 
 #ifndef QT_NO_DOCKWIDGET
     dockAreaLayout.centralWidgetItem = item;
@@ -1562,7 +1562,7 @@ void QMainWindowLayout::setStatusBar(QStatusBar *sb)
     if (sb)
         addChildWidget(sb);
     delete statusbar;
-    statusbar = sb ? new QWidgetItemV2(sb) : 0;
+    statusbar = sb ? new QWidgetItem(sb) : 0;
     invalidate();
 }
 #endif // QT_NO_STATUSBAR

@@ -548,7 +548,6 @@ static const struct ClassTblData {
     { QLatin1String("QWidget"), QLatin1String("QtGui/qwidget.h") },
     { QLatin1String("QWidgetAction"), QLatin1String("QtGui/qwidgetaction.h") },
     { QLatin1String("QWidgetItem"), QLatin1String("QtGui/qlayoutitem.h") },
-    { QLatin1String("QWidgetItemV2"), QLatin1String("QtGui/qlayoutitem.h") },
     { QLatin1String("QWindowStateChangeEvent"), QLatin1String("QtGui/qevent.h") },
     { QLatin1String("QWindowsStyle"), QLatin1String("QtGui/qwindowsstyle.h") },
     { QLatin1String("QWizard"), QLatin1String("QtGui/qwizard.h") },
