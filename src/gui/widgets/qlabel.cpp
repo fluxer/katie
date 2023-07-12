@@ -49,6 +49,7 @@ QLabelPrivate::QLabelPrivate()
     textDirty(false),
     isRichText(false),
     isTextLabel(false),
+    hasShortcut(false),
     textformat(Qt::AutoText),
     control(nullptr),
     textInteractionFlags(Qt::LinksAccessibleByMouse),
