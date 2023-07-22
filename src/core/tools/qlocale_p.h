@@ -141,7 +141,7 @@ public:
     bool validateChars(const QString &str, NumberMode numMode, QByteArray *buff, int decDigits = -1) const;
 
     QString dateTimeToString(const QString &format, const QDate *date, const QTime *time,
-                             const QLocale *q) const;
+                             const QLocale *q, const bool isLocalTime) const;
 
     const QLocale::Language m_language;
     const QLocale::Script m_script;

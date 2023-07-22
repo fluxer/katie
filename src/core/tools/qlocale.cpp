@@ -903,7 +903,7 @@ QString QLocale::toString(qulonglong i) const
 
 QString QLocale::toString(const QDate &date, const QString &format) const
 {
-    return d()->dateTimeToString(format, &date, 0, this);
+    return d()->dateTimeToString(format, &date, 0, this, false);
 }
 
 /*!
@@ -943,7 +943,7 @@ static bool timeFormatContainsAP(const QString &format)
 */
 QString QLocale::toString(const QTime &time, const QString &format) const
 {
-    return d()->dateTimeToString(format, 0, &time, this);
+    return d()->dateTimeToString(format, 0, &time, this, false);
 }
 
 /*!
@@ -958,7 +958,7 @@ QString QLocale::toString(const QDateTime &dateTime, const QString &format) cons
 {
     const QDate dt = dateTime.date();
     const QTime tm = dateTime.time();
-    return d()->dateTimeToString(format, &dt, &tm, this);
+    return d()->dateTimeToString(format, &dt, &tm, this, dateTime.timeSpec() == Qt::LocalTime);
 }
 
 /*!
@@ -1634,7 +1634,7 @@ QString QLocale::pmText() const
 
 
 QString QLocalePrivate::dateTimeToString(const QString &format, const QDate *date, const QTime *time,
-                                         const QLocale *q) const
+                                         const QLocale *q, const bool isLocalTime) const
 {
     Q_ASSERT(date || time);
     if ((date && !date->isValid()) || (time && !time->isValid()))
@@ -1835,7 +1835,11 @@ QString QLocalePrivate::dateTimeToString(const QString &format, const QDate *dat
             case 'Z':
                 used = true;
                 repeat = 1;
-                result.append(timeZone());
+                if (isLocalTime) {
+                    result.append(timeZone());
+                } else {
+                    result.append(QLatin1String("GMT"));
+                }
                 break;
             default:
                 break;
