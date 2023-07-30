@@ -3196,7 +3196,15 @@ QUrl QUrl::fromLocalFile(const QString &localFile)
 {
     QUrl url;
     url.setScheme(QLatin1String("file"));
-    url.setPath(localFile);
+    // magic for authority path-abempty
+    if (localFile.startsWith(QLatin1String("//"))) {
+        int indexOfPath = localFile.indexOf(QLatin1Char('/'), 2);
+        url.setHost(localFile.mid(2, indexOfPath - 2));
+        if (indexOfPath > 2)
+            url.setPath(localFile.right(localFile.length() - indexOfPath));
+    } else {
+        url.setPath(localFile);
+    }
     return url;
 }
 
@@ -3204,6 +3212,10 @@ QUrl QUrl::fromLocalFile(const QString &localFile)
     Returns the path of this URL formatted as a local file path. The path
     returned will use forward slashes, even if it was originally created
     from one with backslashes.
+
+    If this URL contains a non-empty hostname, it will be encoded in the
+    returned value in the form found on SMB networks (for example,
+    "//servername/path/to/file.txt").
 
     If this is a relative URL, in Qt 4.x this function returns the path to
     maintain backward compatability. This will change from 5.0 onwards. Then
@@ -3220,7 +3232,20 @@ QString QUrl::toLocalFile() const
     if (!isLocalFile() && !scheme().isEmpty())
         return QString();
 
-    return path();
+    QString tmp;
+    QString ourPath = path();
+
+    QMutexLocker lock(&d->mutex); // for d->host
+
+    // magic for authority path-abempty
+    if (!d->host.isEmpty()) {
+        tmp = QLatin1String("//") + d->host + (ourPath.length() > 0 && ourPath.at(0) != QLatin1Char('/')
+                                               ? QLatin1Char('/') + ourPath :  ourPath);
+    } else {
+        tmp = ourPath;
+    }
+
+    return tmp;
 }
 
 /*!
