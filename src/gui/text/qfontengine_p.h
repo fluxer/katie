@@ -33,8 +33,8 @@
 // We mean it.
 //
 
-#include "QtCore/qatomic.h"
-#include <QtCore/qvarlengtharray.h>
+#include "qatomic.h"
+#include "qstdcontainers_p.h"
 #include "qtextengine_p.h"
 #include "qfont_p.h"
 
@@ -112,7 +112,7 @@ public:
                                  QPainterPath *path) = 0;
 
     void getGlyphPositions(const QGlyphLayout &glyphs, const QPointF &point,
-                           QVarLengthArray<glyph_t> &glyphs_out, QVarLengthArray<QFixedPoint> &positions);
+                           QStdVector<glyph_t> &glyphs_out, QStdVector<QFixedPoint> &positions);
 
     virtual void addOutlineToPath(qreal, qreal, const QGlyphLayout &, QPainterPath *);
 

@@ -25,7 +25,6 @@
 #include "qtextengine_p.h"
 #include "qabstracttextdocumentlayout.h"
 #include "qtextlayout.h"
-#include "qvarlengtharray.h"
 #include "qfont.h"
 #include "qfontengine_p.h"
 #include "qunicodetables_p.h"
@@ -291,7 +290,7 @@ void QTextEngine::itemize() const
     if (!length)
         return;
 
-    QVarLengthArray<QScriptAnalysis> scriptAnalysis(length);
+    QStdVector<QScriptAnalysis> scriptAnalysis(length);
     QScriptAnalysis *analysis = scriptAnalysis.data();
 
     const ushort *uc = reinterpret_cast<const ushort *>(layoutData->string.unicode());
@@ -595,7 +594,7 @@ void QTextEngine::justify(const QScriptLine &line)
     int firstItem = findItem(line.from);
     int nItems = findItem(line.from + line_length - 1) - firstItem + 1;
 
-    QVarLengthArray<QJustificationPoint> justificationPoints;
+    QStdVector<QJustificationPoint> justificationPoints;
     int nPoints = 0;
     // qDebug("justifying from %d len %d, firstItem=%d, nItems=%d (%s)", line.from, line_length, firstItem, nItems, layoutData->string.mid(line.from, line_length).toUtf8().constData());
 

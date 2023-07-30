@@ -35,12 +35,12 @@
 #include "qapplication.h"
 #include "qstyle.h"
 #include "qthread.h"
-#include "qvarlengtharray.h"
 #include "qpaintengine_p.h"
 #include "qpainterpath_p.h"
 #include "qwidget_p.h"
 #include "qpaintengine_raster_p.h"
 #include "qstylehelper_p.h"
+#include "qstdcontainers_p.h"
 #include "qguicommon_p.h"
 
 QT_BEGIN_NAMESPACE
@@ -5901,7 +5901,7 @@ void qt_format_text(const QFont &fnt, const QRectF &_r,
 
     uint maxUnderlines = 0;
     int numUnderlines = 0;
-    QVarLengthArray<int> underlinePositions(1);
+    QStdVector<int> underlinePositions(1);
 
     QFontMetricsF fm(fnt);
     QString text = str;

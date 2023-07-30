@@ -2067,7 +2067,7 @@ bool QObject::connect(const QObject *sender, const QMetaMethod &signal,
         return false;
     }
 
-    QVarLengthArray<char> signalSignature;
+    QStdVector<char> signalSignature;
     QObjectPrivate::signalSignature(signal, &signalSignature);
 
     int signal_index;
@@ -2319,7 +2319,7 @@ bool QObject::disconnect(const QObject *sender, const QMetaMethod &signal,
         }
     }
 
-    QVarLengthArray<char> signalSignature;
+    QStdVector<char> signalSignature;
     if (signal.mobj)
         QObjectPrivate::signalSignature(signal, &signalSignature);
 

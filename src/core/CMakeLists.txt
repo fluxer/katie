@@ -9,7 +9,6 @@ set(EXTRA_CORE_LIBS
 )
 
 set(CORE_PUBLIC_HEADERS
-    QVarLengthArray
     QList
     QProcess
     QBuffer
@@ -214,7 +213,6 @@ set(CORE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qtextboundaryfinder.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qtimeline.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qelapsedtimer.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/tools/qvarlengtharray.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qvector.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qiterator.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qpair.h

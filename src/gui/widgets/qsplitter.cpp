@@ -32,10 +32,10 @@
 #include "qstyle.h"
 #include "qstyleoption.h"
 #include "qtextstream.h"
-#include "qvarlengtharray.h"
 #include "qvector.h"
 #include "qlayoutengine_p.h"
 #include "qsplitter_p.h"
+#include "qstdcontainers_p.h"
 #include "qtimer.h"
 #include "qdebug.h"
 
@@ -1304,8 +1304,8 @@ void QSplitter::moveSplitter(int pos, int index)
     qDebug() << "QSplitter::moveSplitter" << debugp << index << "adjusted" << pos << "oldP" << oldP;
 #endif
 
-    QVarLengthArray<int> poss(d->list.count());
-    QVarLengthArray<int> ws(d->list.count());
+    QStdVector<int> poss(d->list.count());
+    QStdVector<int> ws(d->list.count());
     bool upLeft;
 
     d->doMove(false, pos, index, +1, (d->collapsible(s) && (pos > max)), poss.data(), ws.data());

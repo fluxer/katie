@@ -21,7 +21,6 @@
 
 #include <QtTest>
 #include <QtDBus>
-#include <QtCore/QVarLengthArray>
 #include <QtCore/QThread>
 #include <QtCore/QObject>
 #include <QtCore/QSemaphore>
@@ -176,9 +175,9 @@ Thread::Thread(bool automatic)
 
 void Thread::run()
 {
-    QVarLengthArray<char> name;
+    QByteArray name;
     name.append(QTest::currentTestFunction(), qstrlen(QTest::currentTestFunction()));
-    name.append("_thread", sizeof "_thread");
+    name.append("_thread", sizeof("_thread"));
     QMetaObject::invokeMethod(tst_QDBusThreading::self(), name.constData(), Qt::DirectConnection);
 }
 

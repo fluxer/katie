@@ -33,11 +33,11 @@
 #include "qrect.h"
 #include "qpalette.h"
 #include "qdebug.h"
-#include "qvarlengtharray.h"
 #include "qstyle.h"
 #include "qbasictimer.h"
 #include "qfontmetrics.h"
 #include "qx11info_x11.h"
+#include "qstdcontainers_p.h"
 
 #include <limits.h>
 
@@ -935,7 +935,7 @@ void QTextDocumentLayoutPrivate::drawFrame(const QPointF &offset, QPainter *pain
         const int columns = table->columns();
         QTextTableData *td = static_cast<QTextTableData *>(data(table));
 
-        QVarLengthArray<int> selectedTableCells(context.selections.size() * 4);
+        QStdVector<int> selectedTableCells(context.selections.size() * 4);
         for (int i = 0; i < context.selections.size(); ++i) {
             const QAbstractTextDocumentLayout::Selection &s = context.selections.at(i);
             int row_start = -1, col_start = -1, num_rows = -1, num_cols = -1;
@@ -1702,7 +1702,7 @@ recalc_minmax_widths:
 
     // for variable columns distribute the remaining space
     if (variableCols > 0 && remainingWidth > 0) {
-        QVarLengthArray<int> columnsWithProperMaxSize;
+        QStdVector<int> columnsWithProperMaxSize;
         for (int i = 0; i < columns; ++i)
             if (columnWidthConstraints.at(i).type() == QTextLength::VariableLength
                 && td->maxWidths.at(i) != QFIXED_MAX)
@@ -1771,7 +1771,7 @@ recalc_minmax_widths:
     if (pageHeight <= 0)
         pageHeight = QFIXED_MAX;
 
-    QVarLengthArray<QFixed> heightToDistribute(columns);
+    QStdVector<QFixed> heightToDistribute(columns);
 
     td->headerHeight = 0;
     const int headerRowCount = qMin(table->format().headerRowCount(), rows - 1);

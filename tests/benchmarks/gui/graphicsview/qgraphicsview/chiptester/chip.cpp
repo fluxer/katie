@@ -21,7 +21,7 @@
 
 #include "chip.h"
 
-#include "QtCore/qvarlengtharray.h"
+#include <QVector>
 #include <QtGui>
 
 Chip::Chip(const QColor &color, int x, int y)
@@ -102,7 +102,7 @@ void Chip::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
     }
 
     // Draw lines
-    QVarLengthArray<QLineF> lines;
+    QVector<QLineF> lines;
     if (option->levelOfDetail >= 0.5) {
         for (int i = 0; i <= 10; i += (option->levelOfDetail > 0.5 ? 1 : 2)) {
             lines.append(QLineF(18 + 7 * i, 13, 18 + 7 * i, 5));

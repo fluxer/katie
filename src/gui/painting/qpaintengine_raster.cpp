@@ -1980,7 +1980,7 @@ static void qt_merge_clip(const QClipData *c1, const QClipData *c2, QClipData *r
 {
     Q_ASSERT(c1->clipSpanHeight == c2->clipSpanHeight && c1->clipSpanHeight == result->clipSpanHeight);
 
-    QVarLengthArray<short> buffer;
+    QStdVector<short> buffer;
 
     QClipData::ClipLine *c1ClipLines = const_cast<QClipData *>(c1)->clipLines();
     QClipData::ClipLine *c2ClipLines = const_cast<QClipData *>(c2)->clipLines();

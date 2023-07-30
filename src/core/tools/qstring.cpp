@@ -28,12 +28,12 @@
 #include "qlocale_p.h"
 #include "qlocale_tools_p.h"
 #include "qstringmatcher.h"
-#include "qvarlengtharray.h"
 #include "qhash.h"
 #include "qdebug.h"
 #include "qendian.h"
 #include "qmutex.h"
 #include "qbitarray.h"
+#include "qstdcontainers_p.h"
 #include "qcorecommon_p.h"
 
 #ifndef QT_NO_TEXTCODEC
@@ -1666,11 +1666,11 @@ QString &QString::replace(const QLatin1String &before,
                           Qt::CaseSensitivity cs)
 {
     int alen = qstrlen(after.latin1());
-    QVarLengthArray<ushort> a(alen);
+    QStdVector<ushort> a(alen);
     for (int i = 0; i < alen; ++i)
         a[i] = (uchar)after.latin1()[i];
     int blen = qstrlen(before.latin1());
-    QVarLengthArray<ushort> b(blen);
+    QStdVector<ushort> b(blen);
     for (int i = 0; i < blen; ++i)
         b[i] = (uchar)before.latin1()[i];
     return replace(reinterpret_cast<const QChar*>(b.constData()), blen, reinterpret_cast<const QChar*>(a.constData()), alen, cs);
@@ -1693,7 +1693,7 @@ QString &QString::replace(const QLatin1String &before,
                           Qt::CaseSensitivity cs)
 {
     int blen = qstrlen(before.latin1());
-    QVarLengthArray<ushort> b(blen);
+    QStdVector<ushort> b(blen);
     for (int i = 0; i < blen; ++i)
         b[i] = (uchar)before.latin1()[i];
     return replace((const QChar *)b.data(), blen, after.constData(), after.d->size, cs);
@@ -1716,7 +1716,7 @@ QString &QString::replace(const QString &before,
                           Qt::CaseSensitivity cs)
 {
     int alen = qstrlen(after.latin1());
-    QVarLengthArray<ushort> a(alen);
+    QStdVector<ushort> a(alen);
     for (int i = 0; i < alen; ++i)
         a[i] = (uchar)after.latin1()[i];
     return replace(before.constData(), before.d->size, (const QChar *)a.data(), alen, cs);
@@ -1737,7 +1737,7 @@ QString &QString::replace(const QString &before,
 QString &QString::replace(QChar c, const QLatin1String &after, Qt::CaseSensitivity cs)
 {
     int alen = qstrlen(after.latin1());
-    QVarLengthArray<ushort> a(alen);
+    QStdVector<ushort> a(alen);
     for (int i = 0; i < alen; ++i)
         a[i] = (uchar)after.latin1()[i];
     return replace(&c, 1, (const QChar *)a.data(), alen, cs);
@@ -2324,7 +2324,7 @@ int QString::lastIndexOf(const QLatin1String &str, int from, Qt::CaseSensitivity
     if (from > delta)
         from = delta;
 
-    QVarLengthArray<ushort> s(sl);
+    QStdVector<ushort> s(sl);
     for (int i = 0; i < sl; ++i)
         s[i] = str.latin1()[i];
 
@@ -3144,7 +3144,7 @@ static QByteArray toLatin1_helper(const QChar *data, int length)
     if (!length) {
         return QByteArray();
     }
-    QVarLengthArray<char> result(length);
+    QStdVector<char> result(length);
     for (int i = 0; i < length; i++) {
         const ushort ucs = data[i].unicode();
         result[i] = (ucs > 0xff) ? '?' : char(ucs);
@@ -3501,7 +3501,7 @@ QString QString::simplified() const
     if (d->size == 0)
         return *this;
 
-    QVarLengthArray<QChar> result(d->size);
+    QStdVector<QChar> result(d->size);
     const QChar *from = reinterpret_cast<const QChar*>(d->data);
     const QChar *fromend = from + d->size;
     int outc = 0;
@@ -4295,7 +4295,7 @@ QString QString::toLower() const
 
     UErrorCode error = U_ZERO_ERROR;
     const int maxchars = d->size + 1; // ICU will write zero-terminator
-    QVarLengthArray<UChar> result(maxchars);
+    QStdVector<UChar> result(maxchars);
     const int lowerresult = u_strToLower(result.data(), maxchars,
         reinterpret_cast<const UChar*>(d->data), d->size, "C", &error);
     if (Q_UNLIKELY(lowerresult > maxchars || U_FAILURE(error))) {
@@ -4315,7 +4315,7 @@ QString QString::toCaseFolded() const
     }
     UErrorCode error = U_ZERO_ERROR;
     const int maxchars = d->size + 1; // ICU will write zero-terminator
-    QVarLengthArray<UChar> result(maxchars);
+    QStdVector<UChar> result(maxchars);
     const int foldresult = u_strFoldCase(result.data(), maxchars,
         reinterpret_cast<const UChar*>(d->data), d->size, U_FOLD_CASE_DEFAULT, &error);
     if (Q_UNLIKELY(foldresult > maxchars || U_FAILURE(error))) {
@@ -4342,7 +4342,7 @@ QString QString::toUpper() const
     }
     UErrorCode error = U_ZERO_ERROR;
     const int maxchars = d->size + 1; // ICU will write zero-terminator
-    QVarLengthArray<UChar> result(maxchars);
+    QStdVector<UChar> result(maxchars);
     const int upperresult = u_strToUpper(result.data(), maxchars,
         reinterpret_cast<const UChar*>(d->data), d->size, "C", &error);
     if (Q_UNLIKELY(upperresult > maxchars || U_FAILURE(error))) {
@@ -7653,7 +7653,7 @@ int QStringRef::lastIndexOf(QLatin1String str, int from, Qt::CaseSensitivity cs)
     if (from > delta)
         from = delta;
 
-    QVarLengthArray<ushort> s(sl);
+    QStdVector<ushort> s(sl);
     for (int i = 0; i < sl; ++i)
         s[i] = str.latin1()[i];
 
@@ -7987,7 +7987,7 @@ static inline int qt_find_latin1_string(const QChar *haystack, int size,
 {
     const char *latin1 = needle.latin1();
     int len = qstrlen(latin1);
-    QVarLengthArray<ushort> s(len);
+    QStdVector<ushort> s(len);
     for (int i = 0; i < len; ++i)
         s[i] = latin1[i];
 

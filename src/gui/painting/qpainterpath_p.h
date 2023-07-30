@@ -33,10 +33,9 @@
 // We mean it.
 //
 
-#include "QtGui/qpainterpath.h"
-#include "QtCore/qlist.h"
-#include "QtCore/qvarlengtharray.h"
-
+#include "qpainterpath.h"
+#include "qlist.h"
+#include "qstdcontainers_p.h"
 #include "qvectorpath_p.h"
 #include "qstroker_p.h"
 
@@ -100,8 +99,8 @@ public:
             }
 
         }
-        QVarLengthArray<QPainterPath::ElementType> elements;
-        QVarLengthArray<qreal> points;
+        QStdVector<QPainterPath::ElementType> elements;
+        QStdVector<qreal> points;
         uint flags;
     };
 

@@ -148,7 +148,6 @@ include/katie/QtCore/QTimerEvent
 include/katie/QtCore/QTranslator
 include/katie/QtCore/QTypeInfo
 include/katie/QtCore/QUrl
-include/katie/QtCore/QVarLengthArray
 include/katie/QtCore/QVariant
 include/katie/QtCore/QVariantHash
 include/katie/QtCore/QVariantList
@@ -258,7 +257,6 @@ include/katie/QtCore/qtimer.h
 include/katie/QtCore/qtranslator.h
 include/katie/QtCore/qurl.h
 include/katie/QtCore/qvariant.h
-include/katie/QtCore/qvarlengtharray.h
 include/katie/QtCore/qvector.h
 include/katie/QtCore/qwaitcondition.h
 include/katie/QtDBus/QDBusAbstractAdaptor

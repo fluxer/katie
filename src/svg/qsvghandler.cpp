@@ -38,8 +38,8 @@
 #include "qfile.h"
 #include "qdebug.h"
 #include "qnumeric.h"
-#include "qvarlengtharray.h"
 #include "qmath.h"
+#include "qstdcontainers_p.h"
 #include "qcorecommon_p.h"
 
 #include <float.h>
@@ -573,7 +573,7 @@ static QVector<qreal> parseNumbersList(const QChar *&str)
     return points;
 }
 
-static inline void parseNumbersArray(const QChar *&str, QVarLengthArray<qreal> &points)
+static inline void parseNumbersArray(const QChar *&str, QStdVector<qreal> &points)
 {
     while (str->isSpace())
         ++str;
@@ -957,7 +957,7 @@ static QMatrix parseTransformationMatrix(const QStringRef &value)
         if (*str != QLatin1Char('('))
             goto error;
         ++str;
-        QVarLengthArray<qreal> points;
+        QStdVector<qreal> points;
         parseNumbersArray(str, points);
         if (*str != QLatin1Char(')'))
             goto error;
@@ -1387,7 +1387,7 @@ static bool parsePathDataFast(const QStringRef &dataStr, QPainterPath &path)
         ++str;
         QChar endc = *end;
         *const_cast<QChar *>(end) = 0; // parseNumbersArray requires 0-termination that QStringRef cannot guarantee
-        QVarLengthArray<qreal> arg;
+        QStdVector<qreal> arg;
         parseNumbersArray(str, arg);
         *const_cast<QChar *>(end) = endc;
         if (pathElem == QLatin1Char('z') || pathElem == QLatin1Char('Z'))

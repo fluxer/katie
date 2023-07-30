@@ -24,12 +24,12 @@
 #include "qpolygon.h"
 #include "qdatastream.h"
 #include "qvariant.h"
-#include "qvarlengtharray.h"
 #include "qdebug.h"
 #include "qimage.h"
 #include "qbitmap.h"
 #include "qscopedpointer.h"
 #include "qt_x11_p.h"
+#include "qstdcontainers_p.h"
 #include "qcorecommon_p.h"
 
 #include <stdlib.h>
@@ -3260,7 +3260,7 @@ static void PtsToRegion(int numFullPtBlocks, int iCurPtBlock,
     int lastRow = 0;
     int extendTo = 0;
     bool needsExtend = false;
-    QVarLengthArray<QRegionSpan> row;
+    QStdVector<QRegionSpan> row;
     int rowSize = 0;
 
     reg->extents.setLeft(INT_MAX);

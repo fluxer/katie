@@ -89,7 +89,7 @@ int QVectorData::grow(int sizeofTypedData, int size, int sizeofT, bool excessive
     stores its items in adjacent memory locations and provides fast
     index-based access.
 
-    QList\<T\> and QVarLengthArray\<T\> provide similar functionality.
+    QList\<T\> provides similar functionality.
     Here's an overview:
 
     \list
@@ -102,8 +102,6 @@ int QVectorData::grow(int sizeofTypedData, int size, int sizeofT, bool excessive
        if your items are larger than a pointer and you want to avoid
        the overhead of allocating them on the heap individually at
        insertion time, then use QVector.
-    \i If you want a low-level variable-size array, QVarLengthArray
-       may be sufficient.
     \endlist
 
     Here's an example of a QVector that stores integers and a QVector
@@ -196,10 +194,6 @@ int QVectorData::grow(int sizeofTypedData, int size, int sizeofT, bool excessive
     \l{STL-style iterators} (QVector::const_iterator and
     QVector::iterator). In practice, these are rarely used, because
     you can use indexes into the QVector.
-
-    In addition to QVector, Qt also provides QVarLengthArray, a very
-    low-level class with little functionality that is optimized for
-    speed.
 
     QVector does \e not support inserting, prepending, appending or replacing
     with references to its own values. Doing so will cause your application to

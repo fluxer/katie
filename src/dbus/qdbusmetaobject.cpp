@@ -20,20 +20,17 @@
 ****************************************************************************/
 
 #include "qdbusmetaobject_p.h"
-
-#include <QtCore/qbytearray.h>
-#include <QtCore/qhash.h>
-#include <QtCore/qstring.h>
-#include <QtCore/qvarlengtharray.h>
-
+#include "qbytearray.h"
+#include "qhash.h"
+#include "qstring.h"
 #include "qdbusutil_p.h"
 #include "qdbuserror.h"
 #include "qdbusmetatype.h"
 #include "qdbusargument.h"
 #include "qdbusintrospection_p.h"
 #include "qdbusabstractinterface_p.h"
-
 #include "qmetaobject_p.h"
+#include "qstdcontainers_p.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -56,8 +53,8 @@ private:
         QByteArray name;
         QByteArray inputSignature;
         QByteArray outputSignature;
-        QVarLengthArray<int> inputTypes;
-        QVarLengthArray<int> outputTypes;
+        QStdVector<int> inputTypes;
+        QStdVector<int> outputTypes;
         int flags;
     };
     
@@ -355,7 +352,7 @@ void QDBusMetaObjectGenerator::write(QDBusMetaObject *obj)
     foreach (const Method &mm, methods)
         data_size += 2 + mm.inputTypes.count() + mm.outputTypes.count();
 
-    QVarLengthArray<int> idata(data_size + 1);
+    QStdVector<int> idata(data_size + 1);
 
     QDBusMetaObjectPrivate *header = reinterpret_cast<QDBusMetaObjectPrivate *>(idata.data());
     header->revision = qmetaobjectrevision;

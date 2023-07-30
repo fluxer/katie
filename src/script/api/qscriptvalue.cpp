@@ -21,11 +21,13 @@
 
 #include "Platform.h"
 #include "qscriptvalue.h"
-
 #include "qscriptvalue_p.h"
 #include "qscriptengine.h"
 #include "qscriptengine_p.h"
 #include "qscriptstring_p.h"
+#include "qvariant.h"
+#include "qnumeric.h"
+#include "qstdcontainers_p.h"
 
 #include "JSGlobalObject.h"
 #include "JSImmediate.h"
@@ -35,10 +37,6 @@
 #include "Identifier.h"
 #include "Operations.h"
 #include "Arguments.h"
-
-#include <QtCore/qvariant.h>
-#include <QtCore/qvarlengtharray.h>
-#include <QtCore/qnumeric.h>
 
 /*!
   \since 4.3
@@ -1532,7 +1530,7 @@ QScriptValue QScriptValue::call(const QScriptValue &thisObject,
     if (!jscThisObject || !jscThisObject.isObject())
         jscThisObject = d->engine->globalObject();
 
-    QVarLengthArray<JSC::JSValue> argsVector(args.size());
+    QStdVector<JSC::JSValue> argsVector(args.size());
     for (int i = 0; i < args.size(); ++i) {
         const QScriptValue &arg = args.at(i);
         if (!arg.isValid()) {
@@ -1673,7 +1671,7 @@ QScriptValue QScriptValue::construct(const QScriptValueList &args)
 
     JSC::ExecState *exec = d->engine->currentFrame;
 
-    QVarLengthArray<JSC::JSValue> argsVector(args.size());
+    QStdVector<JSC::JSValue> argsVector(args.size());
     for (int i = 0; i < args.size(); ++i) {
         QScriptValue arg = args.at(i);
         if (Q_UNLIKELY(QScriptValuePrivate::getEngine(arg) != d->engine && QScriptValuePrivate::getEngine(arg))) {

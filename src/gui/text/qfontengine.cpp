@@ -25,7 +25,6 @@
 #include "qbitmap.h"
 #include "qpainter.h"
 #include "qpainterpath.h"
-#include "qvarlengtharray.h"
 #include "qmath.h"
 #include "qendian.h"
 #include "qdrawhelper_p.h"
@@ -89,7 +88,7 @@ QFixed QFontEngine::averageCharWidth() const
 
 
 void QFontEngine::getGlyphPositions(const QGlyphLayout &glyphs, const QPointF &point,
-                                    QVarLengthArray<glyph_t> &glyphs_out, QVarLengthArray<QFixedPoint> &positions)
+                                    QStdVector<glyph_t> &glyphs_out, QStdVector<QFixedPoint> &positions)
 {
     QFixed xpos = QFixed::fromReal(point.x());
     QFixed ypos = QFixed::fromReal(point.y());
@@ -128,8 +127,8 @@ void QFontEngine::addOutlineToPath(qreal x, qreal y, const QGlyphLayout &glyphs,
     if (!glyphs.numGlyphs)
         return;
 
-    QVarLengthArray<QFixedPoint> positions;
-    QVarLengthArray<glyph_t> positioned_glyphs;
+    QStdVector<QFixedPoint> positions;
+    QStdVector<glyph_t> positioned_glyphs;
     getGlyphPositions(glyphs, QPointF(x, y), positioned_glyphs, positions);
     addGlyphsToPath(positioned_glyphs.data(), positions.data(), positioned_glyphs.size(), path);
 }
@@ -338,8 +337,8 @@ void QFontEngineBox::addOutlineToPath(qreal x, qreal y, const QGlyphLayout &glyp
     if (!glyphs.numGlyphs)
         return;
 
-    QVarLengthArray<QFixedPoint> positions;
-    QVarLengthArray<glyph_t> positioned_glyphs;
+    QStdVector<QFixedPoint> positions;
+    QStdVector<glyph_t> positioned_glyphs;
     getGlyphPositions(glyphs, QPointF(x, y - _size), positioned_glyphs, positions);
 
     const QSize s(_size - 3, _size - 3);

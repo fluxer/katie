@@ -29,7 +29,6 @@
 #include "qpen.h"
 #include "qpolygon.h"
 #include "qtextlayout.h"
-#include "qvarlengtharray.h"
 #include "qmath.h"
 #include "qbezier_p.h"
 #include "qfontengine_p.h"

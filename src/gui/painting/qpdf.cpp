@@ -1572,8 +1572,8 @@ void QPdfBaseEnginePrivate::drawTextItem(const QPointF &p, const QTextItemInt &t
         currentPage->fonts.append(font->object_id);
 
     const qreal size = ti.fontEngine->fontDef.pixelSize;
-    QVarLengthArray<glyph_t> glyphs;
-    QVarLengthArray<QFixedPoint> positions;
+    QStdVector<glyph_t> glyphs;
+    QStdVector<QFixedPoint> positions;
     ti.fontEngine->getGlyphPositions(ti.glyphs, p, glyphs, positions);
     if (glyphs.size() == 0)
         return;

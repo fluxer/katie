@@ -197,7 +197,7 @@ void QDeclarativeNotifierEndpoint::disconnect()
             QMetaObject::disconnectOne(s->source, s->sourceSignal, target, targetMethod);
             QObjectPrivate * const priv = QObjectPrivate::get(s->source);
             const QMetaMethod signal = s->source->metaObject()->method(s->sourceSignal);
-            QVarLengthArray<char> signalSignature;
+            QStdVector<char> signalSignature;
             QObjectPrivate::signalSignature(signal, &signalSignature);
             priv->disconnectNotify(signalSignature.constData());
             s->source = 0;

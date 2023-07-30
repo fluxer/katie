@@ -27,9 +27,9 @@
 #include "qgridlayoutengine_p.h"
 #include "qstyleoption.h"
 #include "qgraphicswidget_p.h"
-#include "qvarlengtharray.h"
 #include "qdebug.h"
 #include "qmath.h"
+#include "qstdcontainers_p.h"
 #include "qcorecommon_p.h"
 
 QT_BEGIN_NAMESPACE
@@ -156,9 +156,9 @@ void QGridLayoutRowData::distributeMultiCells(const QGridLayoutRowInfo &rowInfo)
         int stretch = i.value().q_stretch;
 
         QGridLayoutBox totalBox = this->totalBox(start, end);
-        QVarLengthArray<QGridLayoutBox> extras(span);
-        QVarLengthArray<qreal> dummy(span);
-        QVarLengthArray<qreal> newSizes(span);
+        QStdVector<QGridLayoutBox> extras(span);
+        QStdVector<qreal> dummy(span);
+        QStdVector<qreal> newSizes(span);
 
         for (int j = 0; j < NSizes; ++j) {
             qreal extra = compare(box, totalBox, j);

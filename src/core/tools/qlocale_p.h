@@ -33,12 +33,10 @@
 // We mean it.
 //
 
-#include "QtCore/qstring.h"
-#include "QtCore/qvarlengtharray.h"
-#include "QtCore/qmetatype.h"
-
+#include "qstring.h"
+#include "qmetatype.h"
 #include "qlocale.h"
-
+#include "qstdcontainers_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -131,7 +129,7 @@ public:
     static qint64 bytearrayToLongLong(const char *num, int base, bool *ok);
     static quint64 bytearrayToUnsLongLong(const char *num, int base, bool *ok);
 
-    typedef QVarLengthArray<char> CharBuff;
+    typedef QStdVector<char> CharBuff;
     bool numberToCLocale(const QString &num,
                          GroupSeparatorMode group_sep_mode,
                          CharBuff *result) const;

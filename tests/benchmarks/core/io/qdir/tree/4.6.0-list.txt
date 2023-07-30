@@ -8209,8 +8209,6 @@
  qtools_p.h
  qunicodetables.cpp
  qunicodetables_p.h
- qvarlengtharray.h
- qvarlengtharray.qdoc
  qvector.cpp
  qvector.h
  qvsnprintf.cpp

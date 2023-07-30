@@ -1596,7 +1596,7 @@ bool QDeclarativePropertyPrivate::connect(QObject *sender, int signal_index,
     // would return the wrong result inside connectNotify().
     const QMetaMethod signal = sender->metaObject()->method(signal_index);
     QObjectPrivate * const senderPriv = QObjectPrivate::get(sender);
-    QVarLengthArray<char> signalSignature;
+    QStdVector<char> signalSignature;
     QObjectPrivate::signalSignature(signal, &signalSignature);
     senderPriv->connectNotify(signalSignature.constData());
 

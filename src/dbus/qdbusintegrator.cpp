@@ -27,7 +27,6 @@
 #include "qstringlist.h"
 #include "qtimer.h"
 #include "qthread.h"
-
 #include "qdbusargument.h"
 #include "qdbusconnection_p.h"
 #include "qdbusconnectionmanager_p.h"
@@ -42,7 +41,6 @@
 #include "qdbuscontext_p.h"
 #include "qdbuspendingcall_p.h"
 #include "qdbusintegrator_p.h"
-
 #include "qdbusthreaddebug_p.h"
 
 
@@ -113,7 +111,7 @@ Q_AUTOTEST_EXPORT qdbusThreadDebugFunc qdbusThreadDebug = 0;
 #endif
 
 typedef void (*QDBusSpyHook)(const QDBusMessage&);
-typedef QVarLengthArray<QDBusSpyHook> QDBusSpyHookList;
+typedef QStdVector<QDBusSpyHook> QDBusSpyHookList;
 Q_GLOBAL_STATIC(QDBusSpyHookList, qDBusSpyHookList)
 
 extern "C" {
@@ -851,7 +849,7 @@ void QDBusConnectionPrivate::deliverCall(QObject *object, const QDBusMessage &ms
                "QDBusConnection: internal threading error",
                "function called for an object that is in another thread!!");
 
-    QVarLengthArray<void *> params;
+    QStdVector<void *> params;
     params.reserve(metaTypes.count());
 
     QVariantList auxParameters;

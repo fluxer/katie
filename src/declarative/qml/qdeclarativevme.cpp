@@ -20,7 +20,6 @@
 ****************************************************************************/
 
 #include "qdeclarativevme_p.h"
-
 #include "qdeclarativecompiler_p.h"
 #include "qdeclarativeboundsignal_p.h"
 #include "qdeclarativestringconverters_p.h"
@@ -40,26 +39,25 @@
 #include "qdeclarativecompiledbindings_p.h"
 #include "qdeclarativeglobal_p.h"
 #include "qdeclarativescriptstring.h"
-
-#include <QStack>
-#include <QWidget>
-#include <QColor>
-#include <QPoint>
-#include <QSize>
-#include <QRect>
-#include <QtCore/qdebug.h>
-#include <QtCore/qvarlengtharray.h>
-#include <QtCore/qcoreapplication.h>
-#include <QtCore/qdatetime.h>
+#include "qstack.h"
+#include "qwidget.h"
+#include "qcolor.h"
+#include "qpoint.h"
+#include "qsize.h"
+#include "qrect.h"
+#include "qdebug.h"
+#include "qcoreapplication.h"
+#include "qdatetime.h"
+#include "qstdcontainers_p.h"
 
 QT_BEGIN_NAMESPACE
 
-// A simple stack wrapper around QVarLengthArray
+// A simple stack wrapper around QStdVector
 template<typename T>
-class QDeclarativeVMEStack : private QVarLengthArray<T>
+class QDeclarativeVMEStack : private QStdVector<T>
 {
 private:
-    typedef QVarLengthArray<T> VLA;
+    typedef QStdVector<T> VLA;
     int _index;
 
 public:

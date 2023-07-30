@@ -22,10 +22,10 @@
 #include "Platform.h"
 #include "qscriptqobject_p.h"
 
-#include <QtCore/qmetaobject.h>
-#include <QtCore/qvarlengtharray.h>
-#include <QtCore/qdebug.h>
-#include <QtScript/qscriptable.h>
+#include "qmetaobject.h"
+#include "qstdcontainers_p.h"
+#include "qdebug.h"
+#include "qscriptable.h"
 #include "../api/qscriptengine_p.h"
 #include "../api/qscriptable_p.h"
 #include "../api/qscriptcontext_p.h"
@@ -458,10 +458,10 @@ struct QScriptMetaArguments
     int matchDistance;
     int index;
     QScriptMetaMethod method;
-    QVarLengthArray<QVariant> args;
+    QStdVector<QVariant> args;
 
     inline QScriptMetaArguments(int dist, int idx, const QScriptMetaMethod &mtd,
-                                const QVarLengthArray<QVariant> &as)
+                                const QStdVector<QVariant> &as)
         : matchDistance(dist), index(idx), method(mtd), args(as) { }
     inline QScriptMetaArguments()
         : index(-1) { }
@@ -492,7 +492,7 @@ static JSC::JSValue delegateQtMethod(JSC::ExecState *exec, QMetaMethod::MethodTy
 {
     QScriptMetaMethod chosenMethod;
     int chosenIndex = -1;
-    QVarLengthArray<QVariant> args;
+    QStdVector<QVariant> args;
     QVector<QScriptMetaArguments> candidates;
     QVector<QScriptMetaArguments> unresolved;
     QVector<int> tooFewArgs;
@@ -562,7 +562,7 @@ static JSC::JSValue delegateQtMethod(JSC::ExecState *exec, QMetaMethod::MethodTy
         if (!mtd.fullyResolved()) {
             // remember it so we can give an error message later, if necessary
             unresolved.append(QScriptMetaArguments(/*matchDistance=*/INT_MAX, index,
-                                                   mtd, QVarLengthArray<QVariant>()));
+                                                   mtd, QStdVector<QVariant>()));
             if (mtd.hasUnresolvedReturnType())
                 continue;
         }
@@ -904,11 +904,11 @@ struct QtMethodCaller
     {}
     JSC::JSValue operator()(JSC::ExecState *exec, QMetaMethod::MethodType callType,
                             const QMetaObject *meta, const QScriptMetaMethod &chosenMethod,
-                            int chosenIndex, const QVarLengthArray<QVariant> &args)
+                            int chosenIndex, const QStdVector<QVariant> &args)
     {
         JSC::JSValue result;
 
-        QVarLengthArray<void*> array(args.count());
+        QStdVector<void*> array(args.count());
         void **params = array.data();
         for (int i = 0; i < args.count(); ++i) {
             const QVariant &v = args[i];
@@ -1037,7 +1037,7 @@ struct QtMethodIndexReturner
 {
     JSC::JSValue operator()(JSC::ExecState *exec, QMetaMethod::MethodType,
                             const QMetaObject *, const QScriptMetaMethod &,
-                            int chosenIndex, const QVarLengthArray<QVariant> &)
+                            int chosenIndex, const QStdVector<QVariant> &)
     {
         return JSC::jsNumber(exec, chosenIndex);
     }
@@ -2181,7 +2181,7 @@ void QObjectConnectionManager::execute(int slotIndex, void **argv)
     int argc = parameterTypes.count();
 
     JSC::ExecState *exec = engine->currentFrame;
-    QVarLengthArray<JSC::JSValue> argsVector(argc);
+    QStdVector<JSC::JSValue> argsVector(argc);
     for (int i = 0; i < argc; ++i) {
         JSC::JSValue actual;
         void *arg = argv[i + 1];

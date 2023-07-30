@@ -34,8 +34,8 @@
 #include "qfilesystementry_p.h"
 #include "qfilesystemmetadata_p.h"
 #include "qfilesystemengine_p.h"
-#include "qvarlengtharray.h"
 #include "qscopedpointer.h"
+#include "qstdcontainers_p.h"
 #include "qcorecommon_p.h"
 
 #include <stdlib.h>
@@ -212,7 +212,7 @@ inline void QDirPrivate::sortFileList(QDir::SortFlags sort, QFileInfoList &l,
                     names->append(l.at(i).fileName());
             }
         } else {
-            QVarLengthArray<QDirSortItem> si(n);
+            QStdVector<QDirSortItem> si(n);
             for (int i = 0; i < n; ++i)
                 si[i].item = l.at(i);
             qSort(si.data(), si.data() + n, QDirSortItemComparator(sort));

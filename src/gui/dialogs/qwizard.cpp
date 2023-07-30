@@ -37,8 +37,8 @@
 #include "qpushbutton.h"
 #include "qset.h"
 #include "qstyle.h"
-#include "qvarlengtharray.h"
 #include "qdialog_p.h"
+#include "qstdcontainers_p.h"
 #include "qdebug.h"
 
 #include <string.h>     // for memset()
@@ -1303,7 +1303,7 @@ void QWizardPrivate::updateButtonTexts()
 void QWizardPrivate::updateButtonLayout()
 {
     if (buttonsHaveCustomLayout) {
-        QVarLengthArray<QWizard::WizardButton> array(buttonsCustomLayout.count());
+        QStdVector<QWizard::WizardButton> array(buttonsCustomLayout.count());
         for (int i = 0; i < buttonsCustomLayout.count(); ++i)
             array[i] = buttonsCustomLayout.at(i);
         setButtonLayout(array.constData(), array.count());
@@ -1313,7 +1313,7 @@ void QWizardPrivate::updateButtonLayout()
 
         const int ArraySize = 12;
         QWizard::WizardButton array[ArraySize];
-        memset(array, QWizard::NoButton, sizeof(array));
+        ::memset(array, QWizard::NoButton, sizeof(array));
         Q_ASSERT(array[0] == QWizard::NoButton);
 
         if (opts & QWizard::HaveHelpButton) {

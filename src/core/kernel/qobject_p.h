@@ -33,11 +33,11 @@
 // We mean it.
 //
 
-#include "QtCore/qpointer.h"
-#include "QtCore/qsharedpointer.h"
-#include "QtCore/qcoreevent.h"
-#include "QtCore/qmetaobject.h"
-#include "QtCore/qvarlengtharray.h"
+#include "qpointer.h"
+#include "qsharedpointer.h"
+#include "qcoreevent.h"
+#include "qmetaobject.h"
+#include "qstdcontainers_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -141,7 +141,7 @@ public:
     inline void disconnectNotify(const char *signal);
 
     static inline void signalSignature(const QMetaMethod &signal,
-                                       QVarLengthArray<char> *result);
+                                       QStdVector<char> *result);
 
 public:
     QString objectName;
@@ -192,17 +192,21 @@ inline void QObjectPrivate::disconnectNotify(const char *signal)
 }
 
 inline void QObjectPrivate::signalSignature(const QMetaMethod &signal,
-                                                  QVarLengthArray<char> *result)
+                                            QStdVector<char> *result)
 {
     Q_ASSERT(result);
-    const int signatureLength = qstrlen(signal.signature());
+    const char* signatureData = signal.signature();
+    const int signatureLength = qstrlen(signatureData);
     if (signatureLength == 0) {
         result->append((char)0);
         return;
     }
     result->reserve(signatureLength + 2);
     result->append((char)(QSIGNAL_CODE + '0'));
-    result->append(signal.signature(), signatureLength + 1);
+    for (int i = 0; i < signatureLength; i++) {
+        result->append(signatureData[i]);
+    }
+    result->append('\0');
 }
 
 inline QObjectPrivate::Sender *QObjectPrivate::setCurrentSender(QObject *receiver,

@@ -26,7 +26,6 @@
 #include "qobject.h"
 #include "qstringlist.h"
 #include "qvector.h"
-#include "qvarlengtharray.h"
 #include "qcoreapplication.h"
 #include "qfile.h"
 #include "qdir.h"
@@ -40,6 +39,7 @@
 #include "qtestresult_p.h"
 #include "qsignaldumper_p.h"
 #include "qbenchmark_p.h"
+#include "qstdcontainers_p.h"
 #include "qcorecommon_p.h"
 
 #include <stdarg.h>
@@ -1724,7 +1724,7 @@ int QTest::qExec(QObject *testObject, int argc, char **argv)
 int QTest::qExec(QObject *testObject, const QStringList &arguments)
 {
     const int argc = arguments.count();
-    QVarLengthArray<char *> argv(argc);
+    QStdVector<char *> argv(argc);
 
     QVector<QByteArray> args;
     args.reserve(argc);

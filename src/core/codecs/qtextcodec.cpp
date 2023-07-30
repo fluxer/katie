@@ -24,13 +24,13 @@
 
 #include "qlist.h"
 #include "qfile.h"
-#include "qvarlengtharray.h"
 #include "qstringlist.h"
 #include "qlocale.h"
 #include "qlocale_tools_p.h"
 #include "qtextcodec_p.h"
 #include "qmutex.h"
 #include "qhash.h"
+#include "qstdcontainers_p.h"
 #include "qcorecommon_p.h"
 #include "qdebug.h"
 
@@ -1091,7 +1091,7 @@ QString QTextCodecPrivate::convertTo(const char *data, int length, const char* c
     ucnv_setSubstString(conv, questionmarkchar, 1, &error);
 
     const int maxbytes = UCNV_GET_MAX_BYTES_FOR_STRING(length, ucnv_getMaxCharSize(conv));
-    QVarLengthArray<UChar> result(maxbytes);
+    QStdVector<UChar> result(maxbytes);
     error = U_ZERO_ERROR;
     const int convresult = ucnv_toUChars(conv, result.data(), maxbytes, data, length, &error);
     ucnv_close(conv);
@@ -1115,7 +1115,7 @@ QByteArray QTextCodecPrivate::convertFrom(const QChar *unicode, int length, cons
     ucnv_setSubstString(conv, questionmarkchar, 1, &error);
 
     const int maxbytes = UCNV_GET_MAX_BYTES_FOR_STRING(length, ucnv_getMaxCharSize(conv));
-    QVarLengthArray<char> result(maxbytes);
+    QStdVector<char> result(maxbytes);
     error = U_ZERO_ERROR;
     const int convresult = ucnv_fromUChars(conv, result.data(), maxbytes,
         reinterpret_cast<const UChar *>(unicode), length, &error);
@@ -1954,7 +1954,7 @@ QByteArray QTextConverter::fromUnicode(const QChar *data, int length) const
     }
 
     const int maxbytes = UCNV_GET_MAX_BYTES_FOR_STRING(length, ucnv_getMaxCharSize(conv));
-    QVarLengthArray<char> result(maxbytes);
+    QStdVector<char> result(maxbytes);
     UErrorCode error = U_ZERO_ERROR;
     const int convresult = ucnv_fromUChars(conv, result.data(), maxbytes,
         reinterpret_cast<const UChar *>(data), length, &error);
@@ -1974,7 +1974,7 @@ QString QTextConverter::toUnicode(const char *data, int length) const
     }
 
     const int maxbytes = UCNV_GET_MAX_BYTES_FOR_STRING(length, ucnv_getMaxCharSize(conv));
-    QVarLengthArray<UChar> result(maxbytes);
+    QStdVector<UChar> result(maxbytes);
     UErrorCode error = U_ZERO_ERROR;
     const int convresult = ucnv_toUChars(conv, result.data(), maxbytes, data, length, &error);
     // regardless if the data has BOM or not, BOMs shall be generated explicitly only by QTextStream

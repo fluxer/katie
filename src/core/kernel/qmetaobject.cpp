@@ -22,19 +22,17 @@
 #include "qmetaobject.h"
 #include "qmetatype.h"
 #include "qobject.h"
-
 #include "qcoreapplication.h"
 #include "qcoreevent.h"
 #include "qdatastream.h"
 #include "qthread.h"
-#include "qvarlengtharray.h"
 #include "qvariant.h"
 #include "qhash.h"
 #include "qdebug.h"
 #include "qsemaphore.h"
-
 #include "qobject_p.h"
 #include "qmetaobject_p.h"
+#include "qstdcontainers_p.h"
 
 #include <ctype.h>
 
@@ -153,7 +151,8 @@ QObject *QMetaObject::newInstance(QGenericArgument val0,
         if (idx != -1)
             constructorName.remove(0, idx+1); // remove qualified part
     }
-    QVarLengthArray<char> sig;
+    QByteArray sig;
+    sig.reserve(constructorName.length() + 1);
     sig.append(constructorName.constData(), constructorName.length());
     sig.append('(');
 
@@ -1049,13 +1048,16 @@ bool QMetaObject::invokeMethod(QObject *obj,
     int len = qstrlen(member);
     if (len <= 0)
         return false;
-    QVarLengthArray<char> sig;
+    QByteArray sig;
+    sig.reserve(len + 1);
     sig.append(member, len);
     sig.append('(');
 
-    const char *typeNames[] = {ret.name(), val0.name(), val1.name(), val2.name(), val3.name(),
-                               val4.name(), val5.name(), val6.name(), val7.name(), val8.name(),
-                               val9.name()};
+    const char *typeNames[] = {
+        ret.name(), val0.name(), val1.name(), val2.name(), val3.name(),
+        val4.name(), val5.name(), val6.name(), val7.name(), val8.name(),
+        val9.name()
+    };
 
     int paramCount;
     for (paramCount = 1; paramCount < MaximumParamCount; ++paramCount) {

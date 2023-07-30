@@ -28,7 +28,6 @@
 #include "qtextlist.h"
 #include "qdebug.h"
 #include "qregexp.h"
-#include "qvarlengtharray.h"
 #include "qtextcodec.h"
 #include "qthread.h"
 #include "qtexthtmlparser_p.h"
@@ -43,7 +42,7 @@
 #include "qfont_p.h"
 #include "qtextedit_p.h"
 #include "qdataurl_p.h"
-
+#include "qstdcontainers_p.h"
 #include "qtextdocument_p.h"
 #include "qprinter_p.h"
 #include "qabstracttextdocumentlayout_p.h"
@@ -2586,7 +2585,7 @@ void QTextHtmlExporter::emitTable(const QTextTable *table)
     }
     Q_ASSERT(columnWidths.count() == columns);
 
-    QVarLengthArray<bool> widthEmittedForColumn(columns);
+    QStdVector<bool> widthEmittedForColumn(columns);
     for (int i = 0; i < columns; ++i)
         widthEmittedForColumn[i] = false;
 

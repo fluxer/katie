@@ -21,7 +21,6 @@
 
 #include <QByteArray>
 #include <QString>
-#include <QVarLengthArray>
 #include <QFile>
 #include <QProcess>
 #include <QMetaObject>
@@ -29,6 +28,7 @@
 #include <QRegExp>
 #include <QCoreApplication>
 #include <QLibraryInfo>
+#include "qstdcontainers_p.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -111,7 +111,7 @@ QByteArray MocParser::readLine()
 void MocParser::loadIntData(uint *&data)
 {
     data = 0;                   // initialise
-    QVarLengthArray<uint> array;
+    QStdVector<uint> array;
     QRegExp rx(QLatin1String("(\\d+|0x[0-9abcdef]+)"), Qt::CaseInsensitive);
 
     while (!input->atEnd()) {
@@ -144,7 +144,7 @@ void MocParser::loadIntData(uint *&data)
 void MocParser::loadStringData(char *&stringdata)
 {
     stringdata = 0;
-    QVarLengthArray<char> array;
+    QStdVector<char> array;
 
     while (!input->atEnd()) {
         QByteArray line = readLine();

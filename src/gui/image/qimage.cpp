@@ -35,7 +35,7 @@
 #include "qhash.h"
 #include "qpaintengine_raster_p.h"
 #include "qimage_p.h"
-#include "qvarlengtharray.h"
+#include "qstdcontainers_p.h"
 #include "qcorecommon_p.h"
 #include "qguicommon_p.h"
 #include "qx11info_x11.h"
@@ -1706,7 +1706,7 @@ static void dither_to_Mono(QImageData *dst, const QImageData *src,
 
     switch (dithermode) {
         case Diffuse: {
-            QVarLengthArray<int> lineBuffer(src->width * 2);
+            QStdVector<int> lineBuffer(src->width * 2);
             int *line1 = lineBuffer.data();
             int *line2 = lineBuffer.data() + src->width;
             int bmwidth = (src->width+7)/8;

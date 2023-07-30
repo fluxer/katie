@@ -29,9 +29,9 @@
 #include "qdeclarativeguard_p.h"
 #include "qdeclarativevmemetaobject_p.h"
 #include "qdeclarativecommon_p.h"
-#include <QtCore/qtimer.h>
-#include <QtCore/qvarlengtharray.h>
-#include <QtScript/qscriptcontextinfo.h>
+#include "qtimer.h"
+#include "qscriptcontextinfo.h"
+#include "qstdcontainers_p.h"
 
 #include <limits.h>
 
@@ -898,7 +898,7 @@ QDeclarativeObjectMethodScriptClass::callPrecise(QObject *object, const QDeclara
 
         QMetaMethod m = object->metaObject()->method(data.coreIndex);
         QList<QByteArray> argTypeNames = m.parameterTypes();
-        QVarLengthArray<int> argTypes(argTypeNames.count());
+        QStdVector<int> argTypes(argTypeNames.count());
 
         // ### Cache
         for (int ii = 0; ii < argTypeNames.count(); ++ii) {
@@ -928,13 +928,13 @@ QDeclarativeObjectMethodScriptClass::callMethod(QObject *object, int index,
 {
     if (argCount > 0) {
 
-        QVarLengthArray<MetaCallArgument> args(argCount + 1);
+        QStdVector<MetaCallArgument> args(argCount + 1);
         args[0].initAsType(returnType, engine);
 
         for (int ii = 0; ii < argCount; ++ii)
             args[ii + 1].fromScriptValue(argTypes[ii], engine, ctxt->argument(ii));
 
-        QVarLengthArray<void *> argData(args.count());
+        QStdVector<void *> argData(args.count());
         for (int ii = 0; ii < args.count(); ++ii)
             argData[ii] = args[ii].dataPtr();
 
@@ -1003,7 +1003,7 @@ QDeclarativeObjectMethodScriptClass::callOverloaded(MethodData *method, QScriptC
             continue; // We already have a better option
 
         int methodMatchScore = 0;
-        QVarLengthArray<int> methodArgTypes(methodArgumentCount);
+        QStdVector<int> methodArgTypes(methodArgumentCount);
 
         bool unknownArgument = false;
         for (int ii = 0; ii < methodArgumentCount; ++ii) {

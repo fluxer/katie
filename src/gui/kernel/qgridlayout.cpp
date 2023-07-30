@@ -25,7 +25,6 @@
 #include "qlist.h"
 #include "qsizepolicy.h"
 #include "qvector.h"
-#include "qvarlengtharray.h"
 #include "qlayoutengine_p.h"
 #include "qlayout_p.h"
 
@@ -678,7 +677,7 @@ void QGridLayoutPrivate::setupLayoutData(int hSpacing, int vSpacing)
         Grid of items. We use it to determine which items are
         adjacent to which and compute the spacings correctly.
     */
-    QVarLengthArray<QGridBox *> grid(rr * cc);
+    QVector<QGridBox *> grid(rr * cc);
     ::memset(grid.data(), 0, size_t(rr) * cc * sizeof(QGridBox *));
 
     /*

@@ -23,7 +23,6 @@
 #include "qplatformdefs.h"
 #include "qbackingstore_p.h"
 #include "qdebug.h"
-#include "qvarlengtharray.h"
 #include "qevent.h"
 #include "qapplication.h"
 #include "qpaintengine.h"
@@ -33,6 +32,7 @@
 #include "qwidget_p.h"
 #include "qwindowsurface_p.h"
 #include "qapplication_p.h"
+#include "qstdcontainers_p.h"
 #include "qpaintengine_raster_p.h"
 
 QT_BEGIN_NAMESPACE
@@ -659,7 +659,7 @@ void QWidgetBackingStore::sync()
     // painted (in case someone calls update() in paintEvent). If the widget is opaque
     // and does not have transparent overlapping siblings, append it to the
     // opaqueNonOverlappedWidgets list and paint it directly without composition.
-    QVarLengthArray<QWidget *> opaqueNonOverlappedWidgets;
+    QStdVector<QWidget *> opaqueNonOverlappedWidgets;
     for (int i = 0; i < dirtyWidgets.size(); ++i) {
         QWidget *w = dirtyWidgets.at(i);
         QWidgetPrivate *wd = w->d_func();

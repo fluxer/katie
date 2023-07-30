@@ -36,7 +36,6 @@
 #include "qthreadpool.h"
 #include "qstandardpaths.h"
 #include "qelapsedtimer.h"
-#include "qvarlengtharray.h"
 #include "qscopedpointer.h"
 #include "qlibraryinfo.h"
 #include "qthread_p.h"
@@ -44,8 +43,8 @@
 #include "qfactoryloader_p.h"
 #include "qlocale_p.h"
 #include "qeventdispatcher_unix_p.h"
-#include "qcorecommon_p.h"
 #include "qstdcontainers_p.h"
+#include "qcorecommon_p.h"
 
 #include <stdlib.h>
 #include <errno.h>
@@ -1061,7 +1060,7 @@ void QCoreApplication::removePostedEvents(QObject *receiver, int eventType)
 
     //we will collect all the posted events for the QObject
     //and we'll delete after the mutex was unlocked
-    QVarLengthArray<QEvent*> events;
+    QStdVector<QEvent*> events;
     int n = data->postEventList.size();
     int j = 0;
 

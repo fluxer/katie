@@ -585,7 +585,6 @@ classlist = [
     "QUrl",
     "QVBoxLayout",
     "QValidator",
-    "QVarLengthArray",
     "QVariant",
     "QVariantAnimation",
     "QVariantHash",

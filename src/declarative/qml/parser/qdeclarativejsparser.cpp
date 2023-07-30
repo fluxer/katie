@@ -27,7 +27,7 @@
 #include "qdeclarativejsast_p.h"
 #include "qdeclarativejsnodepool_p.h"
 #include "qdeclarativejsparser_p.h"
-#include <QVarLengthArray>
+#include "qstdcontainers_p.h"
 
 #include <string.h>
 
@@ -93,8 +93,8 @@ static inline AST::SourceLocation location(Lexer *lexer)
 
 AST::UiQualifiedId *Parser::reparseAsQualifiedId(AST::ExpressionNode *expr)
 {
-    QVarLengthArray<NameId *> nameIds;
-    QVarLengthArray<AST::SourceLocation> locations;
+    QStdVector<NameId *> nameIds;
+    QStdVector<AST::SourceLocation> locations;
 
     AST::ExpressionNode *it = expr;
     while (AST::FieldMemberExpression *m = AST::cast<AST::FieldMemberExpression *>(it)) {
