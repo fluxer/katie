@@ -1,6 +1,6 @@
 add_definitions(${PNG_DEFINITIONS})
 set(EXTRA_GUI_LIBS
-    KtCore KtXml
+    KtCore
     ${FREETYPE_LIBRARIES}
     ${X11_X11_LIB}
     ${PNG_LIBRARIES}
@@ -201,7 +201,6 @@ include_directories(
     ${CMAKE_BINARY_DIR}/include
     ${CMAKE_BINARY_DIR}/privateinclude
     ${CMAKE_BINARY_DIR}/include/QtCore
-    ${CMAKE_BINARY_DIR}/include/QtXml
     ${CMAKE_BINARY_DIR}/include/QtGui
     ${FREETYPE_INCLUDE_DIRS}
     ${X11_INCLUDE_DIR}
@@ -923,7 +922,7 @@ katie_unity_exclude(
 
 katie_generate_misc("${GUI_HEADERS}" QtGui)
 katie_generate_public("${GUI_PUBLIC_HEADERS}" QtGui)
-katie_generate_package(KtGui "KtCore KtXml")
+katie_generate_package(KtGui "KtCore")
 katie_setup_target(KtGui ${GUI_SOURCES} ${GUI_HEADERS})
 
 add_library(KtGui ${KATIE_TYPE} ${KtGui_SOURCES})
