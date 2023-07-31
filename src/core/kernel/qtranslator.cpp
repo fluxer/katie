@@ -218,7 +218,7 @@ bool QTranslator::loadFromData(const QByteArray &data)
     trdatastream >> trmagic;
     trdatastream >> trcodec;
 
-    if (trmagic != "KATIE_TRANSLATION") {
+    if (Q_UNLIKELY(trmagic != "KATIE_TRANSLATION")) {
         qWarning("QTranslator::load: Invalid magic");
         return false;
     }
