@@ -44,6 +44,7 @@ static void generateItem(const QScriptAnalysis *analysis, QScriptItemArray &item
     if (!length)
         return;
     const int end = start + length;
+    items.reserve(items.size() + length);
     for (int i = start + 1; i < end; ++i) {
         items.append(QScriptItem(start, analysis[start]));
         start = i;
