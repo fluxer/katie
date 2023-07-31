@@ -156,7 +156,7 @@ public:
         }
     };
     QVector<KernPair> kerning_pairs;
-    void loadKerningPairs(QFixed scalingFactor);
+    void loadKerningPairs(const QFixed scalingFactor);
 #endif
 };
 

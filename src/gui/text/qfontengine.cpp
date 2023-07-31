@@ -210,7 +210,7 @@ void QFontEngine::doKerning(QGlyphLayout *glyphs)
     }
 }
 
-void QFontEngine::loadKerningPairs(QFixed scalingFactor)
+void QFontEngine::loadKerningPairs(const QFixed scalingFactor)
 {
     kerning_pairs.clear();
 
