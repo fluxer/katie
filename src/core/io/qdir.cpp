@@ -1608,7 +1608,7 @@ QString QDir::cleanPath(const QString &path)
 
     int used = 0, levels = 0;
     const int len = path.length();
-    QSTACKARRAY(QChar, out, len);
+    QStdVector<QChar> out(len);
 
     const QChar *p = path.unicode();
     for (int i = 0, last = -1, iwrite = 0; i < len; ++i) {
@@ -1698,7 +1698,7 @@ QString QDir::cleanPath(const QString &path)
         used++;
     }
 
-    QString ret = (used == len ? path : QString(out, used));
+    QString ret = (used == len ? path : QString(out.constData(), used));
     // Strip away last slash except for root directories
     if (ret.length() > 1 && ret.endsWith(QLatin1Char('/'))) {
         ret.chop(1);
