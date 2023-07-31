@@ -195,7 +195,7 @@ QFontEngineFT::QFontEngineFT(const QFontDef &fd, FcPattern *pattern)
 #endif // QT_NO_FONTCONFIG
 
 QFontEngineFT::QFontEngineFT(const QFontDef &fd)
-    : default_load_flags(FT_LOAD_IGNORE_GLOBAL_ADVANCE_WIDTH | FT_LOAD_NO_BITMAP),
+    : default_load_flags(FT_LOAD_IGNORE_GLOBAL_ADVANCE_WIDTH | FT_LOAD_NO_BITMAP | FT_LOAD_IGNORE_TRANSFORM),
     freetype(nullptr),
     xsize(0),
     ysize(0),
