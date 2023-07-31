@@ -94,8 +94,8 @@ void QFontEngine::getGlyphPositions(const QGlyphLayout &glyphs, const QPointF &p
     QFixed ypos = QFixed::fromReal(point.y());
 
     int current = 0;
-    positions.resize(glyphs.numGlyphs);
-    glyphs_out.resize(glyphs.numGlyphs);
+    Q_ASSERT(positions.size() == glyphs.numGlyphs);
+    Q_ASSERT(glyphs_out.size() == glyphs.numGlyphs);
     int i = 0;
     while (i < glyphs.numGlyphs) {
         if (!glyphs.attributes[i].dontPrint) {
@@ -127,8 +127,8 @@ void QFontEngine::addOutlineToPath(qreal x, qreal y, const QGlyphLayout &glyphs,
     if (!glyphs.numGlyphs)
         return;
 
-    QStdVector<QFixedPoint> positions;
-    QStdVector<glyph_t> positioned_glyphs;
+    QStdVector<QFixedPoint> positions(glyphs.numGlyphs);
+    QStdVector<glyph_t> positioned_glyphs(glyphs.numGlyphs);
     getGlyphPositions(glyphs, QPointF(x, y), positioned_glyphs, positions);
     addGlyphsToPath(positioned_glyphs.data(), positions.data(), positioned_glyphs.size(), path);
 }
@@ -337,8 +337,8 @@ void QFontEngineBox::addOutlineToPath(qreal x, qreal y, const QGlyphLayout &glyp
     if (!glyphs.numGlyphs)
         return;
 
-    QStdVector<QFixedPoint> positions;
-    QStdVector<glyph_t> positioned_glyphs;
+    QStdVector<QFixedPoint> positions(glyphs.numGlyphs);
+    QStdVector<glyph_t> positioned_glyphs(glyphs.numGlyphs);
     getGlyphPositions(glyphs, QPointF(x, y - _size), positioned_glyphs, positions);
 
     const QSize s(_size - 3, _size - 3);
