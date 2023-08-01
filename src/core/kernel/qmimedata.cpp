@@ -49,7 +49,7 @@ public:
 
 void QMimeDataPrivate::removeData(const QString &format)
 {
-    for (int i=0; i<dataList.size(); i++) {
+    for (int i = 0; i < dataList.size(); i++) {
         if (dataList.at(i).format == format) {
             dataList.removeAt(i);
             return;
@@ -70,7 +70,7 @@ void QMimeDataPrivate::setData(const QString &format, const QVariant &data)
 
 QVariant QMimeDataPrivate::getData(const QString &format) const
 {
-    for (int i=0; i<dataList.size(); i++) {
+    for (int i = 0; i < dataList.size(); i++) {
         if (dataList.at(i).format == format) {
             return dataList.at(i).data;
         }
@@ -264,9 +264,9 @@ QList<QUrl> QMimeData::urls() const
     Q_D(const QMimeData);
     QVariant data = d->retrieveTypedData(QLatin1String("text/uri-list"), QVariant::List);
     QList<QUrl> urls;
-    if (data.type() == QVariant::Url)
+    if (data.type() == QVariant::Url) {
         urls.append(data.toUrl());
-    else if (data.type() == QVariant::List) {
+    } else if (data.type() == QVariant::List) {
         QList<QVariant> list = data.toList();
         for (int i = 0; i < list.size(); ++i) {
             if (list.at(i).type() == QVariant::Url)
@@ -289,8 +289,9 @@ void QMimeData::setUrls(const QList<QUrl> &urls)
     QList<QVariant> list;
     const int numUrls = urls.size();
     list.reserve(numUrls);
-    for (int i = 0; i < numUrls; ++i)
+    for (int i = 0; i < numUrls; ++i) {
         list.append(urls.at(i));
+    }
 
     d->setData(QLatin1String("text/uri-list"), list);
 }
