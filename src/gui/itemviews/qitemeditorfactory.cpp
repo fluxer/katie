@@ -199,15 +199,12 @@ QWidget *QDefaultItemEditorFactory::createEditor(QVariant::Type type, QWidget *p
 #ifndef QT_NO_DATETIMEEDIT
     case QVariant::Date: {
         QDateTimeEdit *ed = new QDateEdit(parent);
-        ed->setFrame(false);
         return ed; }
     case QVariant::Time: {
         QDateTimeEdit *ed = new QTimeEdit(parent);
-        ed->setFrame(false);
         return ed; }
     case QVariant::DateTime: {
         QDateTimeEdit *ed = new QDateTimeEdit(parent);
-        ed->setFrame(false);
         return ed; }
 #endif
     case QVariant::Pixmap:
