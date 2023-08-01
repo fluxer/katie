@@ -751,6 +751,7 @@ void tst_QFileInfo::fileTimes()
         QCOMPARE(line, fileName);
     }
 
+    // NOTE: the test will fail if the the filesystem is mounted with noatime
     QFileInfo fileInfo(fileName);
     QVERIFY(fileInfo.lastRead() > beforeRead);
     QVERIFY(fileInfo.lastModified() > beforeWrite);
