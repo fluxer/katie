@@ -158,7 +158,7 @@ int runTrc(int argc, char *argv[])
     QFile outputfile(outputfilepath);
     if (!outputfile.open(QFile::WriteOnly)) {
         fprintf(stderr, "trc: Coult not open output %s\n", qPrintable(outputfilepath));
-        return 1;
+        return 2;
     }
 
     po_file_t gettext_file = po_file_read(
@@ -167,7 +167,7 @@ int runTrc(int argc, char *argv[])
     );
     if (gettext_file == NULL) {
         fprintf(stderr, "trc: Coult not open input %s\n", inputfilepath.constData());
-        return 1;
+        return 3;
     }
 
     const char* gettext_domain_header = po_file_domain_header(gettext_file, NULL);
@@ -205,6 +205,7 @@ int runTrc(int argc, char *argv[])
         gettext_message = po_next_message(gettext_iterator);
     }
     po_message_iterator_free(gettext_iterator);
+    po_file_free(gettext_file);
 
     QByteArray trheaderdata;
     QDataStream trheaderstream(&trheaderdata, QIODevice::WriteOnly);
@@ -214,17 +215,14 @@ int runTrc(int argc, char *argv[])
 
     if (outputfile.write(trheaderdata.constData(), trheaderdata.size()) != trheaderdata.size()) {
         fprintf(stderr, "trc: Coult not write header %s\n", qPrintable(outputfile.errorString()));
-        po_file_free(gettext_file);
-        return 1;
+        return 4;
     }
 
     if (outputfile.write(trdata.constData(), trdata.size()) != trdata.size()) {
         fprintf(stderr, "trc: Coult not write data %s\n", qPrintable(outputfile.errorString()));
-        po_file_free(gettext_file);
-        return 1;
+        return 5;
     }
 
-    po_file_free(gettext_file);
     return 0;
 }
 
