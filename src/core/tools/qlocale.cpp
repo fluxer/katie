@@ -903,7 +903,7 @@ QString QLocale::toString(qulonglong i) const
 
 QString QLocale::toString(const QDate &date, const QString &format) const
 {
-    return d()->dateTimeToString(format, &date, 0, this, false);
+    return d()->dateTimeToString(format, &date, 0, this, true);
 }
 
 /*!
@@ -943,7 +943,7 @@ static bool timeFormatContainsAP(const QString &format)
 */
 QString QLocale::toString(const QTime &time, const QString &format) const
 {
-    return d()->dateTimeToString(format, 0, &time, this, false);
+    return d()->dateTimeToString(format, 0, &time, this, true);
 }
 
 /*!
