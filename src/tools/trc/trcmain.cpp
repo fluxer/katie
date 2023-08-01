@@ -89,6 +89,12 @@ void showHelp()
     fprintf(stderr, "Usage:\n"
             "    trc [options] <translation-file>\n\n"
             "Options:\n"
+            "    -f\n"
+            "    -fuzzy\n"
+            "         Process fuzzy translations.\n\n"
+            "    -b\n"
+            "    -obsolete\n"
+            "         Process obsolete translations.\n\n"
             "    -h\n"
             "    -help\n"
             "         Display this help and exit.\n\n"
@@ -105,6 +111,8 @@ int runTrc(int argc, char *argv[])
     QString outputfilepath;
 
     int arg = 1;
+    bool fuzzy = false;
+    bool obsolete = false;
     while (arg < argc) {
         const QString opt = QString::fromLocal8Bit(argv[arg]);
         if (opt == QLatin1String("-h") || opt == QLatin1String("-help")) {
@@ -113,6 +121,10 @@ int runTrc(int argc, char *argv[])
         } else if (opt == QLatin1String("-v") || opt == QLatin1String("-version")) {
             fprintf(stderr, "Katie Translation Compiler version %s\n", QT_VERSION_STR);
             return 0;
+        } else if (opt == QLatin1String("-f") || opt == QLatin1String("-fuzzy")) {
+            fuzzy = true;
+        } else if (opt == QLatin1String("-b") || opt == QLatin1String("-obsolete")) {
+            obsolete = true;
         } else if (opt == QLatin1String("-o") || opt == QLatin1String("-output")) {
             ++arg;
             if (!argv[arg]) {
@@ -165,7 +177,11 @@ int runTrc(int argc, char *argv[])
     po_message_iterator_t gettext_iterator = po_message_iterator(gettext_file, NULL);
     po_message_t gettext_message = po_next_message(gettext_iterator);
     while (gettext_message != NULL) {
-        if (po_message_is_obsolete(gettext_message) || po_message_is_fuzzy(gettext_message)) {
+        if (po_message_is_obsolete(gettext_message) && !obsolete) {
+            gettext_message = po_next_message(gettext_iterator);
+            continue;
+        }
+        if (po_message_is_fuzzy(gettext_message) && !fuzzy) {
             gettext_message = po_next_message(gettext_iterator);
             continue;
         }

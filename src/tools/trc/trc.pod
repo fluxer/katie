@@ -12,6 +12,14 @@ trc reads a program translation (.po) file and creates corresponding .tr file.
 
 =head1 OPTIONS
 
+    -f
+    -fuzzy
+        Process fuzzy translations.
+
+    -b
+    -obsolete
+        Process obsolete translations.
+
     -h
     -help
         Display this help and exit.
