@@ -45,6 +45,17 @@
 
 QT_BEGIN_NAMESPACE
 
+class QDateTimeBox : public QSpinBox
+{
+public:
+    QDateTimeBox(QWidget *parent);
+
+protected:
+    QValidator::State validate(QString &input, int &pos) const final;
+    int valueFromText(const QString &text) const final;
+    QString textFromValue(int value) const final;
+};
+
 class QDateTimeEditPrivate : public QWidgetPrivate
 {
     Q_DECLARE_PUBLIC(QDateTimeEdit)
@@ -57,7 +68,6 @@ public:
 
     void init(const QDateTime &datetime, const bool showdate, const bool showtime);
     void updateWidgets(const QDateTime &datetime);
-    void updateSuffixes();
     void updateButton(const QDate &date);
     void setCalendar(QCalendarWidget *calendar);
     QDateTime currentDateTime() const;
@@ -70,9 +80,7 @@ private:
     bool m_showdate;
     bool m_showtime;
     QHBoxLayout *m_layout;
-    QSpinBox *m_hourbox;
-    QSpinBox *m_minutebox;
-    QSpinBox *m_secondbox;
+    QDateTimeBox *m_timebox;
     QToolButton *m_datebutton;
     QMenu* m_datemenu;
     QWidgetAction* m_dateaction;

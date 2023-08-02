@@ -27,28 +27,46 @@
 
 QT_BEGIN_NAMESPACE
 
-static QString getHourSuffix(const int value)
+const QTime getTime(const int value)
 {
-    if (value == 1) {
-        return QApplication::translate("QDateTimeEdit", " hour");
-    }
-    return QApplication::translate("QDateTimeEdit", " hours");
+    return QDateTime::fromTime_t(value).time();
 }
 
-static QString getMinuteSuffix(const int value)
+const int getTime_t(const QTime &value)
 {
-    if (value == 1) {
-        return QApplication::translate("QDateTimeEdit", " minute");
-    }
-    return QApplication::translate("QDateTimeEdit", " minutes");
+    return QDateTime(QDATETIMEEDIT_DATE_INITIAL, value).toTime_t();
 }
 
-static QString getSecondSuffix(const int value)
+QDateTimeBox::QDateTimeBox(QWidget *parent)
+    : QSpinBox(parent)
 {
-    if (value == 1) {
-        return QApplication::translate("QDateTimeEdit", " second");
+    QDateTimeEdit* datetimeedit = qobject_cast<QDateTimeEdit*>(parent);
+    const QString timeformat = datetimeedit->locale().timeFormat(QLocale::ShortFormat);
+    if (!timeformat.contains(QLatin1String("ss"))) {
+        setSingleStep(60);
     }
-    return QApplication::translate("QDateTimeEdit", " seconds");
+}
+
+QValidator::State QDateTimeBox::validate(QString &input, int &pos) const
+{
+    QDateTimeEdit* datetimeedit = qobject_cast<QDateTimeEdit*>(parent());
+    const QTime time = datetimeedit->locale().toTime(input, QLocale::ShortFormat);
+    if (!time.isValid()) {
+        return QValidator::Invalid;
+    }
+    return QValidator::Acceptable;
+}
+
+int QDateTimeBox::valueFromText(const QString &text) const
+{
+    QDateTimeEdit* datetimeedit = qobject_cast<QDateTimeEdit*>(parent());
+    return getTime_t(datetimeedit->locale().toTime(text, QLocale::ShortFormat));
+}
+
+QString QDateTimeBox::textFromValue(int value) const
+{
+    QDateTimeEdit* datetimeedit = qobject_cast<QDateTimeEdit*>(parent());
+    return datetimeedit->locale().toString(getTime(value), QLocale::ShortFormat);
 }
 
 /*!
@@ -61,9 +79,7 @@ QDateTimeEditPrivate::QDateTimeEditPrivate()
     m_showdate(true),
     m_showtime(true),
     m_layout(nullptr),
-    m_hourbox(nullptr),
-    m_minutebox(nullptr),
-    m_secondbox(nullptr),
+    m_timebox(nullptr),
     m_datebutton(nullptr),
     m_datemenu(nullptr),
     m_dateaction(nullptr)
@@ -76,15 +92,8 @@ void QDateTimeEditPrivate::init(const QDateTime &datetime, const bool showdate, 
     m_showdate = showdate;
     m_showtime = showtime;
     m_layout = new QHBoxLayout(q);
-    m_hourbox = new QSpinBox(q);
-    m_hourbox->setSuffix(QApplication::translate("QDateTimeEdit", " hour"));
-    m_layout->addWidget(m_hourbox);
-    m_minutebox = new QSpinBox(q);
-    m_minutebox->setSuffix(QApplication::translate("QDateTimeEdit", " minute"));
-    m_layout->addWidget(m_minutebox);
-    m_secondbox = new QSpinBox(q);
-    m_secondbox->setSuffix(QApplication::translate("QDateTimeEdit", " second"));
-    m_layout->addWidget(m_secondbox);
+    m_timebox = new QDateTimeBox(q);
+    m_layout->addWidget(m_timebox);
     m_datebutton = new QToolButton(q);
     m_datebutton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
     m_datebutton->setIcon(QIcon::fromTheme("x-office-calendar", QIcon::fromTheme("text-calendar")));
@@ -105,9 +114,7 @@ void QDateTimeEditPrivate::init(const QDateTime &datetime, const bool showdate, 
 
     updateWidgets(datetime);
 
-    q->connect(m_hourbox, SIGNAL(valueChanged(int)), q, SLOT(_q_timeChanged()));
-    q->connect(m_minutebox, SIGNAL(valueChanged(int)), q, SLOT(_q_timeChanged()));
-    q->connect(m_secondbox, SIGNAL(valueChanged(int)), q, SLOT(_q_timeChanged()));
+    q->connect(m_timebox, SIGNAL(valueChanged(int)), q, SLOT(_q_timeChanged()));
 }
 
 void QDateTimeEditPrivate::updateWidgets(const QDateTime &datetime)
@@ -125,19 +132,11 @@ void QDateTimeEditPrivate::updateWidgets(const QDateTime &datetime)
     if (m_showtime) {
         const QTime mintime = minimumdate.time();
         const QTime maxtime = maximumdate.time();
-        m_hourbox->setMinimum(mintime.hour());
-        m_hourbox->setMaximum(maxtime.hour());
-        m_hourbox->show();
-        m_minutebox->setMinimum(mintime.minute());
-        m_minutebox->setMaximum(maxtime.minute());
-        m_minutebox->show();
-        m_secondbox->setMinimum(mintime.second());
-        m_secondbox->setMaximum(maxtime.second());
-        m_secondbox->show();
+        m_timebox->setMinimum(getTime_t(mintime));
+        m_timebox->setMaximum(getTime_t(maxtime));
+        m_timebox->show();
     } else {
-        m_hourbox->hide();
-        m_minutebox->hide();
-        m_secondbox->hide();
+        m_timebox->hide();
     }
 
     if (m_showdate) {
@@ -147,21 +146,11 @@ void QDateTimeEditPrivate::updateWidgets(const QDateTime &datetime)
     }
     if (m_showtime) {
         const QTime curtime = datetime.time();
-        m_hourbox->setValue(curtime.hour());
-        m_minutebox->setValue(curtime.minute());
-        m_secondbox->setValue(curtime.second());
+        m_timebox->setValue(getTime_t(curtime));
         m_datebutton->setToolButtonStyle(Qt::ToolButtonIconOnly);
-        updateSuffixes();
     } else {
         m_datebutton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
     }
-}
-
-void QDateTimeEditPrivate::updateSuffixes()
-{
-    m_hourbox->setSuffix(getHourSuffix(m_hourbox->value()));
-    m_minutebox->setSuffix(getMinuteSuffix(m_minutebox->value()));
-    m_secondbox->setSuffix(getSecondSuffix(m_secondbox->value()));
 }
 
 void QDateTimeEditPrivate::updateButton(const QDate &date)
@@ -190,7 +179,7 @@ QDateTime QDateTimeEditPrivate::currentDateTime() const
     const QDate curdate = calendarwidget ? calendarwidget->selectedDate() : QDATETIMEEDIT_DATE_INITIAL;
     return QDateTime(
         curdate,
-        QTime(m_hourbox->value(), m_minutebox->value(), m_secondbox->value())
+        getTime(m_timebox->value())
     );
 }
 
@@ -211,7 +200,6 @@ void QDateTimeEditPrivate::_q_timeChanged()
     Q_Q(QDateTimeEdit);
     Q_ASSERT(m_showtime);
     const QDateTime curdatetime = currentDateTime();
-    updateSuffixes();
     emit q->dateTimeChanged(curdatetime);
     emit q->timeChanged(curdatetime.time());
 }
