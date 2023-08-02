@@ -3813,7 +3813,7 @@ bool QDateTimeParser::parseFormat(const QString &newFormat)
     QDTPDEBUGN("parseFormat: %s", newFormat.toLatin1().constData());
 
     QVector<SectionNode> newSectionNodes;
-    Sections newDisplay = nullptr;
+    Sections newDisplay = NoSection;
     QStringList newSeparators;
     int index = 0;
     int add = 0;
