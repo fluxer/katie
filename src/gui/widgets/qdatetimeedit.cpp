@@ -143,7 +143,7 @@ void QDateTimeEditPrivate::updateWidgets(const QDateTime &datetime)
     if (m_showdate) {
         const QDate curdate = datetime.date();
         calendarwidget->setSelectedDate(curdate);
-        m_datebutton->setText(calendarwidget->locale().toString(curdate));
+        updateButton(curdate);
     }
     if (m_showtime) {
         const QTime curtime = datetime.time();
@@ -162,6 +162,11 @@ void QDateTimeEditPrivate::updateSuffixes()
     m_hourbox->setSuffix(getHourSuffix(m_hourbox->value()));
     m_minutebox->setSuffix(getMinuteSuffix(m_minutebox->value()));
     m_secondbox->setSuffix(getSecondSuffix(m_secondbox->value()));
+}
+
+void QDateTimeEditPrivate::updateButton(const QDate &date)
+{
+    m_datebutton->setText(calendarwidget->locale().toString(date));
 }
 
 void QDateTimeEditPrivate::setCalendar(QCalendarWidget *calendar)
@@ -192,17 +197,19 @@ QDateTime QDateTimeEditPrivate::currentDateTime() const
 void QDateTimeEditPrivate::_q_dateChanged()
 {
     Q_Q(QDateTimeEdit);
+    Q_ASSERT(m_showdate);
     const QDateTime curdatetime = currentDateTime();
-    if (m_showdate) {
-        m_datemenu->hide();
-    }
+    const QDate curdate = curdatetime.date();
+    m_datemenu->hide();
+    updateButton(curdate);
     emit q->dateTimeChanged(curdatetime);
-    emit q->dateChanged(curdatetime.date());
+    emit q->dateChanged(curdate);
 }
 
 void QDateTimeEditPrivate::_q_timeChanged()
 {
     Q_Q(QDateTimeEdit);
+    Q_ASSERT(m_showtime);
     const QDateTime curdatetime = currentDateTime();
     updateSuffixes();
     emit q->dateTimeChanged(curdatetime);

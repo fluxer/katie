@@ -58,6 +58,7 @@ public:
     void init(const QDateTime &datetime, const bool showdate, const bool showtime);
     void updateWidgets(const QDateTime &datetime);
     void updateSuffixes();
+    void updateButton(const QDate &date);
     void setCalendar(QCalendarWidget *calendar);
     QDateTime currentDateTime() const;
 
