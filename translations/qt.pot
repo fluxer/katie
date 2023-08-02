@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-19 04:23+0300\n"
+"POT-Creation-Date: 2023-08-02 06:07+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -33,7 +33,7 @@ msgstr ""
 msgid "The file '%1' is not a valid Katie plugin."
 msgstr ""
 
-#: src/core/plugin/qlibrary.cpp:534 src/core/io/qiodevice.cpp:1500
+#: src/core/plugin/qlibrary.cpp:534 src/core/io/qiodevice.cpp:1497
 #: src/network/socket/qtcpserver.cpp:519
 #: src/network/socket/qabstractsocketengine.cpp:408
 msgid "Unknown error"
@@ -121,7 +121,7 @@ msgctxt "QStandardPaths"
 msgid "Executable"
 msgstr ""
 
-#: src/core/io/qfile.cpp:572
+#: src/core/io/qfile.cpp:579
 msgid "Destination file exists"
 msgstr ""
 
@@ -158,62 +158,62 @@ msgstr ""
 msgid "Process operation timed out"
 msgstr ""
 
-#: src/core/tools/qregexp.cpp:45
+#: src/core/tools/qregexp.cpp:46
 msgctxt "QRegExp"
 msgid "no error occurred"
 msgstr ""
 
-#: src/core/tools/qregexp.cpp:46
+#: src/core/tools/qregexp.cpp:47
 msgctxt "QRegExp"
 msgid "disabled feature used"
 msgstr ""
 
-#: src/core/tools/qregexp.cpp:47
+#: src/core/tools/qregexp.cpp:48
 msgctxt "QRegExp"
 msgid "bad char class syntax"
 msgstr ""
 
-#: src/core/tools/qregexp.cpp:48
+#: src/core/tools/qregexp.cpp:49
 msgctxt "QRegExp"
 msgid "bad lookahead syntax"
 msgstr ""
 
-#: src/core/tools/qregexp.cpp:49
+#: src/core/tools/qregexp.cpp:50
 msgctxt "QRegExp"
 msgid "lookbehinds not supported, see QTBUG-2371"
 msgstr ""
 
-#: src/core/tools/qregexp.cpp:50
+#: src/core/tools/qregexp.cpp:51
 msgctxt "QRegExp"
 msgid "bad repetition syntax"
 msgstr ""
 
-#: src/core/tools/qregexp.cpp:51
+#: src/core/tools/qregexp.cpp:52
 msgctxt "QRegExp"
 msgid "invalid octal value"
 msgstr ""
 
-#: src/core/tools/qregexp.cpp:52
+#: src/core/tools/qregexp.cpp:53
 msgctxt "QRegExp"
 msgid "missing left delim"
 msgstr ""
 
-#: src/core/tools/qregexp.cpp:53
+#: src/core/tools/qregexp.cpp:54
 msgctxt "QRegExp"
 msgid "unexpected end"
 msgstr ""
 
-#: src/core/tools/qregexp.cpp:54
+#: src/core/tools/qregexp.cpp:55
 msgctxt "QRegExp"
 msgid "met internal limit"
 msgstr ""
 
-#: src/core/tools/qregexp.cpp:55
+#: src/core/tools/qregexp.cpp:56
 msgctxt "QRegExp"
 msgid "invalid interval"
 msgstr ""
 
-#: src/core/tools/qregexp.cpp:56
+#: src/core/tools/qregexp.cpp:57
 msgctxt "QRegExp"
 msgid "invalid category"
 msgstr ""
@@ -334,12 +334,12 @@ msgstr ""
 msgid "Cannot anchor a vertical edge to a horizontal edge."
 msgstr ""
 
-#: src/declarative/graphicsitems/qdeclarativetextinput.cpp:870
-#: src/declarative/graphicsitems/qdeclarativetextinput.cpp:878
+#: src/declarative/graphicsitems/qdeclarativetextinput.cpp:869
+#: src/declarative/graphicsitems/qdeclarativetextinput.cpp:877
 msgid "Could not load cursor delegate"
 msgstr ""
 
-#: src/declarative/graphicsitems/qdeclarativetextinput.cpp:889
+#: src/declarative/graphicsitems/qdeclarativetextinput.cpp:888
 msgid "Could not instantiate cursor delegate"
 msgstr ""
 
@@ -767,42 +767,42 @@ msgstr ""
 msgid "createObject: value is not an object"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativevme.cpp:199
+#: src/declarative/qml/qdeclarativevme.cpp:197
 msgctxt "QDeclarativeVME"
 msgid "Unable to create object of type %1"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativevme.cpp:639
+#: src/declarative/qml/qdeclarativevme.cpp:637
 msgctxt "QDeclarativeVME"
 msgid "Cannot assign object type %1 with no default method"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativevme.cpp:642
+#: src/declarative/qml/qdeclarativevme.cpp:640
 msgctxt "QDeclarativeVME"
 msgid "Cannot connect mismatched signal/slot %1 %vs. %2"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativevme.cpp:647
+#: src/declarative/qml/qdeclarativevme.cpp:645
 msgctxt "QDeclarativeVME"
 msgid "Cannot assign an object to signal property %1"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativevme.cpp:796
+#: src/declarative/qml/qdeclarativevme.cpp:794
 msgctxt "QDeclarativeVME"
 msgid "Cannot assign object to list"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativevme.cpp:839
+#: src/declarative/qml/qdeclarativevme.cpp:837
 msgctxt "QDeclarativeVME"
 msgid "Cannot assign object to interface property"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativevme.cpp:850
+#: src/declarative/qml/qdeclarativevme.cpp:848
 msgctxt "QDeclarativeVME"
 msgid "Unable to create attached object"
 msgstr ""
 
-#: src/declarative/qml/qdeclarativevme.cpp:882
+#: src/declarative/qml/qdeclarativevme.cpp:880
 msgctxt "QDeclarativeVME"
 msgid "Cannot set properties on %1 as it is null"
 msgstr ""
@@ -1517,126 +1517,126 @@ msgctxt "QPrintDialog"
 msgid "Print"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:493
+#: src/gui/dialogs/qfiledialog.cpp:461
 msgid "Find Directory"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:495
+#: src/gui/dialogs/qfiledialog.cpp:463
 msgid "Open"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:497
+#: src/gui/dialogs/qfiledialog.cpp:465
 msgid "Save As"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:512 src/gui/dialogs/qfiledialog.cpp:1014
+#: src/gui/dialogs/qfiledialog.cpp:480 src/gui/dialogs/qfiledialog.cpp:980
 msgid "All Files (*)"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:522
+#: src/gui/dialogs/qfiledialog.cpp:490
 msgid "Show "
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:526
+#: src/gui/dialogs/qfiledialog.cpp:494
 msgid "&Rename"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:527
+#: src/gui/dialogs/qfiledialog.cpp:495
 msgid "&Delete"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:528
+#: src/gui/dialogs/qfiledialog.cpp:496
 msgid "Show &hidden files"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:529
+#: src/gui/dialogs/qfiledialog.cpp:497
 msgid "&New Folder"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:534 src/gui/dialogs/qfiledialog.cpp:1195
+#: src/gui/dialogs/qfiledialog.cpp:502 src/gui/dialogs/qfiledialog.cpp:1161
 msgid "Directory:"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:536 src/gui/dialogs/qfiledialog.cpp:1201
+#: src/gui/dialogs/qfiledialog.cpp:504 src/gui/dialogs/qfiledialog.cpp:1167
 msgid "File &name:"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:1188 src/gui/dialogs/qfiledialog.cpp:1243
-#: src/gui/dialogs/qfiledialog.cpp:2691
+#: src/gui/dialogs/qfiledialog.cpp:1154 src/gui/dialogs/qfiledialog.cpp:1209
+#: src/gui/dialogs/qfiledialog.cpp:2598
 msgid "&Open"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:1188 src/gui/dialogs/qfiledialog.cpp:1243
+#: src/gui/dialogs/qfiledialog.cpp:1154 src/gui/dialogs/qfiledialog.cpp:1209
 msgid "&Save"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:1191
+#: src/gui/dialogs/qfiledialog.cpp:1157
 msgid "Directories"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:1198 src/gui/dialogs/qfiledialog.cpp:1241
+#: src/gui/dialogs/qfiledialog.cpp:1164 src/gui/dialogs/qfiledialog.cpp:1207
 msgid "&Choose"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:1908 src/gui/dialogs/qfiledialog.cpp:2762
+#: src/gui/dialogs/qfiledialog.cpp:1815 src/gui/dialogs/qfiledialog.cpp:2669
 msgid ""
 "%1\n"
 "Directory not found.\n"
 "Please verify the correct directory name was given."
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:1942
+#: src/gui/dialogs/qfiledialog.cpp:1849
 msgid ""
 "%1 already exists.\n"
 "Do you want to replace it?"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:1962
+#: src/gui/dialogs/qfiledialog.cpp:1869
 msgid ""
 "%1\n"
 "File not found.\n"
 "Please verify the correct file name was given."
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:2411
+#: src/gui/dialogs/qfiledialog.cpp:2318
 msgid "New Folder"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:2540
+#: src/gui/dialogs/qfiledialog.cpp:2447
 msgid ""
 "'%1' is write protected.\n"
 "Do you want to delete it anyway?"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:2545
+#: src/gui/dialogs/qfiledialog.cpp:2452
 msgid "Are sure you want to delete '%1'?"
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:2560
+#: src/gui/dialogs/qfiledialog.cpp:2467
 msgid "Could not delete directory."
 msgstr ""
 
-#: src/gui/dialogs/qfiledialog.cpp:2957
+#: src/gui/dialogs/qfiledialog.cpp:2864
 msgid "Recent Places"
 msgstr ""
 
 #: src/gui/dialogs/qfilesystemmodel.cpp:636
-#: src/gui/itemviews/qdirmodel.cpp:1204
+#: src/gui/itemviews/qdirmodel.cpp:1195
 msgid "%1 TB"
 msgstr ""
 
 #: src/gui/dialogs/qfilesystemmodel.cpp:638
-#: src/gui/itemviews/qdirmodel.cpp:1206
+#: src/gui/itemviews/qdirmodel.cpp:1197
 msgid "%1 GB"
 msgstr ""
 
 #: src/gui/dialogs/qfilesystemmodel.cpp:640
-#: src/gui/itemviews/qdirmodel.cpp:1208
+#: src/gui/itemviews/qdirmodel.cpp:1199
 msgid "%1 MB"
 msgstr ""
 
 #: src/gui/dialogs/qfilesystemmodel.cpp:642
-#: src/gui/itemviews/qdirmodel.cpp:1210
+#: src/gui/itemviews/qdirmodel.cpp:1201
 msgid "%1 KB"
 msgstr ""
 
@@ -1654,19 +1654,19 @@ msgid ""
 "characters or no punctuations marks."
 msgstr ""
 
-#: src/gui/dialogs/qfilesystemmodel.cpp:782 src/gui/itemviews/qdirmodel.cpp:395
+#: src/gui/dialogs/qfilesystemmodel.cpp:782 src/gui/itemviews/qdirmodel.cpp:386
 msgid "Name"
 msgstr ""
 
-#: src/gui/dialogs/qfilesystemmodel.cpp:786 src/gui/itemviews/qdirmodel.cpp:396
+#: src/gui/dialogs/qfilesystemmodel.cpp:786 src/gui/itemviews/qdirmodel.cpp:387
 msgid "Size"
 msgstr ""
 
-#: src/gui/dialogs/qfilesystemmodel.cpp:790 src/gui/itemviews/qdirmodel.cpp:397
+#: src/gui/dialogs/qfilesystemmodel.cpp:790 src/gui/itemviews/qdirmodel.cpp:388
 msgid "Type"
 msgstr ""
 
-#: src/gui/dialogs/qfilesystemmodel.cpp:796 src/gui/itemviews/qdirmodel.cpp:400
+#: src/gui/dialogs/qfilesystemmodel.cpp:796 src/gui/itemviews/qdirmodel.cpp:391
 msgid "Date Modified"
 msgstr ""
 
@@ -1714,31 +1714,31 @@ msgstr ""
 msgid "Close Tab"
 msgstr ""
 
-#: src/gui/widgets/qlineedit.cpp:1710 src/gui/text/qtextcontrol.cpp:1836
+#: src/gui/widgets/qlineedit.cpp:1700 src/gui/text/qtextcontrol.cpp:1836
 msgid "&Undo"
 msgstr ""
 
-#: src/gui/widgets/qlineedit.cpp:1714 src/gui/text/qtextcontrol.cpp:1838
+#: src/gui/widgets/qlineedit.cpp:1704 src/gui/text/qtextcontrol.cpp:1838
 msgid "&Redo"
 msgstr ""
 
-#: src/gui/widgets/qlineedit.cpp:1723 src/gui/text/qtextcontrol.cpp:1842
+#: src/gui/widgets/qlineedit.cpp:1713 src/gui/text/qtextcontrol.cpp:1842
 msgid "Cu&t"
 msgstr ""
 
-#: src/gui/widgets/qlineedit.cpp:1729 src/gui/text/qtextcontrol.cpp:1847
+#: src/gui/widgets/qlineedit.cpp:1719 src/gui/text/qtextcontrol.cpp:1847
 msgid "&Copy"
 msgstr ""
 
-#: src/gui/widgets/qlineedit.cpp:1735 src/gui/text/qtextcontrol.cpp:1860
+#: src/gui/widgets/qlineedit.cpp:1725 src/gui/text/qtextcontrol.cpp:1860
 msgid "&Paste"
 msgstr ""
 
-#: src/gui/widgets/qlineedit.cpp:1742 src/gui/text/qtextcontrol.cpp:1863
+#: src/gui/widgets/qlineedit.cpp:1732 src/gui/text/qtextcontrol.cpp:1863
 msgid "Delete"
 msgstr ""
 
-#: src/gui/widgets/qlineedit.cpp:1750 src/gui/text/qtextcontrol.cpp:1870
+#: src/gui/widgets/qlineedit.cpp:1740 src/gui/text/qtextcontrol.cpp:1870
 msgid "Select All"
 msgstr ""
 
@@ -1884,20 +1884,34 @@ msgctxt "QDialogButtonBox"
 msgid "Restore Defaults"
 msgstr ""
 
-#: src/gui/widgets/qdatetimeedit.cpp:2081
-msgid "AM"
+#: src/gui/widgets/qdatetimeedit.cpp:33 src/gui/widgets/qdatetimeedit.cpp:80
+msgctxt "QDateTimeEdit"
+msgid " hour"
 msgstr ""
 
-#: src/gui/widgets/qdatetimeedit.cpp:2081
-msgid "am"
+#: src/gui/widgets/qdatetimeedit.cpp:35
+msgctxt "QDateTimeEdit"
+msgid " hours"
 msgstr ""
 
-#: src/gui/widgets/qdatetimeedit.cpp:2083
-msgid "PM"
+#: src/gui/widgets/qdatetimeedit.cpp:41 src/gui/widgets/qdatetimeedit.cpp:83
+msgctxt "QDateTimeEdit"
+msgid " minute"
 msgstr ""
 
-#: src/gui/widgets/qdatetimeedit.cpp:2083
-msgid "pm"
+#: src/gui/widgets/qdatetimeedit.cpp:43
+msgctxt "QDateTimeEdit"
+msgid " minutes"
+msgstr ""
+
+#: src/gui/widgets/qdatetimeedit.cpp:49 src/gui/widgets/qdatetimeedit.cpp:86
+msgctxt "QDateTimeEdit"
+msgid " second"
+msgstr ""
+
+#: src/gui/widgets/qdatetimeedit.cpp:51
+msgctxt "QDateTimeEdit"
+msgid " seconds"
 msgstr ""
 
 #: src/gui/widgets/qmdisubwindow.cpp:249
@@ -1985,7 +1999,7 @@ msgstr ""
 msgid "Step &down"
 msgstr ""
 
-#: src/gui/kernel/qwidget.cpp:4780
+#: src/gui/kernel/qwidget.cpp:4773
 msgid "*"
 msgstr ""
 
@@ -3373,20 +3387,20 @@ msgstr ""
 msgid "+"
 msgstr ""
 
-#: src/gui/itemviews/qdirmodel.cpp:792
+#: src/gui/itemviews/qdirmodel.cpp:783
 msgctxt "QFileDialog"
 msgid "My Computer"
 msgstr ""
 
-#: src/gui/itemviews/qdirmodel.cpp:1211
+#: src/gui/itemviews/qdirmodel.cpp:1202
 msgid "%1 byte(s)"
 msgstr ""
 
-#: src/gui/itemviews/qitemeditorfactory.cpp:536
+#: src/gui/itemviews/qitemeditorfactory.cpp:533
 msgid "False"
 msgstr ""
 
-#: src/gui/itemviews/qitemeditorfactory.cpp:537
+#: src/gui/itemviews/qitemeditorfactory.cpp:534
 msgid "True"
 msgstr ""
 
@@ -3531,7 +3545,7 @@ msgid "Host not found"
 msgstr ""
 
 #: src/network/kernel/qhostinfo_unix.cpp:45
-#: src/network/socket/qabstractsocket.cpp:1092
+#: src/network/socket/qabstractsocket.cpp:1086
 msgctxt "QHostInfo"
 msgid "Unknown error"
 msgstr ""
@@ -3565,33 +3579,33 @@ msgid "%1: Address in use"
 msgstr ""
 
 #: src/network/socket/qlocalserver_unix.cpp:207
-#: src/network/socket/qlocalsocket_unix.cpp:139
+#: src/network/socket/qlocalsocket_unix.cpp:142
 msgid "%1: Unknown error %2"
 msgstr ""
 
-#: src/network/socket/qabstractsocket.cpp:427
+#: src/network/socket/qabstractsocket.cpp:421
 msgid "Operation on socket is not supported"
 msgstr ""
 
-#: src/network/socket/qabstractsocket.cpp:685
+#: src/network/socket/qabstractsocket.cpp:679
 msgid "Host not found"
 msgstr ""
 
-#: src/network/socket/qabstractsocket.cpp:727
+#: src/network/socket/qabstractsocket.cpp:721
 #: src/network/socket/qabstractsocketengine.cpp:375
 msgid "Connection refused"
 msgstr ""
 
-#: src/network/socket/qabstractsocket.cpp:865
+#: src/network/socket/qabstractsocket.cpp:859
 #: src/network/socket/qabstractsocketengine.cpp:372
 msgid "Connection timed out"
 msgstr ""
 
-#: src/network/socket/qabstractsocket.cpp:1436
+#: src/network/socket/qabstractsocket.cpp:1430
 msgid "Socket operation timed out"
 msgstr ""
 
-#: src/network/socket/qabstractsocket.cpp:1839
+#: src/network/socket/qabstractsocket.cpp:1833
 msgid "Socket is not connected"
 msgstr ""
 
@@ -3683,39 +3697,39 @@ msgstr ""
 msgid "Operation on non-socket"
 msgstr ""
 
-#: src/network/socket/qlocalsocket_unix.cpp:111
+#: src/network/socket/qlocalsocket_unix.cpp:114
 msgid "%1: Connection refused"
 msgstr ""
 
-#: src/network/socket/qlocalsocket_unix.cpp:114
+#: src/network/socket/qlocalsocket_unix.cpp:117
 msgid "%1: Remote closed"
 msgstr ""
 
-#: src/network/socket/qlocalsocket_unix.cpp:117
+#: src/network/socket/qlocalsocket_unix.cpp:120
 msgid "%1: Invalid name"
 msgstr ""
 
-#: src/network/socket/qlocalsocket_unix.cpp:120
+#: src/network/socket/qlocalsocket_unix.cpp:123
 msgid "%1: Socket access error"
 msgstr ""
 
-#: src/network/socket/qlocalsocket_unix.cpp:123
+#: src/network/socket/qlocalsocket_unix.cpp:126
 msgid "%1: Socket resource error"
 msgstr ""
 
-#: src/network/socket/qlocalsocket_unix.cpp:126
+#: src/network/socket/qlocalsocket_unix.cpp:129
 msgid "%1: Socket operation timed out"
 msgstr ""
 
-#: src/network/socket/qlocalsocket_unix.cpp:129
+#: src/network/socket/qlocalsocket_unix.cpp:132
 msgid "%1: Datagram too large"
 msgstr ""
 
-#: src/network/socket/qlocalsocket_unix.cpp:132
+#: src/network/socket/qlocalsocket_unix.cpp:135
 msgid "%1: Connection error"
 msgstr ""
 
-#: src/network/socket/qlocalsocket_unix.cpp:135
+#: src/network/socket/qlocalsocket_unix.cpp:138
 msgid "%1: The socket operation is not supported"
 msgstr ""
 

@@ -25,16 +25,31 @@
 
 #ifndef QT_NO_DATETIMEEDIT
 
-#define QDATETIMEEDIT_QDTEDEBUG
-#ifdef QDATETIMEEDIT_QDTEDEBUG
-#  define QDTEDEBUG qDebug() << QString::fromLatin1("%1:%2").arg(__FILE__).arg(__LINE__)
-#  define QDTEDEBUGN qDebug
-#else
-#  define QDTEDEBUG if (false) qDebug()
-#  define QDTEDEBUGN if (false) qDebug
-#endif
-
 QT_BEGIN_NAMESPACE
+
+static QString getHourSuffix(const int value)
+{
+    if (value == 1) {
+        return QApplication::translate("QDateTimeEdit", " hour");
+    }
+    return QApplication::translate("QDateTimeEdit", " hours");
+}
+
+static QString getMinuteSuffix(const int value)
+{
+    if (value == 1) {
+        return QApplication::translate("QDateTimeEdit", " minute");
+    }
+    return QApplication::translate("QDateTimeEdit", " minutes");
+}
+
+static QString getSecondSuffix(const int value)
+{
+    if (value == 1) {
+        return QApplication::translate("QDateTimeEdit", " second");
+    }
+    return QApplication::translate("QDateTimeEdit", " seconds");
+}
 
 /*!
   \internal
@@ -136,9 +151,17 @@ void QDateTimeEditPrivate::updateWidgets(const QDateTime &datetime)
         m_minutebox->setValue(curtime.minute());
         m_secondbox->setValue(curtime.second());
         m_datebutton->setToolButtonStyle(Qt::ToolButtonIconOnly);
+        updateSuffixes();
     } else {
         m_datebutton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
     }
+}
+
+void QDateTimeEditPrivate::updateSuffixes()
+{
+    m_hourbox->setSuffix(getHourSuffix(m_hourbox->value()));
+    m_minutebox->setSuffix(getMinuteSuffix(m_minutebox->value()));
+    m_secondbox->setSuffix(getSecondSuffix(m_secondbox->value()));
 }
 
 void QDateTimeEditPrivate::setCalendar(QCalendarWidget *calendar)
@@ -181,6 +204,7 @@ void QDateTimeEditPrivate::_q_timeChanged()
 {
     Q_Q(QDateTimeEdit);
     const QDateTime curdatetime = currentDateTime();
+    updateSuffixes();
     emit q->dateTimeChanged(curdatetime);
     emit q->timeChanged(curdatetime.time());
 }
