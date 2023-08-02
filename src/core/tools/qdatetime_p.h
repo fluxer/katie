@@ -82,7 +82,7 @@ public:
 
 #ifndef QT_BOOTSTRAPPED
 
-class Q_CORE_EXPORT QDateTimeParser
+class QDateTimeParser
 {
 public:
     QDateTimeParser(QVariant::Type t)
