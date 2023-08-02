@@ -50,6 +50,8 @@ class QDateTimeBox : public QSpinBox
 public:
     QDateTimeBox(QWidget *parent);
 
+    void updateLocale(const QLocale &locale);
+
 protected:
     QValidator::State validate(QString &input, int &pos) const final;
     int valueFromText(const QString &text) const final;
@@ -69,6 +71,7 @@ public:
     void init(const QDateTime &datetime, const bool showdate, const bool showtime);
     void updateWidgets(const QDateTime &datetime);
     void updateButton(const QDate &date);
+    void updateLocale(const QLocale &locale);
     void setCalendar(QCalendarWidget *calendar);
     QDateTime currentDateTime() const;
 

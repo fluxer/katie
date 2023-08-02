@@ -41,7 +41,12 @@ QDateTimeBox::QDateTimeBox(QWidget *parent)
     : QSpinBox(parent)
 {
     QDateTimeEdit* datetimeedit = qobject_cast<QDateTimeEdit*>(parent);
-    const QString timeformat = datetimeedit->locale().timeFormat(QLocale::ShortFormat);
+    updateLocale(datetimeedit->locale());
+}
+
+void QDateTimeBox::updateLocale(const QLocale &locale)
+{
+    const QString timeformat = locale.timeFormat(QLocale::ShortFormat);
     if (!timeformat.contains(QLatin1String("ss"))) {
         setSingleStep(60);
     }
@@ -158,6 +163,14 @@ void QDateTimeEditPrivate::updateButton(const QDate &date)
     m_datebutton->setText(calendarwidget->locale().toString(date));
 }
 
+void QDateTimeEditPrivate::updateLocale(const QLocale &locale)
+{
+    m_timebox->updateLocale(locale);
+    if (calendarwidget) {
+        calendarwidget->setLocale(locale);
+    }
+}
+
 void QDateTimeEditPrivate::setCalendar(QCalendarWidget *calendar)
 {
     Q_Q(QDateTimeEdit);
@@ -247,11 +260,9 @@ void QDateTimeEditPrivate::_q_selectDate()
   is passed in \a date.
 */
 
-
 /*!
   Constructs an empty date time editor with a \a parent.
 */
-
 QDateTimeEdit::QDateTimeEdit(QWidget *parent)
     : QWidget(*new QDateTimeEditPrivate(), parent, 0)
 {
@@ -263,7 +274,6 @@ QDateTimeEdit::QDateTimeEdit(QWidget *parent)
   Constructs an empty date time editor with a \a parent. The value
   is set to \a datetime.
 */
-
 QDateTimeEdit::QDateTimeEdit(const QDateTime &datetime, QWidget *parent)
     : QWidget(*new QDateTimeEditPrivate(), parent, 0)
 {
@@ -277,7 +287,6 @@ QDateTimeEdit::QDateTimeEdit(const QDateTime &datetime, QWidget *parent)
   Constructs an empty date time editor with a \a parent.
   The value is set to \a date.
 */
-
 QDateTimeEdit::QDateTimeEdit(const QDate &date, QWidget *parent)
     : QWidget(*new QDateTimeEditPrivate(), parent, 0)
 {
@@ -291,7 +300,6 @@ QDateTimeEdit::QDateTimeEdit(const QDate &date, QWidget *parent)
   Constructs an empty date time editor with a \a parent.
   The value is set to \a time.
 */
-
 QDateTimeEdit::QDateTimeEdit(const QTime &time, QWidget *parent)
     : QWidget(*new QDateTimeEditPrivate(), parent, 0)
 {
@@ -311,7 +319,6 @@ QDateTimeEdit::QDateTimeEdit(const QTime &time, QWidget *parent)
 
   \sa date, time
 */
-
 QDateTime QDateTimeEdit::dateTime() const
 {
     Q_D(const QDateTimeEdit);
@@ -380,7 +387,6 @@ void QDateTimeEdit::setTime(const QTime &time)
     }
 }
 
-
 /*!
   \property QDateTimeEdit::minimumDateTime
   \since 4.4
@@ -397,7 +403,6 @@ void QDateTimeEdit::setTime(const QTime &time)
   \sa maximumDateTime(), minimumTime(), maximumTime(), minimumDate(),
   maximumDate(), setDateTimeRange(), setDateRange(), setTimeRange()
 */
-
 QDateTime QDateTimeEdit::minimumDateTime() const
 {
     Q_D(const QDateTimeEdit);
@@ -420,7 +425,6 @@ QDateTime QDateTimeEdit::minimumDateTime() const
   \sa minimumDateTime(), minimumTime(), maximumTime(), minimumDate(),
   maximumDate(), setDateTimeRange(), setDateRange(), setTimeRange()
 */
-
 QDateTime QDateTimeEdit::maximumDateTime() const
 {
     Q_D(const QDateTimeEdit);
@@ -437,7 +441,6 @@ QDateTime QDateTimeEdit::maximumDateTime() const
 
   \sa setDateRange(), setTimeRange(), QDateTime::isValid()
 */
-
 void QDateTimeEdit::setDateTimeRange(const QDateTime &min, const QDateTime &max)
 {
     Q_D(QDateTimeEdit);
@@ -463,7 +466,6 @@ void QDateTimeEdit::setDateTimeRange(const QDateTime &min, const QDateTime &max)
 
   \sa minimumTime(), maximumTime(), setDateRange()
 */
-
 QDate QDateTimeEdit::minimumDate() const
 {
     return minimumDateTime().date();
@@ -482,7 +484,6 @@ QDate QDateTimeEdit::minimumDate() const
 
   \sa minimumDate, minimumTime, maximumTime, setDateRange()
 */
-
 QDate QDateTimeEdit::maximumDate() const
 {
     return maximumDateTime().date();
@@ -501,7 +502,6 @@ QDate QDateTimeEdit::maximumDate() const
 
   \sa maximumTime, minimumDate, maximumDate, setTimeRange()
 */
-
 QTime QDateTimeEdit::minimumTime() const
 {
     return minimumDateTime().time();
@@ -534,7 +534,6 @@ QTime QDateTimeEdit::maximumTime() const
 
   \sa setDateTimeRange(), setTimeRange(), QDate::isValid()
 */
-
 void QDateTimeEdit::setDateRange(const QDate &min, const QDate &max)
 {
     Q_D(QDateTimeEdit);
@@ -552,7 +551,6 @@ void QDateTimeEdit::setDateRange(const QDate &min, const QDate &max)
 
   \sa setDateTimeRange(), setDateRange(), QTime::isValid()
 */
-
 void QDateTimeEdit::setTimeRange(const QTime &min, const QTime &max)
 {
     Q_D(QDateTimeEdit);
@@ -589,6 +587,24 @@ void QDateTimeEdit::setCalendarWidget(QCalendarWidget *calendarWidget)
 }
 
 /*!
+  \reimp
+*/
+bool QDateTimeEdit::event(QEvent *event)
+{
+    Q_D(QDateTimeEdit);
+    switch (event->type()) {
+        case QEvent::LocaleChange: {
+            d->updateLocale(locale());
+            break;
+        }
+        default: {
+            break;
+        }
+    }
+    return QWidget::event(event);
+}
+
+/*!
   \class QTimeEdit
   \brief The QTimeEdit class provides a widget for editing times based on
   the QDateTimeEdit widget.
@@ -616,8 +632,6 @@ void QDateTimeEdit::setCalendarWidget(QCalendarWidget *calendarWidget)
 /*!
   Constructs an empty time editor with a \a parent.
 */
-
-
 QTimeEdit::QTimeEdit(QWidget *parent)
     : QDateTimeEdit(QTime(), parent)
 {
@@ -627,7 +641,6 @@ QTimeEdit::QTimeEdit(QWidget *parent)
   Constructs an empty time editor with a \a parent. The time is set
   to \a time.
 */
-
 QTimeEdit::QTimeEdit(const QTime &time, QWidget *parent)
     : QDateTimeEdit(time, parent)
 {
@@ -662,7 +675,6 @@ QTimeEdit::QTimeEdit(const QTime &time, QWidget *parent)
 /*!
   Constructs an empty date editor with a \a parent.
 */
-
 QDateEdit::QDateEdit(QWidget *parent)
     : QDateTimeEdit(QDate(), parent)
 {
@@ -672,14 +684,12 @@ QDateEdit::QDateEdit(QWidget *parent)
   Constructs an empty date editor with a \a parent. The date is set
   to \a date.
 */
-
 QDateEdit::QDateEdit(const QDate &date, QWidget *parent)
     : QDateTimeEdit(date, parent)
 {
 }
 
 QT_END_NAMESPACE
-
 
 #include "moc_qdatetimeedit.h"
 

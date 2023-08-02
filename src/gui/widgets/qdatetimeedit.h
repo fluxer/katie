@@ -79,6 +79,9 @@ public Q_SLOTS:
     void setDate(const QDate &date);
     void setTime(const QTime &time);
 
+protected:
+    bool event(QEvent *event);
+
 private:
     Q_DECLARE_PRIVATE(QDateTimeEdit)
     Q_DISABLE_COPY(QDateTimeEdit)
