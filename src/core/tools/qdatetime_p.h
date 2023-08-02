@@ -39,7 +39,7 @@
 #include "QtCore/qlocale.h"
 #include "QtCore/qvector.h"
 
-
+#define QDATETIMEEDIT_SPEC Qt::LocalTime
 #define QDATETIMEEDIT_TIME_MIN QTime(0, 0, 0, 0)
 #define QDATETIMEEDIT_TIME_MAX QTime(23, 59, 59, 999)
 #define QDATETIMEEDIT_DATE_MIN QDate(100, 1, 1)
@@ -85,13 +85,8 @@ public:
 class Q_CORE_EXPORT QDateTimeParser
 {
 public:
-    enum Context {
-        FromString,
-        DateTimeEdit
-    };
-    QDateTimeParser(QVariant::Type t, Context ctx)
-        : currentSectionIndex(-1), display(0), cachedDay(-1), parserType(t),
-        fixday(false), spec(Qt::LocalTime), context(ctx)
+    QDateTimeParser(QVariant::Type t)
+        : currentSectionIndex(-1), display(0), cachedDay(-1), parserType(t)
     {
         defaultLocale = QLocale::system();
         first.type = FirstSection;
@@ -104,7 +99,7 @@ public:
         none.pos = -1;
         none.count = -1;
     }
-    virtual ~QDateTimeParser() {}
+
     enum {
         Neither = -1,
         AM = 0,
@@ -224,12 +219,12 @@ public:
 
     FieldInfo fieldInfo(int index) const;
 
-    virtual QDateTime getMinimum() const;
-    virtual QDateTime getMaximum() const;
-    virtual int cursorPosition() const { return -1; }
-    virtual QString displayText() const { return text; }
-    virtual QString getAmPmText(AmPm ap, Case cs) const;
-    virtual QLocale locale() const { return defaultLocale; }
+    QDateTime getMinimum() const;
+    QDateTime getMaximum() const;
+    int cursorPosition() const { return -1; }
+    QString displayText() const { return text; }
+    QString getAmPmText(AmPm ap, Case cs) const;
+    QLocale locale() const { return defaultLocale; }
 
     int currentSectionIndex;
     Sections display;
@@ -241,11 +236,6 @@ public:
     QString displayFormat;
     QLocale defaultLocale;
     QVariant::Type parserType;
-
-    bool fixday;
-
-    Qt::TimeSpec spec; // spec if used by QDateTimeEdit
-    Context context;
 };
 
 Q_CORE_EXPORT bool operator==(const QDateTimeParser::SectionNode &s1, const QDateTimeParser::SectionNode &s2);

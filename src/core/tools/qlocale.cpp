@@ -1119,7 +1119,7 @@ QTime QLocale::toTime(const QString &string, const QString &format) const
 {
     QTime time;
 #ifndef QT_BOOTSTRAPPED
-    QDateTimeParser dt(QVariant::Time, QDateTimeParser::FromString);
+    QDateTimeParser dt(QVariant::Time);
     dt.defaultLocale = *this;
     if (Q_LIKELY(dt.parseFormat(format)))
         dt.fromString(string, 0, &time);
@@ -1150,7 +1150,7 @@ QDate QLocale::toDate(const QString &string, const QString &format) const
 {
     QDate date;
 #ifndef QT_BOOTSTRAPPED
-    QDateTimeParser dt(QVariant::Date, QDateTimeParser::FromString);
+    QDateTimeParser dt(QVariant::Date);
     dt.defaultLocale = *this;
     if (Q_LIKELY(dt.parseFormat(format)))
         dt.fromString(string, &date, 0);
@@ -1182,7 +1182,7 @@ QDateTime QLocale::toDateTime(const QString &string, const QString &format) cons
     QTime time;
     QDate date;
 #ifndef QT_BOOTSTRAPPED
-    QDateTimeParser dt(QVariant::DateTime, QDateTimeParser::FromString);
+    QDateTimeParser dt(QVariant::DateTime);
     dt.defaultLocale = *this;
     if (Q_LIKELY(dt.parseFormat(format)))
         dt.fromString(string, &date, &time);
