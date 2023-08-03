@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-02 06:07+0300\n"
+"POT-Creation-Date: 2023-08-03 05:13+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1882,36 +1882,6 @@ msgstr ""
 #: src/gui/widgets/qdialogbuttonbox.cpp:490
 msgctxt "QDialogButtonBox"
 msgid "Restore Defaults"
-msgstr ""
-
-#: src/gui/widgets/qdatetimeedit.cpp:33 src/gui/widgets/qdatetimeedit.cpp:80
-msgctxt "QDateTimeEdit"
-msgid " hour"
-msgstr ""
-
-#: src/gui/widgets/qdatetimeedit.cpp:35
-msgctxt "QDateTimeEdit"
-msgid " hours"
-msgstr ""
-
-#: src/gui/widgets/qdatetimeedit.cpp:41 src/gui/widgets/qdatetimeedit.cpp:83
-msgctxt "QDateTimeEdit"
-msgid " minute"
-msgstr ""
-
-#: src/gui/widgets/qdatetimeedit.cpp:43
-msgctxt "QDateTimeEdit"
-msgid " minutes"
-msgstr ""
-
-#: src/gui/widgets/qdatetimeedit.cpp:49 src/gui/widgets/qdatetimeedit.cpp:86
-msgctxt "QDateTimeEdit"
-msgid " second"
-msgstr ""
-
-#: src/gui/widgets/qdatetimeedit.cpp:51
-msgctxt "QDateTimeEdit"
-msgid " seconds"
 msgstr ""
 
 #: src/gui/widgets/qmdisubwindow.cpp:249
