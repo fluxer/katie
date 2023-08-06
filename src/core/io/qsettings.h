@@ -22,7 +22,7 @@
 #ifndef QSETTINGS_H
 #define QSETTINGS_H
 
-#include <QtCore/qvariant.h>
+#include <QStringList>
 
 
 #ifndef QT_NO_SETTINGS
@@ -42,23 +42,14 @@ public:
         FormatError
     };
 
-    enum Format {
-        NativeFormat = 0,
-        IniFormat
-    };
-
-    typedef QMap<QString, QVariant> SettingsMap;
-
     QSettings();
-    QSettings(Format format);
-    QSettings(const QString &fileName, Format format = NativeFormat);
+    QSettings(const QString &fileNamet);
     ~QSettings();
 
     void clear();
     void sync();
     SettingsStatus status() const;
 
-    SettingsMap map() const;
     QStringList keys() const;
     QString group() const;
     void beginGroup(const QString &prefix);
@@ -67,14 +58,19 @@ public:
 
     bool isWritable() const;
 
-    void setValue(const QString &key, const QVariant &value);
-    QVariant value(const QString &key, const QVariant &defaultValue = QVariant()) const;
+    void setString(const QString &key, const QString &value);
+    QString string(const QString &key, const QString &defaultValue = QString()) const;
+    void setStringList(const QString &key, const QStringList &value);
+    QStringList stringList(const QString &key, const QStringList &defaultValue = QStringList()) const;
+    void setInteger(const QString &key, const qlonglong value);
+    qlonglong integer(const QString &key, const qlonglong defaultValue = 0) const;
+    void setBoolean(const QString &key, const bool value);
+    bool boolean(const QString &key, const bool defaultValue = false) const;
 
     void remove(const QString &key);
     bool contains(const QString &key) const;
 
     QString fileName() const;
-    Format format() const;
 
 private:
     Q_DISABLE_COPY(QSettings)

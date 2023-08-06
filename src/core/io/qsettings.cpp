@@ -35,42 +35,11 @@
 
 QT_BEGIN_NAMESPACE
 
-// ************************************************************************
-// Native format
-static bool json_settings_read(QIODevice &device, QSettings::SettingsMap &map)
-{
-    QByteArray data = device.readAll();
-    if (Q_UNLIKELY(data.isEmpty())) {
-        return false;
-    }
-
-    QJsonDocument jsondoc = QJsonDocument::fromJson(data);
-    if (Q_UNLIKELY(jsondoc.isNull())) {
-        qWarning("json_settings_read: %s", jsondoc.errorString().toUtf8().constData());
-        return false;
-    }
-
-    map = jsondoc.toVariant().toMap();
-
-    // qDebug() << "json_settings_read" << jsondoc.toJson();
-    return true;
-}
-
-static bool json_settings_write(QIODevice &device, const QSettings::SettingsMap &map)
-{
-    QJsonDocument jsondoc = QJsonDocument::fromVariant(map);
-    QByteArray jsondata = jsondoc.toJson();
-    if (Q_UNLIKELY(jsondoc.isNull() || jsondata.isNull())) {
-        return false;
-    }
-
-    // qDebug() << "json_settings_write" << jsondata;
-    return device.write(jsondata);
-}
+static const QLatin1String s_stringlistdelim = QLatin1String(",");
 
 // ************************************************************************
 // INI format
-static bool ini_settings_read(QIODevice &device, QSettings::SettingsMap &map)
+static bool ini_settings_read(QIODevice &device, QSettingsMap &map)
 {
     QByteArray section; // keys without section are allowed
 
@@ -93,11 +62,11 @@ static bool ini_settings_read(QIODevice &device, QSettings::SettingsMap &map)
 
         const QByteArray key = line.left(separatorpos).trimmed();
         const QByteArray value = line.mid(separatorpos + 1).trimmed();
-        const QVariant variantvalue(QString::fromAscii(value.constData(), value.size()));
+        const QString stringvalue(QString::fromAscii(value.constData(), value.size()));
         if (section.isEmpty()) {
-            map.insert(key, variantvalue);
+            map.insert(key, stringvalue);
         } else {
-            map.insert(section + '/' + key, variantvalue);
+            map.insert(section + '/' + key, stringvalue);
         }
 
         parsedsomething = true;
@@ -107,7 +76,7 @@ static bool ini_settings_read(QIODevice &device, QSettings::SettingsMap &map)
     return parsedsomething;
 }
 
-static bool ini_settings_write(QIODevice &device, const QSettings::SettingsMap &map)
+static bool ini_settings_write(QIODevice &device, const QSettingsMap &map)
 {
     QString lastsection;
     foreach (const QString &key, map.keys()) {
@@ -136,11 +105,7 @@ static bool ini_settings_write(QIODevice &device, const QSettings::SettingsMap &
             return false;
         }
 
-        const QVariant variantvalue = map.value(key);
-        if (!variantvalue.canConvert<QString>()) {
-            return false;
-        }
-        const QString stringvalue = variantvalue.toString();
+        const QString stringvalue = map.value(key);
         const QString datavalue = QLatin1Char('=') + stringvalue + QLatin1Char('\n');
         if (!device.write(datavalue.toAscii())) {
             return false;
@@ -185,35 +150,16 @@ static QString getSettingsPath(const QString &filename, const QLatin1String &ext
     return createLeadingDir(locations.first() + QDir::separator() + nameandext);
 }
 
-static void setupSettingsFormat(QSettingsPrivate* settings, const QString &filename)
+QSettingsPrivate::QSettingsPrivate()
+    : status(QSettings::NoError), shouldwrite(false)
 {
-    if (settings->format == QSettings::NativeFormat) {
-        settings->readFunc = json_settings_read;
-        settings->writeFunc = json_settings_write;
-        settings->filename = getSettingsPath(filename, QLatin1String(".json"));
-        return;
-    }
-
-    Q_ASSERT(settings->format == QSettings::IniFormat);
-    settings->readFunc = ini_settings_read;
-    settings->writeFunc = ini_settings_write;
-    settings->filename = getSettingsPath(filename, QLatin1String(".ini"));
+    filename = getSettingsPath(QCoreApplication::applicationName(), QLatin1String(".ini"));
 }
 
-QSettingsPrivate::QSettingsPrivate(QSettings::Format format)
-    : format(format), status(QSettings::NoError), shouldwrite(false)
+QSettingsPrivate::QSettingsPrivate(const QString &fileName)
+    : status(QSettings::NoError), shouldwrite(false)
 {
-    setupSettingsFormat(this, QCoreApplication::applicationName());
-}
-
-QSettingsPrivate::QSettingsPrivate(const QString &fileName, QSettings::Format format)
-    : format(format), status(QSettings::NoError), shouldwrite(false)
-{
-    setupSettingsFormat(this, fileName);
-}
-
-QSettingsPrivate::~QSettingsPrivate()
-{
+    filename = getSettingsPath(fileName, QLatin1String(".ini"));
 }
 
 void QSettingsPrivate::read()
@@ -233,7 +179,7 @@ void QSettingsPrivate::read()
     }
     qt_lock_fd(readfile.handle(), true);
 
-    if (Q_UNLIKELY(!readFunc(readfile, map))) {
+    if (Q_UNLIKELY(!ini_settings_read(readfile, map))) {
         status = QSettings::FormatError;
         qWarning("QSettingsPrivate::read: could not read %s", filename.toLocal8Bit().constData());
         return;
@@ -246,12 +192,12 @@ void QSettingsPrivate::write()
         return;
     }
 
-    QSettings::SettingsMap mergemap;
+    QSettingsMap mergemap;
     {
         QFile readfile(filename);
         if (readfile.open(QFile::ReadOnly)) {
             qt_lock_fd(readfile.handle(), true);
-            readFunc(readfile, mergemap);
+            ini_settings_read(readfile, mergemap);
         }
         foreach(const QString &key, map.keys()) {
             mergemap.insert(key, map.value(key));
@@ -266,7 +212,7 @@ void QSettingsPrivate::write()
     }
     qt_lock_fd(writefile.handle(), false);
 
-    if (Q_UNLIKELY(!writeFunc(writefile, mergemap))) {
+    if (Q_UNLIKELY(!ini_settings_write(writefile, mergemap))) {
         status = QSettings::FormatError;
         qWarning("QSettingsPrivate::write: could not write %s", filename.toLocal8Bit().constData());
         return;
@@ -298,11 +244,8 @@ QString QSettingsPrivate::toGroupKey(const QString &key) const
     you to save and restore application settings in a portable
     manner.
 
-    QSettings's API is based on QVariant, allowing you to save
-    most value-based types, such as QString.
-
-    If all you need is a non-persistent memory-based structure,
-    consider using QMap<QString, QVariant> instead.
+    QSettings's API is based on QString, QStringList and qlonglong. It
+    allowing you to save most value-based types.
 
     \tableofcontents section1
 
@@ -314,40 +257,25 @@ QString QSettingsPrivate::toGroupKey(const QString &key) const
     QSettings constructor:
 
     QSettings stores settings. Each setting consists of a QString
-    that specifies the setting's name (the \e key) and a QVariant
-    that stores the data associated with the key. To write a setting,
-    use setValue().
+    that specifies the setting's name (the \e key) and a QString,
+    QStringList or qlonglong that stores the data associated with the
+    key. To write a setting, use setString(), setStringList(),
+    setInteger() or setBoolean().
 
     If there already exists a setting with the same key, the existing
     value is overwritten by the new value. For efficiency, the
     changes may not be saved to permanent storage immediately. (You
     can always call sync() to commit your changes.)
 
-    You can get a setting's value back using value(). If there is no
-    setting with the specified name, QSettings returns a null QVariant
-    (which can be converted to the integer 0). You can specify
-    another default value by passing a second argument to value():
+    You can get a setting's value back using string(), stringList(),
+    integer() or boolean(). If there is no setting with the specified
+    name, QSettings returns a default value. You can specify another
+    default value by passing a second argument:
 
     To test whether a given key exists, call contains(). To remove
     the setting associated with a key, call remove(). To obtain the
     list of all keys, call keys(). To get a map of all settings, call
     map(). To remove all keys, call clear().
-
-    \section1 QVariant and GUI Types
-
-    Because QVariant is part of the \l QtCore library, it cannot provide
-    conversion functions to data types such as QColor, QImage, and
-    QPixmap, which are part of \l QtGui. In other words, there is no
-    \c toColor(), \c toImage(), or \c toPixmap() functions in QVariant.
-    Instead, you can use the QVariant::value() or the qVariantValue()
-    template function.
-
-    The inverse conversion (e.g., from QColor to QVariant) is
-    automatic for all data types supported by QVariant, including
-    GUI-related types.
-
-    Custom types registered using qRegisterMetaType() and
-    qRegisterMetaTypeStreamOperators() can be stored using QSettings.
 
     \section1 Section and Key Syntax
 
@@ -369,10 +297,6 @@ QString QSettingsPrivate::toGroupKey(const QString &key) const
 
     You can form hierarchical keys using the '/' character as a
     separator, similar to Unix file paths.
-
-    If you want to use specific format instead of the native, you
-    can pass QSettings::IniFormat as the first argument to the
-    QSettings constructor.
 
     \section1 Restoring the State of a GUI Application
 
@@ -410,34 +334,24 @@ QString QSettingsPrivate::toGroupKey(const QString &key) const
     system-wide. For simplicity, we're assuming the application is
     called MySoft.
 
-    On Unix systems, if the file format is NativeFormat, the
-    following files are used by default:
-
-    \list 1
-    \o \c{$HOME/.config/MySoft.json}
-    \o \c{/etc/xdg/MySoft.json}
-    \endlist
-
-    If the file format is IniFormat, the following files are
-    used on Unix:
+    On Unix systems, the following files are used:
 
     \list 1
     \o \c{$HOME/.config/MySoft.ini}
     \o \c{/etc/xdg/MySoft.ini}
     \endlist
 
-    The paths for the \c .ini and \c .json files can be changed by the
-    user by setting the \c XDG_CONFIG_HOME environment variable.
+    The paths for the files can be changed by the user by setting the
+    \c XDG_CONFIG_HOME environment variable.
 
     \section2 Accessing Files Directly
 
     Sometimes you do want to access settings stored in a specific file.
     If you want to read an INI file directly, you can use the QSettings
-    constructor that takes a file name as first argument and pass
-    QSettings::IniFormat as second argument. You can then use the
-    QSettings object to read and write settingsin the file.
+    constructor that takes a file name as first argument. You can then
+    use the QSettings object to read and write settingsin the file.
 
-    \sa QVariant, QSessionManager
+    \sa QSessionManager
 */
 
 /*! \enum QSettings::SettingsStatus
@@ -451,27 +365,6 @@ QString QSettingsPrivate::toGroupKey(const QString &key) const
     \sa status()
 */
 
-/*! \enum QSettings::Format
-
-    This enum type specifies the storage format used by QSettings.
-
-    \value NativeFormat  Store the settings in JSON files.
-    \value IniFormat  Store the settings in INI files.
-
-    Katie supports on both formats all platforms. In the absence of an
-    INI standard, the following should be noted:
-
-    \list
-    \o  The INI file format has severe restrictions on the syntax of
-        a key. If you save a top-level setting (a key with no slashes
-        in it, e.g., "someKey"), it will appear in the INI file without
-        section.
-
-    \o  The codec used to read and write the settings files is the
-        same codec used for C-strings, US-ASCII by default.
-    \endlist
-*/
-
 /*!
     Constructs a QSettings object for accessing settings of the
     application set previously with a call to
@@ -480,21 +373,7 @@ QString QSettingsPrivate::toGroupKey(const QString &key) const
     \sa QCoreApplication::setApplicationName()
 */
 QSettings::QSettings()
-    : d_ptr(new QSettingsPrivate(QSettings::NativeFormat))
-{
-    Q_D(QSettings);
-    d->read();
-}
-
-/*!
-    Constructs a QSettings object for accessing settings.
-
-    If \a format is QSettings::NativeFormat, the native JSON API is used
-    for storing settings. If \a format is QSettings::IniFormat, the INI
-    format is used.
-*/
-QSettings::QSettings(Format format)
-    : d_ptr(new QSettingsPrivate(format))
+    : d_ptr(new QSettingsPrivate())
 {
     Q_D(QSettings);
     d->read();
@@ -504,23 +383,12 @@ QSettings::QSettings(Format format)
     Constructs a QSettings object for accessing the settings stored in the
     file called \a fileName. If the file doesn't already exist, it is created.
 
-    The meaning of \a fileName depends on the format. If \a format is
-    QSettings::NativeFormat, the filename will end with .json suffix, if it is
-    QSettings::IniFormat it will be suffixed with .ini.
-
-    If \a format is QSettings::IniFormat, \a fileName is the name of an INI
-    file.
-
-    \list
-    \o In INI files, QSettings uses the \c @ character as a metacharacter in some
-       contexts, to encode Katie-specific data types (e.g., \c @Rect), and might
-       therefore misinterpret it when it occurs in pure INI files.
-    \endlist
+    The \a fileName will be suffixed with .ini if it is relative.
 
     \sa fileName()
 */
-QSettings::QSettings(const QString &fileName, Format format)
-    : d_ptr(new QSettingsPrivate(fileName, format))
+QSettings::QSettings(const QString &fileName)
+    : d_ptr(new QSettingsPrivate(fileName))
 {
     Q_D(QSettings);
     d->read();
@@ -581,19 +449,6 @@ QString QSettings::fileName() const
 }
 
 /*!
-    \since 4.4
-
-    Returns the format used for storing the settings.
-
-    \sa fileName()
-*/
-QSettings::Format QSettings::format() const
-{
-    Q_D(const QSettings);
-    return d->format;
-}
-
-/*!
     Returns a status code indicating the first error that was met by
     QSettings, or QSettings::NoError if no error occurred.
 
@@ -607,18 +462,6 @@ QSettings::SettingsStatus QSettings::status() const
 {
     Q_D(const QSettings);
     return d->status;
-}
-
-/*!
-    Returns a map of all keys, with their values, that the QSettings
-    object holds.
-
-    \sa keys()
-*/
-QSettings::SettingsMap QSettings::map() const
-{
-    Q_D(const QSettings);
-    return d->map;
 }
 
 /*!
@@ -751,13 +594,12 @@ bool QSettings::isWritable() const
 }
 
 /*!
-  
-  Sets the value of setting \a key to \a value. If the \a key already
-  exists, the previous value is overwritten.
+    Sets the value of setting \a key to \a value. If the \a key already
+    exists, the previous value is overwritten.
 
-  \sa value(), remove(), contains()
+    \sa string(), remove(), contains()
 */
-void QSettings::setValue(const QString &key, const QVariant &value)
+void QSettings::setString(const QString &key, const QString &value)
 {
     Q_D(QSettings);
     d->map.insert(d->toGroupKey(key), value);
@@ -765,9 +607,105 @@ void QSettings::setValue(const QString &key, const QVariant &value)
 }
 
 /*!
+    Returns the value for setting \a key. If the setting doesn't
+    exist, returns \a defaultValue.
+
+    If no default value is specified, a default QString is returned.
+
+    \sa setString(), contains(), remove()
+*/
+QString QSettings::string(const QString &key, const QString &defaultValue) const
+{
+    Q_D(const QSettings);
+    return d->map.value(d->toGroupKey(key), defaultValue);
+}
+
+/*!
+    Sets the value of setting \a key to \a value. If the \a key already
+    exists, the previous value is overwritten.
+
+    \sa stringList(), remove(), contains()
+*/
+void QSettings::setStringList(const QString &key, const QStringList &value)
+{
+    Q_D(QSettings);
+    d->map.insert(d->toGroupKey(key), value.join(s_stringlistdelim));
+    d->shouldwrite = true;
+}
+
+/*!
+    Returns the value for setting \a key. If the setting doesn't
+    exist, returns \a defaultValue.
+
+    If no default value is specified, a default QStringList is returned.
+
+    \sa setString(), contains(), remove()
+*/
+QStringList QSettings::stringList(const QString &key, const QStringList &defaultValue) const
+{
+    Q_D(const QSettings);
+    return d->map.value(d->toGroupKey(key), defaultValue.join(s_stringlistdelim)).split(s_stringlistdelim, QString::SkipEmptyParts);
+}
+
+/*!
+    Sets the value of setting \a key to \a value. If the \a key already
+    exists, the previous value is overwritten.
+
+    \sa integer(), remove(), contains()
+*/
+void QSettings::setInteger(const QString &key, const qlonglong value)
+{
+    Q_D(QSettings);
+    d->map.insert(d->toGroupKey(key), QString::number(value));
+    d->shouldwrite = true;
+}
+
+/*!
+    Returns the value for setting \a key. If the setting doesn't
+    exist, returns \a defaultValue.
+
+    If no default value is specified, a default qlonglong is returned.
+
+    \sa setInteger(), contains(), remove()
+*/
+qlonglong QSettings::integer(const QString &key, const qlonglong defaultValue) const
+{
+    Q_D(const QSettings);
+    return d->map.value(d->toGroupKey(key), QString::number(defaultValue)).toLongLong();
+}
+
+/*!
+    Sets the value of setting \a key to \a value. If the \a key already
+    exists, the previous value is overwritten.
+
+    \sa boolean(), remove(), contains()
+*/
+void QSettings::setBoolean(const QString &key, const bool value)
+{
+    Q_D(QSettings);
+    d->map.insert(d->toGroupKey(key), value ? QString::fromLatin1("true") : QString::fromLatin1("false"));
+    d->shouldwrite = true;
+}
+
+/*!
+    Returns the value for setting \a key. If the setting doesn't
+    exist, returns \a defaultValue.
+
+    If no default value is specified, a default bool is returned.
+
+    \sa setBoolean(), contains(), remove()
+*/
+bool QSettings::boolean(const QString &key, const bool defaultValue) const
+{
+    Q_D(const QSettings);
+    const QString value = d->map.value(d->toGroupKey(key), defaultValue ? QString::fromLatin1("true") : QString::fromLatin1("false"));
+    return (value != QLatin1String("0") && value != QLatin1String("false"));
+}
+
+/*!
     Removes the setting \a key.
 
-    \sa setValue(), value(), contains()
+    \sa setString(), string(), contains()
 */
 void QSettings::remove(const QString &key)
 {
@@ -785,34 +723,13 @@ void QSettings::remove(const QString &key)
     Returns true if there exists a setting called \a key; returns
     false otherwise.
 
-    \sa value(), setValue()
+    \sa setString(), string()
 */
 bool QSettings::contains(const QString &key) const
 {
     Q_D(const QSettings);
     return d->map.contains(d->toGroupKey(key));
 }
-
-/*!
-    Returns the value for setting \a key. If the setting doesn't
-    exist, returns \a defaultValue.
-
-    If no default value is specified, a default QVariant is
-    returned.
-
-    \sa setValue(), contains(), remove()
-*/
-QVariant QSettings::value(const QString &key, const QVariant &defaultValue) const
-{
-    Q_D(const QSettings);
-    return d->map.value(d->toGroupKey(key), defaultValue);
-}
-
-/*!
-    \typedef QSettings::SettingsMap
-
-    Typedef for QMap<QString, QVariant>.
-*/
 
 QT_END_NAMESPACE
 

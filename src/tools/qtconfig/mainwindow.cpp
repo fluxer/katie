@@ -175,9 +175,9 @@ MainWindow::MainWindow()
                                    Qt::ToolTipRole);
     ui->guiStyleCombo->addItems(gstyles);
 
-    QSettings settings(QLatin1String("Katie"), QSettings::NativeFormat);
+    QSettings settings(QLatin1String("Katie"));
 
-    QString currentstyle = settings.value(QLatin1String("Qt/style")).toString();
+    QString currentstyle = settings.string(QLatin1String("Qt/style"));
     if (currentstyle.isEmpty()) {
         ui->guiStyleCombo->setCurrentIndex(ui->guiStyleCombo->findText(desktopThemeName));
         currentstyle = QApplication::style()->objectName();
@@ -285,11 +285,9 @@ MainWindow::MainWindow()
         }
     }
 
-    ui->rtlExtensionsCheckBox->setChecked(settings.value(QLatin1String("Qt/useRtlExtensions"), false)
-                                          .toBool());
+    ui->rtlExtensionsCheckBox->setChecked(settings.boolean(QLatin1String("Qt/useRtlExtensions"), false));
 
-    ui->fontEmbeddingCheckBox->setChecked(settings.value(QLatin1String("Qt/embedFonts"), true)
-                                          .toBool());
+    ui->fontEmbeddingCheckBox->setChecked(settings.boolean(QLatin1String("Qt/embedFonts"), true));
 
     ui->helpView->setText(tr(appearance_text));
 
@@ -320,7 +318,7 @@ void MainWindow::fileSave()
 #endif // QT_NO_STATUSBAR
 
     {
-        QSettings settings(QLatin1String("Katie"), QSettings::NativeFormat);
+        QSettings settings(QLatin1String("Katie"));
         QFontDatabase db;
         QFont font = db.font(ui->fontFamilyCombo->currentText(),
                              ui->fontStyleCombo->currentText(),
@@ -341,26 +339,26 @@ void MainWindow::fileSave()
                                            QPalette::ColorRole(i)).name();
         }
 
-        settings.setValue(QLatin1String("Qt/font"), font.toString());
-        settings.setValue(QLatin1String("Qt/Palette/active"), actcg);
-        settings.setValue(QLatin1String("Qt/Palette/inactive"), inactcg);
-        settings.setValue(QLatin1String("Qt/Palette/disabled"), discg);
+        settings.setString(QLatin1String("Qt/font"), font.toString());
+        settings.setStringList(QLatin1String("Qt/Palette/active"), actcg);
+        settings.setStringList(QLatin1String("Qt/Palette/inactive"), inactcg);
+        settings.setStringList(QLatin1String("Qt/Palette/disabled"), discg);
 
-        settings.setValue(QLatin1String("Qt/embedFonts"), ui->fontEmbeddingCheckBox->isChecked());
-        settings.setValue(QLatin1String("Qt/style"),
+        settings.setInteger(QLatin1String("Qt/embedFonts"), ui->fontEmbeddingCheckBox->isChecked());
+        settings.setString(QLatin1String("Qt/style"),
                           overrideDesktopSettings ? ui->guiStyleCombo->currentText() : QString());
 
-        settings.setValue(QLatin1String("Qt/doubleClickInterval"), ui->doubleClickIntervalSpinBox->value());
-        settings.setValue(QLatin1String("Qt/cursorFlashTime"),
+        settings.setInteger(QLatin1String("Qt/doubleClickInterval"), ui->doubleClickIntervalSpinBox->value());
+        settings.setInteger(QLatin1String("Qt/cursorFlashTime"),
                           ui->cursorFlashTimeSpinBox->value() == 9 ? 0 : ui->cursorFlashTimeSpinBox->value());
-        settings.setValue(QLatin1String("Qt/wheelScrollLines"), ui->wheelScrollLinesSpinBox->value());
-        settings.setValue(QLatin1String("Qt/resolveSymlinks"), ui->resolveLinksCheckBox->isChecked());
+        settings.setInteger(QLatin1String("Qt/wheelScrollLines"), ui->wheelScrollLinesSpinBox->value());
+        settings.setInteger(QLatin1String("Qt/resolveSymlinks"), ui->resolveLinksCheckBox->isChecked());
 
         QSize strut(ui->strutWidthSpinBox->value(), ui->strutHeightSpinBox->value());
-        settings.setValue(QLatin1String("Qt/globalStrut/width"), strut.width());
-        settings.setValue(QLatin1String("Qt/globalStrut/height"), strut.height());
+        settings.setInteger(QLatin1String("Qt/globalStrut/width"), strut.width());
+        settings.setInteger(QLatin1String("Qt/globalStrut/height"), strut.height());
 
-        settings.setValue(QLatin1String("Qt/useRtlExtensions"), ui->rtlExtensionsCheckBox->isChecked());
+        settings.setInteger(QLatin1String("Qt/useRtlExtensions"), ui->rtlExtensionsCheckBox->isChecked());
 
         QStringList effects;
         if (ui->effectsCheckBox->isChecked()) {
@@ -375,7 +373,7 @@ void MainWindow::fileSave()
             }
         } else
             effects << QLatin1String("none");
-        settings.setValue(QLatin1String("Qt/GUIEffects"), effects);
+        settings.setStringList(QLatin1String("Qt/GUIEffects"), effects);
     }
 
 #if defined(Q_WS_X11)

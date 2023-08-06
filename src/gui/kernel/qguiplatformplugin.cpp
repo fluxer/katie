@@ -127,8 +127,8 @@ QString QGuiPlatformPlugin::systemIconThemeName()
                 if (subpath == QLatin1String("hicolor")) {
                     continue;
                 }
-                QSettings indextheme(path + QLatin1Char('/') + subpath + QLatin1String("/index.theme"), QSettings::IniFormat);
-                const QStringList themedirectories = indextheme.value(QString::fromLatin1("Icon Theme/Directories")).toStringList();
+                QSettings indextheme(path + QLatin1Char('/') + subpath + QLatin1String("/index.theme"));
+                const QStringList themedirectories = indextheme.stringList(QString::fromLatin1("Icon Theme/Directories"));
                 if (!themedirectories.isEmpty()) {
                     themename = subpath;
                     return themename;

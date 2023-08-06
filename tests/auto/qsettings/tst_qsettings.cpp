@@ -26,14 +26,11 @@
 //TESTED_CLASS=
 //TESTED_FILES=
 
-Q_DECLARE_METATYPE(QSettings::Format)
-
 class tst_QSettings : public QObject
 {
     Q_OBJECT
 
 public:
-    QString m_nativename;
     QString m_ininame;
 
 public slots:
@@ -53,45 +50,40 @@ void tst_QSettings::initTestCase()
 {
     const QString filename = QDir::tempPath() + QLatin1String("/tst_qsettings_")
         + QString::number(qrand());
-    m_nativename = filename + QLatin1String(".json");
     m_ininame = filename + QLatin1String(".ini");
 }
 
 void tst_QSettings::cleanupTestCase()
 {
-    QFile::remove(m_nativename);
     QFile::remove(m_ininame);
 }
 
 void tst_QSettings::value_data()
 {
     QTest::addColumn<QString>("filename");
-    QTest::addColumn<QSettings::Format>("format");
 
-    QTest::newRow("native") << m_nativename << QSettings::NativeFormat;
-    QTest::newRow("ini") << m_ininame << QSettings::IniFormat;
+    QTest::newRow("ini") << m_ininame;
 }
 
 void tst_QSettings::value()
 {
     QFETCH(QString, filename);
-    QFETCH(QSettings::Format, format);
 
-    QSettings settings(filename, format);
+    QSettings settings(filename);
 
-    settings.setValue("a", "1");
+    settings.setString("a", "1");
     QVERIFY(settings.contains("a"));
-    QCOMPARE(settings.value("a"), QVariant("1"));
+    QCOMPARE(settings.string("a"), QString("1"));
 
-    settings.setValue("a/with/separator", "2");
-    QCOMPARE(settings.value("a/with/separator"), QVariant("2"));
+    settings.setString("a/with/separator", "2");
+    QCOMPARE(settings.string("a/with/separator"), QString("2"));
 
     settings.remove("a");
     QVERIFY(!settings.contains("a"));
-    QVERIFY(settings.value("a").isNull());
+    QVERIFY(settings.string("a").isEmpty());
 
-    const QVariant fallback(true);
-    QCOMPARE(settings.value("a", fallback), fallback);
+    const QString fallback("true");
+    QCOMPARE(settings.string("a", fallback), fallback);
 }
 
 void tst_QSettings::variant_data()
@@ -99,30 +91,29 @@ void tst_QSettings::variant_data()
     tst_QSettings::value_data();
 }
 
-#define QVARIANT_TEST(V) \
-    settings.setValue("variant_" #V, V); \
-    QCOMPARE(settings.value("variant_" #V), QVariant(V));
-
 void tst_QSettings::variant()
 {
     QFETCH(QString, filename);
-    QFETCH(QSettings::Format, format);
 
-    QSettings settings(filename, format);
+    QSettings settings(filename);
 
     const qlonglong qll = 123;
     const qreal qrl = 123.456;
     const QByteArray qbytearray("abc");
-    const QByteArray qstring("måndag");
+    const QString qstring = QString::fromUtf8("måndag");
     const QStringList qstringlist = QStringList() << "a" << "b" << "c";
 
-    QVARIANT_TEST(qll);
-    QVARIANT_TEST(qrl);
-    QVARIANT_TEST(qbytearray);
-    QVARIANT_TEST(qstring);
-    QVARIANT_TEST(qstringlist);
+    settings.setInteger("variant_qll", qll);
+    QCOMPARE(settings.integer("variant_qll"), qll);
+    settings.setString("variant_qrl", QString::number(qrl));
+    QCOMPARE(settings.string("variant_qrl"), QString::number(qrl));
+    settings.setString("variant_qbytearray", QString(qbytearray));
+    QCOMPARE(settings.string("variant_qbytearray"), QString(qbytearray));
+    settings.setString("variant_qstring", qstring);
+    QCOMPARE(settings.string("variant_qstring"), qstring);
+    settings.setStringList("variant_qstringlist", qstringlist);
+    QCOMPARE(settings.stringList("variant_qstringlist"), qstringlist);
 }
-#undef QVARIANT_TEST
 
 void tst_QSettings::group_data()
 {
@@ -132,13 +123,12 @@ void tst_QSettings::group_data()
 void tst_QSettings::group()
 {
     QFETCH(QString, filename);
-    QFETCH(QSettings::Format, format);
 
-    QSettings settings(filename, format);
-    settings.setValue("a/a", 1);
-    settings.setValue("a/b", 2);
-    settings.setValue("a/c", 3);
-    settings.setValue("a/c/d", 4);
+    QSettings settings(filename);
+    settings.setInteger("a/a", 1);
+    settings.setInteger("a/b", 2);
+    settings.setInteger("a/c", 3);
+    settings.setInteger("a/c/d", 4);
 
     QCOMPARE(settings.groupKeys(), QStringList());
 
@@ -147,8 +137,8 @@ void tst_QSettings::group()
     QVERIFY(settings.contains("b"));
     settings.remove("c");
     QVERIFY(!settings.contains("c"));
-    QCOMPARE(settings.value("c"), QVariant());
-    QCOMPARE(settings.value("c/d"), QVariant());
+    QCOMPARE(settings.string("c"), QString());
+    QCOMPARE(settings.string("c/d"), QString());
     settings.endGroup();
 }
 

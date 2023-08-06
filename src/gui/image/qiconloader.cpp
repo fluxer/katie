@@ -128,19 +128,19 @@ QIconTheme::QIconTheme(const QString &themeName, const bool supportsSvg)
         }
     }
     if (m_valid) {
-        const QSettings indexReader(m_contentDir + QLatin1String("/index.theme"), QSettings::IniFormat);
-        QStringList indexDirectories = indexReader.value(QLatin1String("Icon Theme/Directories")).toStringList();
+        const QSettings indexReader(m_contentDir + QLatin1String("/index.theme"));
+        QStringList indexDirectories = indexReader.stringList(QLatin1String("Icon Theme/Directories"));
         if (m_supportsSvg) {
-            indexDirectories << indexReader.value(QLatin1String("Icon Theme/ScaledDirectories")).toStringList();
+            indexDirectories << indexReader.stringList(QLatin1String("Icon Theme/ScaledDirectories"));
         }
         // qDebug() << Q_FUNC_INFO << themeName << m_contentDir << indexDirectories;
         foreach (const QString &directoryKey, indexDirectories) {
             const QString sizeKey = directoryKey + QLatin1String("/Size");
-            const int size = indexReader.value(sizeKey).toInt();
+            const int size = indexReader.integer(sizeKey);
             if (Q_LIKELY(size > 0)) {
                 QIconDirInfo dirInfo(directoryKey);
                 dirInfo.size = size;
-                const QString type = indexReader.value(directoryKey + QLatin1String("/Type")).toString();
+                const QString type = indexReader.string(directoryKey + QLatin1String("/Type"));
 
                 if (type == QLatin1String("Fixed")) {
                     dirInfo.type = QIconDirInfo::Fixed;
@@ -149,15 +149,15 @@ QIconTheme::QIconTheme(const QString &themeName, const bool supportsSvg)
                 } else {
                     dirInfo.type = QIconDirInfo::Threshold;
                 }
-                dirInfo.threshold = indexReader.value(directoryKey + QLatin1String("/Threshold"), 2).toInt();
-                dirInfo.minSize = indexReader.value(directoryKey + QLatin1String("/MinSize"), size).toInt();
-                dirInfo.maxSize = indexReader.value(directoryKey + QLatin1String("/MaxSize"), size).toInt();
+                dirInfo.threshold = indexReader.integer(directoryKey + QLatin1String("/Threshold"), 2);
+                dirInfo.minSize = indexReader.integer(directoryKey + QLatin1String("/MinSize"), size);
+                dirInfo.maxSize = indexReader.integer(directoryKey + QLatin1String("/MaxSize"), size);
                 m_keyList.append(dirInfo);
             }
         }
 
         // Parent themes provide fallbacks for missing icons
-        m_parents = indexReader.value(QLatin1String("Icon Theme/Inherits")).toStringList();
+        m_parents = indexReader.stringList(QLatin1String("Icon Theme/Inherits"));
 
         // Ensure that all themes fall back to hicolor
         if (!m_parents.contains(fallbackTheme)) {

@@ -23,7 +23,6 @@
 #include <QtTest/QtTest>
 #include <qcoreapplication.h>
 #include <qdebug.h>
-#include <qsettings.h>
 #include <qtextformat.h>
 #include <qtextdocument.h>
 #include <qtextcursor.h>
@@ -43,27 +42,11 @@ Q_OBJECT
 private slots:
     void getSetCheck();
     void defaultAlignment();
-    void testQTextCharFormat() const;
     void testUnderlinePropertyPrecedence();
     void toFormat();
     void resolveFont();
     void testFontStyleSetters();
 };
-
-/*! \internal
-  This (used to) trigger a crash in:
- 
-    QDataStream &operator>>(QDataStream &stream, QTextFormat &fmt)
-
-  which is most easily produced through QSettings.
- */
-void tst_QTextFormat::testQTextCharFormat() const
-{
-    QSettings settings("testQTextCharFormat", QSettings::NativeFormat);
-    QTextCharFormat test;
-
-    settings.value("test", test);
-}
 
 // Testing get/set functions
 void tst_QTextFormat::getSetCheck()

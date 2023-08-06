@@ -1334,12 +1334,11 @@ void QColorDialogPrivate::init(const QColor &initial)
     initRGB();
 
     if (!customSet) {
-        QSettings settings(QString::fromLatin1("Katie"), QSettings::NativeFormat);
+        QSettings settings(QString::fromLatin1("Katie"));
         for (int i = 0; i < 2*8; ++i) {
-            QVariant v = settings.value(QLatin1String("Qt/customColors/") + QString::number(i));
-            if (v.isValid()) {
-                QRgb rgb = v.toUInt();
-                cusrgb[i] = rgb;
+            qlonglong l = settings.integer(QLatin1String("Qt/customColors/") + QString::number(i));
+            if (l != 0) {
+                cusrgb[i] = QRgb(l);
             }
         }
     }
@@ -1751,9 +1750,9 @@ QColorDialog::~QColorDialog()
     Q_D(QColorDialog);
 
     if (!customSet) {
-        QSettings settings(QString::fromLatin1("Katie"), QSettings::NativeFormat);
+        QSettings settings(QString::fromLatin1("Katie"));
         for (int i = 0; i < 2*8; ++i)
-            settings.setValue(QLatin1String("Qt/customColors/") + QString::number(i), cusrgb[i]);
+            settings.setInteger(QLatin1String("Qt/customColors/") + QString::number(i), cusrgb[i]);
     }
     if (d->nativeDialogInUse)
         qt_guiPlatformPlugin()->colorDialogDelete(this);
