@@ -261,7 +261,29 @@ void QJsonDocumentPrivate::variantToJson(const QVariant &jsonvariant, json_t *jr
                         json_object_set_new_nocheck(jroot, bytearraykey.constData(), json_string(bytearrayvalue.constData()));
                         break;
                     }
-                    case QVariant::List: // this works only for QString-convertable types
+                    case QVariant::List: {
+                        // mixed variant type lists are not supported
+                        bool isobject = true;
+                        const QVariantList valueaslist = value.toList();
+                        foreach (const QVariant &listvalue, valueaslist) {
+                            if (listvalue.type() != QVariant::Map && listvalue.type() != QVariant::Hash) {
+                                isobject = false;
+                                break;
+                            }
+                        }
+                        if (isobject) {
+                            json_t *jarray = json_array();
+                            foreach (const QVariant &listvalue, valueaslist) {
+                                jdepth++;
+                                json_t *jrootn = json_object();
+                                variantToJson(listvalue, jrootn, jdepth);
+                                json_array_append_new(jarray, jrootn);
+                                jdepth--;
+                            }
+                            json_object_set_new_nocheck(jroot, bytearraykey.constData(), jarray);
+                            break;
+                        }
+                    }
                     case QVariant::StringList: {
                         json_t *jarray = json_array();
                         foreach(const QString &listvalue, value.toStringList()) {
