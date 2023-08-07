@@ -119,18 +119,17 @@ static bool ini_settings_write(QIODevice &device, const QSettingsMap &map)
 // ************************************************************************
 // QSettingsPrivate
 
-static inline QString createLeadingDir(const QString &filename)
+static inline void createLeadingDir(const QString &filepath)
 {
-    QFileInfo info(filename);
-    QDir().mkpath(info.absolutePath());
-    return filename;
+    QDir().mkpath(filepath);
 }
 
 static QString getSettingsPath(const QString &filename, const QLatin1String &extension)
 {
     QFileInfo info(filename);
     if (info.isAbsolute()) {
-        return createLeadingDir(filename);
+        createLeadingDir(info.absolutePath());
+        return filename;
     }
 
     QString nameandext = filename;
@@ -142,11 +141,13 @@ static QString getSettingsPath(const QString &filename, const QLatin1String &ext
     foreach (const QString &location, locations) {
         QStatInfo locationinfo(location);
         if (locationinfo.isWritable()) {
-            return createLeadingDir(location + QDir::separator() + nameandext);
+            createLeadingDir(location);
+            return location + QDir::separator() + nameandext;
         }
     }
 
-    return createLeadingDir(locations.first() + QDir::separator() + nameandext);
+    createLeadingDir(locations.first());
+    return locations.first() + QDir::separator() + nameandext;
 }
 
 QSettingsPrivate::QSettingsPrivate()
