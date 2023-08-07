@@ -627,9 +627,7 @@ QString QSettings::string(const QString &key, const QString &defaultValue) const
 */
 void QSettings::setStringList(const QString &key, const QStringList &value)
 {
-    Q_D(QSettings);
-    d->map.insert(d->toGroupKey(key), value.join(s_stringlistdelim));
-    d->shouldwrite = true;
+    setString(key, value.join(s_stringlistdelim));
 }
 
 /*!
@@ -642,8 +640,7 @@ void QSettings::setStringList(const QString &key, const QStringList &value)
 */
 QStringList QSettings::stringList(const QString &key, const QStringList &defaultValue) const
 {
-    Q_D(const QSettings);
-    return d->map.value(d->toGroupKey(key), defaultValue.join(s_stringlistdelim)).split(s_stringlistdelim, QString::SkipEmptyParts);
+    return string(key, defaultValue.join(s_stringlistdelim)).split(s_stringlistdelim, QString::SkipEmptyParts);
 }
 
 /*!
@@ -654,9 +651,7 @@ QStringList QSettings::stringList(const QString &key, const QStringList &default
 */
 void QSettings::setInteger(const QString &key, const qlonglong value)
 {
-    Q_D(QSettings);
-    d->map.insert(d->toGroupKey(key), QString::number(value));
-    d->shouldwrite = true;
+    setString(key, QString::number(value));
 }
 
 /*!
@@ -669,8 +664,7 @@ void QSettings::setInteger(const QString &key, const qlonglong value)
 */
 qlonglong QSettings::integer(const QString &key, const qlonglong defaultValue) const
 {
-    Q_D(const QSettings);
-    return d->map.value(d->toGroupKey(key), QString::number(defaultValue)).toLongLong();
+    return string(key, QString::number(defaultValue)).toLongLong();
 }
 
 /*!
@@ -681,9 +675,7 @@ qlonglong QSettings::integer(const QString &key, const qlonglong defaultValue) c
 */
 void QSettings::setBoolean(const QString &key, const bool value)
 {
-    Q_D(QSettings);
-    d->map.insert(d->toGroupKey(key), value ? QString::fromLatin1("true") : QString::fromLatin1("false"));
-    d->shouldwrite = true;
+    setString(key, value ? QString::fromLatin1("true") : QString::fromLatin1("false"));
 }
 
 /*!
@@ -696,8 +688,7 @@ void QSettings::setBoolean(const QString &key, const bool value)
 */
 bool QSettings::boolean(const QString &key, const bool defaultValue) const
 {
-    Q_D(const QSettings);
-    const QString value = d->map.value(d->toGroupKey(key), defaultValue ? QString::fromLatin1("true") : QString::fromLatin1("false"));
+    const QString value = string(key, defaultValue ? QString::fromLatin1("true") : QString::fromLatin1("false"));
     return (value != QLatin1String("0") && value != QLatin1String("false"));
 }
 
