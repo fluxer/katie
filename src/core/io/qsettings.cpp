@@ -22,7 +22,6 @@
 #include "qdebug.h"
 #include "qplatformdefs.h"
 #include "qsettings.h"
-#include "qjsondocument.h"
 #include "qstandardpaths.h"
 #include "qcoreapplication.h"
 #include "qcore_unix_p.h"
