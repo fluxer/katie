@@ -957,10 +957,8 @@ include/katie/QtTest/QTestEventLoop
 include/katie/QtTest/QTestFileLogger
 include/katie/QtTest/QTestKeyClicksEvent
 include/katie/QtTest/QTestKeyEvent
-include/katie/QtTest/QTestLightXmlStreamer
 include/katie/QtTest/QTestMouseEvent
 include/katie/QtTest/QTestXmlStreamer
-include/katie/QtTest/QTestXunitStreamer
 include/katie/QtTest/QtTest
 include/katie/QtTest/QtTestGui
 include/katie/QtTest/qbenchmark.h
@@ -981,12 +979,10 @@ include/katie/QtTest/qtestevent.h
 include/katie/QtTest/qtesteventloop.h
 include/katie/QtTest/qtestfilelogger.h
 include/katie/QtTest/qtestkeyboard.h
-include/katie/QtTest/qtestlightxmlstreamer.h
 include/katie/QtTest/qtestmouse.h
 include/katie/QtTest/qtestspontaneevent.h
 include/katie/QtTest/qtestsystem.h
 include/katie/QtTest/qtestxmlstreamer.h
-include/katie/QtTest/qtestxunitstreamer.h
 include/katie/QtUiTools/QCustomWidget
 include/katie/QtUiTools/QCustomWidgetPlugin
 include/katie/QtUiTools/QUiLoader

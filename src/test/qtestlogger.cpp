@@ -21,9 +21,7 @@
 
 #include "qtestlogger_p.h"
 #include "qtestelement.h"
-#include "qtestxunitstreamer.h"
 #include "qtestxmlstreamer.h"
-#include "qtestlightxmlstreamer.h"
 #include "qtestfilelogger.h"
 #include "qtestcase.h"
 #include "qtestresult_p.h"
@@ -35,7 +33,7 @@
 QT_BEGIN_NAMESPACE
 
 QTestLogger::QTestLogger(TestLoggerFormat fm)
-    :listOfTestcases(0), currentLogElement(0), errorLogElement(0),
+    : listOfTestcases(0), currentLogElement(0), errorLogElement(0),
     logFormatter(0), format( (TestLoggerFormat)fm ), filelogger(new QTestFileLogger),
     testCounter(0), passCounter(0), failureCounter(0), errorCounter(0),
     skipCounter(0), randomSeed_(0), hasRandomSeed_(false)
@@ -44,11 +42,7 @@ QTestLogger::QTestLogger(TestLoggerFormat fm)
 
 QTestLogger::~QTestLogger()
 {
-    if(format == TLF_XunitXml)
-        delete currentLogElement;
-    else
-        delete listOfTestcases;
-
+    delete listOfTestcases;
     delete logFormatter;
     delete filelogger;
 }
@@ -56,21 +50,11 @@ QTestLogger::~QTestLogger()
 void QTestLogger::startLogging()
 {
     switch(format){
-    case TLF_LightXml:{
-        logFormatter = new QTestLightXmlStreamer;
-        filelogger->init();
-        break;
-    }case TLF_XML:{
-        logFormatter = new QTestXmlStreamer;
-        filelogger->init();
-        break;
-    }case TLF_XunitXml:{
-        logFormatter = new QTestXunitStreamer;
-        delete errorLogElement;
-        errorLogElement = new QTestElement(QTest::LET_SystemError);
-        filelogger->init();
-        break;
-    }
+        case TLF_XML: {
+            logFormatter = new QTestXmlStreamer;
+            filelogger->init();
+            break;
+        }
     }
 
     logFormatter->setLogger(this);
@@ -79,63 +63,7 @@ void QTestLogger::startLogging()
 
 void QTestLogger::stopLogging()
 {
-    QTestElement *iterator = listOfTestcases;
-
-    if(format == TLF_XunitXml ){
-        QSTACKARRAY(char, buf, 10);
-
-        currentLogElement = new QTestElement(QTest::LET_TestSuite);
-        currentLogElement->addAttribute(QTest::AI_Name, QTestResult::currentTestObjectName());
-
-        QTest::qt_snprintf(buf, sizeof(buf), "%i", testCounter);
-        currentLogElement->addAttribute(QTest::AI_Tests, buf);
-
-        QTest::qt_snprintf(buf, sizeof(buf), "%i", failureCounter);
-        currentLogElement->addAttribute(QTest::AI_Failures, buf);
-
-        QTest::qt_snprintf(buf, sizeof(buf), "%i", errorCounter);
-        currentLogElement->addAttribute(QTest::AI_Errors, buf);
-
-        QTestElement *property;
-        QTestElement *properties = new QTestElement(QTest::LET_Properties);
-
-        property = new QTestElement(QTest::LET_Property);
-        property->addAttribute(QTest::AI_Name, "QTestVersion");
-        property->addAttribute(QTest::AI_PropertyValue, QT_VERSION_STR);
-        properties->addLogElement(property);
-
-        property = new QTestElement(QTest::LET_Property);
-        property->addAttribute(QTest::AI_Name, "QtVersion");
-        property->addAttribute(QTest::AI_PropertyValue, qVersion());
-        properties->addLogElement(property);
-
-        if (hasRandomSeed()) {
-            property = new QTestElement(QTest::LET_Property);
-            property->addAttribute(QTest::AI_Name, "RandomSeed");
-            QTest::qt_snprintf(buf, sizeof(buf), "%i", randomSeed());
-            property->addAttribute(QTest::AI_PropertyValue, buf);
-            properties->addLogElement(property);
-        }
-
-        currentLogElement->addLogElement(properties);
-
-        currentLogElement->addLogElement(iterator);
-
-        /* For correct indenting, make sure every testcase knows its parent */
-        QTestElement* testcase = iterator;
-        while (testcase) {
-            testcase->setParent(currentLogElement);
-            testcase = testcase->nextElement();
-        }
-
-        currentLogElement->addLogElement(errorLogElement);
-
-        QTestElement *it = currentLogElement;
-        logFormatter->output(it);
-    }else{
-        logFormatter->output(iterator);
-    }
-
+    logFormatter->output(listOfTestcases);
     logFormatter->stopStreaming();
 }
 
@@ -185,7 +113,7 @@ void QTestLogger::addIncident(IncidentTypes type, const char *description,
     }
 
     if (type == QAbstractTestLogger::Fail || type == QAbstractTestLogger::XPass
-            || ((format != TLF_XunitXml) && (type == QAbstractTestLogger::XFail))) {
+            || type == QAbstractTestLogger::XFail) {
         QTestElement *failureElement = new QTestElement(QTest::LET_Failure);
         failureElement->addAttribute(QTest::AI_Result, typeBuf);
         if(file)
@@ -230,14 +158,6 @@ void QTestLogger::addIncident(IncidentTypes type, const char *description,
 
     QTest::qt_snprintf(buf, sizeof(buf), "%i", line);
     currentLogElement->addAttribute(QTest::AI_Line, buf);
-
-    /*
-        Since XFAIL does not add a failure to the testlog in xunitxml, add a message, so we still
-        have some information about the expected failure.
-    */
-    if (format == TLF_XunitXml && type == QAbstractTestLogger::XFail) {
-        QTestLogger::addMessage(QAbstractTestLogger::Info, description, file, line);
-    }
 }
 
 void QTestLogger::addBenchmarkResult(const QBenchmarkResult &result)

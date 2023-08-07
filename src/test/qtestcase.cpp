@@ -974,9 +974,7 @@ Q_TEST_EXPORT void qtest_qParseArgs(int argc, char *argv[], bool qml)
          " -functions : Returns a list of current testfunctions\n"
          " -datatags  : Returns a list of current data tags.\n"
          "              A global data tag is preceded by ' __global__ '.\n"
-         " -xunitxml  : Outputs results as XML XUnit document\n"
          " -xml       : Outputs results as XML document\n"
-         " -lightxml  : Outputs results as stream of XML tags\n"
          " -flush     : Flushes the results\n"
          " -o filename: Writes all output into a file\n"
          " -silent    : Only outputs warnings and failures\n"
@@ -1026,13 +1024,9 @@ Q_TEST_EXPORT void qtest_qParseArgs(int argc, char *argv[], bool qml)
                 qPrintDataTags();
                 ::exit(0);
             }
-        } else if(strcmp(argv[i], "-xunitxml") == 0){
-            QTestLog::setLogMode(QTestLog::XunitXML);
         } else if (strcmp(argv[i], "-xml") == 0) {
             QTestLog::setLogMode(QTestLog::XML);
-        } else if (strcmp(argv[i], "-lightxml") == 0) {
-            QTestLog::setLogMode(QTestLog::LightXML);
-        }else if(strcmp(argv[i], "-flush") == 0){
+        } else if(strcmp(argv[i], "-flush") == 0){
             QTestLog::setFlushMode(QTestLog::FLushOn);
         } else if (strcmp(argv[i], "-silent") == 0) {
             QTestLog::setVerboseLevel(-1);

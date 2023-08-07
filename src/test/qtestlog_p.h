@@ -42,7 +42,7 @@ class QBenchmarkResult;
 class Q_TEST_EXPORT QTestLog
 {
 public:
-    enum LogMode { Plain = 0, XML, LightXML, XunitXML };
+    enum LogMode { Plain = 0, XML };
     enum FlushMode { NoFlush = 0, FLushOn };
 
     static void enterTestFunction(const char* function);

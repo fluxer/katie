@@ -46,9 +46,7 @@ class QTestLogger : public QAbstractTestLogger
     public:
         enum TestLoggerFormat
         {
-            TLF_XML = 0,
-            TLF_LightXml = 1,
-            TLF_XunitXml = 2
+            TLF_XML = 0
         };
 
 
