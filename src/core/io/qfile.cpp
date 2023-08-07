@@ -1261,23 +1261,18 @@ bool QFile::seek(qint64 off)
 qint64 QFile::readLineData(char *data, qint64 maxlen)
 {
     Q_D(QFile);
-    if (d->fd != -1 && isSequential()) {
-        qint64 readSoFar = 0;
-        while (readSoFar < maxlen) {
-            char c;
-            qint64 readResult = qt_safe_read(d->fd, &c, 1);
-            if (readResult <= 0)
-                return (readSoFar > 0) ? readSoFar : -1;
-            ++readSoFar;
-            *data++ = c;
-            if (c == '\n')
-                return readSoFar;
-        }
-        return readSoFar;
+    qint64 readSoFar = 0;
+    while (readSoFar < maxlen) {
+        char c;
+        qint64 readResult = qt_safe_read(d->fd, &c, 1);
+        if (readResult <= 0)
+            return (readSoFar > 0) ? readSoFar : -1;
+        ++readSoFar;
+        *data++ = c;
+        if (c == '\n')
+            return readSoFar;
     }
-    // Fall back to QIODevice's readLine implementation if the engine
-    // cannot do it faster.
-    return QIODevice::readLineData(data, maxlen);
+    return readSoFar;
 }
 
 /*!
