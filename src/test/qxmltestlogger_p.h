@@ -41,9 +41,7 @@ QT_BEGIN_NAMESPACE
 class QXmlTestLogger : public QAbstractTestLogger
 {
 public:
-    enum XmlMode { Complete = 0, Light };
-
-    QXmlTestLogger(XmlMode mode = Complete);
+    QXmlTestLogger();
     ~QXmlTestLogger();
 
     void startLogging();
@@ -67,7 +65,6 @@ public:
     static int xmlQuote(QTestCharBuffer *dest, char const* src, size_t n);
 
 private:
-    XmlMode xmlmode;
     unsigned int randomSeed;
     bool hasRandomSeed;
 };

@@ -71,8 +71,8 @@ namespace QTest {
 }
 
 
-QXmlTestLogger::QXmlTestLogger(XmlMode mode )
-    :xmlmode(mode), randomSeed(0), hasRandomSeed(false)
+QXmlTestLogger::QXmlTestLogger()
+    : randomSeed(0), hasRandomSeed(false)
 {
 
 }
@@ -86,14 +86,12 @@ void QXmlTestLogger::startLogging()
     QAbstractTestLogger::startLogging();
     QTestCharBuffer buf;
 
-    if (xmlmode == QXmlTestLogger::Complete) {
-        QTestCharBuffer quotedTc;
-        xmlQuote(&quotedTc, QTestResult::currentTestObjectName());
-        QTest::qt_asprintf(&buf,
-                "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n"
-                "<TestCase name=\"%s\">\n", quotedTc.constData());
-        outputString(buf.constData());
-    }
+    QTestCharBuffer quotedTc;
+    xmlQuote(&quotedTc, QTestResult::currentTestObjectName());
+    QTest::qt_asprintf(&buf,
+            "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n"
+            "<TestCase name=\"%s\">\n", quotedTc.constData());
+    outputString(buf.constData());
 
     if (hasRandomSeed) {
        QTest::qt_asprintf(&buf,
@@ -114,10 +112,7 @@ void QXmlTestLogger::startLogging()
 
 void QXmlTestLogger::stopLogging()
 {
-    if (xmlmode == QXmlTestLogger::Complete) {
-        outputString("</TestCase>\n");
-    }
-
+    outputString("</TestCase>\n");
     QAbstractTestLogger::stopLogging();
 }
 

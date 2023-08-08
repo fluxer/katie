@@ -157,7 +157,7 @@ void initLogger()
         }
         case QTestLog::XML: {
             if(QTest::flushMode == QTestLog::FLushOn)
-                QTest::testLogger = new QXmlTestLogger(QXmlTestLogger::Complete);
+                QTest::testLogger = new QXmlTestLogger();
             else
                 QTest::testLogger = new QTestLogger(QTestLogger::TLF_XML);
             break;
