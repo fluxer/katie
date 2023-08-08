@@ -163,7 +163,6 @@ namespace QTest
 
 QT_END_NAMESPACE
 
-
 #endif // QT_GUI_LIB
 
 #endif // QTESTKEYBOARD_H

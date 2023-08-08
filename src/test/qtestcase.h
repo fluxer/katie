@@ -27,9 +27,7 @@
 #include <QtCore/qnamespace.h>
 #include <QtCore/qmetatype.h>
 
-
 QT_BEGIN_NAMESPACE
-
 
 #define QVERIFY(statement) \
 do {\

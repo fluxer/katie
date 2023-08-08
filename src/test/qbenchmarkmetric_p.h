@@ -25,9 +25,7 @@
 #include "qtest_global.h"
 #include "qbenchmarkmetric.h"
 
-
 QT_BEGIN_NAMESPACE
-
 
 namespace QTest {
     const char * benchmarkMetricName(QBenchmarkMetric metric);
@@ -35,6 +33,5 @@ namespace QTest {
 }
 
 QT_END_NAMESPACE
-
 
 #endif // QBENCHMARK_H
