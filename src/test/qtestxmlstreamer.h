@@ -31,16 +31,16 @@ QT_BEGIN_NAMESPACE
 class QTestElement;
 class QTestElementAttribute;
 
-class QTestXmlStreamer: public QTestBasicStreamer
+class Q_TEST_EXPORT QTestXmlStreamer: public QTestBasicStreamer
 {
-    public:
-        QTestXmlStreamer();
-        ~QTestXmlStreamer();
+public:
+    QTestXmlStreamer();
+    ~QTestXmlStreamer();
 
-        void formatStart(const QTestElement *element, QTestCharBuffer *formatted) const;
-        void formatEnd(const QTestElement *element, QTestCharBuffer *formatted) const;
-        void formatBeforeAttributes(const QTestElement *element, QTestCharBuffer *formatted) const;
-        void output(QTestElement *element) const;
+    void formatStart(const QTestElement *element, QTestCharBuffer *formatted) const;
+    void formatEnd(const QTestElement *element, QTestCharBuffer *formatted) const;
+    void formatBeforeAttributes(const QTestElement *element, QTestCharBuffer *formatted) const;
+    void output(QTestElement *element) const;
 };
 
 QT_END_NAMESPACE

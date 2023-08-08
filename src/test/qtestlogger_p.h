@@ -43,49 +43,49 @@ class QTestFileLogger;
 
 class QTestLogger : public QAbstractTestLogger
 {
-    public:
-        enum TestLoggerFormat
-        {
-            TLF_XML = 0
-        };
+public:
+    enum TestLoggerFormat
+    {
+        TLF_XML = 0
+    };
 
 
-        QTestLogger(TestLoggerFormat fm = TestLoggerFormat::TLF_XML);
-        ~QTestLogger();
+    QTestLogger(TestLoggerFormat fm = TestLoggerFormat::TLF_XML);
+    ~QTestLogger();
 
-        void startLogging();
-        void stopLogging();
+    void startLogging();
+    void stopLogging();
 
-        void enterTestFunction(const char *function);
-        void leaveTestFunction();
+    void enterTestFunction(const char *function);
+    void leaveTestFunction();
 
-        void addIncident(IncidentTypes type, const char *description,
+    void addIncident(IncidentTypes type, const char *description,
                      const char *file = 0, int line = 0);
-        void addBenchmarkResult(const QBenchmarkResult &result);
-        void addTag(QTestElement* element);
+    void addBenchmarkResult(const QBenchmarkResult &result);
+    void addTag(QTestElement* element);
 
-        void addMessage(MessageTypes type, const char *message,
+    void addMessage(MessageTypes type, const char *message,
                     const char *file = 0, int line = 0);
 
-        void registerRandomSeed(unsigned int seed);
-        unsigned int randomSeed() const;
-        bool hasRandomSeed() const;
+    void registerRandomSeed(unsigned int seed);
+    unsigned int randomSeed() const;
+    bool hasRandomSeed() const;
 
-    private:
-        QTestElement *listOfTestcases;
-        QTestElement *currentLogElement;
-        QTestElement *errorLogElement;
-        QTestBasicStreamer *logFormatter;
-        TestLoggerFormat format;
-        QTestFileLogger *filelogger;
+private:
+    QTestElement *listOfTestcases;
+    QTestElement *currentLogElement;
+    QTestElement *errorLogElement;
+    QTestBasicStreamer *logFormatter;
+    TestLoggerFormat format;
+    QTestFileLogger *filelogger;
 
-        int testCounter;
-        int passCounter;
-        int failureCounter;
-        int errorCounter;
-        int skipCounter;
-        unsigned int randomSeed_;
-        bool hasRandomSeed_;
+    int testCounter;
+    int passCounter;
+    int failureCounter;
+    int errorCounter;
+    int skipCounter;
+    unsigned int randomSeed_;
+    bool hasRandomSeed_;
 };
 
 QT_END_NAMESPACE

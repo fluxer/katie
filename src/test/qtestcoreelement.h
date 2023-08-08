@@ -29,29 +29,29 @@
 QT_BEGIN_NAMESPACE
 
 template <class ElementType>
-class QTestCoreElement: public QTestCoreList<ElementType>
+class Q_TEST_EXPORT QTestCoreElement: public QTestCoreList<ElementType>
 {
-    public:
-        QTestCoreElement( int type = -1 );
-        virtual ~QTestCoreElement();
+public:
+    QTestCoreElement( int type = -1 );
+    virtual ~QTestCoreElement();
 
-        void addAttribute(const QTest::AttributeIndex index, const char *value);
-        QTestElementAttribute *attributes() const;
-        const char *attributeValue(QTest::AttributeIndex index) const;
-        const char *attributeName(QTest::AttributeIndex index) const;
-        const QTestElementAttribute *attribute(QTest::AttributeIndex index) const;
+    void addAttribute(const QTest::AttributeIndex index, const char *value);
+    QTestElementAttribute *attributes() const;
+    const char *attributeValue(QTest::AttributeIndex index) const;
+    const char *attributeName(QTest::AttributeIndex index) const;
+    const QTestElementAttribute *attribute(QTest::AttributeIndex index) const;
 
-        const char *elementName() const;
-        QTest::LogElementType elementType() const;
+    const char *elementName() const;
+    QTest::LogElementType elementType() const;
 
-    private:
-        QTestElementAttribute *listOfAttributes;
-        QTest::LogElementType type;
+private:
+    QTestElementAttribute *listOfAttributes;
+    QTest::LogElementType type;
 };
 
 template<class ElementType>
 QTestCoreElement<ElementType>::QTestCoreElement(int t)
-    :listOfAttributes(0), type(QTest::LogElementType(t))
+    : listOfAttributes(0), type(QTest::LogElementType(t))
 {
 }
 

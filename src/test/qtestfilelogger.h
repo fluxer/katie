@@ -27,7 +27,7 @@
 
 QT_BEGIN_NAMESPACE
 
-class QTestFileLogger
+class Q_TEST_EXPORT QTestFileLogger
 {
     public:
         QTestFileLogger();

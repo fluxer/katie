@@ -27,22 +27,21 @@
 
 QT_BEGIN_NAMESPACE
 
-class QTestElement: public QTestCoreElement<QTestElement>
+class Q_TEST_EXPORT QTestElement: public QTestCoreElement<QTestElement>
 {
-    public:
-        QTestElement(int type = -1);
-        ~QTestElement();
+public:
+    QTestElement(int type = -1);
+    ~QTestElement();
 
-        bool addLogElement(QTestElement *element);
-        QTestElement *childElements() const;
+    bool addLogElement(QTestElement *element);
+    QTestElement *childElements() const;
 
-        const QTestElement *parentElement() const;
-        void setParent(const QTestElement *p);
+    const QTestElement *parentElement() const;
+    void setParent(const QTestElement *p);
 
-    private:
-        QTestElement *listOfChildren;
-        const QTestElement * parent;
-
+private:
+    QTestElement *listOfChildren;
+    const QTestElement * parent;
 };
 
 QT_END_NAMESPACE

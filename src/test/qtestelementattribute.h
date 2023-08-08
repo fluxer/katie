@@ -64,24 +64,23 @@ namespace QTest {
     };
 }
 
-class QTestElementAttribute: public QTestCoreList<QTestElementAttribute>
+class Q_TEST_EXPORT QTestElementAttribute: public QTestCoreList<QTestElementAttribute>
 {
-    public:
-        QTestElementAttribute();
-        ~QTestElementAttribute();
+public:
+    QTestElementAttribute();
+    ~QTestElementAttribute();
 
-        const char *value() const;
-        const char *name() const;
-        QTest::AttributeIndex index() const;
-        bool isNull() const;
-        bool setPair(QTest::AttributeIndex attributeIndex, const char *value);
+    const char *value() const;
+    const char *name() const;
+    QTest::AttributeIndex index() const;
+    bool isNull() const;
+    bool setPair(QTest::AttributeIndex attributeIndex, const char *value);
 
-    private:
-        char *attributeValue;
-        QTest::AttributeIndex attributeIndex;
+private:
+    char *attributeValue;
+    QTest::AttributeIndex attributeIndex;
 };
 
 QT_END_NAMESPACE
-
 
 #endif

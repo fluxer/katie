@@ -28,27 +28,27 @@
 QT_BEGIN_NAMESPACE
 
 template <class T>
-class QTestCoreList
+class Q_TEST_EXPORT QTestCoreList
 {
-    public:
-        QTestCoreList();
-        virtual ~QTestCoreList();
+public:
+    QTestCoreList();
+    virtual ~QTestCoreList();
 
-        void addToList(T **list);
-        T *nextElement();
-        T *previousElement();
-        int count(T *list);
-        int count();
+    void addToList(T **list);
+    T *nextElement();
+    T *previousElement();
+    int count(T *list);
+    int count();
 
-    private:
-        T *next;
-        T *prev;
+private:
+    T *next;
+    T *prev;
 };
 
 template <class T>
 QTestCoreList<T>::QTestCoreList()
-:next(0)
-,prev(0)
+    : next(0),
+    prev(0)
 {
 }
 

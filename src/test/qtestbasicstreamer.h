@@ -32,7 +32,7 @@ class QTestElementAttribute;
 class QTestLogger;
 struct QTestCharBuffer;
 
-class QTestBasicStreamer
+class Q_TEST_EXPORT QTestBasicStreamer
 {
     public:
         QTestBasicStreamer();
