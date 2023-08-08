@@ -33,8 +33,8 @@
 QT_BEGIN_NAMESPACE
 
 QTestLogger::QTestLogger(TestLoggerFormat fm)
-    : listOfTestcases(0), currentLogElement(0), errorLogElement(0),
-    logFormatter(0), format( (TestLoggerFormat)fm ), filelogger(new QTestFileLogger),
+    : listOfTestcases(0), currentLogElement(0),
+    logFormatter(0), format(fm), filelogger(new QTestFileLogger()),
     testCounter(0), passCounter(0), failureCounter(0), errorCounter(0),
     skipCounter(0), randomSeed_(0), hasRandomSeed_(false)
 {
@@ -246,13 +246,6 @@ void QTestLogger::addMessage(MessageTypes type, const char *message, const char 
 
     currentLogElement->addLogElement(errorElement);
     ++errorCounter;
-
-    // Also add the message to the system error log (i.e. stderr), if one exists
-    if (errorLogElement) {
-        QTestElement *systemErrorElement = new QTestElement(QTest::LET_Error);
-        systemErrorElement->addAttribute(QTest::AI_Description, message);
-        errorLogElement->addLogElement(systemErrorElement);
-    }
 }
 
 void QTestLogger::registerRandomSeed(unsigned int seed)

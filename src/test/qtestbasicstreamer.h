@@ -34,31 +34,31 @@ struct QTestCharBuffer;
 
 class Q_TEST_EXPORT QTestBasicStreamer
 {
-    public:
-        QTestBasicStreamer();
-        virtual ~QTestBasicStreamer();
+public:
+    QTestBasicStreamer();
+    virtual ~QTestBasicStreamer();
 
-        virtual void output(QTestElement *element) const;
+    virtual void output(QTestElement *element) const;
 
-        void outputString(const char *msg) const;
-        bool isTtyOutput();
-        void startStreaming();
-        void stopStreaming();
+    void outputString(const char *msg) const;
+    bool isTtyOutput();
+    void startStreaming();
+    void stopStreaming();
 
-        void setLogger(const QTestLogger *tstLogger);
-        const QTestLogger *logger() const;
+    void setLogger(const QTestLogger *tstLogger);
+    const QTestLogger *logger() const;
 
-    protected:
-        virtual void formatStart(const QTestElement *element, QTestCharBuffer *formatted) const;
-        virtual void formatEnd(const QTestElement *element, QTestCharBuffer *formatted) const;
-        virtual void formatBeforeAttributes(const QTestElement *element, QTestCharBuffer *formatted) const;
-        virtual void formatAfterAttributes(const QTestElement *element, QTestCharBuffer *formatted) const;
-        virtual void formatAttributes(const QTestElement *element, const QTestElementAttribute *attribute, QTestCharBuffer *formatted) const;
-        virtual void outputElements(QTestElement *element, bool isChildElement = false) const;
-        virtual void outputElementAttributes(const QTestElement *element, QTestElementAttribute *attribute) const;
+protected:
+    virtual void formatStart(const QTestElement *element, QTestCharBuffer *formatted) const;
+    virtual void formatEnd(const QTestElement *element, QTestCharBuffer *formatted) const;
+    virtual void formatBeforeAttributes(const QTestElement *element, QTestCharBuffer *formatted) const;
+    virtual void formatAfterAttributes(const QTestElement *element, QTestCharBuffer *formatted) const;
+    virtual void formatAttributes(const QTestElement *element, const QTestElementAttribute *attribute, QTestCharBuffer *formatted) const;
+    virtual void outputElements(QTestElement *element, bool isChildElement = false) const;
+    virtual void outputElementAttributes(const QTestElement *element, QTestElementAttribute *attribute) const;
 
-    private:
-        const QTestLogger *testLogger;
+private:
+    const QTestLogger *testLogger;
 };
 
 QT_END_NAMESPACE

@@ -33,12 +33,13 @@
 QT_BEGIN_NAMESPACE
 
 QTestXmlStreamer::QTestXmlStreamer()
-    :QTestBasicStreamer()
+    : QTestBasicStreamer()
 {
 }
 
 QTestXmlStreamer::~QTestXmlStreamer()
-{}
+{
+}
 
 void QTestXmlStreamer::formatStart(const QTestElement *element, QTestCharBuffer *formatted) const
 {
