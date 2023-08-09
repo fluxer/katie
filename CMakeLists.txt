@@ -69,9 +69,9 @@ endif()
 
 # mostly relevant to the build process, also stored in the version file for CMake and in qconfig.h.cmake
 set(KATIE_MAJOR "4")
-set(KATIE_MINOR "13")
+set(KATIE_MINOR "14")
 set(KATIE_MICRO "0")
-set(KATIE_HEX "0x041300")
+set(KATIE_HEX "0x041400")
 set(KATIE_VERSION "${KATIE_MAJOR}.${KATIE_MINOR}.${KATIE_MICRO}")
 
 # only for the build process
