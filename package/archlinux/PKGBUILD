@@ -13,7 +13,11 @@ depends=('libsm' 'libxcursor' 'libxinerama' 'libxrandr' 'fontconfig'
          'icu' 'jansson' 'libcups' 'xdg-utils' 'libdeflate')
 makedepends=('cmake' 'git' 'unifdef')
 optdepends=('gnu-free-fonts: last resort font')
-source=("git+https://scm.osdn.net/gitroot/kde/Katie.git")
+source=(
+    "git+https://scm.osdn.net/gitroot/kde/Katie.git"
+    # "git+https://bitbucket.org/smil3y/Katie.git"
+    # "git+https://github.com/fluxer/katie.git"
+)
 sha1sums=('SKIP')
 conflicts=('katie')
 # options=('debug')

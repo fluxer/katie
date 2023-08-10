@@ -8,8 +8,8 @@ COMMENT = C++ toolkit derived from the Qt 4.8 framework
 LICENSE = BSD3CLAUSE LGPL21+
 LICENSE_COMB = multi
 
-MASTER_SITES = https://osdn.net/projects/kde/news/
-DISTFILES = rss
+MASTER_SITES = https://google.com/
+DISTFILES = index.html
 DIST_SUBDIR = ${PORTNAME}
 WRKSRC = ${WRKDIR}/katie.git
 
@@ -36,5 +36,7 @@ NLS_CMAKE_OFF = -DWITH_GETTEXTPO=FALSE
 do-extract:
 	@rm -vrf ${WRKSRC}
 	@git clone --depth=1 https://scm.osdn.net/gitroot/kde/Katie.git ${WRKSRC}
+	# @git clone --depth=1 https://bitbucket.org/smil3y/Katie.git ${WRKSRC}
+	# @git clone --depth=1 https://github.com/fluxer/katie.git ${WRKSRC}
 
 .include <bsd.port.mk>
