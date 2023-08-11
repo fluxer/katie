@@ -22,40 +22,21 @@
 #ifndef PREVIEWFRAME_H
 #define PREVIEWFRAME_H
 
-#include <QMdiArea>
+#include <QFrame>
 
 QT_BEGIN_NAMESPACE
-
-class PreviewFrame;
-class Workspace : public QMdiArea
-{
-    Q_OBJECT
-
-public:
-    Workspace(PreviewFrame *parent = 0);
-    ~Workspace() {}
-
-protected:
-    void paintEvent(QPaintEvent *);
-private:
-    PreviewFrame *previewFrame;
-};
 
 class PreviewWidget;
 class PreviewFrame : public QFrame
 {
     Q_OBJECT
-
 public:
     PreviewFrame(QWidget *parent = nullptr);
     void setPreviewPalette(const QPalette &pal);
     void setPreviewVisible(bool val);
-    QString previewText() const;
     PreviewWidget *widget() const { return previewWidget; }
 private:
-    Workspace *workspace;
     PreviewWidget *previewWidget;
-    QString m_previewWindowText;
 };
 
 QT_END_NAMESPACE

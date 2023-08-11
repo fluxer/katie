@@ -2784,7 +2784,7 @@ QStyleOptionRubberBand::QStyleOptionRubberBand(int version)
     parameters for drawing a title bar.
 
     QStyleOptionTitleBar contains all the information that QStyle
-    functions need to draw the title bar of a QMdiSubWindow.
+    functions need to draw the title bar.
 
     For performance reasons, the access to the member variables is
     direct (i.e., using the \c . or \c -> operator). This low-level feel
@@ -2794,7 +2794,7 @@ QStyleOptionRubberBand::QStyleOptionRubberBand(int version)
     For an example demonstrating how style options can be used, see
     the \l {widgets/styles}{Styles} example.
 
-    \sa QStyleOption, QStyleOptionComplex, QMdiSubWindow
+    \sa QStyleOption, QStyleOptionComplex
 */
 
 /*!

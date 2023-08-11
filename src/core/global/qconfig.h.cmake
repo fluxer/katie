@@ -113,7 +113,6 @@
 // #cmakedefine QT_NO_MAINWINDOW
 // #cmakedefine QT_NO_MATRIX4X4
 // #cmakedefine QT_NO_VECTOR3D
-// #cmakedefine QT_NO_MDIAREA
 // #cmakedefine QT_NO_MENU
 // #cmakedefine QT_NO_MENUBAR
 // #cmakedefine QT_NO_MESSAGEBOX
@@ -317,11 +316,6 @@
 // QGraphicsView
 #if !defined(QT_NO_GRAPHICSVIEW) && (defined(QT_NO_SCROLLAREA) || defined(QT_NO_MATRIX4X4) || defined(QT_NO_VECTOR3D))
 #  define QT_NO_GRAPHICSVIEW
-#endif
-
-// QMdiArea
-#if !defined(QT_NO_MDIAREA) && defined(QT_NO_SCROLLAREA)
-#  define QT_NO_MDIAREA
 #endif
 
 // QPrinter

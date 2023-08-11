@@ -337,7 +337,6 @@ public:
         CC_TitleBar,
         CC_Dial,
         CC_GroupBox,
-        CC_MdiControls,
 
         // do not add any values below/greater than this
         CC_CustomBase = 0xf0000000
@@ -390,10 +389,6 @@ public:
         SC_GroupBoxLabel =         0x00000002,
         SC_GroupBoxContents =      0x00000004,
         SC_GroupBoxFrame =         0x00000008,
-
-        SC_MdiMinButton     =      0x00000001,
-        SC_MdiNormalButton  =      0x00000002,
-        SC_MdiCloseButton   =      0x00000004,
 
         SC_CustomBase =            0xf0000000,
         SC_All =                   0xffffffff
@@ -465,11 +460,6 @@ public:
         PM_DialogButtonsSeparator,
         PM_DialogButtonsButtonWidth,
         PM_DialogButtonsButtonHeight,
-
-        PM_MdiSubWindowFrameWidth,
-        PM_MDIFrameWidth = PM_MdiSubWindowFrameWidth,            //obsolete
-        PM_MdiSubWindowMinimizedWidth,
-        PM_MDIMinimizedWidth = PM_MdiSubWindowMinimizedWidth,    //obsolete
 
         PM_HeaderMargin,
         PM_HeaderMarkSize,
@@ -556,7 +546,6 @@ public:
         CT_DialogButtons,
         CT_HeaderSection,
         CT_GroupBox,
-        CT_MdiControls,
         CT_ItemViewItem,
         // do not add any values below/greater than this
         CT_CustomBase = 0xf0000000

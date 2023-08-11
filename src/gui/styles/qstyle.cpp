@@ -1038,12 +1038,9 @@ void QStyle::drawItemPixmap(QPainter *painter, const QRect &rect, int alignment,
     \value CC_ScrollBar         A scroll bar, like QScrollBar.
     \value CC_Slider            A slider, like QSlider.
     \value CC_ToolButton        A tool button, like QToolButton.
-    \value CC_TitleBar          A Title bar, like those used in QMdiSubWindow.
+    \value CC_TitleBar          A Title bar, obsolete.
     \value CC_GroupBox          A group box, like QGroupBox.
     \value CC_Dial              A dial, like QDial.
-    \value CC_MdiControls       The minimize, close, and normal
-                                button in the menu bar for a
-                                maximized MDI subwindow.
 
     \value CC_CustomBase Base value for custom complex controls. Custom
     values must be greater than this value.
@@ -1108,13 +1105,6 @@ void QStyle::drawItemPixmap(QPainter *painter, const QRect &rect, int alignment,
     \value SC_GroupBoxLabel The title of a group box.
     \value SC_GroupBoxCheckBox The optional check box of a group box.
     \value SC_GroupBoxContents The group box contents.
-
-    \value SC_MdiNormalButton The normal button for a MDI
-                              subwindow in the menu bar.
-    \value SC_MdiMinButton The minimize button for a MDI
-                           subwindow in the menu bar.
-    \value SC_MdiCloseButton The close button for a MDI subwindow
-                             in the menu bar.
 
     \value SC_All  Special value that matches all sub-controls.
     \omitvalue SC_CustomBase
@@ -1250,11 +1240,6 @@ void QStyle::drawItemPixmap(QPainter *painter, const QRect &rect, int alignment,
     \value PM_DefaultFrameWidth  Default frame width (usually 2).
     \value PM_SpinBoxFrameWidth  Frame width of a spin box, defaults to PM_DefaultFrameWidth.
     \value PM_ComboBoxFrameWidth Frame width of a combo box, defaults to PM_DefaultFrameWidth.
-
-    \value PM_MDIFrameWidth  Obsolete. Use PM_MdiSubWindowFrameWidth instead.
-    \value PM_MdiSubWindowFrameWidth  Frame width of an MDI window.
-    \value PM_MDIMinimizedWidth  Obsolete. Use PM_MdiSubWindowMinimizedWidth instead.
-    \value PM_MdiSubWindowMinimizedWidth  Width of a minimized MDI window.
 
     \value PM_LayoutLeftMargin  Default \l{QLayout::setContentsMargins()}{left margin} for a
                                 QLayout.
@@ -1461,10 +1446,6 @@ void QStyle::drawItemPixmap(QPainter *painter, const QRect &rect, int alignment,
 
     \value CT_CustomBase  Base value for custom contents types.
     Custom values must be greater than this value.
-
-    \value CT_MdiControls The minimize, normal, and close button
-                          in the menu bar for a maximized MDI
-                          subwindow.
 
     \sa sizeFromContents()
 */
@@ -1822,8 +1803,7 @@ void QStyle::drawItemPixmap(QPainter *painter, const QRect &rect, int alignment,
     This enum describes the available standard pixmaps. A standard pixmap is a pixmap that
     can follow some existing GUI style or guideline.
 
-    \value SP_TitleBarMinButton  Minimize button on title bars (e.g.,
-        in QMdiSubWindow).
+    \value SP_TitleBarMinButton  Minimize button on title bars.
     \value SP_TitleBarMenuButton Menu button on a title bar.
     \value SP_TitleBarMaxButton  Maximize button on title bars.
     \value SP_TitleBarCloseButton  Close button on title bars.

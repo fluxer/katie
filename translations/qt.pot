@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-03 05:13+0300\n"
+"POT-Creation-Date: 2023-08-11 13:50+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -233,7 +233,7 @@ msgctxt "QJsonDocument"
 msgid "Unknown JSON type"
 msgstr ""
 
-#: src/core/tools/qjsondocument.cpp:199 src/core/tools/qjsondocument.cpp:301
+#: src/core/tools/qjsondocument.cpp:199 src/core/tools/qjsondocument.cpp:323
 msgctxt "QJsonDocument"
 msgid "Rootless values are not supported"
 msgstr ""
@@ -248,12 +248,12 @@ msgctxt "QJsonDocument"
 msgid "Maximum depth reached"
 msgstr ""
 
-#: src/core/tools/qjsondocument.cpp:284 src/core/tools/qjsondocument.cpp:310
+#: src/core/tools/qjsondocument.cpp:306 src/core/tools/qjsondocument.cpp:332
 msgctxt "QJsonDocument"
 msgid "Unknown variant type"
 msgstr ""
 
-#: src/core/tools/qjsondocument.cpp:306
+#: src/core/tools/qjsondocument.cpp:328
 msgctxt "QJsonDocument"
 msgid "Rootless arrays are not supported"
 msgstr ""
@@ -1125,7 +1125,7 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-#: src/gui/dialogs/qwizard.cpp:591 src/gui/widgets/qmdisubwindow.cpp:312
+#: src/gui/dialogs/qwizard.cpp:591
 msgid "Help"
 msgstr ""
 
@@ -1276,7 +1276,7 @@ msgstr ""
 msgid "Font st&yle"
 msgstr ""
 
-#: src/gui/dialogs/qfontdialog.cpp:681 src/gui/widgets/qmdisubwindow.cpp:1016
+#: src/gui/dialogs/qfontdialog.cpp:681
 msgid "&Size"
 msgstr ""
 
@@ -1328,15 +1328,15 @@ msgstr ""
 msgid "Select Color"
 msgstr ""
 
-#: src/gui/dialogs/qcolordialog.cpp:1437
+#: src/gui/dialogs/qcolordialog.cpp:1436
 msgid "&Basic colors"
 msgstr ""
 
-#: src/gui/dialogs/qcolordialog.cpp:1438
+#: src/gui/dialogs/qcolordialog.cpp:1437
 msgid "&Custom colors"
 msgstr ""
 
-#: src/gui/dialogs/qcolordialog.cpp:1439
+#: src/gui/dialogs/qcolordialog.cpp:1438
 msgid "&Add to Custom Colors"
 msgstr ""
 
@@ -1882,74 +1882,6 @@ msgstr ""
 #: src/gui/widgets/qdialogbuttonbox.cpp:490
 msgctxt "QDialogButtonBox"
 msgid "Restore Defaults"
-msgstr ""
-
-#: src/gui/widgets/qmdisubwindow.cpp:249
-msgid "- [%1]"
-msgstr ""
-
-#: src/gui/widgets/qmdisubwindow.cpp:250
-msgid "%1 - [%2]"
-msgstr ""
-
-#: src/gui/widgets/qmdisubwindow.cpp:291
-msgid "Minimize"
-msgstr ""
-
-#: src/gui/widgets/qmdisubwindow.cpp:294
-msgid "Maximize"
-msgstr ""
-
-#: src/gui/widgets/qmdisubwindow.cpp:297
-msgid "Unshade"
-msgstr ""
-
-#: src/gui/widgets/qmdisubwindow.cpp:300
-msgid "Shade"
-msgstr ""
-
-#: src/gui/widgets/qmdisubwindow.cpp:304
-msgid "Restore Down"
-msgstr ""
-
-#: src/gui/widgets/qmdisubwindow.cpp:306
-msgid "Restore"
-msgstr ""
-
-#: src/gui/widgets/qmdisubwindow.cpp:309
-msgid "Close"
-msgstr ""
-
-#: src/gui/widgets/qmdisubwindow.cpp:315
-msgid "Menu"
-msgstr ""
-
-#: src/gui/widgets/qmdisubwindow.cpp:1012
-msgid "&Restore"
-msgstr ""
-
-#: src/gui/widgets/qmdisubwindow.cpp:1015
-msgid "&Move"
-msgstr ""
-
-#: src/gui/widgets/qmdisubwindow.cpp:1017
-msgid "Mi&nimize"
-msgstr ""
-
-#: src/gui/widgets/qmdisubwindow.cpp:1019
-msgid "Ma&ximize"
-msgstr ""
-
-#: src/gui/widgets/qmdisubwindow.cpp:1021
-msgid "Stay on &Top"
-msgstr ""
-
-#: src/gui/widgets/qmdisubwindow.cpp:1024
-msgid "&Close"
-msgstr ""
-
-#: src/gui/widgets/qmdiarea.cpp:251
-msgid "(Untitled)"
 msgstr ""
 
 #: src/gui/widgets/qmenubar.cpp:1500
@@ -3737,55 +3669,55 @@ msgctxt "QFormBuilder"
 msgid "The property %1 could not be written. The type %2 is not supported yet."
 msgstr ""
 
-#: src/uitools/formbuilder.cpp:140
+#: src/uitools/formbuilder.cpp:137
 msgctxt "QFormBuilder"
 msgid "An empty class name was passed on to %1 (object name: '%2')."
 msgstr ""
 
-#: src/uitools/formbuilder.cpp:194
+#: src/uitools/formbuilder.cpp:191
 msgctxt "QFormBuilder"
 msgid ""
 "QFormBuilder was unable to create a custom widget of the class '%1'; "
 "defaulting to base class '%2'."
 msgstr ""
 
-#: src/uitools/formbuilder.cpp:200
+#: src/uitools/formbuilder.cpp:197
 msgctxt "QFormBuilder"
 msgid "QFormBuilder was unable to create a widget of the class '%1'."
 msgstr ""
 
-#: src/uitools/formbuilder.cpp:241
+#: src/uitools/formbuilder.cpp:238
 msgctxt "QFormBuilder"
 msgid "The layout type `%1' is not supported."
 msgstr ""
 
-#: src/uitools/abstractformbuilder.cpp:170
+#: src/uitools/abstractformbuilder.cpp:169
 msgctxt "QAbstractFormBuilder"
 msgid "Unexpected element <%1>"
 msgstr ""
 
-#: src/uitools/abstractformbuilder.cpp:175
+#: src/uitools/abstractformbuilder.cpp:174
 msgctxt "QAbstractFormBuilder"
 msgid ""
 "An error has occurred while reading the UI file at line %1, column %2: %3"
 msgstr ""
 
-#: src/uitools/abstractformbuilder.cpp:181
+#: src/uitools/abstractformbuilder.cpp:180
 msgctxt "QAbstractFormBuilder"
 msgid "Invalid UI file: The root element <ui> is missing."
 msgstr ""
 
-#: src/uitools/abstractformbuilder.cpp:284
+#: src/uitools/abstractformbuilder.cpp:283
 msgctxt "QAbstractFormBuilder"
 msgid "The creation of a widget of the class '%1' failed."
 msgstr ""
 
-#: src/uitools/abstractformbuilder.cpp:566
+#: src/uitools/abstractformbuilder.cpp:558
 msgctxt "QAbstractFormBuilder"
 msgid "Attempt to add child that is not of class QWizardPage to QWizard."
 msgstr ""
 
-#: src/uitools/abstractformbuilder.cpp:628
+#: src/uitools/abstractformbuilder.cpp:620
 msgctxt "QAbstractFormBuilder"
 msgid ""
 "Attempt to add a layout to a widget '%1' (%2) which already has a layout of "
@@ -3793,22 +3725,22 @@ msgid ""
 "This indicates an inconsistency in the ui-file."
 msgstr ""
 
-#: src/uitools/abstractformbuilder.cpp:834
+#: src/uitools/abstractformbuilder.cpp:826
 msgctxt "QAbstractFormBuilder"
 msgid "Empty widget item in %1 '%2'."
 msgstr ""
 
-#: src/uitools/abstractformbuilder.cpp:1566
+#: src/uitools/abstractformbuilder.cpp:1558
 msgctxt "QAbstractFormBuilder"
 msgid "Flags property are not supported yet."
 msgstr ""
 
-#: src/uitools/abstractformbuilder.cpp:1647
+#: src/uitools/abstractformbuilder.cpp:1639
 msgctxt "QAbstractFormBuilder"
 msgid "While applying tab stops: The widget '%1' could not be found."
 msgstr ""
 
-#: src/uitools/abstractformbuilder.cpp:2384
+#: src/uitools/abstractformbuilder.cpp:2376
 msgctxt "QAbstractFormBuilder"
 msgid "Invalid QButtonGroup reference '%1' referenced by '%2'."
 msgstr ""

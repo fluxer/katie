@@ -666,8 +666,6 @@ void WriteInitialization::acceptWidget(DomWidget *node)
         m_output << m_indent << parentWidget << "->setWidget(" << varName << ");\n";
     } else if (m_uic->customWidgetsInfo()->extends(parentClass, QLatin1String("QSplitter"))) {
         m_output << m_indent << parentWidget << "->addWidget(" << varName << ");\n";
-    } else if (m_uic->customWidgetsInfo()->extends(parentClass, QLatin1String("QMdiArea"))) {
-        m_output << m_indent << parentWidget << "->addSubWindow(" << varName << ");\n";
     } else if (m_uic->customWidgetsInfo()->extends(parentClass, QLatin1String("QWizard"))) {
         addWizardPage(varName, node, parentWidget);
     } else if (m_uic->customWidgetsInfo()->extends(parentClass, QLatin1String("QToolBox"))) {

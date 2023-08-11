@@ -255,7 +255,6 @@ bool Uic::isContainer(const QString &className) const
         || customWidgetsInfo()->extends(className, QLatin1String("QToolBox"))
         || customWidgetsInfo()->extends(className, QLatin1String("QTabWidget"))
         || customWidgetsInfo()->extends(className, QLatin1String("QScrollArea"))
-        || customWidgetsInfo()->extends(className, QLatin1String("QMdiArea"))
         || customWidgetsInfo()->extends(className, QLatin1String("QWizard"))
         || customWidgetsInfo()->extends(className, QLatin1String("QDockWidget"));
 }

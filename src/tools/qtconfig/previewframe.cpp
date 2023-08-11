@@ -25,7 +25,6 @@
 #include <QBoxLayout>
 #include <QPainter>
 #include <QPen>
-#include <QMdiSubWindow>
 
 QT_BEGIN_NAMESPACE
 
@@ -38,9 +37,8 @@ PreviewFrame::PreviewFrame(QWidget *parent)
 
     QVBoxLayout *vbox = new QVBoxLayout(this);
     vbox->setMargin(0);
-    previewWidget = new PreviewWidget;
-    workspace = new Workspace(this);
-    vbox->addWidget(workspace);
+    previewWidget = new PreviewWidget();
+    vbox->addWidget(previewWidget);
     previewWidget->setAutoFillBackground(true);
 }
 
@@ -49,37 +47,10 @@ void PreviewFrame::setPreviewPalette(const QPalette &pal)
     previewWidget->setPalette(pal);
 }
 
-QString PreviewFrame::previewText() const
-{
-    return m_previewWindowText;
-}
 
 void PreviewFrame::setPreviewVisible(bool visible)
 {
     previewWidget->parentWidget()->setVisible(visible);
-    if (visible)
-        m_previewWindowText = QLatin1String("The moose in the noose\nate the goose who was loose.");
-    else
-        m_previewWindowText = tr("Desktop settings will only take effect after an application restart.");
-    workspace->viewport()->update();
-}
-
-Workspace::Workspace(PreviewFrame *parent)
-    : QMdiArea(parent)
-{
-    previewFrame = parent;
-    PreviewWidget *previewWidget = previewFrame->widget();
-    QMdiSubWindow *frame = addSubWindow(previewWidget, Qt::Window);
-    frame->move(10, 10);
-    frame->show();
-}
-
-void Workspace::paintEvent(QPaintEvent *)
-{
-    QPainter p(viewport());
-    p.fillRect(rect(), palette().color(backgroundRole()).dark());
-    p.setPen(QPen(Qt::white));
-    p.drawText(0, height() / 2,  width(), height(), Qt::AlignHCenter, previewFrame->previewText());
 }
 
 #include "moc_previewframe.h"

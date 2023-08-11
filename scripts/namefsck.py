@@ -291,8 +291,6 @@ classlist = [
     "QMatrix4x2",
     "QMatrix4x3",
     "QMatrix4x4",
-    "QMdiArea",
-    "QMdiSubWindow",
     "QMenu",
     "QMenuBar",
     "QMessageBox",

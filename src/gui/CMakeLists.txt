@@ -102,8 +102,6 @@ set(GUI_PUBLIC_HEADERS
     QMainWindow
     QMatrix
     QMatrix4x4
-    QMdiArea
-    QMdiSubWindow
     QMenu
     QMenuBar
     QMovie
@@ -522,10 +520,6 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qlinecontrol_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qmainwindow.h
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qmainwindowlayout_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qmdiarea.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qmdiarea_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qmdisubwindow.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qmdisubwindow_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qmenu.h
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qmenu_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qmenubar.h
@@ -813,8 +807,6 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qlinecontrol.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qmainwindow.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qmainwindowlayout.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qmdiarea.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qmdisubwindow.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qmenu.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qmenubar.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qprogressbar.cpp

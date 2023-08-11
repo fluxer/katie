@@ -1520,8 +1520,7 @@
     \value Desktop  Indicates that this widget is the desktop. This
                     is the type for QDesktopWidget.
 
-    \value SubWindow  Indicates that this widget is a sub-window, such
-                      as a QMdiSubWindow widget.
+    \value SubWindow  Indicates that this widget is a sub-window.
 
     There are also a number of flags which you can use to customize
     the appearance of top-level windows. These have no effect on other

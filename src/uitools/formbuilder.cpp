@@ -115,9 +115,6 @@ QWidget *QFormBuilder::create(DomWidget *ui_widget, QWidget *parentWidget)
 #ifndef QT_NO_SCROLLAREA
             && !qobject_cast<QScrollArea *>(parentWidget)
 #endif
-#ifndef QT_NO_MDIAREA
-            && !qobject_cast<QMdiArea *>(parentWidget)
-#endif
 #ifndef QT_NO_DOCKWIDGET
             && !qobject_cast<QDockWidget *>(parentWidget)
 #endif

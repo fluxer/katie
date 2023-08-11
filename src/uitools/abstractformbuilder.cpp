@@ -69,7 +69,6 @@
 #include <QtGui/QToolBar>
 #include <QtGui/QMenuBar>
 #include <QtGui/QDockWidget>
-#include <QtGui/QMdiArea>
 #include <QtGui/QWizard>
 
 #include <limits.h>
@@ -534,13 +533,6 @@ bool QAbstractFormBuilder::addItem(DomWidget *ui_widget, QWidget *widget, QWidge
 #ifndef QT_NO_SPLITTER
     else if (QSplitter *splitter = qobject_cast<QSplitter*>(parentWidget)) {
         splitter->addWidget(widget);
-        return true;
-    }
-#endif
-
-#ifndef QT_NO_MDIAREA
-    else if (QMdiArea *mdiArea = qobject_cast<QMdiArea*>(parentWidget)) {
-        mdiArea->addSubWindow(widget);
         return true;
     }
 #endif

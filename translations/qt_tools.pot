@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-03 05:13+0300\n"
+"POT-Creation-Date: 2023-08-11 13:50+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,10 +16,6 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
-
-#: src/tools/qtconfig/previewframe.cpp:63
-msgid "Desktop settings will only take effect after an application restart."
-msgstr ""
 
 #: src/tools/qtconfig/mainwindow.cpp:57
 msgctxt "MainWindow"
@@ -76,34 +72,34 @@ msgstr ""
 msgid "Unknown"
 msgstr ""
 
-#: src/tools/qtconfig/mainwindow.cpp:313
+#: src/tools/qtconfig/mainwindow.cpp:311
 msgid "No changes to be saved."
 msgstr ""
 
-#: src/tools/qtconfig/mainwindow.cpp:319
+#: src/tools/qtconfig/mainwindow.cpp:317
 msgid "Saving changes..."
 msgstr ""
 
-#: src/tools/qtconfig/mainwindow.cpp:387
+#: src/tools/qtconfig/mainwindow.cpp:385
 msgid "Saved changes."
 msgstr ""
 
-#: src/tools/qtconfig/mainwindow.cpp:509
+#: src/tools/qtconfig/mainwindow.cpp:507
 msgid ""
 "<h3>%1</h3><br/>Version %2<br/><br/>Copyright (C) 2015 The Qt Company Ltd."
 "<br/><br/>Copyright (C) 2016 Ivailo Monev"
 msgstr ""
 
-#: src/tools/qtconfig/mainwindow.cpp:514 src/tools/qtconfig/mainwindow.cpp:515
-#: src/tools/qtconfig/mainwindow.cpp:522
+#: src/tools/qtconfig/mainwindow.cpp:512 src/tools/qtconfig/mainwindow.cpp:513
+#: src/tools/qtconfig/mainwindow.cpp:520
 msgid "Katie Configuration"
 msgstr ""
 
-#: src/tools/qtconfig/mainwindow.cpp:545
+#: src/tools/qtconfig/mainwindow.cpp:543
 msgid "Save Changes"
 msgstr ""
 
-#: src/tools/qtconfig/mainwindow.cpp:546
+#: src/tools/qtconfig/mainwindow.cpp:544
 msgid "Save changes to settings?"
 msgstr ""
 

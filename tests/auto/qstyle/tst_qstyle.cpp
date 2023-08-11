@@ -45,7 +45,6 @@
 #include <qcombobox.h>
 #include <qradiobutton.h>
 #include <qlineedit.h>
-#include <qmdiarea.h>
 #include <qwidget.h>
 #include <qdebug.h>
 #include <qcleanlooksstyle.h>

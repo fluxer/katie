@@ -301,8 +301,6 @@ static const struct ClassTblData {
     { QLatin1String("QMapData"), QLatin1String("QtCore/qmap.h") },
     { QLatin1String("QMatrix"), QLatin1String("QtGui/qmatrix.h") },
     { QLatin1String("QMatrix4x4"), QLatin1String("QtGui/qmatrix4x4.h") },
-    { QLatin1String("QMdiArea"), QLatin1String("QtGui/qmdiarea.h") },
-    { QLatin1String("QMdiSubWindow"), QLatin1String("QtGui/qmdisubwindow.h") },
     { QLatin1String("QMenu"), QLatin1String("QtGui/qmenu.h") },
     { QLatin1String("QMenuBar"), QLatin1String("QtGui/qmenubar.h") },
     { QLatin1String("QMessageBox"), QLatin1String("QtGui/qmessagebox.h") },

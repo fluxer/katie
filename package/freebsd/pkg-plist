@@ -495,8 +495,6 @@ include/katie/QtGui/QMatrix3x4
 include/katie/QtGui/QMatrix4x2
 include/katie/QtGui/QMatrix4x3
 include/katie/QtGui/QMatrix4x4
-include/katie/QtGui/QMdiArea
-include/katie/QtGui/QMdiSubWindow
 include/katie/QtGui/QMenu
 include/katie/QtGui/QMenuBar
 include/katie/QtGui/QMessageBox
@@ -783,8 +781,6 @@ include/katie/QtGui/qlistwidget.h
 include/katie/QtGui/qmainwindow.h
 include/katie/QtGui/qmatrix.h
 include/katie/QtGui/qmatrix4x4.h
-include/katie/QtGui/qmdiarea.h
-include/katie/QtGui/qmdisubwindow.h
 include/katie/QtGui/qmenu.h
 include/katie/QtGui/qmenubar.h
 include/katie/QtGui/qmessagebox.h

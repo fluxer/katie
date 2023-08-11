@@ -46,9 +46,6 @@ DECLARE_WIDGET(QListWidget, "")
 #ifndef QT_NO_MAINWINDOW
 DECLARE_WIDGET(QMainWindow, "")
 #endif
-#ifndef QT_NO_MDIAREA
-DECLARE_WIDGET(QMdiArea, "")
-#endif
 #ifndef QT_NO_MENU
 DECLARE_WIDGET(QMenu, "")
 #endif
