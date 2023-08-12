@@ -114,12 +114,13 @@ public:
 private:
     Q_DISABLE_COPY(QTextCodec);
 
-    QTextCodec();
+    QTextCodec(const QByteArray &codec);
+    QTextCodec(const int codec);
     ~QTextCodec();
 
     friend class QTextCodecCleanup;
 
-    QTextCodecPrivate* d_ptr;
+    QTextCodecPrivate* const d_ptr;
 };
 
 #endif // QT_NO_TEXTCODEC

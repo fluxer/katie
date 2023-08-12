@@ -1399,8 +1399,16 @@ Q_GLOBAL_STATIC(QTextCodecCleanup, qGlobalQTextCodec)
 /*!
     \internal
 */
-QTextCodec::QTextCodec()
-    : d_ptr(nullptr)
+QTextCodec::QTextCodec(const QByteArray &codec)
+    : d_ptr(new QTextCodecPrivate(codec))
+{
+}
+
+/*!
+    \internal
+*/
+QTextCodec::QTextCodec(const int codec)
+    : d_ptr(new QTextCodecPrivate(codec))
 {
 }
 
@@ -1447,8 +1455,7 @@ QTextCodec *QTextCodec::codecForName(const QByteArray &name)
 #ifndef QT_NO_THREAD
             QMutexLocker locker(textCodecsMutex());
 #endif
-            QTextCodec* newcodec = new QTextCodec();
-            newcodec->d_ptr = new QTextCodecPrivate(codec);
+            QTextCodec* newcodec = new QTextCodec(codec);
             qGlobalQTextCodec()->append(newcodec);
             return newcodec;
         }
@@ -1481,8 +1488,7 @@ QTextCodec* QTextCodec::codecForMib(int mib)
 #ifndef QT_NO_THREAD
             QMutexLocker locker(textCodecsMutex());
 #endif
-            QTextCodec* newcodec = new QTextCodec();
-            newcodec->d_ptr = new QTextCodecPrivate(codec);
+            QTextCodec* newcodec = new QTextCodec(codec);
             qGlobalQTextCodec()->append(newcodec);
             return newcodec;
         }
