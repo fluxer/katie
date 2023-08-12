@@ -1672,9 +1672,6 @@ QByteArray &QByteArray::replace(int pos, int len, const char *after, int alen)
     return insert(pos, after, alen);
 }
 
-// ### optimize all other replace method, by offering
-// QByteArray::replace(const char *before, int blen, const char *after, int alen)
-
 /*!
     \overload
 
