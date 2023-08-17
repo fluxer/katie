@@ -1919,12 +1919,14 @@ static const qint16 elementsTblSize = 59;
 */
 bool Qt::mightBeRichText(const QString& text)
 {
-    if (text.isEmpty())
+    if (text.isEmpty()) {
         return false;
-    int start = 0;
+    }
 
-    while (start < text.length() && text.at(start).isSpace())
+    int start = 0;
+    while (start < text.length() && text.at(start).isSpace()) {
         ++start;
+    }
 
     // skip a leading <?xml ... ?> as for example with xhtml
     if (text.mid(start, 5) == QLatin1String("<?xml")) {
@@ -1938,40 +1940,49 @@ bool Qt::mightBeRichText(const QString& text)
             ++start;
         }
 
-        while (start < text.length() && text.at(start).isSpace())
+        while (start < text.length() && text.at(start).isSpace()) {
             ++start;
+        }
     }
 
-    if (text.mid(start, 5).toLower() == QLatin1String("<!doc"))
+    if (text.mid(start, 5).toLower() == QLatin1String("<!doc")) {
         return true;
+    }
     int open = start;
     while (open < text.length() && text.at(open) != QLatin1Char('<')
-            && text.at(open) != QLatin1Char('\n')) {
-        if (text.at(open) == QLatin1Char('&') &&  text.mid(open+1,3) == QLatin1String("lt;"))
-            return true; // support desperate attempt of user to see <...>
+        && text.at(open) != QLatin1Char('\n')) {
+        if (text.at(open) == QLatin1Char('&') &&  text.mid(open+1,3) == QLatin1String("lt;")) {
+            // support desperate attempt of user to see <...>
+            return true;
+        }
         ++open;
     }
-    if (open < text.length() && text.at(open) == QLatin1Char('<')) {
-        const int close = text.indexOf(QLatin1Char('>'), open);
-        if (close > -1) {
+
+    int tagstart = text.indexOf(QLatin1Char('<'), start);
+    while (tagstart > -1) {
+        const int tagclose = text.indexOf(QLatin1Char('>'), tagstart);
+        if (tagclose > -1) {
             QByteArray tag;
-            for (int i = open+1; i < close; ++i) {
-                if (text[i].isDigit() || text[i].isLetter())
+            for (int i = tagstart+1; i < tagclose; ++i) {
+                if (text[i].isDigit() || text[i].isLetter()) {
                     tag += text[i].toLatin1();
-                else if (!tag.isEmpty() && text[i].isSpace())
+                } else if (!tag.isEmpty() && text[i].isSpace()) {
                     break;
-                else if (!tag.isEmpty() && text[i] == QLatin1Char('/') && i + 1 == close)
+                } else if (!tag.isEmpty() && text[i] == QLatin1Char('/') && i + 1 == tagclose) {
                     break;
-                else if (!text[i].isSpace() && (!tag.isEmpty() || text[i] != QLatin1Char('!')))
-                    return false; // that's not a tag
+                } else if (!text[i].isSpace() && (!tag.isEmpty() || text[i] != QLatin1Char('!'))) {
+                    // that's not a tag
+                    goto nexttag;
+                }
             }
             for (qint16 i = 0; i < elementsTblSize; i++) {
                 if (qstricmp(tag.constData(), elementsTbl[i]) == 0) {
                     return true;
                 }
             }
-            return false;
         }
+    nexttag:
+        tagstart = text.indexOf(QLatin1Char('<'), tagstart + 1);
     }
     return false;
 }
