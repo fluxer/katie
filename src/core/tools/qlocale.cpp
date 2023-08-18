@@ -238,39 +238,6 @@ QLocale::Country QLocalePrivate::codeToCountry(const QByteArray &code)
     return QLocale::AnyCountry;
 }
 
-QByteArray QLocalePrivate::bcp47Name() const
-{
-    if (m_language == QLocale::AnyLanguage) {
-        return QByteArray();
-    }
-    if (m_language == QLocale::C) {
-        return QByteArray("C");
-    }
-
-    const char *lang = languageTbl[m_language].code;
-    const char *script = scriptTbl[m_script].code;
-    const char *country = countryTbl[m_country].code;
-    const int langlen = qstrlen(lang);
-    const int scriptlen = qstrlen(script);
-    const int countrylen = qstrlen(country);
-    const int totallen = langlen + scriptlen + countrylen + (script ? 1 : 0) + (country ? 1 : 0);
-
-    QSTACKARRAY(char, bcp, totallen);
-    int datapos = langlen;
-    ::memcpy(bcp, lang, langlen * sizeof(char));
-    if (script) {
-        bcp[datapos++] = '-';
-        ::memcpy(bcp + datapos, script, scriptlen * sizeof(char));
-        datapos += scriptlen;
-    }
-    if (country) {
-        bcp[datapos++] = '-';
-        ::memcpy(bcp + datapos, country, countrylen * sizeof(char));
-    }
-
-    return QByteArray(bcp, totallen);
-}
-
 const QLocalePrivate *QLocalePrivate::findLocale(QLocale::Language language, QLocale::Script script, QLocale::Country country)
 {
     // check likely substitutes first
@@ -607,7 +574,37 @@ QString QLocale::name() const
 */
 QByteArray QLocale::bcp47Name() const
 {
-    return d()->bcp47Name();
+    const QLocalePrivate *dd = d();
+
+    if (dd->m_language == QLocale::AnyLanguage) {
+        return QByteArray();
+    }
+    if (dd->m_language == QLocale::C) {
+        return QByteArray("C");
+    }
+
+    const char *lang = languageTbl[dd->m_language].code;
+    const char *script = scriptTbl[dd->m_script].code;
+    const char *country = countryTbl[dd->m_country].code;
+    const int langlen = qstrlen(lang);
+    const int scriptlen = qstrlen(script);
+    const int countrylen = qstrlen(country);
+    const int totallen = langlen + scriptlen + countrylen + (script ? 1 : 0) + (country ? 1 : 0);
+
+    QSTACKARRAY(char, bcp, totallen);
+    int datapos = langlen;
+    ::memcpy(bcp, lang, langlen * sizeof(char));
+    if (script) {
+        bcp[datapos++] = '-';
+        ::memcpy(bcp + datapos, script, scriptlen * sizeof(char));
+        datapos += scriptlen;
+    }
+    if (country) {
+        bcp[datapos++] = '-';
+        ::memcpy(bcp + datapos, country, countrylen * sizeof(char));
+    }
+
+    return QByteArray(bcp, totallen);
 }
 
 /*!
@@ -1511,32 +1508,6 @@ Qt::DayOfWeek QLocale::firstDayOfWeek() const
     return d()->m_first_day_of_week;
 }
 
-QLocale::MeasurementSystem QLocalePrivate::measurementSystem() const
-{
-    QByteArray asciibcp47 = bcp47Name();
-    UErrorCode error = U_ZERO_ERROR;
-    UMeasurementSystem measurement = ulocdata_getMeasurementSystem(asciibcp47.constData(), &error);
-    if (Q_UNLIKELY(U_FAILURE(error))) {
-        qWarning("QLocale::measurementSystem: ulocdata_getMeasurementSystem(%s) failed %s",
-            asciibcp47.constData(), u_errorName(error));
-        return QLocale::MetricSystem;
-    }
-    switch (measurement) {
-        case UMS_SI:
-            return QLocale::MetricSystem;
-        case UMS_US:
-            return QLocale::ImperialSystem;
-        case UMS_UK:
-            return QLocale::UKSystem;
-        // just to silence compiler warning
-#ifndef U_HIDE_DEPRECATED_API
-        case UMS_LIMIT:
-            break;
-#endif
-    }
-    Q_UNREACHABLE();
-}
-
 /*!
     \since 4.8
 
@@ -1562,7 +1533,28 @@ QList<Qt::DayOfWeek> QLocale::weekdays() const
 */
 QLocale::MeasurementSystem QLocale::measurementSystem() const
 {
-    return d()->measurementSystem();
+    QByteArray asciibcp47 = bcp47Name();
+    UErrorCode error = U_ZERO_ERROR;
+    UMeasurementSystem measurement = ulocdata_getMeasurementSystem(asciibcp47.constData(), &error);
+    if (Q_UNLIKELY(U_FAILURE(error))) {
+        qWarning("QLocale::measurementSystem: ulocdata_getMeasurementSystem(%s) failed %s",
+            asciibcp47.constData(), u_errorName(error));
+        return QLocale::MetricSystem;
+    }
+    switch (measurement) {
+        case UMS_SI:
+            return QLocale::MetricSystem;
+        case UMS_US:
+            return QLocale::ImperialSystem;
+        case UMS_UK:
+            return QLocale::UKSystem;
+        // just to silence compiler warning
+#ifndef U_HIDE_DEPRECATED_API
+        case UMS_LIMIT:
+            break;
+#endif
+    }
+    Q_UNREACHABLE();
 }
 
 /*!

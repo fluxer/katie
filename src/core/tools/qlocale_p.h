@@ -52,17 +52,12 @@ public:
     QChar minus() const { return QChar(m_minus); }
     QChar exponential() const { return QChar(m_exponential); }
 
-    QByteArray bcp47Name() const;
-
     static QLocale::Language codeToLanguage(const QByteArray &code);
     static QLocale::Script codeToScript(const QByteArray &code);
     static QLocale::Country codeToCountry(const QByteArray &code);
     static const QLocalePrivate *findLocale(QLocale::Language language,
                                             QLocale::Script script,
                                             QLocale::Country country);
-
-
-    QLocale::MeasurementSystem measurementSystem() const;
 
     enum DoubleForm {
         DFExponent = 0,
