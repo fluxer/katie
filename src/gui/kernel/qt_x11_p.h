@@ -244,8 +244,6 @@ public:
     bool has_fontconfig;
     int fc_hint_style;
 
-    char *startupId;
-
     /* Warning: if you modify this list, modify the names of atoms in qapplication_x11.cpp as well! */
     enum X11Atom {
         // window-manager <-> client protocols
@@ -328,9 +326,6 @@ public:
         _NET_WM_WINDOW_TYPE_COMBO,
         _NET_WM_WINDOW_TYPE_DND,
         _NET_WM_WINDOW_TYPE_NORMAL,
-
-        _NET_STARTUP_INFO,
-        _NET_STARTUP_INFO_BEGIN,
 
         _NET_SUPPORTING_WM_CHECK,
 

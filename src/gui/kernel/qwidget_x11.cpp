@@ -1948,46 +1948,6 @@ void QWidgetPrivate::show_sys()
 
     if (q->internalWinId())
         XMapWindow(qt_x11Data->display, q->internalWinId());
-
-    // Freedesktop.org Startup Notification
-    if (qt_x11Data->startupId && q->isWindow()) {
-        sendStartupMessage();
-    }
-}
-
-/*!
-  \internal
-  Platform-specific part of QWidget::show().
-*/
-
-void QWidgetPrivate::sendStartupMessage() const
-{
-    Q_Q(const QWidget);
-
-    QByteArray message("remove: ID=");
-    message.append(qt_x11Data->startupId);
-
-    XEvent xevent;
-    xevent.xclient.type = ClientMessage;
-    xevent.xclient.message_type = ATOM(_NET_STARTUP_INFO_BEGIN);
-    xevent.xclient.display = qt_x11Data->display;
-    xevent.xclient.window = q->internalWinId();
-    xevent.xclient.format = 8;
-
-    Window rootWindow = RootWindow(qt_x11Data->display, DefaultScreen(qt_x11Data->display));
-    uint sent = 0;
-    uint length = message.size() + 1;
-    do {
-        if (sent == 20)
-            xevent.xclient.message_type = ATOM(_NET_STARTUP_INFO);
-
-        for (uint i = 0; i < 20 && i + sent <= length; i++)
-            xevent.xclient.data.b[i] = message[i + sent++];
-
-        XSendEvent(qt_x11Data->display, rootWindow, false, PropertyChangeMask, &xevent);
-    } while (sent <= length);
-
-    qt_x11Data->startupId = 0;
 }
 
 void QWidgetPrivate::setNetWmWindowTypes()

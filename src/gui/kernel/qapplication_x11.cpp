@@ -160,9 +160,6 @@ static const char* X11AtomsTbl[QX11Data::NPredefinedAtoms] = {
     "_NET_WM_WINDOW_TYPE_DND\0",
     "_NET_WM_WINDOW_TYPE_NORMAL\0",
 
-    "_NET_STARTUP_INFO\0",
-    "_NET_STARTUP_INFO_BEGIN\0",
-
     "_NET_SUPPORTING_WM_CHECK\0",
 
     "_NET_SYSTEM_TRAY_VISUAL\0",
@@ -935,8 +932,6 @@ void qt_init(QApplicationPrivate *priv, Display *display,
         qt_x11Data->has_fontconfig = FcInit();
 #endif
 
-    qt_x11Data->startupId = 0;
-
     int argc = priv->argc;
     char **argv = priv->argv;
 
@@ -1225,11 +1220,6 @@ void qt_init(QApplicationPrivate *priv, Display *display,
         // no font from settings, provide a fallback
         QFont f(QFont::lastResortFamily(), ptsz);
         QApplicationPrivate::setSystemFont(f);
-    }
-
-    qt_x11Data->startupId = getenv("DESKTOP_STARTUP_ID");
-    if (qt_x11Data->startupId) {
-        ::unsetenv("DESKTOP_STARTUP_ID");
     }
 }
 
