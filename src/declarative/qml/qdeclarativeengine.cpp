@@ -1694,9 +1694,9 @@ QScriptValue QDeclarativeEnginePrivate::md5(QScriptContext *ctxt, QScriptEngine 
         return ctxt->throwError(QLatin1String("Qt.md5(): Invalid arguments"));
 
     QByteArray data = ctxt->argument(0).toString().toUtf8();
-    QByteArray result = QCryptographicHash::hash(data, QCryptographicHash::Md5);
+    QByteArray result = QCryptographicHash::hash(data, QCryptographicHash::Md5).toHex();
 
-    return QScriptValue(QLatin1String(result.toHex()));
+    return QScriptValue(QString::fromLatin1(result.constData(), result.size()));
 }
 
 /*!
@@ -1708,9 +1708,9 @@ QScriptValue QDeclarativeEnginePrivate::btoa(QScriptContext *ctxt, QScriptEngine
     if (ctxt->argumentCount() != 1)
         return ctxt->throwError(QLatin1String("Qt.btoa(): Invalid arguments"));
 
-    QByteArray data = ctxt->argument(0).toString().toUtf8();
+    QByteArray data = ctxt->argument(0).toString().toUtf8().toBase64();
 
-    return QScriptValue(QLatin1String(data.toBase64()));
+    return QScriptValue(QString::fromLatin1(data.constData(), data.size()));
 }
 
 /*!
@@ -1723,9 +1723,9 @@ QScriptValue QDeclarativeEnginePrivate::atob(QScriptContext *ctxt, QScriptEngine
     if (ctxt->argumentCount() != 1)
         return ctxt->throwError(QLatin1String("Qt.atob(): Invalid arguments"));
 
-    QByteArray data = ctxt->argument(0).toString().toUtf8();
+    QByteArray data = QByteArray::fromBase64(ctxt->argument(0).toString().toUtf8());
 
-    return QScriptValue(QLatin1String(QByteArray::fromBase64(data)));
+    return QScriptValue(QString::fromLatin1(data.constData(), data.size()));
 }
 
 QScriptValue QDeclarativeEnginePrivate::consoleLog(QScriptContext *ctxt, QScriptEngine *e)

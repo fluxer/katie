@@ -1110,9 +1110,9 @@ case 266: {
               for (int s = 0; s < shifts; ++s)
                 {
                   if (first)
-                    error_message += QLatin1String ("Expected ");
+                    error_message += QLatin1String("Expected ");
                   else
-                    error_message += QLatin1String (", ");
+                    error_message += QLatin1String(", ");
 
                   first = false;
                   error_message += QLatin1String("`");
