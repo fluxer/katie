@@ -47,17 +47,24 @@ Q_GLOBAL_STATIC_WITH_ARGS(QFactoryLoader, platformLoader, (QString::fromLatin1("
 QGuiPlatformPlugin *qt_guiPlatformPlugin()
 {
     static QGuiPlatformPlugin *plugin = nullptr;
-    if (!plugin)
-    {
+    if (!plugin) {
 #ifndef QT_NO_LIBRARY
-
-        static QString key = qGetEnv("QT_PLATFORM_PLUGIN");
-        if (key.isEmpty()) {
-            key = qGetEnv("DESKTOP_SESSION");
-        }
-
-        if (!key.isEmpty()) {
-            plugin = qobject_cast<QGuiPlatformPlugin *>(platformLoader()->instance(key));
+        static const char* platformEnvTbl[] = {
+            "QT_PLATFORM_PLUGIN",
+            "XDG_CURRENT_DESKTOP",
+            "DESKTOP_SESSION",
+            nullptr
+        };
+        int counter = 0;
+        while (platformEnvTbl[counter]) {
+            QString key = qGetEnv(platformEnvTbl[counter]);
+            if (!key.isEmpty()) {
+                plugin = qobject_cast<QGuiPlatformPlugin*>(platformLoader()->instance(key));
+                if (plugin) {
+                    break;
+                }
+            }
+            counter++;
         }
 #endif // QT_NO_LIBRARY
 
