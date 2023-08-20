@@ -46,7 +46,7 @@ dpkg --add-architecture $crossarch
 apt-get update
 apt-get install --yes git crossbuild-essential-$crossarch qemu-user-static
 
-git clone --depth=1 git://git.osdn.net/gitroot/kde/Katie.git
+git clone --depth=1 https://bitbucket.org/smil3y/Katie.git
 cd Katie
 ln -sv package/debian .
 apt-get build-dep --yes -a $crossarch .

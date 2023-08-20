@@ -7,15 +7,15 @@ pkgver=4.14.0.r8005.14dedd943
 pkgrel=1
 pkgdesc='C++ toolkit derived from the Qt 4.8 framework'
 arch=('i486' 'i686' 'pentium4' 'x86_64' 'arm')
-url='https://osdn.net/projects/kde/'
+url='https://bitbucket.org/smil3y/workspace/projects/KATANA'
 license=('LGPL' 'BSD')
 depends=('libsm' 'libxcursor' 'libxinerama' 'libxrandr' 'fontconfig'
          'icu' 'jansson' 'libcups' 'xdg-utils' 'libdeflate')
 makedepends=('cmake' 'git' 'unifdef')
 optdepends=('gnu-free-fonts: last resort font')
 source=(
-    "git+https://scm.osdn.net/gitroot/kde/Katie.git"
-    # "git+https://bitbucket.org/smil3y/Katie.git"
+    # "git+https://scm.osdn.net/gitroot/kde/Katie.git"
+    "git+https://bitbucket.org/smil3y/Katie.git"
     # "git+https://github.com/fluxer/katie.git"
 )
 sha1sums=('SKIP')

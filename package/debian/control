@@ -1,9 +1,8 @@
 Source: katie
 Priority: optional
 Maintainer: Ivailo Monev <xakepa10@gmail.com>
-Homepage: https://osdn.net/projects/kde/
-Vcs-Git: git://git.osdn.net/gitroot/kde/Katie.git
-Vcs-browser: https://osdn.net/projects/kde/scm/git/Katie/tree
+Homepage: https://bitbucket.org/smil3y/workspace/projects/KATANA
+Vcs-Git: https://bitbucket.org/smil3y/Katie.git
 Standards-Version: 4.14.0
 Build-Depends: debhelper (>= 9~), libdeflate-dev, libgettextpo-dev,
  libc6-dev, libjansson-dev, libpng-dev, libcups2-dev, libfreetype6-dev,
