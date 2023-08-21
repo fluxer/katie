@@ -599,9 +599,14 @@ bool QApplicationPrivate::x11_apply_settings()
                          QColor(strlist[i]));
     }
 
-    // ### Fix properly for 4.6
-    if (groupCount == QPalette::NColorGroups)
+    if (groupCount == QPalette::NColorGroups) {
         QApplicationPrivate::setSystemPalette(pal);
+    } else {
+        pal = qt_guiPlatformPlugin()->palette();
+        if (pal != QPalette()) {
+            QApplicationPrivate::setSystemPalette(pal);
+        }
+    }
 
     QString fontDescription = settings.string(QLatin1String("Qt/font"));
     if (!fontDescription.isEmpty()) {
