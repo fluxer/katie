@@ -871,9 +871,7 @@ QIcon QIcon::fromTheme(const QString &name, const QIcon &fallback)
 */
 bool QIcon::hasThemeIcon(const QString &name)
 {
-    QIcon icon = fromTheme(name);
-
-    return !icon.isNull();
+    return !fromTheme(name).isNull();
 }
 
 
