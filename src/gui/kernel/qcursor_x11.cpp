@@ -114,7 +114,7 @@ Qt::HANDLE QCursor::handle() const
         return 0;
     }
 
-    Display *dpy = qt_x11Data->display;
+    Display *dpy = (qt_x11Data ? qt_x11Data->display : nullptr);
     if (!dpy) {
         return 0;
     }
@@ -185,11 +185,14 @@ Qt::HANDLE QCursor::handle() const
 */
 int QCursor::x11Screen()
 {
+    Display *dpy = (qt_x11Data ? qt_x11Data->display : nullptr);
+    if (!dpy) {
+        return -1;
+    }
     Window root;
     Window child;
     int root_x, root_y, win_x, win_y;
     uint buttons;
-    Display* dpy = qt_x11Data->display;
     for (int i = 0; i < ScreenCount(dpy); ++i) {
         if (XQueryPointer(dpy, QX11Info::appRootWindow(i), &root, &child, &root_x, &root_y,
                           &win_x, &win_y, &buttons)) {
@@ -202,11 +205,14 @@ int QCursor::x11Screen()
 
 QPoint QCursor::pos()
 {
+    Display *dpy = (qt_x11Data ? qt_x11Data->display : nullptr);
+    if (!dpy) {
+        return QPoint();
+    }
     Window root;
     Window child;
     int root_x, root_y, win_x, win_y;
     uint buttons;
-    Display* dpy = qt_x11Data->display;
     for (int i = 0; i < ScreenCount(dpy); ++i) {
         if (XQueryPointer(dpy, QX11Info::appRootWindow(i), &root, &child, &root_x, &root_y,
                           &win_x, &win_y, &buttons)) {
@@ -218,18 +224,21 @@ QPoint QCursor::pos()
 
 void QCursor::setPos(int x, int y)
 {
+    Display *dpy = (qt_x11Data ? qt_x11Data->display : nullptr);
+    if (!dpy) {
+        return;
+    }
+
     QPoint current;
     QPoint target(x, y);
-
     // this is copied from pos(), since we need the screen number for the correct
     // root window in the XWarpPointer call
     Window root;
     Window child;
     int root_x, root_y, win_x, win_y;
     uint buttons;
-    Display* dpy = qt_x11Data->display;
-    int screen;
-    for (screen = 0; screen < ScreenCount(dpy); ++screen) {
+    int screen = 0;
+    for (; screen < ScreenCount(dpy); ++screen) {
         if (XQueryPointer(dpy, QX11Info::appRootWindow(screen), &root, &child, &root_x, &root_y,
                           &win_x, &win_y, &buttons)) {
             current = QPoint(root_x, root_y);
