@@ -46,6 +46,11 @@ Q_GLOBAL_STATIC_WITH_ARGS(QFactoryLoader, platformLoader, (QString::fromLatin1("
  */
 QGuiPlatformPlugin *qt_guiPlatformPlugin()
 {
+    static QGuiPlatformPlugin *appplugin = nullptr;
+    if (appplugin) {
+        return appplugin;
+    }
+
     QGuiPlatformPlugin *plugin = nullptr;
 #ifndef QT_NO_LIBRARY
     static const char* platformEnvTbl[] = {
@@ -70,6 +75,10 @@ QGuiPlatformPlugin *qt_guiPlatformPlugin()
     if (!plugin) {
         static QGuiPlatformPlugin def;
         plugin = &def;
+    }
+
+    if (qApp) {
+        appplugin = plugin;
     }
 
     return plugin;
