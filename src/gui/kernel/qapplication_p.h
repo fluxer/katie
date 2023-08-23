@@ -62,10 +62,7 @@ extern QClipboard *qt_clipboard;
 #endif
 
 typedef QHash<QByteArray, QFont> FontHash;
-FontHash *qt_app_fonts_hash();
-
 typedef QHash<QByteArray, QPalette> PaletteHash;
-PaletteHash *qt_app_palettes_hash();
 
 class QApplicationPrivate : public QCoreApplicationPrivate
 {
