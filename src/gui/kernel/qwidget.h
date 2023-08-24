@@ -568,7 +568,6 @@ protected:
 private:
     QLayout *takeLayout();
 
-    friend class QBackingStoreDevice;
     friend class QWidgetBackingStore;
     friend class QApplication;
     friend class QApplicationPrivate;
@@ -588,7 +587,6 @@ private:
     friend class QStyleSheetStyle;
     friend class QX11EmbedWidgetPrivate;
     friend class QX11EmbedContainerPrivate;
-    friend struct QWidgetExceptionCleaner;
 
 #ifdef Q_WS_X11
     friend void qt_net_update_user_time(QWidget *tlw, unsigned long timestamp);

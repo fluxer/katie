@@ -743,42 +743,6 @@ QWidgetSet *QWidgetPrivate::allWidgets = 0;         // widgets with no wid
   QWidget member functions
  *****************************************************************************/
 
-/*
-    Widget state flags:
-  \list
-  \i Qt::WA_WState_Created The widget has a valid winId().
-  \i Qt::WA_WState_Visible The widget is currently visible.
-  \i Qt::WA_WState_Hidden The widget is hidden, i.e. it won't
-  become visible unless you call show() on it. Qt::WA_WState_Hidden
-  implies !Qt::WA_WState_Visible.
-  \i Qt::WA_WState_CompressKeys Compress keyboard events.
-  \i Qt::WA_WState_BlockUpdates Repaints and updates are disabled.
-  \i Qt::WA_WState_InPaintEvent Currently processing a paint event.
-  \i Qt::WA_WState_Reparented The widget has been reparented.
-  \i Qt::WA_WState_ConfigPending A configuration (resize/move) event is pending.
-  \endlist
-*/
-
-struct QWidgetExceptionCleaner
-{
-    /* this cleans up when the constructor throws an exception */
-    static inline void cleanup(QWidget *that, QWidgetPrivate *d)
-    {
-#ifdef QT_NO_EXCEPTIONS
-        Q_UNUSED(that);
-        Q_UNUSED(d);
-#else
-        QWidgetPrivate::allWidgets->remove(that);
-        if (d->focus_next != that) {
-            if (d->focus_next)
-                d->focus_next->d_func()->focus_prev = d->focus_prev;
-            if (d->focus_prev)
-                d->focus_prev->d_func()->focus_next = d->focus_next;
-        }
-#endif
-    }
-};
-
 /*!
     Constructs a widget which is a child of \a parent, with  widget
     flags set to \a f.
