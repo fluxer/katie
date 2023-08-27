@@ -1170,9 +1170,10 @@ QString QKeySequence::toString(SequenceFormat format) const
             return QKeySequencePrivate::encodeString(key1, format);
         }
         case 2: {
-            const QString firststring(QKeySequencePrivate::encodeString(key1, format));
-            const QString secondstring(QKeySequencePrivate::encodeString(key2, format));
-            return QString::fromLatin1("%1, %2").arg(firststring, secondstring);
+            return QString::fromLatin1("%1, %2").arg(
+                QKeySequencePrivate::encodeString(key1, format),
+                QKeySequencePrivate::encodeString(key2, format)
+            );
         }
     }
     Q_UNREACHABLE();
