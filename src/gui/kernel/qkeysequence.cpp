@@ -1028,8 +1028,9 @@ QKeySequence::operator QVariant() const
  */
 QKeySequence::operator int () const
 {
-    if (1 <= count())
+    if (1 <= count()) {
         return key1;
+    }
     return 0;
 }
 
@@ -1047,6 +1048,9 @@ int QKeySequence::operator[](uint index) const
         }
         case 1: {
             return key2;
+        }
+        default: {
+            return 0;
         }
     }
     Q_UNREACHABLE();
