@@ -247,13 +247,13 @@ bool QTranslator::loadFromData(const QByteArray &data)
 */
 QString QTranslator::translate(const char *context, const char *sourceText) const
 {
+    const int sourcelen = qstrlen(sourceText);
     if (isEmpty()) {
-        return QString::fromUtf8(sourceText);
+        return QString::fromUtf8(sourceText, sourcelen);
     }
 
     Q_D(const QTranslator);
     const int contextlen = qstrlen(context);
-    const int sourcelen = qstrlen(sourceText);
     foreach (const QTranslatorCache &it, d->cache) {
         // this search method assumes plurals and regular messages are unique strings
         if (isCharEqual(it.trmsgctxt.constData(), it.trmsgctxt.size(), context, contextlen)
@@ -268,7 +268,7 @@ QString QTranslator::translate(const char *context, const char *sourceText) cons
             return d->converter.toUnicode(it.trmsgstr.constData(), it.trmsgstr.size());
         }
     }
-    return QString::fromUtf8(sourceText);
+    return QString::fromUtf8(sourceText, sourcelen);
 }
 
 /*!
