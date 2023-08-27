@@ -915,9 +915,16 @@ int QKeySequencePrivate::decodeString(const QString &str, QKeySequence::Sequence
     // if we don't find anything then try it out with just the untranlated stuff.
     // PortableText will only try the untranlated table.
     for (qint16 i = 0; i < KeyNameTblSize; ++i) {
-        QString keyName(nativeText
-                        ? QShortcut::tr(KeyNameTbl[i].name)
-                        : QString::fromLatin1(KeyNameTbl[i].name));
+        QString keyName;
+        if (nativeText) {
+            keyName = QShortcut::tr(KeyNameTbl[i].name);
+            if (accel == keyName.toLower()) {
+                ret |= KeyNameTbl[i].key;
+                foundmatch = true;
+                break;
+            }
+        }
+        keyName = QString::fromLatin1(KeyNameTbl[i].name);
         if (accel == keyName.toLower()) {
             ret |= KeyNameTbl[i].key;
             foundmatch = true;
@@ -1241,7 +1248,3 @@ QDebug operator<<(QDebug dbg, const QKeySequence &p)
 #endif // QT_NO_SHORTCUT
 
 QT_END_NAMESPACE
-
-
-
-
