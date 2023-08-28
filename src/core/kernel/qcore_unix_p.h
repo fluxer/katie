@@ -105,7 +105,8 @@ private:
     time_t m_mtime;
     off_t m_size;
     QList<QStatInfo> m_entries;
-    QByteArray m_path;
+    QString m_path;
+    QByteArray m_native;
 };
 
 static inline bool qt_lock_fd(int fd, const bool forread)

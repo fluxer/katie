@@ -47,17 +47,18 @@ QStatInfo::QStatInfo(const QString &path, const bool listdir)
     m_gid(QFileSystemMetaData::nobodyID),
     m_mtime(0),
     m_size(0),
-    m_path(QFile::encodeName(path))
+    m_path(path),
+    m_native(QFile::encodeName(path))
 {
     QT_STATBUF statbuf;
-    if (QT_STAT(m_path.constData(), &statbuf) == 0) {
+    if (QT_STAT(m_native.constData(), &statbuf) == 0) {
         m_mode = statbuf.st_mode;
         m_uid = statbuf.st_uid;
         m_gid = statbuf.st_gid;
         m_mtime = statbuf.st_mtime;
         m_size = statbuf.st_size;
         if (listdir && S_ISDIR(statbuf.st_mode)) {
-            m_entries = dirInfos(m_path, path);
+            m_entries = dirInfos(m_native, path);
         }
     }
 }
@@ -69,7 +70,8 @@ QStatInfo::QStatInfo(const QStatInfo &other)
     m_mtime(other.m_mtime),
     m_size(other.m_size),
     m_entries(other.m_entries),
-    m_path(other.m_path)
+    m_path(other.m_path),
+    m_native(other.m_native)
 {
 }
 
@@ -82,6 +84,7 @@ QStatInfo& QStatInfo::operator=(const QStatInfo &other)
     m_size = other.m_size;
     m_entries = other.m_entries;
     m_path = other.m_path;
+    m_native = other.m_native;
     return *this;
 }
 
@@ -92,22 +95,25 @@ bool QStatInfo::operator==(const QStatInfo &other) const
         || m_size != other.m_size || m_entries != other.m_entries) {
         return false;
     }
+    if (m_path == other.m_path) {
+        return true;
+    }
     return (QDir::cleanPath(m_path) == QDir::cleanPath(other.m_path));
 }
 
 bool QStatInfo::isReadable() const
 {
-    return (QT_ACCESS(m_path.constData(), R_OK) == 0);
+    return (QT_ACCESS(m_native.constData(), R_OK) == 0);
 }
 
 bool QStatInfo::isWritable() const
 {
-    return (QT_ACCESS(m_path.constData(), W_OK) == 0);
+    return (QT_ACCESS(m_native.constData(), W_OK) == 0);
 }
 
 bool QStatInfo::isExecutable() const
 {
-    return (QT_ACCESS(m_path.constData(), X_OK) == 0);
+    return (QT_ACCESS(m_native.constData(), X_OK) == 0);
 }
 
 bool QStatInfo::dirEquals(const QStatInfo &other) const
@@ -116,8 +122,7 @@ bool QStatInfo::dirEquals(const QStatInfo &other) const
         return false;
     }
     if (isDir() && other.isDir()) {
-        const QString localpath = QFile::decodeName(other.m_path);
-        if (m_entries != dirInfos(other.m_path, localpath)) {
+        if (m_entries != dirInfos(other.m_native, other.m_path)) {
             return false;
         }
     }
