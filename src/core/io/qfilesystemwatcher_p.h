@@ -54,6 +54,7 @@ public:
     QStringList addPaths(const QStringList &paths);
     QStringList removePaths(const QStringList &paths);
 
+    int interval;
     QTimer timer;
     QHash<QString, QStatInfo> files, directories;
 

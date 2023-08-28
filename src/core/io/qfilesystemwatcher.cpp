@@ -28,11 +28,9 @@
 
 QT_BEGIN_NAMESPACE
 
-
-enum { PollingInterval = 1000 };
-
 QFileSystemWatcherPrivate::QFileSystemWatcherPrivate()
-    : timer(q_ptr)
+    : interval(1000),
+    timer(q_ptr)
 {
 }
 
@@ -49,7 +47,7 @@ QStringList QFileSystemWatcherPrivate::addPaths(const QStringList &paths)
         p.removeAll(path);
     }
     if ((!files.isEmpty() || !directories.isEmpty()) && !timer.isActive()) {
-        timer.start(PollingInterval);
+        timer.start(interval);
     }
     return p;
 }
@@ -265,6 +263,38 @@ QStringList QFileSystemWatcher::files() const
 {
     Q_D(const QFileSystemWatcher);
     return d->files.keys();
+}
+
+/*!
+    Returns the interval on which files and directories are checked.
+
+    \since 4.14
+    \sa setInterval()
+*/
+int QFileSystemWatcher::interval() const
+{
+    Q_D(const QFileSystemWatcher);
+    return d->interval;
+}
+
+/*!
+    Sets the interval on which files and directories are checked.
+
+    \since 4.14
+    \sa interval()
+*/
+void QFileSystemWatcher::setInterval(int interval)
+{
+    Q_D(QFileSystemWatcher);
+    if (Q_UNLIKELY(interval <= 0)) {
+        qWarning("QFileSystemWatcher::setInterval: interval is less or equal to zero");
+        return;
+    }
+    d->interval = interval;
+    if (d->timer.isActive()) {
+        d->timer.stop();
+        d->timer.start(interval);
+    }
 }
 
 /*!

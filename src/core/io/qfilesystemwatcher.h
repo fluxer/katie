@@ -50,6 +50,9 @@ public:
     QStringList files() const;
     QStringList directories() const;
 
+    int interval() const;
+    void setInterval(int interval);
+
 Q_SIGNALS:
     void fileChanged(const QString &path);
     void directoryChanged(const QString &path);
