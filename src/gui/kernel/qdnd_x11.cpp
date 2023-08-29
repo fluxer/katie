@@ -1963,7 +1963,7 @@ QVariant QDropData::retrieveData_sys(const QString &mimetype, QVariant::Type req
             QImage image = qvariant_cast<QImage>(o->data->imageData());
             QBuffer buf(&result);
             buf.open(QBuffer::WriteOnly);
-            image.save(&buf, mimetype.mid(mimetype.indexOf(QLatin1Char('/')) + 1).toLatin1().toUpper());
+            image.save(&buf, QImageWriter::formatForMimeType(mimetype.toLatin1()));
         }
         return result;
     }

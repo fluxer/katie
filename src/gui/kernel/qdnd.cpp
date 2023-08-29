@@ -336,7 +336,7 @@ bool QInternalMimeData::hasFormatHelper(const QString &mimeType, const QMimeData
 
     bool foundFormat = data->hasFormat(mimeType);
     if (!foundFormat) {
-        QStringList imageFormats = imageWriteMimeFormats();
+        const QStringList imageFormats = imageWriteMimeFormats();
         if (mimeType == QLatin1String("application/x-qt-image")) {
             // check all supported image formats
             foreach (const QString &it, imageFormats) {
