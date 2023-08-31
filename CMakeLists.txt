@@ -64,6 +64,7 @@ if(CMAKE_SYSTEM_NAME MATCHES "(Linux|GNU)")
 elseif(CMAKE_SYSTEM_NAME MATCHES "(FreeBSD|DragonFly)")
     katie_definition(-D_THREAD_SAFE)
 elseif(NOT CMAKE_SYSTEM_NAME MATCHES "(OpenBSD|NetBSD|Solaris|SunOS)")
+    # if it is not open-source it is not supported, don't even bother requesting support for such
     message(FATAL_ERROR "Unknown platform '${CMAKE_SYSTEM_NAME}'")
 endif()
 
