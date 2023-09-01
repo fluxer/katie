@@ -167,7 +167,7 @@ static bool qt_unix_query(const QString &library, QLibraryPrivate *lib)
 static QString qt_find_library(const QString &fileName)
 {
     if (qt_debug_component()) {
-        qWarning() << "QLibrary: looking for" << fileName;
+        qDebug() << "QLibrary: looking for" << fileName;
     }
 
     if (Q_UNLIKELY(fileName.isEmpty())) {
@@ -240,7 +240,11 @@ bool QLibraryPrivate::load()
         return false;
     }
 
-    return load_sys();
+    const bool result = load_sys();
+    if (!result && qt_debug_component()) {
+        qWarning() << "QLibraryPrivate::load failed on" << fileName << ":" << errorString;
+    }
+    return result;
 }
 
 bool QLibraryPrivate::unload()
@@ -251,7 +255,7 @@ bool QLibraryPrivate::unload()
     delete inst.data();
     if (unload_sys()) {
         if (qt_debug_component()) {
-            qWarning() << "QLibraryPrivate::unload succeeded on" << fileName;
+            qDebug() << "QLibraryPrivate::unload succeeded on" << fileName;
         }
         pHnd = nullptr;
     }
