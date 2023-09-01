@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-20 20:18+0300\n"
+"POT-Creation-Date: 2023-09-01 04:23+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1902,7 +1902,7 @@ msgstr ""
 msgid "Step &down"
 msgstr ""
 
-#: src/gui/kernel/qwidget.cpp:4773
+#: src/gui/kernel/qwidget.cpp:4737
 msgid "*"
 msgstr ""
 
@@ -3270,23 +3270,23 @@ msgctxt "QShortcut"
 msgid "ShiftLock"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:873 src/gui/kernel/qkeysequence.cpp:952
+#: src/gui/kernel/qkeysequence.cpp:873 src/gui/kernel/qkeysequence.cpp:959
 msgid "Ctrl"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:874 src/gui/kernel/qkeysequence.cpp:956
+#: src/gui/kernel/qkeysequence.cpp:874 src/gui/kernel/qkeysequence.cpp:963
 msgid "Shift"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:875 src/gui/kernel/qkeysequence.cpp:954
+#: src/gui/kernel/qkeysequence.cpp:875 src/gui/kernel/qkeysequence.cpp:961
 msgid "Alt"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:876 src/gui/kernel/qkeysequence.cpp:950
+#: src/gui/kernel/qkeysequence.cpp:876 src/gui/kernel/qkeysequence.cpp:957
 msgid "Meta"
 msgstr ""
 
-#: src/gui/kernel/qkeysequence.cpp:939
+#: src/gui/kernel/qkeysequence.cpp:946
 msgid "+"
 msgstr ""
 

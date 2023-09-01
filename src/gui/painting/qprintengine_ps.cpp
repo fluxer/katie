@@ -38,7 +38,6 @@
 #include "qstring.h"
 #include "qbytearray.h"
 #include "qhash.h"
-#include "qsettings.h"
 #include "qmap.h"
 #include "qbitmap.h"
 #include "qregion.h"
@@ -150,9 +149,6 @@ QPSPrintEnginePrivate::QPSPrintEnginePrivate()
     postscript = true;
 
     firstPage = true;
-
-    QSettings settings(QString::fromLatin1("Katie"));
-    embedFonts = settings.boolean(QLatin1String("Qt/embedFonts"), true);
 }
 
 QPSPrintEnginePrivate::~QPSPrintEnginePrivate()

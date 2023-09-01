@@ -32,7 +32,7 @@ Description: C++ toolkit derived from the Qt 4.8 framework
  on the latest Git revision of Qt v4.8.
  .
  This package includes designer, moc, qdbus, qdbuscpp2xml, qdbusviewer,
- qdbusxml2cpp, qscript, qtconfig, rcc, and uic
+ qdbusxml2cpp, qscript, trc, rcc, and uic
 
 Package: katie-dev
 Architecture: amd64 arm64 armel armhf i386 mips mips64el mipsel ppc64el s390x hurd-i386

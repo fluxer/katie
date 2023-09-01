@@ -36,7 +36,6 @@
 #include "qsessionmanager.h"
 #include "qclipboard.h"
 #include "qwhatsthis.h"
-#include "qsettings.h"
 #include "qstylefactory.h"
 #include "qfileinfo.h"
 #include "qdir.h"
@@ -574,60 +573,13 @@ bool QApplicationPrivate::x11_apply_settings()
       GUIEffects                 - QStringList
     */
 
-    QPalette pal(Qt::black);
-    int groupCount = 0;
-    QSettings settings(QString::fromLatin1("Katie"));
-    QStringList strlist = settings.stringList(QLatin1String("Qt/Palette/active"));
-    if (!strlist.isEmpty()) {
-        ++groupCount;
-        for (int i = 0; i < qMin(strlist.count(), int(QPalette::NColorRoles)); i++)
-            pal.setColor(QPalette::Active, (QPalette::ColorRole) i,
-                         QColor(strlist[i]));
-    }
-    strlist = settings.stringList(QLatin1String("Qt/Palette/inactive"));
-    if (!strlist.isEmpty()) {
-        ++groupCount;
-        for (int i = 0; i < qMin(strlist.count(), int(QPalette::NColorRoles)); i++)
-            pal.setColor(QPalette::Inactive, (QPalette::ColorRole) i,
-                         QColor(strlist[i]));
-    }
-    strlist = settings.stringList(QLatin1String("Qt/Palette/disabled"));
-    if (!strlist.isEmpty()) {
-        ++groupCount;
-        for (int i = 0; i < qMin(strlist.count(), int(QPalette::NColorRoles)); i++)
-            pal.setColor(QPalette::Disabled, (QPalette::ColorRole) i,
-                         QColor(strlist[i]));
-    }
-
-    if (groupCount == QPalette::NColorGroups) {
+    QPalette pal = qt_guiPlatformPlugin()->palette();
+    if (pal != QPalette()) {
         QApplicationPrivate::setSystemPalette(pal);
-    } else {
-        pal = qt_guiPlatformPlugin()->palette();
-        if (pal != QPalette()) {
-            QApplicationPrivate::setSystemPalette(pal);
-        }
     }
 
-    QString fontDescription = settings.string(QLatin1String("Qt/font"));
-    if (!fontDescription.isEmpty()) {
-        QFont font(QApplication::font());
-        font.fromString(fontDescription);
-        QApplicationPrivate::setSystemFont(font);
-    }
-
-#ifndef QT_NO_LIBRARY
-    // read library (ie. plugin) path list
-    QStringList pathlist = settings.string(QLatin1String("Qt/libraryPath")).split(QLatin1Char(':'));
-    if (!pathlist.isEmpty()) {
-        QStringList::ConstIterator it = pathlist.constBegin();
-        while (it != pathlist.constEnd())
-            QApplication::addLibraryPath(*it++);
-    }
-#endif // QT_NO_LIBRARY
-
-    // read new QStyle
-    QString stylename = settings.string(QLatin1String("Qt/style"));
-    if (stylename.isEmpty() && QApplicationPrivate::styleOverride.isEmpty()) {
+    QString stylename;
+    if (QApplicationPrivate::styleOverride.isEmpty()) {
         stylename = qt_guiPlatformPlugin()->styleName();
     }
     if (!stylename.isEmpty() && QApplicationPrivate::styleOverride.isEmpty()) {
@@ -635,36 +587,6 @@ bool QApplicationPrivate::x11_apply_settings()
             QApplication::setStyle(stylename);
         }
     }
-
-    int num = settings.integer(QLatin1String("Qt/doubleClickInterval"),
-                               QApplication::doubleClickInterval());
-    QApplication::setDoubleClickInterval(num);
-
-    num = settings.integer(QLatin1String("Qt/cursorFlashTime"),
-                           QApplication::cursorFlashTime());
-    QApplication::setCursorFlashTime(num);
-
-#ifndef QT_NO_WHEELEVENT
-    num = settings.integer(QLatin1String("Qt/wheelScrollLines"),
-                           QApplication::wheelScrollLines());
-    QApplication::setWheelScrollLines(num);
-#endif
-
-    int w = settings.integer(QLatin1String("Qt/globalStrut/width"));
-    int h = settings.integer(QLatin1String("Qt/globalStrut/height"));
-    QSize strut(w, h);
-    if (strut.isValid())
-        QApplication::setGlobalStrut(strut);
-
-    QStringList effects = settings.stringList(QLatin1String("Qt/GUIEffects"));
-    QApplication::setEffectEnabled(Qt::UI_General,
-                                   effects.contains(QLatin1String("general")));
-    QApplication::setEffectEnabled(Qt::UI_FadeMenu,
-                                   effects.contains(QLatin1String("fademenu")));
-    QApplication::setEffectEnabled(Qt::UI_FadeTooltip,
-                                   effects.contains(QLatin1String("fadetooltip")));
-
-    qt_use_rtl_extensions = settings.boolean(QLatin1String("Qt/useRtlExtensions"), false);
 
 #ifndef QT_NO_ICON
     QIconLoader::instance()->updateSystemTheme();

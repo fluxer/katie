@@ -99,7 +99,7 @@ set(KATIE_TYPE SHARED CACHE STRING "Build type")
 
 # components and tools that will be build, changed depending on the requirements availability
 set(KATIE_COMPONENTS "Core Gui Declarative Network Svg Xml Script Test UiTools")
-set(KATIE_TOOLS "moc uic qscript qtconfig")
+set(KATIE_TOOLS "moc uic qscript")
 
 set(KATIE_HEADERS_PATH "${CMAKE_INSTALL_FULL_INCLUDEDIR}/katie" CACHE PATH "Headers installation path")
 set(KATIE_LIBRARIES_PATH "${CMAKE_INSTALL_FULL_LIBDIR}" CACHE PATH "Libraries installation path")

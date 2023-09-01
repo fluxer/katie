@@ -365,7 +365,6 @@ void QWellArray::keyPressEvent(QKeyEvent* e)
 static bool initrgb = false;
 static QRgb stdrgb[6*8];
 static QRgb cusrgb[2*8];
-static bool customSet = false;
 
 
 static void initRGB()
@@ -413,7 +412,6 @@ void QColorDialog::setCustomColor(int index, QRgb color)
     if (index >= customCount())
         return;
     initRGB();
-    customSet = true;
     cusrgb[index] = color;
 }
 
@@ -1327,21 +1325,11 @@ void QColorDialogPrivate::init(const QColor &initial)
     const int lumSpace = topLay->spacing() / 2;
 
     if (!smallDisplay) {
-        leftLay = new QVBoxLayout;
+        leftLay = new QVBoxLayout();
         topLay->addLayout(leftLay);
     }
 
     initRGB();
-
-    if (!customSet) {
-        QSettings settings(QString::fromLatin1("Katie"));
-        for (int i = 0; i < 2*8; ++i) {
-            qlonglong l = settings.integer(QLatin1String("Qt/customColors/") + QString::number(i));
-            if (l != 0) {
-                cusrgb[i] = QRgb(l);
-            }
-        }
-    }
 
     if (!smallDisplay) {
         standard = new QColorWell(q, 6, 8, stdrgb);
@@ -1748,12 +1736,6 @@ QRgb QColorDialog::getRgba(QRgb initial, bool *ok, QWidget *parent)
 QColorDialog::~QColorDialog()
 {
     Q_D(QColorDialog);
-
-    if (!customSet) {
-        QSettings settings(QString::fromLatin1("Katie"));
-        for (int i = 0; i < 2*8; ++i)
-            settings.setInteger(QLatin1String("Qt/customColors/") + QString::number(i), cusrgb[i]);
-    }
     if (d->nativeDialogInUse)
         qt_guiPlatformPlugin()->colorDialogDelete(this);
 
