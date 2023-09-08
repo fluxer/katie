@@ -5732,7 +5732,7 @@ static const QLocalePrivate localeTbl[] = {
     {
         QLocale::Language::English, QLocale::Script::LatinScript, QLocale::Country::SouthAfrica,
         Qt::Monday, Qt::Saturday, Qt::Sunday,
-        44, 160, 59, 37, 45, 43, 69, 48,
+        46, 44, 59, 37, 45, 43, 69, 48,
         "English\0", "South Africa\0",
         "yyyy/MM/dd\0", "dd MMMM yyyy\0", "HH:mm\0", "HH:mm:ss Z\0",
         "am\0", "pm\0",
