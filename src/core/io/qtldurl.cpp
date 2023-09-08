@@ -29,7 +29,7 @@ QT_BEGIN_NAMESPACE
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 // generated via gentld.py
-static const char* TLDTbl[9109] = {
+static const char* TLDTbl[9104] = {
     "ac",
     "com.ac",
     "edu.ac",
@@ -6426,7 +6426,6 @@ static const char* TLDTbl[9109] = {
     "mtn",
     "mtr",
     "music",
-    "mutual",
     "nab",
     "nagoya",
     "natura",
@@ -6452,7 +6451,6 @@ static const char* TLDTbl[9109] = {
     "nissan",
     "nissay",
     "nokia",
-    "northwesternmutual",
     "norton",
     "now",
     "nowruz",
@@ -6713,7 +6711,6 @@ static const char* TLDTbl[9109] = {
     "tiaa",
     "tickets",
     "tienda",
-    "tiffany",
     "tips",
     "tires",
     "tirol",
@@ -8238,7 +8235,6 @@ static const char* TLDTbl[9109] = {
     "iobb.net",
     "mel.cloudlets.com.au",
     "cloud.interhostsolutions.be",
-    "users.scale.virtualcloud.com.br",
     "mycloud.by",
     "alp1.ae.flow.ch",
     "appengine.flow.ch",
@@ -8262,9 +8258,7 @@ static const char* TLDTbl[9109] = {
     "de.trendhosting.cloud",
     "jele.club",
     "amscompute.com",
-    "clicketcloud.com",
     "dopaas.com",
-    "hidora.com",
     "paas.hosted-by-previder.com",
     "rag-cloud.hosteur.com",
     "rag-cloud-ch.hosteur.com",
@@ -8912,6 +8906,7 @@ static const char* TLDTbl[9109] = {
     "myspreadshop.se",
     "myspreadshop.co.uk",
     "api.stdlib.com",
+    "storipress.app",
     "storj.farm",
     "utwente.io",
     "soc.srcf.net",
@@ -9140,7 +9135,8 @@ static const char* TLDTbl[9109] = {
     "virtualserver.io",
     "enterprisecloud.nu",
 };
-static const qint16 TLDTblSize = 9109;
+static const qint16 TLDTblSize = 9104;
+
 
 static inline bool containsTLDEntry(const QString &entry)
 {
