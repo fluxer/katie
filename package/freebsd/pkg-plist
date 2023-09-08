@@ -137,7 +137,6 @@ include/katie/QtCore/QTextCodec
 include/katie/QtCore/QTextConverter
 include/katie/QtCore/QTextStream
 include/katie/QtCore/QTextStreamFunction
-include/katie/QtCore/QTextStreamManipulator
 include/katie/QtCore/QThread
 include/katie/QtCore/QThreadPool
 include/katie/QtCore/QTime

@@ -69,7 +69,6 @@ incmap = {
         'QStringRef': 'qstring.h',
         'QTextConverter': 'qtextcodec.h',
         'QTextStreamFunction': 'qtextstream.h',
-        'QTextStreamManipulator': 'qtextstream.h',
         'QTime': 'qdatetime.h',
         'QTimerEvent': 'qcoreevent.h',
         'QTypeInfo': 'qglobal.h',
