@@ -219,7 +219,6 @@ protected:
     void dragMoveEvent(QDragMoveEvent *event);
     void dropEvent(QDropEvent *event);
     void focusInEvent(QFocusEvent *event);
-    bool focusNextPrevChild(bool next);
     void focusOutEvent(QFocusEvent *event);
     void keyPressEvent(QKeyEvent *event);
     void keyReleaseEvent(QKeyEvent *event);

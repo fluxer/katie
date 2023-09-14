@@ -2887,14 +2887,6 @@ void QGraphicsView::focusInEvent(QFocusEvent *event)
 /*!
     \reimp
 */
-bool QGraphicsView::focusNextPrevChild(bool next)
-{
-    return QAbstractScrollArea::focusNextPrevChild(next);
-}
-
-/*!
-    \reimp
-*/
 void QGraphicsView::focusOutEvent(QFocusEvent *event)
 {
     Q_D(QGraphicsView);
