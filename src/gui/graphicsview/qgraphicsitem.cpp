@@ -6449,10 +6449,6 @@ void QGraphicsItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 */
 void QGraphicsItem::dragEnterEvent(QGraphicsSceneDragDropEvent *event)
 {
-    Q_D(QGraphicsItem);
-    // binary compatibility workaround between 4.4 and 4.5
-    if (d->isProxyWidget())
-        static_cast<QGraphicsProxyWidget*>(this)->dragEnterEvent(event);
 }
 
 /*!
@@ -6473,10 +6469,6 @@ void QGraphicsItem::dragEnterEvent(QGraphicsSceneDragDropEvent *event)
 */
 void QGraphicsItem::dragLeaveEvent(QGraphicsSceneDragDropEvent *event)
 {
-    Q_D(QGraphicsItem);
-    // binary compatibility workaround between 4.4 and 4.5
-    if (d->isProxyWidget())
-        static_cast<QGraphicsProxyWidget*>(this)->dragLeaveEvent(event);
 }
 
 /*!
@@ -6500,10 +6492,6 @@ void QGraphicsItem::dragLeaveEvent(QGraphicsSceneDragDropEvent *event)
 */
 void QGraphicsItem::dragMoveEvent(QGraphicsSceneDragDropEvent *event)
 {
-    Q_D(QGraphicsItem);
-    // binary compatibility workaround between 4.4 and 4.5
-    if (d->isProxyWidget())
-        static_cast<QGraphicsProxyWidget*>(this)->dragMoveEvent(event);
 }
 
 /*!
@@ -6522,10 +6510,6 @@ void QGraphicsItem::dragMoveEvent(QGraphicsSceneDragDropEvent *event)
 */
 void QGraphicsItem::dropEvent(QGraphicsSceneDragDropEvent *event)
 {
-    Q_D(QGraphicsItem);
-    // binary compatibility workaround between 4.4 and 4.5
-    if (d->isProxyWidget())
-        static_cast<QGraphicsProxyWidget*>(this)->dropEvent(event);
 }
 
 /*!
