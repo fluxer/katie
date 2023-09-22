@@ -9234,34 +9234,11 @@ bool QGraphicsTextItem::sceneEvent(QEvent *event)
             return true;
         }
     }
-    bool result = QGraphicsItem::sceneEvent(event);
-
-    // Ensure input context is updated.
-    switch (event->type()) {
-    case QEvent::ContextMenu:
-    case QEvent::FocusIn:
-    case QEvent::FocusOut:
-    case QEvent::GraphicsSceneDragEnter:
-    case QEvent::GraphicsSceneDragLeave:
-    case QEvent::GraphicsSceneDragMove:
-    case QEvent::GraphicsSceneDrop:
-    case QEvent::GraphicsSceneHoverEnter:
-    case QEvent::GraphicsSceneHoverLeave:
-    case QEvent::GraphicsSceneHoverMove:
-    case QEvent::GraphicsSceneMouseDoubleClick:
-    case QEvent::GraphicsSceneMousePress:
-    case QEvent::GraphicsSceneMouseMove:
-    case QEvent::GraphicsSceneMouseRelease:
-    case QEvent::KeyPress:
-    case QEvent::KeyRelease:
-        break;
-    case QEvent::ShortcutOverride:
+    const bool result = QGraphicsItem::sceneEvent(event);
+    if (event->type() == QEvent::ShortcutOverride) {
         dd->sendControlEvent(event);
         return true;
-    default:
-        break;
     }
-
     return result;
 }
 
